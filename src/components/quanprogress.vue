@@ -43,9 +43,7 @@
       if (this.version2) {
         this.img1 = this.img2;
       }
-      if(this.isLogin){
         this.mountedStart();
-      }
       //第一次进来发送一个请求获取用户充值情况
 //      this.$store.dispatch('getActivityPromocode').then((res) => {
 //        var bili = res.progress / res.amount - Math.floor(res.progress/res.amount);
@@ -141,11 +139,6 @@
           this.goReceive();
         }
       },
-      watch:{
-        isLogin(){
-          this.mountedStart();
-        }
-      }
     }
   }
 </script>

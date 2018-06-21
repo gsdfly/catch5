@@ -37,9 +37,7 @@
     }),
     mounted() {
 //      this.getCoinList()
-      if(this.isLogin){
         this.$store.dispatch('getCoinList');
-      }
     },
     methods: {
       handlePayBefore(pay) {
@@ -153,11 +151,6 @@
         }
       }
     },
-    watch:{
-      isLogin(){
-        this.$store.dispatch('getCoinList');
-      }
-    }
   }
 </script>
 
