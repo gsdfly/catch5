@@ -340,6 +340,66 @@
           </div>
         </div>
 
+        <div class="bg-center14" v-if="contentShow == 'test'" @click.stop="">
+          <div class="center-bg" :style="centerStyle">
+           <div>
+             <div class="top-high">
+               <!--<img src="./../assets/task/con_light.png" alt=""/>-->
+               <div class="con-light">
+                 <img src="./../assets/task/con_light.png" alt="" />
+               </div>
+               <img src="./../assets/task/congradulation.png" alt="" class="top-high-bg" />
+               <p>2币</p>
+             </div>
+             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                  @click="closeBg"/>
+           </div>
+          </div>
+          <div class="center-main">
+            <div>
+              <img src="./../assets/task/title.png" alt="" class="title"/>
+              <div class="section1">
+                <img src="./../assets/task/a_wechat.png" alt="" class="section1Bg"/>
+                <img src="./../assets/task/code_default.png" alt="" class="button" />
+                <!--<div class="button">-->
+                <!--<img src="./../assets/task/qrcode2.jpg" alt=""/>-->
+                <!--</div>-->
+              </div>
+              <div class="section2">
+                <img src="./../assets/task/b_recharge.png" alt="" class="section2Bg"/>
+                <div class="progress-out">
+                  <div class="progress"></div>
+                </div>
+                <!--<div class="button">-->
+                <!--&lt;!&ndash;<span><b>5</b>/7</span>&ndash;&gt;-->
+                <!--<em>已领取</em>-->
+                <!--</div>-->
+                <div class="button2" @click="test">
+                  <div class="sun">
+                    <div>
+                      <img src="./../assets/task/light.png" alt="">
+                    </div>
+                  </div>
+                  <img src="./../assets/task/b_press_receive.png" alt=""/>
+                </div>
+              </div>
+              <div class="section3">
+                <img src="./../assets/task/c_win.png" alt="" class="section3Bg" />
+                <div class="button" :class="{'is-receive':false}"><span v-if="true">点击<br/>挑战</span><em v-else="">已领取</em></div>
+                <div class="button2" @click="test">
+                  <div class="sun">
+                    <div>
+                      <img src="./../assets/task/light.png" alt="">
+                    </div>
+                  </div>
+                  <img src="./../assets/task/c_press_receive.png" alt=""/>
+                </div>
+              </div>
+            </div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
       </div>
 
       <tipOperation></tipOperation>
@@ -374,8 +434,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: false,
-        contentShow: '',
+        bgShow: true,
+        contentShow: 'test',
         currentCoupon: {},
         pay: {},
         currentCouponPay: {},
@@ -388,7 +448,8 @@
           code:'',
           end_time:''
         },
-        freeTipImg:''
+        freeTipImg:'',
+        centerStyle:''
       }
     },
     created() {
@@ -438,6 +499,14 @@
       this.$store.dispatch('getUser')
     },
     methods: {
+      test(){
+        console.log('1111111');
+//        this.centerStyle = 'display:block;';
+//        setTimeout(()=>{
+//          this.centerStyle = 'display:block;opacity:1;clip-path: circle(100vh at 50vw 50vh);';
+//        },0)
+        this.centerStyle = 'opacity:1;clip-path: circle(100vh at 50vw 50vh);';
+      },
       receiveCoupon(){
         this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
           this.isReceive = true;
@@ -703,6 +772,11 @@
     transform: translateY(-50%);
   }
 
+
+  @keyframes turn {
+    from {transform:rotateZ(0deg)}
+    to {transform:rotateZ(360deg)}
+  }
   .tipTitle {
       font-size: 36px;
       color: #25edff;
@@ -1278,6 +1352,223 @@
     }
   }
 
+  .bg-center14 {
+    width: 100%;
+    height: 100%;
+    .center-bg {
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      position: absolute;
+      z-index: 999;
+      clip-path:circle(65px at 610px 710px);
+      filter: none;
+      transition: all 1s;
+      opacity: 0;
+      /*display: none;*/
+      pointer-events:none;
+      >div{
+        /*background: red;*/
+        @include center;
+        .top-high{
+          width: 660px;
+          height: 856px;
+          /*background: red;*/
+          padding: 0.1px;
+          .top-high-bg{
+            width: 674px;
+            position: absolute;
+            left: 0;
+            top:0;
+          }
+          .con-light{
+            width: 734px;
+            height: 500px;
+            /*background: blue;*/
+            margin: -25px 0 0 -37px;
+            overflow: hidden;
+            >img{
+              width: 100%;
+              /*animation: turn 10s linear infinite;*/
+            }
+          }
+          p{
+            font-size: 100px;
+            color: #fff;
+            position: absolute;
+            width: 100%;
+            left:0;
+            top:240px;
+            text-align: center;
+          }
+        }
+      }
+    }
+    .center-main {
+      @include center;
+      > div {
+        width: 660px;
+        height: 856px;
+        background-color: #445ee4;
+        border-radius: 20px;
+        /*border: solid 4px #445ee4;*/
+        padding: 0.1px;
+        img {
+          display: block;
+        }
+        .title {
+          width: 688px;
+          margin: -55px 0 15px -26px;
+        }
+        .section1 {
+          width: 100%;
+          position: relative;
+          .section1Bg {
+            width: 656px;
+            margin: 0 0 0 -16px;
+          }
+          .button {
+            width: 121px;
+            height: 160px;
+            position: absolute;
+            right: 31px;
+            top: 44px;
+            /*background-color: #fa8e3f;*/
+            /*border-radius: 8px;*/
+            /*box-shadow: 0 8px 0 #d6712d;*/
+            /*img{*/
+            /*width: 114px;*/
+            /*height: 114px;*/
+            /*margin: 4px auto 3px auto;*/
+            /*}*/
+            /*p{*/
+            /*font-size: 28px;*/
+            /*line-height: 34px;*/
+            /*color: #ffffff;*/
+            /*}*/
+          }
+        }
+        .button2 {
+          position: absolute;
+          right: -20px;
+          bottom: 20px;
+          .sun {
+            /*background: red;*/
+            width: 232px;
+            height: 180px;
+            position: absolute;
+            right: 38px;
+            bottom: -16px;
+            overflow: hidden;
+            > div {
+              @include centerY;
+              img {
+                width: 300px;
+              }
+            }
+          }
+          > img {
+            width: 224px;
+            position: relative;
+            z-index: 666;
+          }
+        }
+        .section2 {
+          position: relative;
+          .section2Bg {
+            width: 638px;
+            margin: 10px 0 0 20px;
+          }
+          .progress-out {
+            width: 412px;
+            height: 30px;
+            background-color: #aadcff;
+            border-radius: 15px;
+            border: solid 3px #63bdfc;
+            position: absolute;
+            bottom: 20px;
+            right: 74px;
+            .progress {
+              width: 50%;
+              height: 30px;
+              border: solid 3px #63bdfc;
+              position: absolute;
+              left: -3px;
+              top: -3px;
+              background: linear-gradient(to right, #ffb66e, #fef52e);
+              border-radius: 15px;
+            }
+          }
+          .button {
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            background-color: #dddddd;
+            box-shadow: 0 7px 0 #a4a4a4;
+            border-radius: 50%;
+            right: 28px;
+            bottom: 27px;
+            span {
+              width: 100px;
+              height: 100px;
+              background-color: #bbbbbb;
+              border-radius: 50%;
+              @include center;
+              color: #fff;
+              font-size: 30px;
+              line-height: 100px;
+              b {
+                font-size: 60px;
+              }
+            }
+            em {
+              font-size: 36px;
+              line-height: 130px;
+              color: #bbbbbb;
+            }
+          }
+
+        }
+        .section3 {
+          position: relative;
+          .section3Bg {
+            width: 620px;
+            margin: 20px 20px 0 20px;
+          }
+          .button {
+            width: 130px;
+            height: 130px;
+            background-color: #fa8e3f;
+            border-radius: 50%;
+            box-shadow: 0 7px 0 #d6712d;
+            position: absolute;
+            right: 28px;
+            bottom: 27px;
+            font-size: 36px;
+            line-height: 40px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &.is-receive {
+              background-color: #dddddd;
+              box-shadow: 0 7px 0 #a4a4a4;
+              color: #bbbbbb;
+            }
+          }
+          .button2 {
+            bottom: 16px;
+            .sun {
+              /*overflow: visible;*/
+              img {
+                /*animation: turn 10s linear infinite;*/
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   .price {
     position: absolute;
     width: 298px;

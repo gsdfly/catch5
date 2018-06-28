@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    #box{
+      width: 120px;
+      height: 152px;
+      background: #fa8e3f;
+      box-shadow: 0 8px 0px #d6712d;
+      border-radius: 8px;
+      /*transition: all 0.1s;*/
+    }
+    #btn2{
+      width: 130px;
+      height: 130px;
+      background-color: #fa8e3f;
+      box-shadow: 0 7px 0px #d6712d;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+<button>测试</button>
+<div id="box" onclick="change()">
+</div>
+<div id="btn2" onclick="change2()"></div>
+</body>
+<script>
+  function change() {
+    event.target.style=' height:157px;box-shadow: 0 3px 0px #d6712d;'
+  }
+  function change2() {
+    event.target.style=' height:134px;box-shadow: 0 3px 0px #d6712d;'
+  }
+</script>
+</html>

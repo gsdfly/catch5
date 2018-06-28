@@ -17,7 +17,7 @@ instance.interceptors.response.use(function(response) {
   let res = response.data
   if (res.status_code !== 200) {
     // sendError({code:response.data.status_code,message:response.data.message,url:response.config.url});
-    store.commit('changeTipContent',getErrMsg(res.status_code, res.message))
+    // store.commit('changeTipContent',getErrMsg(res.status_code, res.message))
     return Promise.reject(res);
   }
   return res
