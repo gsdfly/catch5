@@ -137,15 +137,26 @@ export default {
   timeOthers:function (params) {
     return instance.post(CONFIG.url + 'api/time/others',jsonToStr(params));
   },
-  //获取奖励金
-  getActivityBounty:function (params) {
-    return instance.get(CONFIG.url+'api/activity/bounty', {
+  // //获取奖励金
+  // getActivityBounty:function (params) {
+  //   return instance.get(CONFIG.url+'api/activity/bounty', {
+  //     params: params
+  //   })
+  // },
+  // //领取券
+  // getActivityReceive:function (params) {
+  //   return instance.get(CONFIG.url+'api/activity/receive', {
+  //     params: params
+  //   })
+  // },
+  getActivityBountyInfo:function (params) {
+    return instance.get(CONFIG.url+'api/bounty/info', {
       params: params
     })
   },
-  //领取券
-  getActivityReceive:function (params) {
-    return instance.get(CONFIG.url+'api/activity/receive', {
+  //奖励金兑换，这个是任务的
+  getActivityBountyExchange:function (params) {
+    return instance.get(CONFIG.url+'api/bounty/exchange', {
       params: params
     })
   },

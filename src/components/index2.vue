@@ -5,7 +5,7 @@
         <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png" alt="">
         <img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="">
         <img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/catch3/shuoming.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/catch3/shuoming2.png" alt="">
       </div>
       <div class="header">
         <div>
@@ -229,13 +229,13 @@
         <div class="bg-center9" v-show="contentShow == 'exchange2'" style="width: 100%;height: 100%">
           <div class="bg-center9-center">
             <div>
-              <!--<h3 class="tipTitle"><span></span><b>5元“买娃娃”红包</b></h3>-->
+              <h3 class="tipTitle"><span></span><b>5元“买娃娃”红包</b></h3>
               <div class="scroll">
                   <h3 id="copy">{{couponInfo.code}}</h3>
                   <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                   <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy">复制</button>
               </div>
-              <img src="http://res.catchme.com.cn/activity/catch3/shuoming.png" alt="" @click.prevent="" class="imgBg"/>
+              <img src="http://res.catchme.com.cn/activity/catch3/shuoming2.png" alt="" @click.prevent="" class="imgBg"/>
               <!--<div class="phone">-->
                 <!--<img src="http://res.catchme.com.cn/activity/catch3/image_Instructions.png" alt="" @click.prevent="">-->
                 <!--<div>-->
@@ -275,13 +275,13 @@
           <div>
             <img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="" class="imgBg" @click.prevent=""/>
             <div class="content">
-              <h3><span class="home_icon_bi"></span>{{activity_bounty.bounty}}</h3>
+              <h3><span class="home_icon_bi"></span>{{task_now.recharge_bounty}}</h3>
               <p>我的奖励金</p>
               <div v-if="!isReceive">
                 <dl class="dlCoupon">
                   <dt>
-                    <h4>5元“买娃娃”红包</h4>
-                    <p>(消耗{{activity_bounty.voucher.value}}个奖励金)</p>
+                    <h4>{{activity_bounty.voucher_batch.name}}</h4>
+                    <p>(消耗{{activity_bounty.voucher_batch.value}}个奖励金)</p>
                   </dt>
                   <dd>
                     <button @click="receiveCoupon">领取</button>
@@ -291,7 +291,7 @@
               <div v-else="">
                 <dl class="dlCoupon">
                   <dt>
-                    <h4>5元“买娃娃”红包</h4>
+                    <h4>{{activity_bounty.voucher_batch.name}}</h4>
                     <p>{{couponInfo.code}}</p>
                     <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                   </dt>
@@ -311,11 +311,11 @@
             <div>
               <h3 class="tipTitle"><span></span><b>我的红包</b></h3>
               <ul>
-                <li v-for="item in activity_bounty.list">
+                <li v-for="item in activity_bounty.vouchers">
                   <div>
                     <dl class="dlCoupon">
                       <dt>
-                        <h4>5元“买娃娃”红包</h4>
+                        <h4>{{activity_bounty.voucher_batch.name}}</h4>
                         <p>{{item.code}}</p>
                         <p>有效期至：{{item.end_time | handleEndTime}}</p>
                       </dt>
@@ -404,6 +404,7 @@
       tip_operation: state => state.user.tip_operation,
       activity_promocode: state => state.user.activity_promocode,
       activity_bounty: state => state.user.activity_bounty,
+      task_now:state => state.user.task_now,
     }),
     components: {
       joPay,
@@ -668,7 +669,11 @@
     },
     filters:{
       handleEndTime(value){
-        return value.split(' ')[0].replace(/-/g,'.');
+        if(value){
+          return value.split(' ')[0].replace(/-/g,'.');
+        }else {
+          return value;
+        }
       }
     }
   }
@@ -704,6 +709,7 @@
   }
 
   .tipTitle {
+    width: 100%;
       font-size: 36px;
       color: #25edff;
       line-height: 36px;
@@ -950,32 +956,12 @@
         /*background: #445ee4;*/
         position: relative;
         border-radius: 20px;
-        /*padding: 34px 0 0 0;*/
-       /* >h3{
-          font-size: 36px;
-          color: #25edff;
-          line-height: 36px;
-          height: 36px;
-          position: relative;
-          margin: 0 0 42px 0;
-          b{
-            padding: 0 10px;
-            background: #445ee4;
-            position: absolute;
-            left: 50%;
-            top:0;
-            transform: translateX(-50%);
-          }
-          span{
-            position: absolute;
-            width: calc(100% - 66px);
-            left: 33px;
-            top:16px;
-            height: 3px;
-            background: #25edff;
-          }
+        .tipTitle{
+          margin: 36px 0 0 0;
+          position: absolute;
+          left: 0;
+          top:0;
         }
-        */
         >img{
           width: 100%;
         }

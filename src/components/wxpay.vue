@@ -33,7 +33,6 @@
       info: state => state.user.info,
       hide_coupons: state => state.user.hide_coupons,
       tip_operation: state => state.user.tip_operation,
-      isLogin:state => state.user.isLogin
     }),
     mounted() {
 //      this.getCoinList()
@@ -144,7 +143,8 @@
                 self.$store.dispatch('getUser');
                 self.$store.dispatch('getCoinList');
 //                self.$store.dispatch('getActivityPromocode') //获取用户充值状态
-                self.$store.dispatch('getActivityBounty');
+//                self.$store.dispatch('getActivityBounty');
+                self.$store.dispatch('getActivityBountyInfo');
               },1000)
             })
           }

@@ -1,14 +1,14 @@
 <template>
   <div class="quanprogress" :class="{'quan-version2':version2}">
     <p class="p1" @click="openActivityRule">活动规则</p>
-    <p class="p2" @click="goExchange">我的红包:{{activity_bounty.list.length}}<span></span></p>
+    <p class="p2" @click="goExchange">我的红包:{{activity_bounty.vouchers.length}}<span></span></p>
     <div>
       <img @click.prevent="" :src="img1" alt="">
       <div class="progress-out">
         <div class="progress-in" :style="styleLong"></div>
       </div>
-      <img v-if="activity_bounty.voucher.value <= activity_bounty.bounty && activity_bounty.voucher.value !== 0" class="ling" @click="goReceive" src="./../assets/catch3/ling.png" alt="">
-      <div class="right" v-else="">还差<span>{{(activity_bounty.voucher.value - activity_bounty.bounty).toFixed(2)}}</span>元</div>
+      <img v-if="activity_bounty.voucher_batch.value <= task_now.recharge_bounty && activity_bounty.voucher_batch.value !== 0" class="ling" @click="goReceive" src="./../assets/catch3/ling.png" alt="">
+      <div class="right" v-else="">还差<span>{{(activity_bounty.voucher_batch.value - task_now.recharge_bounty).toFixed(2)}}</span>元</div>
     </div>
   </div>
 </template>
@@ -36,14 +36,14 @@
       ...mapState({
         activity_promocode: state => state.user.activity_promocode,
         activity_bounty: state => state.user.activity_bounty,
-        isLogin:state => state.user.isLogin
+        task_now: state => state.user.task_now,
       })
     },
     mounted() {
       if (this.version2) {
         this.img1 = this.img2;
       }
-        this.mountedStart();
+//        this.mountedStart();
       //第一次进来发送一个请求获取用户充值情况
 //      this.$store.dispatch('getActivityPromocode').then((res) => {
 //        var bili = res.progress / res.amount - Math.floor(res.progress/res.amount);
@@ -55,16 +55,16 @@
 //      })
     },
     methods: {
-      mountedStart(){
-        this.$store.dispatch('getActivityBounty').then((res)=>{
-          if(res.bounty<res.voucher.value){
-            var bili = res.bounty/res.voucher.value;
-            this.styleLong = 'width:' + bili * 100 + '%';
-          }else {
-            this.styleLong = 'width:100%';
-          }
-        })
-      },
+//      mountedStart(){
+//        this.$store.dispatch('getActivityBounty').then((res)=>{
+//          if(res.bounty<res.voucher.value){
+//            var bili = res.bounty/res.voucher.value;
+//            this.styleLong = 'width:' + bili * 100 + '%';
+//          }else {
+//            this.styleLong = 'width:100%';
+//          }
+//        })
+//      },
       goExchange() {
         if (this.activity_bounty.list && this.activity_bounty.list.length === 0) {
           this.$emit('openTip', 'notExchange');
@@ -116,29 +116,83 @@
 //          },500);
 //        }
 //      }
-      activity_bounty(newActivity,oldActivity){
-        if (this.isFirst) {
-          this.isFirst = false;
+//      activity_bounty(newActivity,oldActivity){
+//        if (this.isFirst) {
+//          this.isFirst = false;
+//          return;
+//        }
+//        //如果充值成功之后获取到用户的进度没有改变，再过3秒重新请求
+//        if(newActivity.bounty === oldActivity.bounty){
+//          console.log('数据未改变发送请求')
+//          setTimeout(()=>{
+//            this.$store.dispatch('getActivityBounty');
+//          },3000);
+//          return;
+//        }
+//        if(newActivity.bounty<newActivity.voucher.value){
+//          var bili = newActivity.bounty/newActivity.voucher.value;
+//          this.styleLong = 'width:' + bili * 100 + '%';
+//        }else {
+//          this.styleLong = 'width:100%';
+//        }
+//        if(newActivity.voucher.value <= newActivity.bounty ){
+//          this.goReceive();
+//        }
+//      },
+
+      activity_bounty() {
+        //只有第一次才会根据来请求奖励金设置进度，后面奖励金的改变，都是根据task_now的监听实现的
+        if (!this.isFirst) {
           return;
         }
-        //如果充值成功之后获取到用户的进度没有改变，再过3秒重新请求
-        if(newActivity.bounty === oldActivity.bounty){
-          console.log('数据未改变发送请求')
-          setTimeout(()=>{
-            this.$store.dispatch('getActivityBounty');
-          },3000);
+        this.isFirst = false;
+        this.$store.dispatch('getActivityBountyInfo').then((res) => {
+          if (res.recharge_bounty < this.activity_bounty.voucher_batch.value) {
+            var bili = res.recharge_bounty / this.activity_bounty.voucher_batch.value;
+            this.styleLong = 'width:' + bili * 100 + '%';
+          } else {
+            this.styleLong = 'width:100%';
+          }
+        });
+      },
+
+      task_now(newActivity,oldActivity){
+        var task = localStorage.getItem('task');
+        console.log('11111111111')
+        if(task){
+          localStorage.removeItem('task');
           return;
         }
-        if(newActivity.bounty<newActivity.voucher.value){
-          var bili = newActivity.bounty/newActivity.voucher.value;
+//          if (this.isFirst) {
+//            this.isFirst = false;
+//            return;
+//          }
+        console.log('2222222')
+        //这里需要判断是不是充值之后改变的
+        if(newActivity.game_bounty !== oldActivity.game_bounty || newActivity.prize_bounty !== oldActivity.prize_bounty){
+          return;
+        }
+        console.log('333333')
+        if(newActivity.recharge_bounty<this.activity_bounty.voucher_batch.value){
+          var bili = newActivity.recharge_bounty/this.activity_bounty.voucher_batch.value;
           this.styleLong = 'width:' + bili * 100 + '%';
         }else {
           this.styleLong = 'width:100%';
         }
-        if(newActivity.voucher.value <= newActivity.bounty ){
+        console.log('newActivity--------'+newActivity.recharge_bounty);
+        console.log('oldActivity-----------'+oldActivity.recharge_bounty);
+        console.log(newActivity.recharge_bounty === oldActivity.recharge_bounty);
+        if(newActivity.recharge_bounty === oldActivity.recharge_bounty){
+          console.log('数据未改变发送请求')
+//          setTimeout(()=>{
+//            this.$store.dispatch('getActivityBountyInfo');
+//          },3000);
+          return;
+        }
+        if(this.activity_bounty.voucher_batch.value <= newActivity.recharge_bounty ){
           this.goReceive();
         }
-      },
+      }
     }
   }
 </script>

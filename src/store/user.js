@@ -38,13 +38,39 @@ const state = {
     records:[],
     needle:0
   },
+  // activity_bounty:{
+  //   bounty:0,
+  //   voucher:{
+  //     value:0
+  //   },
+  //   list:[]
+  // },
   activity_bounty:{
-    bounty:0,
-    voucher:{
+    voucher_batch:{
       value:0
     },
-    list:[]
-  }
+    vouchers:[]
+  },
+
+  task_game:{
+    num:1, //任务可以完成多少次
+    value:1,//任务值
+    task_count:0,//任务已经完成的次数
+    coupon:{},//任务绑定的优惠券
+    coin_price:{}//优惠券绑定的充值项
+  },
+  task_wawa:{
+    num:1, //任务可以完成多少次
+    value:1,//任务值
+    task_count:0,//任务已经完成的次数
+    coupon:{},//任务绑定的优惠券
+    coin_price:{}//优惠券绑定的充值项
+  },
+  task_now:{
+    recharge_bounty:-1,//充值的奖励金
+    game_bounty:-1,//用户当前任务的进度
+    prize_bounty:-1//掉落的娃娃数
+  },
 }
 
 const mutations = {
@@ -90,10 +116,19 @@ const mutations = {
     state.activity_promocode = obj
   },
   setActivityBounty(state,obj){
-  state.activity_bounty = obj
-},
+    state.activity_bounty = obj
+  },
   setActivityBountyValue(state,value){
     state.activity_bounty.bounty = value
+  },
+  setTaskGame(state,obj){
+    state.task_game = obj;
+  },
+  setTaskNow(state,obj){
+    state.task_now = obj;
+  },
+  setTaskWawa(state,obj){
+    state.task_wawa = obj;
   }
 }
 
@@ -316,6 +351,14 @@ const actions = {
             if(endTime >= nowTime){
               ctx.commit('setTipOperation',res[i]);
             }
+          }else if(res[i].type === 8){
+            ctx.commit('setActivityBounty',res[i]);
+          }else if(res[i].type === 9){
+            //type为9时为游戏次数运营位
+            ctx.commit('setTaskGame',res[i]);
+          }else if(res[i].type === 10){
+            //type为10时为掉落任务运营位
+            ctx.commit('setTaskWawa',res[i]);
           }
         }
         ctx.commit('setHideCoupons',hideCoupons);
@@ -323,6 +366,17 @@ const actions = {
         success(operationsList)
       }).catch(()=>{
 
+      })
+    })
+  },
+  //获取奖励金（新版带任务）
+  getActivityBountyInfo(ctx){
+    return new Promise((success,error)=>{
+      api.getActivityBountyInfo({token:CONFIG.token}).then((data)=>{
+        ctx.commit('setTaskNow',data.data);
+        success(data.data);
+      }).catch((err)=>{
+        error(err)
       })
     })
   },
@@ -354,6 +408,7 @@ const actions = {
       })
     })
   },
+
   getActivityPromocode:function (ctx) {
     return new Promise((success,error)=>{
       api.getActivityPromocode({machine_no:ctx.state.machine_no,token:CONFIG.token,site_version_id:CONFIG.site_version_id}).then((data)=>{
@@ -362,18 +417,32 @@ const actions = {
       })
     })
   },
-  getActivityBounty:function (ctx) {
+  //已经被舍弃
+  // getActivityBounty:function (ctx) {
+  //   return new Promise((success,error)=>{
+  //     api.getActivityBounty({machine_no:ctx.state.machine_no,token:CONFIG.token,site_version_id:CONFIG.site_version_id}).then((data)=>{
+  //       ctx.commit('setActivityBounty',data.data);
+  //       success(data.data)
+  //     })
+  //   })
+  // },
+
+  //已经被舍弃
+  // getActivityReceive:function (ctx,batch_id) {
+  //   return new Promise((success,error)=>{
+  //     api.getActivityReceive({machine_no:ctx.state.machine_no,token:CONFIG.token,site_version_id:CONFIG.site_version_id,batch_id:batch_id}).then((data)=>{
+  //       success(data.data)
+  //     })
+  //   })
+  // },
+
+  //奖励金兑换
+  getActivityBountyExchange:function (ctx,operation_id) {
     return new Promise((success,error)=>{
-      api.getActivityBounty({machine_no:ctx.state.machine_no,token:CONFIG.token,site_version_id:CONFIG.site_version_id}).then((data)=>{
-        ctx.commit('setActivityBounty',data.data);
-        success(data.data)
-      })
-    })
-  },
-  getActivityReceive:function (ctx,batch_id) {
-    return new Promise((success,error)=>{
-      api.getActivityReceive({machine_no:ctx.state.machine_no,token:CONFIG.token,site_version_id:CONFIG.site_version_id,batch_id:batch_id}).then((data)=>{
-        success(data.data)
+      api.getActivityBountyExchange({token:CONFIG.token,operation_id:operation_id}).then((data)=>{
+        success(data);
+      }).catch((err)=>{
+        error(err);
       })
     })
   }
