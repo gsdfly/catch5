@@ -66,7 +66,7 @@
 //        })
 //      },
       goExchange() {
-        if (this.activity_bounty.list && this.activity_bounty.list.length === 0) {
+        if (this.activity_bounty.vouchers && this.activity_bounty.vouchers.length === 0) {
           this.$emit('openTip', 'notExchange');
         } else {
 //          this.$emit('openTip', 'exchange');
