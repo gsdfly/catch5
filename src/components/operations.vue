@@ -3,7 +3,8 @@
 
     <div v-for="(item,index) in operations.slice(0,1)">
       <!--运营位类别:优惠券-->
-      <div v-if="item.type === 1 || item.type === 7">
+      <!--<div v-if="item.type === 1 || item.type === 7">-->
+        <div v-if="item.type === 1">
         <!--优惠券样式类型、优惠券状态-->
         <img @click.prevent="" v-if="item.coupon.status === 0" :src="imgscurrent[index].img_receive"
              @click="consumer(index,item.coupon.id,item.coin_price.coin_price_id,item.coupon.type,item.coin_price.coin_num,item.coin_price.type,item.type,item.mp_url)"
@@ -70,9 +71,10 @@
         <span v-if="item.remark" class="more" @click.stop="openDetails(item.remark)"></span>
       </div>
 
-      <!--<div v-if="item.type === 7" @click="openFree">-->
-        <!--<img :src="gzhImg1" alt="">-->
-      <!--</div>-->
+      <div v-if="item.type === 7" @click="openTask(item)">
+        <img :src="gzhImg1" alt="">
+        <span class="quan_game_num quan_coin_num">{{item.coin_price.coin_num}}<b>币</b></span>
+      </div>
     </div>
   </div>
 </template>
@@ -155,6 +157,11 @@
       tip_operation: state => state.user.tip_operation,
     }),
     methods: {
+      openTask(item){
+        //将公众号的优惠券信息传给index2页面
+        console.log(item);
+        this.$emit('openTip','task',item);
+      },
       mountedStart(){
         this.$store.dispatch('getOperations').then((res) => {
           //运营位获取完成时间
@@ -265,17 +272,18 @@
       //领取优惠券
       consumer(index, coupon_id, coin_price_id, coupon_type, coin, type,opType,imgUrl) {
         //类型为7的运营位，如果是支付宝的话直接按原来，如果是微信的话弹窗
-        if(opType === 7){
-          if(CONFIG.isWx){
-            this.$emit('openTip','free',imgUrl);
-            return;
-          }
-        }
+//        if(opType === 7){
+//          if(CONFIG.isWx){
+//            this.$emit('openTip','free',imgUrl);
+//            return;
+//          }
+//        }
         if (!this.isRequestFree) {
           this.isRequestFree = true;
           this.$store.dispatch('consumer', {coupon_id: coupon_id}).then(() => {
             _hmt.push(['_trackEvent', '领取抓娃娃优惠券', '点击', '免费抓娃娃优惠券', '']);
             if (coupon_type === 2) {
+              //免费的直接使用
               this.useCoupons(coupon_id, coin_price_id, coupon_type, coin, type);
             } else if (type === 1) {
               this.$emit('changeBgShow', {
@@ -317,7 +325,7 @@
 //                this.isRequest = false;
 //                this.isRequestFree = false;
 //              })
-              this.$emit('closeBg');
+//              this.$emit('closeBg');
             })
           } else {
             if (this.info.online === 0) {

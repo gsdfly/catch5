@@ -17,7 +17,7 @@ instance.interceptors.response.use(function(response) {
   let res = response.data
   if (res.status_code !== 200) {
     // sendError({code:response.data.status_code,message:response.data.message,url:response.config.url});
-    // store.commit('changeTipContent',getErrMsg(res.status_code, res.message))
+    store.commit('changeTipContent',getErrMsg(res.status_code, res.message))
     return Promise.reject(res);
   }
   return res
@@ -137,16 +137,28 @@ export default {
   timeOthers:function (params) {
     return instance.post(CONFIG.url + 'api/time/others',jsonToStr(params));
   },
-  //获取奖励金
-  getActivityBounty:function (params) {
-    return instance.get(CONFIG.url+'api/activity/bounty', {
+  // //获取奖励金,已经舍弃
+  // getActivityBounty:function (params) {
+  //   return instance.get(CONFIG.url+'api/activity/bounty', {
+  //     params: params
+  //   })
+  // },
+  //领取券已经舍弃
+  // getActivityReceive:function (params) {
+  //   return instance.get(CONFIG.url+'api/activity/receive', {
+  //     params: params
+  //   })
+  // },
+  getActivityBountyInfo:function (params) {
+    return instance.get(CONFIG.url+'api/bounty/info', {
       params: params
     })
   },
-  //领取券
-  getActivityReceive:function (params) {
-    return instance.get(CONFIG.url+'api/activity/receive', {
+  //奖励金兑换，这个是任务的
+  getActivityBountyExchange:function (params) {
+    return instance.get(CONFIG.url+'api/bounty/exchange', {
       params: params
     })
   },
+
 }

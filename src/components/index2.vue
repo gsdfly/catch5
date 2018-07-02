@@ -5,7 +5,7 @@
         <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png" alt="">
         <img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="">
         <img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/catch3/shuoming.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/catch3/shuoming2.png" alt="">
       </div>
       <div class="header">
         <div>
@@ -229,28 +229,13 @@
         <div class="bg-center9" v-show="contentShow == 'exchange2'" style="width: 100%;height: 100%">
           <div class="bg-center9-center">
             <div>
-              <!--<h3 class="tipTitle"><span></span><b>5元“买娃娃”红包</b></h3>-->
+              <h3 class="tipTitle"><span></span><b>{{activity_bounty.voucher_batch.name}}</b></h3>
               <div class="scroll">
                   <h3 id="copy">{{couponInfo.code}}</h3>
                   <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                   <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy">复制</button>
               </div>
-              <img src="http://res.catchme.com.cn/activity/catch3/shuoming.png" alt="" @click.prevent="" class="imgBg"/>
-              <!--<div class="phone">-->
-                <!--<img src="http://res.catchme.com.cn/activity/catch3/image_Instructions.png" alt="" @click.prevent="">-->
-                <!--<div>-->
-                  <!--<p>1、长按识别图中小程序码；</p>-->
-                  <!--<p>2、选择您想要购买的商品；</p>-->
-                  <!--<p>3、在订单页面点击“优惠”，<span>3、</span>粘贴兑换码即可；</p>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div class="code">-->
-                <!--<img src="./../assets/catch3/code.png" alt="">-->
-                <!--<div>-->
-                  <!--<p>还可关注“我抓娃娃机服务”公众号，</p>-->
-                  <!--<p>进入个人中心，查看自己的兑换码。</p>-->
-                <!--</div>-->
-              <!--</div>-->
+              <img src="http://res.catchme.com.cn/activity/catch3/shuoming2.png" alt="" @click.prevent="" class="imgBg"/>
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg2"/>
@@ -275,13 +260,13 @@
           <div>
             <img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="" class="imgBg" @click.prevent=""/>
             <div class="content">
-              <h3><span class="home_icon_bi"></span>{{activity_bounty.bounty}}</h3>
+              <h3><span class="home_icon_bi"></span>{{task_now.recharge_bounty}}</h3>
               <p>我的奖励金</p>
               <div v-if="!isReceive">
                 <dl class="dlCoupon">
                   <dt>
-                    <h4>5元“买娃娃”红包</h4>
-                    <p>(消耗{{activity_bounty.voucher.value}}个奖励金)</p>
+                    <h4>{{activity_bounty.voucher_batch.name}}</h4>
+                    <p>(消耗{{activity_bounty.voucher_batch.value}}个奖励金)</p>
                   </dt>
                   <dd>
                     <button @click="receiveCoupon">领取</button>
@@ -291,7 +276,7 @@
               <div v-else="">
                 <dl class="dlCoupon">
                   <dt>
-                    <h4>5元“买娃娃”红包</h4>
+                    <h4>{{activity_bounty.voucher_batch.name}}</h4>
                     <p>{{couponInfo.code}}</p>
                     <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                   </dt>
@@ -311,11 +296,11 @@
             <div>
               <h3 class="tipTitle"><span></span><b>我的红包</b></h3>
               <ul>
-                <li v-for="item in activity_bounty.list">
+                <li v-for="item in activity_bounty.vouchers">
                   <div>
                     <dl class="dlCoupon">
                       <dt>
-                        <h4>5元“买娃娃”红包</h4>
+                        <h4>{{activity_bounty.voucher_batch.name}}</h4>
                         <p>{{item.code}}</p>
                         <p>有效期至：{{item.end_time | handleEndTime}}</p>
                       </dt>
@@ -340,15 +325,15 @@
           </div>
         </div>
 
-        <div class="bg-center14" v-if="contentShow == 'test'" @click.stop="">
+        <div class="bg-center14" v-if="contentShow == 'task'" @click.stop="">
           <div class="center-bg" :style="centerStyle">
            <div>
              <div class="top-high">
                <!--<img src="./../assets/task/con_light.png" alt=""/>-->
                <div class="con-light">
-                 <img src="./../assets/task/con_light.png" alt="" />
+                 <img src="http://res.catchme.com.cn/activity/task/con_light.png" alt="" @click.prevent=""/>
                </div>
-               <img src="./../assets/task/congradulation.png" alt="" class="top-high-bg" />
+               <img src="http://res.catchme.com.cn/activity/task/congradulation.png" alt="" class="top-high-bg" @click.prevent=""/>
                <p>2币</p>
              </div>
              <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -357,42 +342,48 @@
           </div>
           <div class="center-main">
             <div>
-              <img src="./../assets/task/title.png" alt="" class="title"/>
-              <div class="section1">
-                <img src="./../assets/task/a_wechat.png" alt="" class="section1Bg"/>
-                <img src="./../assets/task/code_default.png" alt="" class="button" />
-                <!--<div class="button">-->
-                <!--<img src="./../assets/task/qrcode2.jpg" alt=""/>-->
-                <!--</div>-->
-              </div>
-              <div class="section2">
-                <img src="./../assets/task/b_recharge.png" alt="" class="section2Bg"/>
-                <div class="progress-out">
-                  <div class="progress"></div>
+              <img src="http://res.catchme.com.cn/activity/task/title.png" alt="" class="title" @click.prevent=""/>
+              <div class="section1" @touchstart="section1Start" @touchend="section1End">
+                <img v-if="isWx" src="http://res.catchme.com.cn/activity/task/a_wechat.png" alt="" class="section1Bg" @click.prevent=""/>
+                <img v-if="!isWx && gzhOperation.coupon.status !==2" src="./../assets/task/a_wechat_zfb.png" alt="" class="section1Bg" @click.prevent=""/>
+                <img v-if="!isWx && gzhOperation.coupon.status ===2" src="./../assets/task/a_wechat_zfb_used.png" alt="" class="section1Bg" @click.prevent=""/>
+                <img v-if="isWx" :src="taskImgUrl" alt="" class="imgButton" @click.prevent=""/>
+                <div v-if="!isWx && gzhOperation.coupon.status ===2" class="button" ><em>已领取</em></div>
+                <div v-if="!isWx && gzhOperation.coupon.status !==2" class="btn2"  @click="receiveFree">
+                  <img src="./../assets/task/press.png" alt="">
                 </div>
-                <!--<div class="button">-->
-                <!--&lt;!&ndash;<span><b>5</b>/7</span>&ndash;&gt;-->
-                <!--<em>已领取</em>-->
-                <!--</div>-->
-                <div class="button2" @click="test">
+              </div>
+
+              <div class="section2">
+                <img v-if="task_game.task_count<task_game.num" src="http://res.catchme.com.cn/activity/task/b_recharge2.png" alt="" class="section2Bg" @click.prevent=""/>
+                <img v-else="" src="http://res.catchme.com.cn/activity/task/b_recharge_used.png" alt="" class="section2Bg" @click.prevent=""/>
+                <div class="progress-out">
+                  <div class="progress" :style="taskProgressStyle"></div>
+                </div>
+                <div class="button">
+                <span v-if="task_game.task_count<task_game.num && task_now.game_bounty < task_game.value"><b>{{task_now.game_bounty/info.coin_num}}</b>/{{task_game.value/info.coin_num}}</span>
+                <em v-else="">已领取</em>
+                </div>
+                <div class="button2" @click="bountyExchange(task_game)" v-if="task_now.game_bounty >= task_game.value && task_game.task_count<task_game.num">
                   <div class="sun">
                     <div>
-                      <img src="./../assets/task/light.png" alt="">
+                      <img src="http://res.catchme.com.cn/activity/task/light.png" alt="" @click.prevent=""/>
                     </div>
                   </div>
-                  <img src="./../assets/task/b_press_receive.png" alt=""/>
+                  <img src="./../assets/task/b_press_receive.png" alt="" @click.prevent=""/>
                 </div>
               </div>
               <div class="section3">
-                <img src="./../assets/task/c_win.png" alt="" class="section3Bg" />
-                <div class="button" :class="{'is-receive':false}"><span v-if="true">点击<br/>挑战</span><em v-else="">已领取</em></div>
-                <div class="button2" @click="test">
+                <img  v-if="task_wawa.task_count<task_wawa.num" src="http://res.catchme.com.cn/activity/task/c_win.png" alt="" class="section3Bg" @click.prevent=""/>
+                <img v-else="" src="http://res.catchme.com.cn/activity/task/c_win_ed.png" alt="" class="section3Bg" @click.prevent=""/>
+                <div class="button" :class="{'is-receive':task_wawa.task_count>=task_wawa.num}"><span v-if="task_wawa.task_count<task_wawa.num && task_now.prize_bounty < task_wawa.value" @click="closeBg">点击<br/>挑战</span><em v-else="">已领取</em></div>
+                <div class="button2" @click="bountyExchange(task_wawa)" v-if="task_now.prize_bounty >= task_wawa.value && task_wawa.task_count<task_wawa.num">
                   <div class="sun">
                     <div>
-                      <img src="./../assets/task/light.png" alt="">
+                      <img src="http://res.catchme.com.cn/activity/task/light.png" alt="" @click.prevent=""/>
                     </div>
                   </div>
-                  <img src="./../assets/task/c_press_receive.png" alt=""/>
+                  <img src="./../assets/task/c_press_receive.png" alt="" @click.prevent=""/>
                 </div>
               </div>
             </div>
@@ -423,6 +414,7 @@
   export default {
     data() {
       return {
+        isWx:CONFIG.isWx,
         start_desc: '投币启动',
         gameNum: 1,
         is_start: false,
@@ -434,8 +426,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: true,
-        contentShow: 'test',
+        bgShow: false,
+        contentShow: '',
         currentCoupon: {},
         pay: {},
         currentCouponPay: {},
@@ -449,7 +441,10 @@
           end_time:''
         },
         freeTipImg:'',
-        centerStyle:''
+        centerStyle:'',
+        taskImgUrl:require('./../assets/task/code_default.png'),
+        taskProgressStyle:'',//进度条的样式，主要是宽度
+        gzhOperation:{}
       }
     },
     created() {
@@ -465,7 +460,10 @@
       tip_operation: state => state.user.tip_operation,
       activity_promocode: state => state.user.activity_promocode,
       activity_bounty: state => state.user.activity_bounty,
-    }),
+      task_game:state => state.user.task_game,
+      task_wawa:state => state.user.task_wawa,
+      task_now:state => state.user.task_now,
+  }),
     components: {
       joPay,
       operations,
@@ -499,21 +497,95 @@
       this.$store.dispatch('getUser')
     },
     methods: {
-      test(){
-        console.log('1111111');
-//        this.centerStyle = 'display:block;';
-//        setTimeout(()=>{
-//          this.centerStyle = 'display:block;opacity:1;clip-path: circle(100vh at 50vw 50vh);';
-//        },0)
-        this.centerStyle = 'opacity:1;clip-path: circle(100vh at 50vw 50vh);';
+      bountyExchange(task){
+        var rem = document.body.clientWidth/100;
+        var r = 65/7.5+'vw';
+//        var x =(32.5+(event.clientX-event.offsetX)+23)+'px';
+//        var y =(32.5+(event.clientY-event.offsetY)+15)+'px';
+        var x =(111/7.5+(event.clientX-event.offsetX)/rem)+'vw';
+        var y =(92/7.5+(event.clientY-event.offsetY)/rem)+'vw';
+        //点击领取
+        var sun = event.target.previousElementSibling;
+        var button2 = event.target.parentNode;
+        var button = button2.previousElementSibling;
+        var img =  sun.children[0].children[0];
+        img.className = 'animation';
+        sun.style = 'overflow: visible;';
+        this.$store.dispatch('getActivityBountyExchange',task.id).then((res)=>{
+          if(res.status_code===200){
+            this.$store.dispatch('getFreeCoin', {coin_price_id: task.coin_price.coin_price_id, coupon_id: task.coupon.id}).then((res)=>{
+              //领取完之后还领取的次数要更新
+              this.centerStyle = 'transition:all 0s;clip-path: circle('+r+' at '+x+' '+y+');';
+              setTimeout(()=>{
+                button.style = 'opacity:0';
+                button2.style = 'opacity:0';
+                this.centerStyle = 'transition:all 1s;opacity:1;clip-path: circle(100vh at 50vw 50vh);';
+              });
+//              领取成功,重新请求用户信息
+              img.className = '';
+              sun.style = 'overflow: hidden;';
+              this.$store.dispatch('getUser');
+              this.$store.dispatch('getOperations');
+              this.taskProgress();
+              setTimeout(()=>{
+                this.bgShow = false;
+                this.centerStyle = 'opacity:0;clip-path: circle('+r+' at '+x+' '+y+');';
+                console.log(this.centerStyle);
+                button.style = 'opacity:1';
+                button2.style = 'opacity:1';
+              },2000)
+            })
+          }
+        })
+      },
+      section1End(){
+        this.taskImgUrl = require('./../assets/task/code_default.png');
+      },
+      section1Start(){
+        this.taskImgUrl = require('./../assets/task/code_select.png');
+      },
+      taskProgress(){
+        //领取任务币，点击领取发送请求，满次数运营位是按照投币来算的，或取到数据
+        this.$store.dispatch('getActivityBountyInfo').then((res)=>{
+          if(this.task_game.task_count>=this.task_game.num){
+            this.taskProgressStyle = 'width:0';
+            return;
+          }
+          var width = res.game_bounty/this.task_game.value*100+'%';
+          if(width === '0%'){
+            this.taskProgressStyle = 'width:'+width;
+          }else {
+            this.taskProgressStyle = 'border: solid 0.4vw #63bdfc;width:'+width;
+           }
+        });
+//        得到进度条
       },
       receiveCoupon(){
-        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
+//        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
+//          this.isReceive = true;
+////          this.$store.commit('setActivityBountyValue',res.bounty);
+//          this.$store.dispatch('getActivityBounty');
+//          this.couponInfo = res;
+//        })
+
+        this.$store.dispatch('getActivityBountyExchange',this.activity_bounty.id).then((res)=>{
+          this.couponInfo = res.data;
           this.isReceive = true;
-//          this.$store.commit('setActivityBountyValue',res.bounty);
-          this.$store.dispatch('getActivityBounty');
-          this.couponInfo = res;
+          //重新获取奖励金信息
+          this.$store.dispatch('getActivityBountyInfo');
+          this.$store.dispatch('getOperations');
         })
+      },
+      //支付宝点击免费抓娃娃调用
+      receiveFree(){
+        this.centerStyle = 'transition:all 1s;opacity:1;clip-path: circle(100vh at 50vw 50vh);';
+
+        this.$refs.operations.useCoupons(this.gzhOperation.coupon.id, this.gzhOperation.coin_price.coin_price_id, this.gzhOperation.coupon.type, this.gzhOperation.coin_price.coin_num, this.gzhOperation.coin_price.type);
+        setTimeout(()=>{
+          this.bgShow = false;
+          this.centerStyle = 'opacity:0;clip-path: circle(8.67vw at 81.33vw 91.67vw);';
+        },2000)
+
       },
       useCoupon(code,end_time) {
         this.contentShow = 'exchange2';
@@ -549,9 +621,16 @@
         this.bgShow = false
       },
       openTip(value,value2='') {
-        this.freeTipImg = value2;
+        if(typeof value2 === 'string'){
+          this.freeTipImg = value2;
+        }
         this.bgShow = true;
         this.contentShow = value;
+        if(value === 'task'){
+          this.gzhOperation = value2;
+          localStorage.setItem('task','true');
+          this.taskProgress();
+        }
       },
       getVoucherLength(value) {
         if (value > 1) {
@@ -737,7 +816,11 @@
     },
     filters:{
       handleEndTime(value){
-        return value.split(' ')[0].replace(/-/g,'.');
+        if(value){
+          return value.split(' ')[0].replace(/-/g,'.');
+        }else {
+          return value;
+        }
       }
     }
   }
@@ -778,6 +861,7 @@
     to {transform:rotateZ(360deg)}
   }
   .tipTitle {
+      width:100%;
       font-size: 36px;
       color: #25edff;
       line-height: 36px;
@@ -1025,6 +1109,12 @@
         position: relative;
         border-radius: 20px;
         /*padding: 34px 0 0 0;*/
+        .tipTitle{
+          margin: 36px 0 0 0;
+          position: absolute;
+          left: 0;
+          top:0;
+        }
        /* >h3{
           font-size: 36px;
           color: #25edff;
@@ -1353,17 +1443,19 @@
   }
 
   .bg-center14 {
-    width: 100%;
-    height: 100%;
+    /*width: 100%;*/
+    /*height: 100%;*/
     .center-bg {
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.3);
+      /*background: red;*/
       position: absolute;
       z-index: 999;
       clip-path:circle(65px at 610px 710px);
       filter: none;
-      transition: all 1s;
+      /*transition: opacity,clip-path 0.5s;*/
+      transition:all 1s;
       opacity: 0;
       /*display: none;*/
       pointer-events:none;
@@ -1389,7 +1481,7 @@
             overflow: hidden;
             >img{
               width: 100%;
-              /*animation: turn 10s linear infinite;*/
+              animation: turn 5s linear infinite;
             }
           }
           p{
@@ -1427,25 +1519,37 @@
             width: 656px;
             margin: 0 0 0 -16px;
           }
-          .button {
+          .imgButton {
             width: 121px;
             height: 160px;
             position: absolute;
             right: 31px;
             top: 44px;
-            /*background-color: #fa8e3f;*/
-            /*border-radius: 8px;*/
-            /*box-shadow: 0 8px 0 #d6712d;*/
-            /*img{*/
-            /*width: 114px;*/
-            /*height: 114px;*/
-            /*margin: 4px auto 3px auto;*/
-            /*}*/
-            /*p{*/
-            /*font-size: 28px;*/
-            /*line-height: 34px;*/
-            /*color: #ffffff;*/
-            /*}*/
+          }
+          .button{
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            background-color: #dddddd;
+            box-shadow: 0 7px 0 #a4a4a4;
+            border-radius: 50%;
+            right: 28px;
+            top:50%;
+            transform: translateY(-50%);
+            em {
+              font-size: 36px;
+              line-height: 130px;
+              color: #bbbbbb;
+            }
+          }
+          .btn2{
+            width:140px;
+            height: 136px;
+            @include centerY;
+            right: 16px;
+            >img{
+              width: 100%;
+            }
           }
         }
         .button2 {
@@ -1489,9 +1593,8 @@
             bottom: 20px;
             right: 74px;
             .progress {
-              width: 50%;
+              width: 0;
               height: 30px;
-              border: solid 3px #63bdfc;
               position: absolute;
               left: -3px;
               top: -3px;
@@ -1527,7 +1630,15 @@
               color: #bbbbbb;
             }
           }
-
+          .button2 {
+            bottom: 20px;
+            .sun {
+              /*overflow: visible;*/
+              .animation {
+                animation: turn 5s linear infinite;
+              }
+            }
+          }
         }
         .section3 {
           position: relative;
@@ -1560,8 +1671,8 @@
             bottom: 16px;
             .sun {
               /*overflow: visible;*/
-              img {
-                /*animation: turn 10s linear infinite;*/
+              .animation {
+                animation: turn 10s linear infinite;
               }
             }
           }
