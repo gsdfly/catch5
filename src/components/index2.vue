@@ -440,11 +440,19 @@
     },
     methods: {
       receiveCoupon(){
-        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
+//        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
+//          this.isReceive = true;
+////          this.$store.commit('setActivityBountyValue',res.bounty);
+//          this.$store.dispatch('getActivityBounty');
+//          this.couponInfo = res;
+//        })
+
+        this.$store.dispatch('getActivityBountyExchange',this.activity_bounty.id).then((res)=>{
+          this.couponInfo = res.data;
           this.isReceive = true;
-//          this.$store.commit('setActivityBountyValue',res.bounty);
-          this.$store.dispatch('getActivityBounty');
-          this.couponInfo = res;
+          //重新获取奖励金信息
+          this.$store.dispatch('getActivityBountyInfo');
+          this.$store.dispatch('getOperations');
         })
       },
       useCoupon(code,end_time) {
