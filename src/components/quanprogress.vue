@@ -147,6 +147,7 @@
         }
         this.isFirst = false;
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
+          //计算充值任务的进度
           if (res.recharge_bounty < this.activity_bounty.voucher_batch.value) {
             var bili = res.recharge_bounty / this.activity_bounty.voucher_batch.value;
             this.styleLong = 'width:' + bili * 100 + '%';

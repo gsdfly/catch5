@@ -14,7 +14,7 @@
             <!--<img v-else="" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_portrait.png" alt="">-->
             <img v-else="" src="./../assets/small/icon_portrait.png" alt="">
             <!--<img src="http://res.catchme.com.cn/imgs-2018-02-05/portrait.png" alt="">-->
-            <p>{{user.player_id}}</p>
+            <p >{{user.player_id}}</p>
           </div>
           <div class="header-main">
             <h4>{{user.nick_name}}<span>{{'机器号：' + machine_no}}</span></h4>
@@ -62,6 +62,13 @@
           <div class="centerout">
             <div class="center">
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
+              <div class="ring" v-if="task_game.task_count<task_game.num">
+                <div class="progress" :style="ringStyle">
+                  <img src="./../assets/ring/progress.png" alt="">
+                </div>
+                <img @click="receiveTaskGame" class="ringicon" v-if="task_now.game_bounty >= task_game.value" src="./../assets/small/icon_kefu.png" alt=""/>
+                <img class="ringicon" v-else="" src="./../assets/small/icon_portrait_bi.png" alt=""/>
+              </div>
               <button class="startgame" :class="{'hasclick':start_desc == '投币中'}" id="coin-operated"
                       @click="handleStartingDevice">{{start_desc ? start_desc : '投币启动'}}
               </button>
@@ -388,7 +395,8 @@
           code:'',
           end_time:''
         },
-        freeTipImg:''
+        freeTipImg:'',
+        ringStyle:''
       }
     },
     created() {
@@ -404,6 +412,7 @@
       tip_operation: state => state.user.tip_operation,
       activity_promocode: state => state.user.activity_promocode,
       activity_bounty: state => state.user.activity_bounty,
+      task_game:state => state.user.task_game,
       task_now:state => state.user.task_now,
     }),
     components: {
@@ -439,6 +448,36 @@
       this.$store.dispatch('getUser')
     },
     methods: {
+      receiveTaskGame(){
+        //运营位id
+        this.$store.dispatch('getActivityBountyExchange',this.task_game.id).then((res)=>{
+          this.$store.dispatch('getUser')
+        })
+      },
+      changeTaskGameProgress(){
+        /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
+//        每次投币之后自己请求,调用此方法改变进度
+
+        //计算180为100%
+        var n = this.task_now.game_bounty/this.task_game.value;
+        console.log(n);
+        var x1 = 196 -  200 * Math.cos(n* 3.14) + 5;
+        var y1 = 200-  200 * Math.sin(n* 3.14);
+        console.log(x1);
+        console.log(y1);
+        var nowX1 = x1/7.5.toFixed(3)+'vw';
+        var nowY1 = y1/7.5.toFixed(3)+'vw';
+        console.log(nowX1);
+        console.log(nowY1);
+        if(n<=0.5){
+          this.ringStyle = `clip-path:polygon(0 0,${nowX1} ${nowY1},26.133vw 26.667vw,0 26.667vw)`;
+        }else {
+          this.ringStyle = `clip-path:polygon(0 0,53.334vw 0,${nowX1} ${nowY1},26.133vw 26.667vw,0 26.667vw)`;
+          if(n=1){
+            //将旁边的图变为领取按钮
+          }
+        }
+      },
       receiveCoupon(){
 //        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
 //          this.isReceive = true;
@@ -607,6 +646,8 @@
         _hmt.push(['_trackEvent', '主按钮投币', '点击', '投币-游戏次数-' + this.gameNum, '']);
         this.$store.dispatch('startingDevice', this.gameNum * this.info.coin_num)
           .then(() => {
+          //投币成功，重新调用获取task_now的接口
+            this.$store.dispatch('getActivityBountyInfo');
             this.is_lamp_after = true
             this.is_start = false
             this.start_desc = '投币启动'
@@ -672,6 +713,11 @@
           setTimeout(() => {
             this.$store.dispatch('getUser')
           }, 2000)
+        }
+      },
+      task_now(newValue,oldValue){
+        if(newValue.game_bounty !== oldValue.game_bounty){
+          this.changeTaskGameProgress();
         }
       }
     },
@@ -1747,7 +1793,39 @@
 
   }
 
-  .main .center .tbz {
+  .main .centerout .center .ring{
+    position: absolute;
+    width: 392px;
+    height: 213px;
+    /*background: red;*/
+    left: 50%;
+    top:50px;
+    transform: translateX(calc(-50% - 7px));
+    background: url("./../assets/ring/progress-out.png");
+    background-size: 100% 100%;
+  }
+  .main .centerout .center .ring .ringicon{
+    position: absolute;
+    bottom: -33px;
+    right:-30px;
+  }
+  //test
+  .main .centerout .center .ring .progress{
+    width: 100%;
+    height: 100%;
+    background: pink;
+  /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
+    /*clip-path: polygon( 0px 0px,20.779px 138.227px,196px 200px, 0px 200px);*/
+    clip-path: polygon( 0px 0px,0px 200px,196px 200px,  0px 200px);
+    transition: all 1s;
+  }
+  .main .centerout .center .ring .progress >img{
+    width: 100%;
+    height: 100%;
+  }
+
+
+    .main .center .tbz {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -1962,8 +2040,8 @@
   }
 
   .jo-version2 .main .center .startgame {
-    width: 336px;
-    height: 336px;
+    /*width: 336px;*/
+    /*height: 336px;*/
   }
 
   .jo-version2 .main .centerout {
