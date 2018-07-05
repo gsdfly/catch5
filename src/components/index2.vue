@@ -396,7 +396,8 @@
           end_time:''
         },
         freeTipImg:'',
-        ringStyle:''
+        ringStyle:'',
+        isRequest:false
       }
     },
     created() {
@@ -449,10 +450,15 @@
     },
     methods: {
       receiveTaskGame(){
+        //这里需要防止重复点击
+        if(!this.isRequest){
+          this.$store.dispatch('getActivityBountyExchange',this.task_game.id).then((res)=>{
+            this.isRequest = true;
+            this.$store.dispatch('getUser')
+          })
+        }
         //运营位id
-        this.$store.dispatch('getActivityBountyExchange',this.task_game.id).then((res)=>{
-          this.$store.dispatch('getUser')
-        })
+
       },
       changeTaskGameProgress(){
         /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
@@ -1799,12 +1805,13 @@
     height: 213px;
     /*background: red;*/
     left: 50%;
-    top:50px;
+    top:34px;
     transform: translateX(calc(-50% - 7px));
     background: url("./../assets/ring/progress-out.png");
     background-size: 100% 100%;
   }
-  .main .centerout .center .ring .ringicon{
+
+    .main .centerout .center .ring .ringicon{
     position: absolute;
     bottom: -33px;
     right:-30px;
@@ -1813,7 +1820,7 @@
   .main .centerout .center .ring .progress{
     width: 100%;
     height: 100%;
-    background: pink;
+    /*background: pink;*/
   /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
     /*clip-path: polygon( 0px 0px,20.779px 138.227px,196px 200px, 0px 200px);*/
     clip-path: polygon( 0px 0px,0px 200px,196px 200px,  0px 200px);
@@ -2037,6 +2044,10 @@
 
   .jo-version2 .main .center .tip > p {
     line-height: 72px;
+  }
+
+  .jo-version2 .main .centerout .center .ring {
+    top:50px;
   }
 
   .jo-version2 .main .center .startgame {
