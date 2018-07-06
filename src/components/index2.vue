@@ -64,10 +64,11 @@
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
               <div class="ring" v-if="task_game.task_count<task_game.num">
                 <div class="progress" :style="ringStyle">
-                  <img src="./../assets/ring/progress.png" alt="">
+                  <img src="http://res.catchme.com.cn/activity/ring/progress.png" alt="">
                 </div>
+                <p class="ringp"><span>{{task_now.game_bounty}}</span>/{{task_game.value}}</p>
                 <img @click="receiveTaskGame" class="ringicon ringicon1" v-if="task_now.game_bounty >= task_game.value" src="./../assets/ring/lingbi.png" alt=""/>
-                <img class="ringicon ringicon2" v-else="" src="./../assets/ring/press_give.png" alt=""/>
+                <img  class="ringicon ringicon2" v-else="" src="./../assets/ring/press_give.png" alt=""/>
               </div>
               <button class="startgame" :class="{'hasclick':start_desc == '投币中'}" id="coin-operated"
                       @click="handleStartingDevice">{{start_desc ? start_desc : '投币启动'}}
@@ -347,7 +348,7 @@
           </div>
         </div>
 
-        <div class="bg-center14" v-if="contentShow == 'ddd'" @click.stop="">
+        <div class="bg-center14" v-if="contentShow == 'receiveBi'" @click.stop="">
           <div class="center-bg" :style="centerStyle">
             <div>
               <div class="top-high">
@@ -396,8 +397,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: true,
-        contentShow: 'ddd',
+        bgShow: false,
+        contentShow: '',
         currentCoupon: {},
         pay: {},
         currentCouponPay: {},
@@ -412,7 +413,8 @@
         },
         freeTipImg:'',
         ringStyle:'',
-        isRequest:false
+        isRequest:false,
+        centerStyle:''
       }
     },
     created() {
@@ -469,11 +471,22 @@
         if(!this.isRequest){
           this.$store.dispatch('getActivityBountyExchange',this.task_game.id).then((res)=>{
             this.isRequest = true;
+            this.bgShow = true;
+            this.contentShow = 'receiveBi';
+            setTimeout(()=>{
+              this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
+            },0)
+            setTimeout(()=>{
+              this.bgShow = false;
+              this.contentShow = '';
+              this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
+            },2000)
             this.$store.dispatch('getUser')
+            this.$store.dispatch('getActivityBountyInfo')
+            this.$store.dispatch('getOperations')
           })
         }
         //运营位id
-
       },
       changeTaskGameProgress(){
         /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
@@ -783,6 +796,10 @@
     transform: translateY(-50%);
   }
 
+  @keyframes turn {
+    from {transform:rotateZ(0deg)}
+    to {transform:rotateZ(360deg)}
+  }
   .tipTitle {
     width: 100%;
       font-size: 36px;
@@ -1112,85 +1129,6 @@
       .close {
         margin: 40px 0 0 0;
       }
-      /*.imgBg {*/
-        /*width: 652px;*/
-      /*}*/
-      /*.scroll-out {*/
-        /*width: calc(100% - 30px);*/
-        /*!*width: calc(100% - 64px);*!*/
-        /*height: 243px;*/
-        /*position: absolute;*/
-        /*top: 232px;*/
-        /*!*left: 50px;*!*/
-        /*padding: 0 0 0 50px;*/
-        /*left: 0;*/
-        /*overflow: auto;*/
-        /*.scroll-in {*/
-          /*!*width: calc(498px * 2 + 50px);*!*/
-          /*height: 243px;*/
-          /*> div {*/
-            /*width: 513px;*/
-            /*height: 240px;*/
-            /*!*background: url("http://res.catchme.com.cn/activity/jiewu/big/quan.png") no-repeat;*!*/
-            /*!*background: url("./../assets/catch2/quan.png") no-repeat;*!*/
-            /*background: url("./../assets/catch2/ticket_bg.png") no-repeat;*/
-            /*background-size: 100% 100%;*/
-            /*float: left;*/
-            /*margin: 0 1px 0 0;*/
-            /*position: relative;*/
-            /*p{*/
-            /*width: 100%;*/
-            /*height: 86px;*/
-            /*position: absolute;*/
-            /*padding: 0 17px 0 32px;*/
-            /*!*top:50%;*!*/
-            /*top:42px;*/
-            /*!*transform: translateY(-50%);*!*/
-            /*.input{*/
-            /*border: none;*/
-            /*background: none;*/
-            /*outline: none;*/
-            /*color: #5d4037;*/
-            /*font-size: 42px;*/
-            /*height: 100%;*/
-            /*width: calc(100% - 142px);*/
-            /*-webkit-appearance:none;*/
-            /*float: left;*/
-            /*line-height: 86px;*/
-            /*text-align: left;*/
-            /*}*/
-            /*button{*/
-            /*width: 142px;*/
-            /*height: 86px;*/
-            /*border: none;*/
-            /*outline: none;*/
-            /*font-size: 28px;*/
-            /*color: #fff;*/
-            /*background: url("./../assets/catch2/press_copy.png") no-repeat;*/
-            /*background-size: 100% 100%;*/
-            /*float: right;*/
-            /*}*/
-            /*}*/
-            /*b{*/
-            /*position: absolute;*/
-            /*left: 30px;*/
-            /*bottom: 26px;*/
-            /*font-size: 22px;*/
-            /*color: #6d523a;*/
-            /*line-height: 22px;*/
-            /*}*/
-          /*}*/
-        /*}*/
-      /*}*/
-      /*.exchange2 {*/
-        /*top: 232px;*/
-        /*.scroll-in {*/
-          /*> div {*/
-            /*width: 520px;*/
-            /*background: none;*/
-          /*}*/
-        /*}*/
-      /*}*/
     }
 
   }
@@ -1347,11 +1285,11 @@
       /*background: red;*/
       position: absolute;
       z-index: 999;
-      /*clip-path:circle(65px at 610px 710px);*/
+      clip-path:circle(65px at 580px 660px);
       filter: none;
       /*transition: opacity,clip-path 0.5s;*/
       transition:all 1s;
-      /*opacity: 0;*/
+      opacity: 0;
       /*display: none;*/
       pointer-events:none;
       >div{
@@ -1876,9 +1814,23 @@
     left: 50%;
     top:34px;
     transform: translateX(calc(-50% - 7px));
-    background: url("./../assets/ring/progress-out.png");
+    background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");
     background-size: 100% 100%;
   }
+  .main .centerout .center .ring .ringp{
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left:0;
+    font-size: 20px;
+    line-height: 46px;
+    width: 46px;
+    text-align: center;
+  }
+  .main .centerout .center .ring .ringp span{
+    font-size: 26px;
+  }
+
 
     .main .centerout .center .ring .ringicon1{
       width: 178px;
