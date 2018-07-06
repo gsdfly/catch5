@@ -367,6 +367,7 @@
 
       <tipOperation></tipOperation>
     </div>
+    {{task_game}}
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
   </div>
 </template>
@@ -446,6 +447,7 @@
           if (!document.hidden) {
             this.$store.dispatch('getUser');
             this.$store.dispatch('getOperations');
+            this.$store.dispatch('getActivityBountyInfo')
             this.bgShow = false;
           }
         }.bind(this));
@@ -470,21 +472,23 @@
         //这里需要防止重复点击
         if(!this.isRequest){
           this.$store.dispatch('getActivityBountyExchange',this.task_game.id).then((res)=>{
-            this.isRequest = true;
-            this.bgShow = true;
-            this.contentShow = 'receiveBi';
-            setTimeout(()=>{
-              this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
-            },0)
-            setTimeout(()=>{
-              this.bgShow = false;
-              this.contentShow = '';
-              this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
-            },2000)
-            this.$store.dispatch('getUser')
-            this.$store.dispatch('getActivityBountyInfo')
-            this.$store.dispatch('getOperations')
-          })
+            this.$store.dispatch('getFreeCoin',{coin_price_id: this.task_game.coin_price.coin_price_id, coupon_id: this.task_game.coupon.id}).then(()=>{
+              this.isRequest = true;
+              this.bgShow = true;
+              this.contentShow = 'receiveBi';
+              setTimeout(()=>{
+                this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
+              },0)
+              setTimeout(()=>{
+                this.bgShow = false;
+                this.contentShow = '';
+                this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
+              },2000)
+              this.$store.dispatch('getUser')
+              this.$store.dispatch('getActivityBountyInfo')
+              this.$store.dispatch('getOperations')
+            })
+            })
         }
         //运营位id
       },
@@ -504,12 +508,9 @@
         console.log(nowX1);
         console.log(nowY1);
         if(n<=0.5){
-          this.ringStyle = `clip-path:polygon(0 0,${nowX1} ${nowY1},26.133vw 26.667vw,0 26.667vw)`;
+          this.ringStyle = `clip-path:polygon(0 0,0 0,${nowX1} ${nowY1},26.133vw 26.667vw,0 26.667vw)`;
         }else {
           this.ringStyle = `clip-path:polygon(0 0,53.334vw 0,${nowX1} ${nowY1},26.133vw 26.667vw,0 26.667vw)`;
-          if(n=1){
-            //将旁边的图变为领取按钮
-          }
         }
       },
       receiveCoupon(){
@@ -1807,6 +1808,7 @@
   }
 
   .main .centerout .center .ring{
+    z-index: 5;
     position: absolute;
     width: 392px;
     height: 213px;
@@ -1853,8 +1855,8 @@
     /*background: pink;*/
   /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
     /*clip-path: polygon( 0px 0px,20.779px 138.227px,196px 200px, 0px 200px);*/
-    clip-path: polygon( 0px 0px,0px 200px,196px 200px,  0px 200px);
-    transition: all 1s;
+    clip-path: polygon( 0px 0px,0px 0px,0px 200px,196px 200px,  0px 200px);
+    transition: all 0.5s;
   }
   .main .centerout .center .ring .progress >img{
     width: 100%;
