@@ -160,9 +160,9 @@
         console.log(newActivity.recharge_bounty === oldActivity.recharge_bounty);
           if(newActivity.recharge_bounty === oldActivity.recharge_bounty){
           console.log('数据未改变发送请求')
-//          setTimeout(()=>{
-//            this.$store.dispatch('getActivityBountyInfo');
-//          },3000);
+          setTimeout(()=>{
+            this.$store.dispatch('getActivityBountyInfo');
+          },3000);
           return;
         }
           if(this.activity_bounty.voucher_batch.value <= newActivity.recharge_bounty ){
