@@ -347,6 +347,9 @@
           </div>
         </div>
 
+        <div class="bg-center14" v-if="contentShow == '领币'" @click.stop="">
+          
+        </div>
       </div>
 
       <tipOperation></tipOperation>
