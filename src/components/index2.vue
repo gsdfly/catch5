@@ -347,8 +347,20 @@
           </div>
         </div>
 
-        <div class="bg-center14" v-if="contentShow == '领币'" @click.stop="">
-          
+        <div class="bg-center14" v-if="contentShow == 'ddd'" @click.stop="">
+          <div class="center-bg" :style="centerStyle">
+            <div>
+              <div class="top-high">
+                <div class="con-light">
+                  <img src="http://res.catchme.com.cn/activity/task/con_light.png" alt="" @click.prevent=""/>
+                </div>
+                <img src="http://res.catchme.com.cn/activity/task/congradulation.png" alt="" class="top-high-bg" @click.prevent=""/>
+                <p>2币</p>
+              </div>
+              <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                   @click="closeBg"/>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -384,8 +396,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: false,
-        contentShow: '',
+        bgShow: true,
+        contentShow: 'ddd',
         currentCoupon: {},
         pay: {},
         currentCouponPay: {},
@@ -1323,6 +1335,60 @@
       @include center;
       .imgBg{
         width: 640px;
+      }
+    }
+  }
+
+  .bg-center14{
+    .center-bg {
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      /*background: red;*/
+      position: absolute;
+      z-index: 999;
+      /*clip-path:circle(65px at 610px 710px);*/
+      filter: none;
+      /*transition: opacity,clip-path 0.5s;*/
+      transition:all 1s;
+      /*opacity: 0;*/
+      /*display: none;*/
+      pointer-events:none;
+      >div{
+        /*background: red;*/
+        @include center;
+        .top-high{
+          width: 660px;
+          height: 856px;
+          /*background: red;*/
+          padding: 0.1px;
+          .top-high-bg{
+            width: 674px;
+            position: absolute;
+            left: 0;
+            top:0;
+          }
+          .con-light{
+            width: 734px;
+            height: 500px;
+            /*background: blue;*/
+            margin: -25px 0 0 -37px;
+            overflow: hidden;
+            >img{
+              width: 100%;
+              animation: turn 5s linear infinite;
+            }
+          }
+          p{
+            font-size: 100px;
+            color: #fff;
+            position: absolute;
+            width: 100%;
+            left:0;
+            top:240px;
+            text-align: center;
+          }
+        }
       }
     }
   }
