@@ -53,7 +53,7 @@ const state = {
   },
 
   task_game:{
-    num:1, //任务可以完成多少次
+    num:0, //任务可以完成多少次
     value:1,//任务值
     task_count:0,//任务已经完成的次数
     coupon:{},//任务绑定的优惠券
