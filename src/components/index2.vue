@@ -66,8 +66,8 @@
                 <div class="progress" :style="ringStyle">
                   <img src="./../assets/ring/progress.png" alt="">
                 </div>
-                <img @click="receiveTaskGame" class="ringicon" v-if="task_now.game_bounty >= task_game.value" src="./../assets/small/icon_kefu.png" alt=""/>
-                <img class="ringicon" v-else="" src="./../assets/small/icon_portrait_bi.png" alt=""/>
+                <img @click="receiveTaskGame" class="ringicon ringicon1" v-if="task_now.game_bounty >= task_game.value" src="./../assets/ring/lingbi.png" alt=""/>
+                <img class="ringicon ringicon2" v-else="" src="./../assets/ring/press_give.png" alt=""/>
               </div>
               <button class="startgame" :class="{'hasclick':start_desc == '投币中'}" id="coin-operated"
                       @click="handleStartingDevice">{{start_desc ? start_desc : '投币启动'}}
@@ -1811,12 +1811,21 @@
     background-size: 100% 100%;
   }
 
-    .main .centerout .center .ring .ringicon{
+    .main .centerout .center .ring .ringicon1{
+      width: 178px;
+      height: 146px;
     position: absolute;
-    bottom: -33px;
-    right:-30px;
+    bottom: -30px;
+    right:-130px;
   }
-  //test
+  .main .centerout .center .ring .ringicon2{
+    width: 98px;
+    height: 107px;
+    position: absolute;
+    right: -60px;
+    bottom: -40px;
+  }
+    //test
   .main .centerout .center .ring .progress{
     width: 100%;
     height: 100%;
