@@ -271,7 +271,7 @@
     height: 46px;
     /*line-height: 24px;*/
     position: absolute;
-    left: -12px;
+    left: -16px;
     top: -10px;
     color: #fff;
     /*background: url("./../assets/jiewu/bg_limit.png") no-repeat;*/

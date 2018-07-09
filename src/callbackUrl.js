@@ -35,9 +35,8 @@ const callbackUrl = () => {
         resolve()
       } else {
         var a = document.createElement('a');
-        if (CONFIG.isWx) {
-          a.href = `${CONFIG.url}wechat/oauth_scope?callback=${document.URL}`
-          // a.href = `${CONFIG.url}alipay/oauth?callback=${document.URL}`;
+        if (CONFIG.isAlipay) {
+          a.href = `${CONFIG.url}alipay/oauth?callback=${document.URL}`;
           // window.location.href = `${CONFIG.url}alipay/oauth?callback=${document.URL}`
         }
         // else if (CONFIG.isTpp) {
@@ -52,8 +51,7 @@ const callbackUrl = () => {
         //     // window.location.href = `${CONFIG.url}tpp/oauth?identity=${uid}&callback=${document.URL}`
         // }
         else {
-          // a.href = `${CONFIG.url}wechat/oauth_scope?callback=${document.URL}`
-          a.href = `${CONFIG.url}alipay/oauth?callback=${document.URL}`;
+          a.href = `${CONFIG.url}wechat/oauth_scope?callback=${document.URL}`
           // window.location.href = `${CONFIG.url}wechat/oauth_scope?callback=${document.URL}`
         }
         document.getElementsByTagName('body')[0].appendChild(a)

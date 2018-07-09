@@ -64,15 +64,16 @@
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
               <div class="ring" v-if="task_game.task_count<task_game.num">
                 <div class="progress" :style="ringStyle">
-                  <img src="http://res.catchme.com.cn/activity/ring/progress.png" alt="">
+                  <!--<img src="http://res.catchme.com.cn/activity/ring/progress.png" alt="">-->
+                  <img src="./../assets/ring/process2.png" alt="">
                 </div>
                 <p class="ringp"><span>{{task_now.game_bounty}}</span>/{{task_game.value}}</p>
                 <img @click="receiveTaskGame" class="ringicon ringicon1" v-if="task_now.game_bounty >= task_game.value" src="./../assets/ring/lingbi.png" alt=""/>
                 <img  class="ringicon ringicon2" v-else="" src="./../assets/ring/press_give.png" alt=""/>
               </div>
-              <button class="startgame" :class="{'hasclick':start_desc == '投币中'}" id="coin-operated"
+              <div class="startgame" :class="{'hasclick':start_desc == '投币中'}" id="coin-operated"
                       @click="handleStartingDevice">{{start_desc ? start_desc : '投币启动'}}
-              </button>
+              </div>
               <div class="game-num norecharge" v-if="user.coins<=0">您还没有游戏币，请先充值<span></span>
               </div>
               <div class="game-num" v-else>
@@ -367,7 +368,6 @@
 
       <tipOperation></tipOperation>
     </div>
-    {{task_game}}
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
   </div>
 </template>
@@ -447,7 +447,7 @@
           if (!document.hidden) {
             this.$store.dispatch('getUser');
             this.$store.dispatch('getOperations');
-            this.$store.dispatch('getActivityBountyInfo')
+//            this.$store.dispatch('getActivityBountyInfo')
             this.bgShow = false;
           }
         }.bind(this));
@@ -471,19 +471,20 @@
       receiveTaskGame(){
         //这里需要防止重复点击
         if(!this.isRequest){
+          this.isRequest = true;
           this.$store.dispatch('getActivityBountyExchange',this.task_game.id).then((res)=>{
             this.$store.dispatch('getFreeCoin',{coin_price_id: this.task_game.coin_price.coin_price_id, coupon_id: this.task_game.coupon.id}).then(()=>{
-              this.isRequest = true;
-              this.bgShow = true;
-              this.contentShow = 'receiveBi';
-              setTimeout(()=>{
-                this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
-              },0)
-              setTimeout(()=>{
-                this.bgShow = false;
-                this.contentShow = '';
-                this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
-              },2000)
+              this.isRequest = false;
+//              this.bgShow = true;
+//              this.contentShow = 'receiveBi';
+//              setTimeout(()=>{
+//                this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
+//              },0)
+//              setTimeout(()=>{
+//                this.bgShow = false;
+//                this.contentShow = '';
+//                this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
+//              },2000)
               this.$store.dispatch('getUser')
               this.$store.dispatch('getActivityBountyInfo')
               this.$store.dispatch('getOperations')
@@ -499,8 +500,8 @@
         //计算180为100%
         var n = this.task_now.game_bounty/this.task_game.value;
         console.log(n);
-        var x1 = 196 -  200 * Math.cos(n* 3.14) + 5;
-        var y1 = 200-  200 * Math.sin(n* 3.14);
+        var x1 = 215 -  202 * Math.cos(n* 3.14);
+        var y1 = 209 -  202 * Math.sin(n* 3.14);
         console.log(x1);
         console.log(y1);
         var nowX1 = x1/7.5.toFixed(3)+'vw';
@@ -508,9 +509,9 @@
         console.log(nowX1);
         console.log(nowY1);
         if(n<=0.5){
-          this.ringStyle = `clip-path:polygon(0 0,0 0,${nowX1} ${nowY1},26.133vw 26.667vw,0 26.667vw)`;
+          this.ringStyle = `clip-path:polygon(0 0,0 0,${nowX1} ${nowY1},27.867vw 28.667vw,0 28.667vw)`;
         }else {
-          this.ringStyle = `clip-path:polygon(0 0,53.334vw 0,${nowX1} ${nowY1},26.133vw 26.667vw,0 26.667vw)`;
+          this.ringStyle = `clip-path:polygon(0 0,55.6vw 0,${nowX1} ${nowY1},27.867vw 28.667vw,0 28.667vw)`;
         }
       },
       receiveCoupon(){
@@ -1810,20 +1811,24 @@
   .main .centerout .center .ring{
     z-index: 5;
     position: absolute;
-    width: 392px;
-    height: 213px;
+    /*width: 392px;*/
+    /*height: 213px;*/
+    width: 417px;
+    height: 240px;
     /*background: red;*/
     left: 50%;
-    top:34px;
-    transform: translateX(calc(-50% - 7px));
-    background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");
+    top:36px;
+    transform: translateX(calc(-50% - 8px));
+    /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
+    background: url("./../assets/ring/process_bg2.png");
     background-size: 100% 100%;
   }
   .main .centerout .center .ring .ringp{
     color: #fff;
     position: absolute;
-    bottom: 0;
-    left:0;
+    bottom: 18px;
+    left:14px;
+    /*background: blue;*/
     font-size: 20px;
     line-height: 46px;
     width: 46px;
@@ -1839,13 +1844,13 @@
       height: 146px;
     position: absolute;
     bottom: -30px;
-    right:-130px;
+    right:-120px;
   }
   .main .centerout .center .ring .ringicon2{
     width: 98px;
     height: 107px;
     position: absolute;
-    right: -60px;
+    right: -50px;
     bottom: -40px;
   }
     //test
@@ -1855,8 +1860,8 @@
     /*background: pink;*/
   /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
     /*clip-path: polygon( 0px 0px,20.779px 138.227px,196px 200px, 0px 200px);*/
-    clip-path: polygon( 0px 0px,0px 0px,0px 200px,196px 200px,  0px 200px);
-    transition: all 0.5s;
+    clip-path: polygon( 0px 0px,0px 0px,0px 209px,217px 209px,  0px 209px);
+    transition: all 0.2s;
   }
   .main .centerout .center .ring .progress >img{
     width: 100%;
@@ -1896,10 +1901,14 @@
   }
 
   .main .center .startgame {
-    width: 306px;
-    height: 306px;
+    /*width: 306px;*/
+    /*height: 306px;*/
+    width: 358px;
+    height: 361px;
+    text-align: center;
+    line-height: 306px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
-    background: url("./../assets/small/press_begin.png");
+    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
     background-size: 100% 100%;
     border: none;
     outline: none;
@@ -1914,7 +1923,7 @@
 
   .main .center .hasclick {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_ing.png");*/
-    background: url("./../assets/small/press_ing.png");
+    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
     background-size: 100% 100%;
   }
 
@@ -1925,7 +1934,8 @@
     border-radius: 18px;
     font-size: 24px;
     line-height: 91px;
-    margin: -63px auto 0 auto;
+   // margin: -63px auto 0 auto;
+    margin: -118px auto 0 auto;
     background: #fff;
     color: #7e7e7e;
     text-align: center;
@@ -2066,7 +2076,7 @@
   .jo-version2 .main .center .game-num {
     width: 430px;
     height: 96px;
-    margin: -86px auto 0 auto;
+    margin: -118px auto 0 auto;
   }
 
   /*.jo-version2 .main .center .game-num > div h3 {*/
@@ -2079,7 +2089,7 @@
   }
 
   .jo-version2 .main .centerout .center .ring {
-    top:50px;
+    top:52px;
   }
 
   .jo-version2 .main .center .startgame {

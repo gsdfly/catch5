@@ -101,8 +101,8 @@
         gzhImg2: require('./../assets/catch2/free_one2.png'),
         imgs: {
           free: {
-            img_receive: require('./../assets/catch2/free_one.png'),
-            img_use: require('./../assets/catch2/free_two.png'),
+            img_receive: require('./../assets/ring/free_one.png'),
+            img_use: require('./../assets/ring/free_two.png'),
             img_already_use: require('./../assets/catch2/free_used.png')
           },
           infinity: {
@@ -124,8 +124,8 @@
         },
         imgs2: {
           free: {
-            img_receive: require('./../assets/catch2/free_one2.png'),
-            img_use: require('./../assets/catch2/free_two2.png'),
+            img_receive: require('./../assets/ring/free_long_one.png'),
+            img_use: require('./../assets/ring/free_long_two.png'),
             img_already_use: require('./../assets/catch2/free_used2.png')
           },
           infinity: {
