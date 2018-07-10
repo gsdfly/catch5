@@ -21,6 +21,11 @@
     if(!localStorage.getItem('startTime2')){
       localStorage.setItem('startTime2',performance.timing.navigationStart);
     }
+
+    
+
+
+
     window.onload = function () {
       var domTime = Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart);
       localStorage.setItem('domTime',domTime);
