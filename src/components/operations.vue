@@ -91,7 +91,9 @@
         this.gzhImg1 = this.gzhImg2;
       }
 //      需要根据优惠券的样式类型判断
+      if(this.isLogin){
         this.mountedStart();
+      }
     },
     data() {
       return {
@@ -153,6 +155,7 @@
       info: state => state.user.info,
       operations: state => state.user.operations,
       tip_operation: state => state.user.tip_operation,
+      isLogin:state => state.user.isLogin,
     }),
     methods: {
       mountedStart(){
@@ -371,6 +374,11 @@
         }
       }
     },
+    watch:{
+      isLogin(){
+        this.mountedStart();
+      }
+    }
   }
 </script>
 

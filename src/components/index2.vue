@@ -457,16 +457,16 @@
       quanprogress
     },
     mounted() {
-      if (CONFIG.isWx) {
-        document.addEventListener('visibilitychange', function () {
-          if (!document.hidden) {
-            this.$store.dispatch('getUser');
+//      if (CONFIG.isWx) {
+//        document.addEventListener('visibilitychange', function () {
+//          if (!document.hidden) {
+//            this.$store.dispatch('getUser');
 //            this.$store.dispatch('getOperations');
 //            this.$store.dispatch('getActivityBountyInfo')
-            this.bgShow = false;
-          }
-        }.bind(this));
-      }
+//            this.bgShow = false;
+//          }
+//        }.bind(this));
+//      }
 // else if (CONFIG.isAlipay) {
 //        document.addEventListener('resume', function () {
 //          this.$store.dispatch('getUser');
@@ -480,7 +480,7 @@
         this.showHtml = true;
         this.isGetImg = true;
       })
-      this.$store.dispatch('getUser')
+//      this.$store.dispatch('getUser')
     },
     methods: {
       receiveTaskGame(){
@@ -509,9 +509,6 @@
         //运营位id
       },
       changeTaskGameProgress(){
-        /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
-//        每次投币之后自己请求,调用此方法改变进度
-
         //计算180为100%
         var n = this.task_now.game_bounty/this.task_game.value*180+180;
         if(n>360){
@@ -522,29 +519,8 @@
           this.starClass = '';
         },1000);
         this.ringStyle = `transform:  rotate(${n}deg);`
-
-//        var x1 = 215 -  202 * Math.cos(n* 3.14);
-//        var y1 = 209 -  202 * Math.sin(n* 3.14);
-//        console.log(x1);
-//        console.log(y1);
-//        var nowX1 = x1/7.5.toFixed(3)+'vw';
-//        var nowY1 = y1/7.5.toFixed(3)+'vw';
-//        console.log(nowX1);
-//        console.log(nowY1);
-//        if(n<=0.5){
-//          this.ringStyle = `clip-path:polygon(0 0,0 0,${nowX1} ${nowY1},27.867vw 28.667vw,0 28.667vw)`;
-//        }else {
-//          this.ringStyle = `clip-path:polygon(0 0,55.6vw 0,${nowX1} ${nowY1},27.867vw 28.667vw,0 28.667vw)`;
-//        }
       },
       receiveCoupon(){
-//        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
-//          this.isReceive = true;
-////          this.$store.commit('setActivityBountyValue',res.bounty);
-//          this.$store.dispatch('getActivityBounty');
-//          this.couponInfo = res;
-//        })
-
         this.$store.dispatch('getActivityBountyExchange',this.activity_bounty.id).then((res)=>{
           this.couponInfo = res.data;
           this.isReceive = true;
