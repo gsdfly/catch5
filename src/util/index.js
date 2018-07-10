@@ -17,7 +17,7 @@ export const GetCookie = (name) => {
 export const SetCookie = (name, value) => {
   var Days = 30
   var exp = new Date()
-  exp.setTime(exp.getTime() + 60 * 60 * 1000)//过期时间 60分钟
+  exp.setTime(exp.getTime() + 60 * 60 * 1000*6)//过期时间 60分钟*6
   document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString()
 }
 

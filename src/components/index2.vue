@@ -63,11 +63,25 @@
             <div class="center">
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
               <div class="ring" v-if="task_game.task_count<task_game.num">
-                <div class="progress" :style="ringStyle">
-                  <!--<img src="http://res.catchme.com.cn/activity/ring/progress.png" alt="">-->
-                  <img src="./../assets/ring/process2.png" alt="">
+                <div class="d">
+                  <div class="dd" :style="ringStyle">
+                    <div>
+                      <img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">
+                      <!--<img class="img" src="./../assets/ring/process-m.png" alt="">-->
+                      <div class="star" :class="{'animation':starClass==='animation'}">
+                        <img class="star1"  src="./../assets/ring/star1.png" alt="">
+                        <img class="star2"  src="./../assets/ring/star2.png" alt="">
+                        <img class="star3"  src="./../assets/ring/star3.png" alt="">
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <p class="ringp"><span>{{task_now.game_bounty}}</span>/{{task_game.value}}</p>
+                <span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>
+                <!--<div class="progress" :style="ringStyle">-->
+                  <!--&lt;!&ndash;<img src="http://res.catchme.com.cn/activity/ring/progress.png" alt="">&ndash;&gt;-->
+                  <!--<img src="./../assets/ring/process2.png" alt="">-->
+                <!--</div>-->
+                <!--<p class="ringp"><span>{{task_now.game_bounty}}</span>/{{task_game.value}}</p>-->
                 <img @click="receiveTaskGame" class="ringicon ringicon1" v-if="task_now.game_bounty >= task_game.value" src="./../assets/ring/lingbi.png" alt=""/>
                 <img  class="ringicon ringicon2" v-else="" src="./../assets/ring/press_give.png" alt=""/>
               </div>
@@ -415,7 +429,8 @@
         freeTipImg:'',
         ringStyle:'',
         isRequest:false,
-        centerStyle:''
+        centerStyle:'',
+        starClass:''
       }
     },
     created() {
@@ -446,7 +461,7 @@
         document.addEventListener('visibilitychange', function () {
           if (!document.hidden) {
             this.$store.dispatch('getUser');
-            this.$store.dispatch('getOperations');
+//            this.$store.dispatch('getOperations');
 //            this.$store.dispatch('getActivityBountyInfo')
             this.bgShow = false;
           }
@@ -475,16 +490,16 @@
           this.$store.dispatch('getActivityBountyExchange',this.task_game.id).then((res)=>{
             this.$store.dispatch('getFreeCoin',{coin_price_id: this.task_game.coin_price.coin_price_id, coupon_id: this.task_game.coupon.id}).then(()=>{
               this.isRequest = false;
-//              this.bgShow = true;
-//              this.contentShow = 'receiveBi';
-//              setTimeout(()=>{
-//                this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
-//              },0)
-//              setTimeout(()=>{
-//                this.bgShow = false;
-//                this.contentShow = '';
-//                this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
-//              },2000)
+              this.bgShow = true;
+              this.contentShow = 'receiveBi';
+              setTimeout(()=>{
+                this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
+              },0)
+              setTimeout(()=>{
+                this.bgShow = false;
+                this.contentShow = '';
+                this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
+              },2000)
               this.$store.dispatch('getUser')
               this.$store.dispatch('getActivityBountyInfo')
               this.$store.dispatch('getOperations')
@@ -498,21 +513,29 @@
 //        每次投币之后自己请求,调用此方法改变进度
 
         //计算180为100%
-        var n = this.task_now.game_bounty/this.task_game.value;
-        console.log(n);
-        var x1 = 215 -  202 * Math.cos(n* 3.14);
-        var y1 = 209 -  202 * Math.sin(n* 3.14);
-        console.log(x1);
-        console.log(y1);
-        var nowX1 = x1/7.5.toFixed(3)+'vw';
-        var nowY1 = y1/7.5.toFixed(3)+'vw';
-        console.log(nowX1);
-        console.log(nowY1);
-        if(n<=0.5){
-          this.ringStyle = `clip-path:polygon(0 0,0 0,${nowX1} ${nowY1},27.867vw 28.667vw,0 28.667vw)`;
-        }else {
-          this.ringStyle = `clip-path:polygon(0 0,55.6vw 0,${nowX1} ${nowY1},27.867vw 28.667vw,0 28.667vw)`;
+        var n = this.task_now.game_bounty/this.task_game.value*180+180;
+        if(n>360){
+          n=360;
         }
+        this.starClass = 'animation';
+        setTimeout(()=>{
+          this.starClass = '';
+        },1000);
+        this.ringStyle = `transform:  rotate(${n}deg);`
+
+//        var x1 = 215 -  202 * Math.cos(n* 3.14);
+//        var y1 = 209 -  202 * Math.sin(n* 3.14);
+//        console.log(x1);
+//        console.log(y1);
+//        var nowX1 = x1/7.5.toFixed(3)+'vw';
+//        var nowY1 = y1/7.5.toFixed(3)+'vw';
+//        console.log(nowX1);
+//        console.log(nowY1);
+//        if(n<=0.5){
+//          this.ringStyle = `clip-path:polygon(0 0,0 0,${nowX1} ${nowY1},27.867vw 28.667vw,0 28.667vw)`;
+//        }else {
+//          this.ringStyle = `clip-path:polygon(0 0,55.6vw 0,${nowX1} ${nowY1},27.867vw 28.667vw,0 28.667vw)`;
+//        }
       },
       receiveCoupon(){
 //        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
@@ -1805,7 +1828,7 @@
     /*border-radius: 10px;*/
     position: relative;
     background: #fff;
-
+    overflow: hidden;
   }
 
   .main .centerout .center .ring{
@@ -1820,22 +1843,111 @@
     top:36px;
     transform: translateX(calc(-50% - 8px));
     /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
-    background: url("./../assets/ring/process_bg2.png");
+    background: url("http://res.catchme.com.cn/activity/ring/process_bg2.png");
     background-size: 100% 100%;
+    /*padding: 0.1px;*/
   }
-  .main .centerout .center .ring .ringp{
+  .main .centerout .center .ring .icon{
+    width: 54px;
+    height: 54px;
+    position: absolute;
+    /*left: 7px;*/
+    /*bottom:12px;*/
+    font-size: 20px;
+    background: blue;
+    left: 8px;
+    bottom:12px;
+    background: url("./../assets/ring/process_r.png");
+    background-size: 100% 100%;
+    color: #fff;
+    text-align: center;
+    line-height: 58px;
+    letter-spacing: -25;
+  }
+  .main .centerout .center .ring .icon b{
+    font-size: 24px;
+  }
+
+
+    .main .centerout .center .ring .d{
+    width: 380px;
+    height: 196px;
+    margin: 0 0 0 26px;
+      padding: 6px 0 0 0;
+    overflow: hidden;
+      /*background: blue;*/
+    }
+  .main .centerout .center .ring .d .dd{
+    width: 100%;
+    height: 380px;
+    transform: rotate(180deg);
+    transition: transform 1s linear;
+    /*display: none;*/
+    /*animation: turn 1s linear infinite;*/
+    /*background: pink;*/
+  }
+  .main .centerout .center .ring .d .dd>div{
+    position: relative;
+  }
+  .main .centerout .center .ring .d .dd .star{
+    width: 30px;
+    height: 30px;
+    /*background: red;*/
+    position: absolute;
+    bottom: 10px;
+    right: -2px;
+    /*z-index: 999;*/
+  }
+  .main .centerout .center .ring .d .dd .animation img{
+    animation: turn 1s linear infinite;
+  }
+  .main .centerout .center .ring .d .dd .star .star1{
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    left: 1px;
+    top:2px;
+    /*animation: turn 1s linear infinite;*/
+  }
+  .main .centerout .center .ring .d .dd .star .star2{
+    width: 21.5px;
+    height: 21.5px;
+    position: absolute;
+    left: 7px;
+    top: 11px;
+    /*animation: turn 1s linear infinite;*/
+  }
+  .main .centerout .center .ring .d .dd .star .star3{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 0;
+    top: 6px;
+    /*animation: turn 1s linear infinite;*/
+  }
+
+
+    .main .centerout .center .ring .d .dd .img{
+    width: 380px;
+    height: 190px;
+      display: block;
+  }
+
+
+    .main .centerout .center .ring .ringp{
     color: #fff;
     position: absolute;
     bottom: 18px;
-    left:14px;
-    /*background: blue;*/
+    left:12px;
+    background: blue;
     font-size: 20px;
-    line-height: 46px;
-    width: 46px;
+    line-height: 51px;
+    width: 51px;
     text-align: center;
+      letter-spacing: -25;
   }
   .main .centerout .center .ring .ringp span{
-    font-size: 26px;
+    font-size: 24px;
   }
 
 
@@ -1919,6 +2031,7 @@
     margin: 0 auto;
     position: relative;
     z-index: 6;
+
   }
 
   .main .center .hasclick {
