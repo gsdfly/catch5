@@ -85,10 +85,6 @@ FastClick.attach(document.body)
       sc.src = 'https://a.alipayobjects.com/g/h5-lib/alipayjsapi/3.0.5/alipayjsapi.inc.min.js'
       document.getElementsByTagName('body')[0].appendChild(sc)
     }
-  }else {
-    store.commit('changeIsLogin');
-    store.dispatch('getUser');
-  }
 
   store.commit('setMachineNo');
 
