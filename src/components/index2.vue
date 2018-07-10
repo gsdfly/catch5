@@ -457,16 +457,16 @@
       quanprogress
     },
     mounted() {
-//      if (CONFIG.isWx) {
-//        document.addEventListener('visibilitychange', function () {
-//          if (!document.hidden) {
-//            this.$store.dispatch('getUser');
-//            this.$store.dispatch('getOperations');
+      if (CONFIG.isWx) {
+        document.addEventListener('visibilitychange', function () {
+          if (!document.hidden) {
+            this.$store.dispatch('getUser');
+            this.$store.dispatch('getOperations');
 //            this.$store.dispatch('getActivityBountyInfo')
-//            this.bgShow = false;
-//          }
-//        }.bind(this));
-//      }
+            this.bgShow = false;
+          }
+        }.bind(this));
+      }
 // else if (CONFIG.isAlipay) {
 //        document.addEventListener('resume', function () {
 //          this.$store.dispatch('getUser');

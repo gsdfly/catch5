@@ -236,6 +236,7 @@
         localStorage.removeItem('warrantTime');
         localStorage.removeItem('userTime');
         localStorage.removeItem('domTime');
+        localStorage.removeItem('log_id');
       },
       openDetails(operationTipContent) {
         this.$emit('changeBgShow', {
