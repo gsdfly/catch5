@@ -24,9 +24,10 @@ instance.interceptors.response.use(function(response) {
 }, async function(error) {
   // Do something with response error
   // sendError({code:error.response.data.status_code,message:error.response.data.message,url:error.config.url});
-  // if(error.response.data.status_code === 401){
-  //   await callbackUrl();
-  // }
+  if (error.response.data.status_code === 401) {
+    location.reload();
+    return;
+  }
   console.log(error, '全局err')
   store.commit('changeTipContent',{
     imgSrc:"http://res.catchme.com.cn/imgs-2018-02-05/tip/tip1.png",
