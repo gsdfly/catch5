@@ -234,6 +234,7 @@
           coupon_time:coupon_time,
           use_time:localStorage.getItem('userTime')
         })
+        localStorage.removeItem('log_id');
         localStorage.removeItem('warrantTime');
         localStorage.removeItem('userTime');
         localStorage.removeItem('domTime');
