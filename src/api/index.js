@@ -160,4 +160,16 @@ export default {
       params: params
     })
   },
+  //授权登录，获取token
+  getToken:function (params) {
+    return instance.get(CONFIG.url + 'api/auth/login', {
+      params: params
+    });
+  },
+  //根据用户的id来获取token
+  getToken2:function (params) {
+    return instance.get(CONFIG.url + 'api/auth/token', {
+      params: params
+    });
+  },
 }
