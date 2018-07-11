@@ -121,7 +121,7 @@ FastClick.attach(document.body)
   })
 
   //统计扫码用户
-  api.machineLogin({machine_no:CONFIG.machine_no,token:CONFIG.token});
+  // api.machineLogin({machine_no:CONFIG.machine_no,token:CONFIG.token});
 
   Vue.prototype.Indicator = Indicator
 
