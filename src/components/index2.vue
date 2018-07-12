@@ -55,7 +55,7 @@
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
                     <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
-        <task></task>
+        <task @receiveBiSuccess="receiveBiSuccess" @openTip="openTip"></task>
       </div>
 
       <div class="main">
@@ -63,12 +63,11 @@
           <div class="centerout">
             <div class="center">
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
-              <div class="ring" v-if="task_game.task_count<task_game.num">
+              <div class="ring" v-if="activity_bounty.length>0">
                 <div class="d">
                   <div class="dd" :style="ringStyle">
                     <div>
                       <img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">
-                      <!--<img class="img" src="./../assets/ring/process-m.png" alt="">-->
                       <div class="star" :class="{'animation':starClass==='animation'}">
                         <img class="star1"  src="./../assets/ring/star1.png" alt="">
                         <img class="star2"  src="./../assets/ring/star2.png" alt="">
@@ -77,14 +76,23 @@
                     </div>
                   </div>
                 </div>
-                <span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>
-                <!--<div class="progress" :style="ringStyle">-->
-                  <!--&lt;!&ndash;<img src="http://res.catchme.com.cn/activity/ring/progress.png" alt="">&ndash;&gt;-->
-                  <!--<img src="./../assets/ring/process2.png" alt="">-->
+
+                <span class="icon"></span>
+                <!--<span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>-->
+                <div class="task-gift" v-for="item in activity_bounty" >
+                  <img v-if="item.voucher_batch.value <= task_now.recharge_bounty" src="./../assets/task/b_done.png" alt="">
+                  <div class="ring-tip" v-else="" @click="openTip('couponList')">
+                    <img  class="ringicon ringicon2"  src="./../assets/task/red.png" alt=""/>
+                    <p>在抓{{( item.voucher_batch.value - task_now.recharge_bounty)/info.coin_num}}次</p>
+                  </div>
+                </div>
+
+                <!--<img @click="openTip('receive')" class="ringicon ringicon1" v-if="activity_bounty[activity_bounty.length-1].voucher_batch.value <= task_now.recharge_bounty" src="./../assets/ring/lingbi.png" alt=""/>-->
+
+                <!--<div class="ring-tip" v-else="" @click="openTip('couponList')">-->
+                  <!--<img  class="ringicon ringicon2"  src="./../assets/task/red.png" alt=""/>-->
+                  <!--<p>在抓{{( activity_bounty[activity_bounty.length-1].voucher_batch.value - task_now.recharge_bounty)/info.coin_num}}次</p>-->
                 <!--</div>-->
-                <!--<p class="ringp"><span>{{task_now.game_bounty}}</span>/{{task_game.value}}</p>-->
-                <img @click="receiveTaskGame" class="ringicon ringicon1" v-if="task_now.game_bounty >= task_game.value" src="./../assets/ring/lingbi.png" alt=""/>
-                <img  class="ringicon ringicon2" v-else="" src="./../assets/ring/press_give.png" alt=""/>
               </div>
               <div class="startgame" :class="{'hasclick':start_desc == '投币中'}" id="coin-operated"
                       @click="handleStartingDevice">{{start_desc ? start_desc : '投币启动'}}
@@ -225,26 +233,6 @@
         <div class="bg-center8-2" v-if="contentShow == 'activityRule'" @click.stop="">
           <div>
             <img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="" class="imgBg" @click.prevent=""/>
-            <!--<div class="rule-main">-->
-              <!--<h3 class="tipTitle"><span></span><b>我的红包</b></h3>-->
-              <!--<div class="contentli"><span>1.</span>-->
-                <!--<p>充值投币抓娃娃；</p></div>-->
-              <!--<div class="contentli"><span>2.</span>-->
-                <!--<p>每充值1元得1个奖励金，使用奖励金兑换红包；</p></div>-->
-              <!--<div class="contentli"><span>3.</span>-->
-                <!--<p>按照使用说明购买或兑换相应产品；</p></div>-->
-              <!--<div class="contentli"><span>4.</span>-->
-                <!--<p>请在有效期内使用红包，过期作废；</p></div>-->
-              <!--<div class="contentli"><span>5.</span>-->
-                <!--<p>本活动最终解释权归深圳市我抓科技有限公司所有。</p></div>-->
-              <!--<div class="code">-->
-                <!--<img src="./../assets/catch3/code.png" alt="">-->
-                <!--<div>-->
-                  <!--<p>长按识别图中小程序码，进入</p>-->
-                  <!--<p>“趣东西商城”</p>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg2"/>
           </div>
@@ -260,21 +248,6 @@
                   <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy">复制</button>
               </div>
               <img src="http://res.catchme.com.cn/activity/catch3/shuoming2.png" alt="" @click.prevent="" class="imgBg"/>
-              <!--<div class="phone">-->
-                <!--<img src="http://res.catchme.com.cn/activity/catch3/image_Instructions.png" alt="" @click.prevent="">-->
-                <!--<div>-->
-                  <!--<p>1、长按识别图中小程序码；</p>-->
-                  <!--<p>2、选择您想要购买的商品；</p>-->
-                  <!--<p>3、在订单页面点击“优惠”，<span>3、</span>粘贴兑换码即可；</p>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div class="code">-->
-                <!--<img src="./../assets/catch3/code.png" alt="">-->
-                <!--<div>-->
-                  <!--<p>还可关注“我抓娃娃机服务”公众号，</p>-->
-                  <!--<p>进入个人中心，查看自己的兑换码。</p>-->
-                <!--</div>-->
-              <!--</div>-->
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg2"/>
@@ -383,6 +356,7 @@
 
       <tipOperation></tipOperation>
     </div>
+    {{activity_bounty}}
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
   </div>
 </template>
@@ -447,7 +421,7 @@
       hide_coupons: state => state.user.hide_coupons,
       tipContent: state => state.user.tipContent,
       tip_operation: state => state.user.tip_operation,
-      activity_promocode: state => state.user.activity_promocode,
+//      activity_promocode: state => state.user.activity_promocode, //已经舍弃
       activity_bounty: state => state.user.activity_bounty,
       task_game:state => state.user.task_game,
       task_now:state => state.user.task_now,
@@ -466,17 +440,17 @@
           if (!document.hidden) {
             this.$store.dispatch('getUser');
             this.$store.dispatch('getOperations');
-//            this.$store.dispatch('getActivityBountyInfo')
+            this.$store.dispatch('getActivityBountyInfo')
             this.bgShow = false;
           }
         }.bind(this));
-      }
-// else if (CONFIG.isAlipay) {
-//        document.addEventListener('resume', function () {
-//          this.$store.dispatch('getUser');
-//          this.bgShow = false;
-//        }.bind(this));
-//      }
+      } else if (CONFIG.isAlipay) {
+            document.addEventListener('resume', function () {
+//              this.$store.dispatch('getUser');
+              this.$store.dispatch('getActivityBountyInfo')
+              this.bgShow = false;
+            }.bind(this));
+          }
       this.$store.dispatch('judgeMachine').then(() => {
         //用户可以操作时间
         localStorage.setItem('userTime', (Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart)))
@@ -494,16 +468,7 @@
           this.$store.dispatch('getActivityBountyExchange',this.task_game.id).then((res)=>{
             this.$store.dispatch('getFreeCoin',{coin_price_id: this.task_game.coin_price.coin_price_id, coupon_id: this.task_game.coupon.id}).then(()=>{
               this.isRequest = false;
-              this.bgShow = true;
-              this.contentShow = 'receiveBi';
-              setTimeout(()=>{
-                this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
-              },0)
-              setTimeout(()=>{
-                this.bgShow = false;
-                this.contentShow = '';
-                this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
-              },2000)
+              this.receiveBiSuccess();
               this.$store.dispatch('getUser')
               this.$store.dispatch('getActivityBountyInfo')
               this.$store.dispatch('getOperations')
@@ -512,12 +477,27 @@
         }
         //运营位id
       },
+      receiveBiSuccess(){
+        this.bgShow = true;
+        this.contentShow = 'receiveBi';
+        setTimeout(()=>{
+          this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
+        },0)
+        setTimeout(()=>{
+          this.bgShow = false;
+          this.contentShow = '';
+          this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
+        },2000)
+      },
       changeTaskGameProgress(){
         /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
 //        每次投币之后自己请求,调用此方法改变进度
 
         //计算180为100%
-        var n = this.task_now.game_bounty/this.task_game.value*180+180;
+//        var n = this.task_now.game_bounty/this.task_game.value*180+180;
+//        console.log('1111111111111----------'+this.task_now.recharge_bounty);
+//        console.log('222222222222------------'+this.activity_bounty.voucher_batch.value);
+        var n = this.task_now.recharge_bounty/this.activity_bounty.voucher_batch.value*180+180;
         if(n>360){
           n=360;
         }
@@ -527,19 +507,6 @@
         },1000);
         this.ringStyle = `transform:  rotate(${n}deg);`
 
-//        var x1 = 215 -  202 * Math.cos(n* 3.14);
-//        var y1 = 209 -  202 * Math.sin(n* 3.14);
-//        console.log(x1);
-//        console.log(y1);
-//        var nowX1 = x1/7.5.toFixed(3)+'vw';
-//        var nowY1 = y1/7.5.toFixed(3)+'vw';
-//        console.log(nowX1);
-//        console.log(nowY1);
-//        if(n<=0.5){
-//          this.ringStyle = `clip-path:polygon(0 0,0 0,${nowX1} ${nowY1},27.867vw 28.667vw,0 28.667vw)`;
-//        }else {
-//          this.ringStyle = `clip-path:polygon(0 0,55.6vw 0,${nowX1} ${nowY1},27.867vw 28.667vw,0 28.667vw)`;
-//        }
       },
       receiveCoupon(){
 //        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
@@ -548,7 +515,6 @@
 //          this.$store.dispatch('getActivityBounty');
 //          this.couponInfo = res;
 //        })
-
         this.$store.dispatch('getActivityBountyExchange',this.activity_bounty.id).then((res)=>{
           this.couponInfo = res.data;
           this.isReceive = true;
@@ -755,18 +721,6 @@
         this.isKefuStyle = ' transform: translate3d(100%,0,0);';
       }
     },
-//    watch: {
-//          tip_operation:{
-//            handler(val,oldVal) {
-//              console.log(val)
-//              console.log(oldVal);
-////            console.log(this.tip_operation.enter)
-//            console.log('111')
-//            if(this.tip_operation.enter){
-//              this.$store.commit('changeShowTipOperation',{isShow:true,tipObj:this.tip_operation.enter});
-//            }
-//          },deep:true},
-//    }
     watch: {
       user(newUser, oldUser) {
         if (oldUser.coins === 0) {
@@ -779,9 +733,23 @@
         }
       },
       task_now(newValue,oldValue){
-        if(newValue.game_bounty !== oldValue.game_bounty){
-          this.changeTaskGameProgress();
+        if(newValue.recharge_bounty !== oldValue.recharge_bounty){
+//          this.changeTaskGameProgress();
         }
+//        if(this.activity_bounty.voucher_batch.value <= newValue.recharge_bounty ){
+//          this.openTip('receive');
+//        }
+      },
+      //来设置图形的位置
+      activity_bounty(newValue){
+        var taskGiftList = document.querySelector('.task-gift');
+        var len = newValue.length;
+        for(var i=0;i<len;i++){
+          var n = newValue[i].voucher_batch.value/newValue[len-1].voucher_batch.value;
+          //根据角度获取圆环上的坐标点来进行定位
+          
+        }
+
       }
     },
     filters:{
@@ -791,7 +759,16 @@
         }else {
           return value;
         }
-      }
+      },
+//      handleArr(arr){
+//        var max = 0;
+//        for(var i=0;i<arr.length;i++){
+//          if(arr[i].voucher_batch.value>max){
+//            max = arr[i].voucher_batch.value;
+//          }
+//        }
+//        return max;
+//      }
     }
   }
 </script>
@@ -1799,7 +1776,8 @@
     /*padding: 0 0.22px;*/
     /*height: 2.04px;*/
     height: 15%;
-    min-height: 178px;
+    /*min-height: 178px;*/
+    min-height: 182px;
     /*padding: 0 22px;*/
     position: relative;
   }
@@ -1851,7 +1829,9 @@
     background-size: 100% 100%;
     /*padding: 0.1px;*/
   }
-  .main .centerout .center .ring .icon{
+
+
+    .main .centerout .center .ring .icon{
     width: 54px;
     height: 54px;
     position: absolute;
@@ -1939,35 +1919,57 @@
 
 
     .main .centerout .center .ring .ringp{
-    color: #fff;
-    position: absolute;
-    bottom: 18px;
-    left:12px;
-    background: blue;
-    font-size: 20px;
-    line-height: 51px;
-    width: 51px;
-    text-align: center;
-      letter-spacing: -25;
-  }
-  .main .centerout .center .ring .ringp span{
-    font-size: 24px;
-  }
-
+      color: #fff;
+      position: absolute;
+      bottom: 18px;
+      left:12px;
+      background: blue;
+      font-size: 20px;
+      line-height: 51px;
+      width: 51px;
+      text-align: center;
+        letter-spacing: -25;
+    }
+    .main .centerout .center .ring .ringp span{
+      font-size: 24px;
+    }
 
     .main .centerout .center .ring .ringicon1{
       width: 178px;
       height: 146px;
+      position: absolute;
+      bottom: -30px;
+      right:-120px;
+  }
+    .main .centerout .center .ring .task-gift{
+      width:119px;
+      position: absolute;
+    }
+    .main .centerout .center .ring .task-gift>img{
+      width: 100%;
+    }
+
+    .main .centerout .center .ring .task-gift .ring-tip{
+      position: absolute;
+      right: -70px;
+      bottom: -40px;
+    }
+  .main .centerout .center .ring .task-gift .ring-tip p{
     position: absolute;
-    bottom: -30px;
-    right:-120px;
+    right: 0;
+    top:0;
+    font-size: 26px;
+    color: #2e339b;
+    width: 110px;
+    height: 38px;
+    line-height: 42px;
+    text-align: center;
   }
   .main .centerout .center .ring .ringicon2{
-    width: 98px;
-    height: 107px;
-    position: absolute;
-    right: -50px;
-    bottom: -40px;
+    /*width: 98px;*/
+    /*height: 107px;*/
+    width: 119px;
+    height: 157px;
   }
     //test
   .main .centerout .center .ring .progress{

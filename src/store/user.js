@@ -33,25 +33,20 @@ const state = {
   },
   show_tip_operation:{isShow:false,tipObj:{image:''}},
   tip_operation:{},
-  activity_promocode:{
-    progress:0,
-    records:[],
-    needle:0
-  },
+  // 已经丢弃
+  // activity_promocode:{
+  //   progress:0,
+  //   records:[],
+  //   needle:0
+  // },
   // activity_bounty:{
-  //   bounty:0,
-  //   voucher:{
+  //   voucher_batch:{
   //     value:0
   //   },
-  //   list:[]
+  //   vouchers:[]
   // },
-  activity_bounty:{
-    voucher_batch:{
-      value:0
-    },
-    vouchers:[]
-  },
-  
+  activity_bounty:[],
+  gzh_operation:{},
   task_game:{
     num:0, //任务可以完成多少次
     value:1,//任务值
@@ -112,9 +107,10 @@ const mutations = {
   changeShowTipOperation(state,obj){
     state.show_tip_operation = obj;
   },
-  setActivityPromocode(state,obj){
-    state.activity_promocode = obj
-  },
+  //已经舍弃
+  // setActivityPromocode(state,obj){
+  //   state.activity_promocode = obj
+  // },
   setActivityBounty(state,obj){
     state.activity_bounty = obj
   },
@@ -129,7 +125,10 @@ const mutations = {
   },
   setTaskWawa(state,obj){
     state.task_wawa = obj;
-  }
+  },
+  setGzhOperation(state,obj){
+    state.gzh_operation = obj;
+  },
 }
 
 const actions = {
@@ -316,8 +315,10 @@ const actions = {
         var res = data.data;
         var operationsList = [];
         var hideCoupons = [];
+        var activity_bounty = [];
+
         for(var i=0;i<res.length;i++){
-          if(res[i].type ===1 || res[i].type === 7){
+          if(res[i].type ===1){
             if(res[i].coupon){
               if(res[i].coupon.type == 2 ){
                 operationsList.push(res[i]);
@@ -351,8 +352,12 @@ const actions = {
             if(endTime >= nowTime){
               ctx.commit('setTipOperation',res[i]);
             }
-          }else if(res[i].type === 8){
-            ctx.commit('setActivityBounty',res[i]);
+          }else if(res[i].type === 7){
+            ctx.commit('setGzhOperation',res[i]);
+          }
+          else if(res[i].type === 8){
+            // console.log(ctx.state.activity_bounty);
+            activity_bounty.push(res[i]);
           }else if(res[i].type === 9){
             //type为9时为游戏次数运营位
             ctx.commit('setTaskGame',res[i]);
@@ -361,6 +366,17 @@ const actions = {
             ctx.commit('setTaskWawa',res[i]);
           }
         }
+        let len = activity_bounty.length;
+        for(var j=0;j<len;j++){
+          for(var k=0;k<len-1-j;k++){
+            if(activity_bounty[k]>activity_bounty[k+1]){
+              var temp = activity_bounty[k+1];        //元素交换
+              activity_bounty[k+1] = activity_bounty[k];
+              activity_bounty[k] = temp;
+            }
+          }
+        }
+        ctx.commit('setActivityBounty',activity_bounty);
         ctx.commit('setHideCoupons',hideCoupons);
         ctx.commit('setOperations',operationsList)
         success(operationsList)
@@ -409,14 +425,15 @@ const actions = {
     })
   },
 
-  getActivityPromocode:function (ctx) {
-    return new Promise((success,error)=>{
-      api.getActivityPromocode({machine_no:ctx.state.machine_no,token:CONFIG.token,site_version_id:CONFIG.site_version_id}).then((data)=>{
-        ctx.commit('setActivityPromocode',data.data);
-        success(data.data)
-      })
-    })
-  },
+  //已经被舍弃
+  // getActivityPromocode:function (ctx) {
+  //   return new Promise((success,error)=>{
+  //     api.getActivityPromocode({machine_no:ctx.state.machine_no,token:CONFIG.token,site_version_id:CONFIG.site_version_id}).then((data)=>{
+  //       ctx.commit('setActivityPromocode',data.data);
+  //       success(data.data)
+  //     })
+  //   })
+  // },
   //已经被舍弃
   // getActivityBounty:function (ctx) {
   //   return new Promise((success,error)=>{
