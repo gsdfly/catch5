@@ -51,7 +51,7 @@ const state = {
     },
     vouchers:[]
   },
-
+  
   task_game:{
     num:0, //任务可以完成多少次
     value:1,//任务值

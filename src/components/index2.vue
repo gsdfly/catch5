@@ -52,9 +52,10 @@
       </div>
 
       <div class="activitys">
-        <operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"
-                    @changeTip="changeTip" @openTip="openTip"></operations>
-        <quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>
+        <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
+                    <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
+        <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
+        <task></task>
       </div>
 
       <div class="main">
@@ -397,6 +398,8 @@
   import Toast from 'mint-ui/lib/Toast'
   import Clipboard from 'clipboard';
   import quanprogress from './quanprogress.vue'
+  import task from './task.vue'
+
 
   export default {
     data() {
@@ -454,7 +457,8 @@
       operations,
       tip,
       tipOperation,
-      quanprogress
+      quanprogress,
+      task
     },
     mounted() {
       if (CONFIG.isWx) {
@@ -1814,7 +1818,7 @@
     background: url("./../assets/small/bg_begin.png") no-repeat;
     background-size: 100% 100%;
     /*padding: 0.22px;*/
-    padding: 20px;
+    padding: 22px;
     /*margin: 0.05px 0 0 0;*/
   }
 
