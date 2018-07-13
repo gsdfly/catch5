@@ -3,7 +3,7 @@
     <div class="jo-index-div" v-show="showHtml" @click="hideKefu">
       <div v-if="isGetImg" v-show="false">
         <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="">
+        <!--<img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="">-->
         <img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="">
         <img src="http://res.catchme.com.cn/activity/catch3/shuoming2.png" alt="">
       </div>
@@ -1727,7 +1727,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    padding: 0 0 0 22px;
+    padding: 0 0 0 20px;
     height: 112px;
   }
 
@@ -2143,8 +2143,8 @@
     background: #feedd7;
     line-height: 90px;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 0px;
+    top: 0px;
     /*top:-0.28px;*/
     text-align: center;
     /*padding: 0.2px 0.3px;*/

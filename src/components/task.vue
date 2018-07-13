@@ -123,9 +123,9 @@
     width: 100%;
     height: 100%;
     position: relative;
-    padding: 0 22px;
+    padding: 0 20px;
     .task-bg{
-      width: 706px;
+      width: 710px;
     }
     .free-bg{
       width: 333px;

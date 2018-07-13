@@ -160,14 +160,14 @@
     position: absolute;
     left: 0;
     top: 0;
-    padding: 10px 22px 0 22px;
+    padding: 10px 20px 0 20px;
   }
 
   .recharge-lists > div {
     margin: 0 0 20px 0;
     font-size: 36px;
     float: right;
-    width: 342px;
+    width: 345px;
     /*height: 1.28px;*/
     height: 37.87%;
     border: 1px solid #fd643b;
