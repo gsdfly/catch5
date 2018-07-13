@@ -369,7 +369,7 @@ const actions = {
         let len = activity_bounty.length;
         for(var j=0;j<len;j++){
           for(var k=0;k<len-1-j;k++){
-            if(activity_bounty[k]>activity_bounty[k+1]){
+            if(activity_bounty[k].voucher_batch.value>activity_bounty[k+1].voucher_batch.value){
               var temp = activity_bounty[k+1];        //元素交换
               activity_bounty[k+1] = activity_bounty[k];
               activity_bounty[k] = temp;

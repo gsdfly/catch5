@@ -783,10 +783,10 @@
             var n = newValue[i].voucher_batch.value/newValue[len-1].voucher_batch.value;
             //根据角度获取圆环上的坐标点来进行定位
             console.log(n);
-//            var x1 = 215 -  202 * Math.cos(n* 3.14) -45;
-//            var y1 = 209 -  202 * Math.sin(n* 3.14) - 90;
-            var x1 = 215 -  202 * Math.cos(n* 3.14);
-            var y1 = 209 -  202 * Math.sin(n* 3.14);
+            var x1 = 215 -  202 * Math.cos(n* 3.14) -45;
+            var y1 = 209 -  202 * Math.sin(n* 3.14) - 90;
+//            var x1 = 215 -  202 * Math.cos(n* 3.14);
+//            var y1 = 209 -  202 * Math.sin(n* 3.14);
             console.log(x1);
             console.log(y1);
             var nowX1 = x1/7.5.toFixed(3)+'vw';
@@ -1921,7 +1921,7 @@
     background: url("./../assets/small/bg_begin.png") no-repeat;
     background-size: 100% 100%;
     /*padding: 0.22px;*/
-    padding: 22px;
+    padding: 20px;
     /*margin: 0.05px 0 0 0;*/
   }
 
@@ -2074,10 +2074,13 @@
       left: 0;
       top:0;
       pointer-events: auto;
-      background: red;
+      /*background: red;*/
     }
     .main .centerout .center .ring .task-gift>img{
       width: 100%;
+      position: absolute;
+      left: 0;
+      bottom: 0;
     }
     /*
     .main .centerout .center .ring .task-gift .ring-tip{
