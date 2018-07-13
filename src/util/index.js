@@ -108,7 +108,7 @@ export const getErrMsg = (errCode, message) => {
       case 1013:
         m = {
           imgSrc: "http://res.catchme.com.cn/imgs-2018-02-05/tip/tip9.png",
-          content: ['优惠券领取失败'],
+          content: [message],
           button: '知道了',
           isShow: true
         }
