@@ -311,14 +311,14 @@
     z-index: 2;
   }
 
-  .version2 {
-    padding: 0 18px;
-  }
+  /*.version2 {*/
+    /*padding: 0 18px;*/
+  /*}*/
 
-  .version2  > div {
-    width: 348px;
-    margin: 0 0 18px 0;
-  }
+  /*.version2  > div {*/
+    /*width: 348px;*/
+    /*margin: 0 0 18px 0;*/
+  /*}*/
 
   .version2 .recharge-item-t {
     height: 84px;

@@ -138,7 +138,7 @@
       position: absolute;
       height: 182px;
       left: 22px;
-      bottom: 0;
+      bottom: 2px;
       li{
         width: calc(100% / 3);
         height: 100%;
@@ -219,15 +219,13 @@
     }
 
   .task-version2{
-    padding: 0 18px;
+    /*padding: 0 18px;*/
     .task-bg{
-      width: 714px;
+      /*width: 714px;*/
+      height: 204px;
       position: absolute;
-      left: 18px;
+      left: 22px;
       bottom: 0;
-    }
-    ul{
-      width: 714px;
     }
   }
 </style>

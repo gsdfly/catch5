@@ -13,7 +13,7 @@ export default {
 
 <style>
 @import url(//at.alicdn.com/t/font_316150_nmzks0hbfba10pb9.css);
-/*@import url(//at.alicdn.com/t/font_385880_yj22sx6x51rwwmi.css);*/
+@import url(//at.alicdn.com/t/font_385880_yj22sx6x51rwwmi.css);
 
 
 html{

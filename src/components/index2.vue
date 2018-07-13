@@ -1889,7 +1889,7 @@
 
   .main {
     width: 100%;
-    height: 46%;
+    height: 45.8%;
     min-height: 542px;
     /*height: calc(100% - 4.98px);*/
     position: relative;
@@ -1900,7 +1900,7 @@
     /*overflow: hidden;*/
     /*padding: 0 0.22px;*/
     /*height: 2.04px;*/
-    height: 15%;
+    height: 15.2%;
     /*min-height: 178px;*/
     min-height: 182px;
     /*padding: 0 22px;*/
@@ -1928,13 +1928,13 @@
   .main .centerout .center {
     width: 100%;
     /*height: 5px;*/
-    /*background: #fff;*/
+    background: #fff;
     /*margin: 0.32px 0 0 0;*/
     /*padding: 0.28px 0.2px 0 0.2px;*/
     padding: 70px 20px 0 20px;
     /*border-radius: 10px;*/
     position: relative;
-    background: #fff;
+    /*background: #fff;*/
     /*overflow: hidden;*/
   }
 
@@ -1965,8 +1965,8 @@
     /*bottom:12px;*/
     font-size: 20px;
     /*background: blue;*/
-    left: 13px;
-    bottom:16px;
+    left: 12px;
+    bottom:18px;
     background: url("./../assets/ring/process_r.png");
     background-size: 100% 100%;
     color: #fff;
@@ -2351,10 +2351,10 @@
     /*height: 336px;*/
   }
 
-  .jo-version2 .main .centerout {
-    /*margin: 0.1px 0 0 0;*/
-    padding: 22px 18px;
-  }
+  /*.jo-version2 .main .centerout {*/
+    /*!*margin: 0.1px 0 0 0;*!*/
+    /*padding: 22px 18px;*/
+  /*}*/
 
   .jo-version2 .main .centerout .center {
     padding: 90px 20px 0 20px;
@@ -2362,7 +2362,7 @@
 
   .jo-version2 .header > div {
     top: 55%;
-    padding: 0 0 0 18px;
+    /*padding: 0 0 0 18px;*/
   }
 
   .jo-version2 .main .center .tip {
