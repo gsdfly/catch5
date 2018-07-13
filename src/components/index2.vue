@@ -83,7 +83,7 @@
                   <img class="ling" v-if="item.voucher_batch.value <= task_now.recharge_bounty" src="./../assets/task/red_ling.png" alt="" @click="receiveGift(item)" />
                   <div class="ring-tip" v-else="" @click="couponList">
                     <img  class="ringicon ringicon2"  src="./../assets/task/red.png" alt=""/>
-                    <p>在抓{{( item.voucher_batch.value - task_now.recharge_bounty)/info.coin_num}}次</p>
+                    <p>再抓{{( item.voucher_batch.value - task_now.recharge_bounty)/info.coin_num}}次</p>
                   </div>
                 </div>
 
@@ -309,7 +309,7 @@
               <h3 class="tipTitle"><span></span><b>我的红包</b></h3>
               <ul>
                 <template v-for="activity_bountyItem in activity_bounty">
-                <li v-for="item in activity_bountyItem">
+                <li v-for="item in activity_bountyItem.vouchers">
                   <div>
                     <dl class="dlCoupon">
                       <dt>
