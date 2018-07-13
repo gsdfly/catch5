@@ -80,8 +80,8 @@
                 <span class="icon"></span>
                 <!--<span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>-->
                 <div class="task-gift" v-for="item in activity_bounty" >
-                  <img v-if="item.voucher_batch.value <= task_now.recharge_bounty" src="./../assets/task/b_done.png" alt="">
-                  <div class="ring-tip" v-else="" @click="openTip('couponList')">
+                  <img class="ling" v-if="item.voucher_batch.value <= task_now.recharge_bounty" src="./../assets/task/red_ling.png" alt="" @click="receiveGift(item)" />
+                  <div class="ring-tip" v-else="" @click="couponList">
                     <img  class="ringicon ringicon2"  src="./../assets/task/red.png" alt=""/>
                     <p>在抓{{( item.voucher_batch.value - task_now.recharge_bounty)/info.coin_num}}次</p>
                   </div>
@@ -277,8 +277,8 @@
               <div v-if="!isReceive">
                 <dl class="dlCoupon">
                   <dt>
-                    <h4>{{activity_bounty.voucher_batch.name}}</h4>
-                    <p>(消耗{{activity_bounty.voucher_batch.value}}个奖励金)</p>
+                    <h4>{{currentGift.voucher_batch.name}}</h4>
+                    <p>(消耗{{currentGift.voucher_batch.value}}个奖励金)</p>
                   </dt>
                   <dd>
                     <button @click="receiveCoupon">领取</button>
@@ -288,7 +288,7 @@
               <div v-else="">
                 <dl class="dlCoupon">
                   <dt>
-                    <h4>{{activity_bounty.voucher_batch.name}}</h4>
+                    <h4>{{currentGift.voucher_batch.name}}</h4>
                     <p>{{couponInfo.code}}</p>
                     <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                   </dt>
@@ -308,11 +308,12 @@
             <div>
               <h3 class="tipTitle"><span></span><b>我的红包</b></h3>
               <ul>
-                <li v-for="item in activity_bounty.vouchers">
+                <template v-for="activity_bountyItem in activity_bounty">
+                <li v-for="item in activity_bountyItem">
                   <div>
                     <dl class="dlCoupon">
                       <dt>
-                        <h4>{{activity_bounty.voucher_batch.name}}</h4>
+                        <h4>{{activity_bountyItem.voucher_batch.name}}</h4>
                         <p>{{item.code}}</p>
                         <p>有效期至：{{item.end_time | handleEndTime}}</p>
                       </dt>
@@ -322,6 +323,7 @@
                     </dl>
                   </div>
                 </li>
+                </template>
               </ul>
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -352,11 +354,27 @@
             </div>
           </div>
         </div>
+
+        <div class="bg-center15" v-if="contentShow == 'taskGameTip'" @click.stop="">
+            <div class="water"  v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value" >
+              <div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>
+              <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{task_game.value/info.coin_num}}</span>
+            </div>
+          <p>投币送币</p>
+          <p>累计抓{{task_game.value/info.coin_num}}次，送免费游戏币</p>
+          <button @click="closeBg">去抓娃娃</button>
+        </div>
+
+        <div class="bg-center15" v-if="contentShow == 'taskWawaTip'" @click.stop="">
+          <img src="./../assets/task/window_catch.png" alt=""/>
+          <p>抓中送币</p>
+          <p>您还没有抓中哦</p>
+          <button @click="closeBg">去抓娃娃</button>
+        </div>
       </div>
 
       <tipOperation></tipOperation>
     </div>
-    {{activity_bounty}}
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
   </div>
 </template>
@@ -407,7 +425,8 @@
         ringStyle:'',
         isRequest:false,
         centerStyle:'',
-        starClass:''
+        starClass:'',
+        currentGift:{}
       }
     },
     created() {
@@ -461,6 +480,20 @@
       this.$store.dispatch('getUser')
     },
     methods: {
+      receiveGift(gift){
+        this.currentGift = gift;
+        this.openTip('receive');
+      },
+      couponList(){
+        var len = this.activity_bounty.length;
+        for(var i=0;i<len;i++){
+          if(this.activity_bounty[i].vouchers.length>0){
+            this.openTip('couponList');
+            return;
+          }
+        }
+        this.openTip('notExchange');
+      },
       receiveTaskGame(){
         //这里需要防止重复点击
         if(!this.isRequest){
@@ -497,7 +530,8 @@
 //        var n = this.task_now.game_bounty/this.task_game.value*180+180;
 //        console.log('1111111111111----------'+this.task_now.recharge_bounty);
 //        console.log('222222222222------------'+this.activity_bounty.voucher_batch.value);
-        var n = this.task_now.recharge_bounty/this.activity_bounty.voucher_batch.value*180+180;
+        var len = this.activity_bounty.length;
+        var n = this.task_now.recharge_bounty/this.activity_bounty[len-1].voucher_batch.value*180+180;
         if(n>360){
           n=360;
         }
@@ -515,7 +549,7 @@
 //          this.$store.dispatch('getActivityBounty');
 //          this.couponInfo = res;
 //        })
-        this.$store.dispatch('getActivityBountyExchange',this.activity_bounty.id).then((res)=>{
+        this.$store.dispatch('getActivityBountyExchange',this.currentGift.id).then((res)=>{
           this.couponInfo = res.data;
           this.isReceive = true;
           //重新获取奖励金信息
@@ -561,12 +595,12 @@
         this.bgShow = true;
         this.contentShow = value;
       },
-      getVoucherLength(value) {
-        if (value > 1) {
-          var scrollIn = document.querySelector('.scroll-in');
-          scrollIn.style = 'width:' + (68.4 * value + 6.4) + 'vw';
-        }
-      },
+//      getVoucherLength(value) {
+//        if (value > 1) {
+//          var scrollIn = document.querySelector('.scroll-in');
+//          scrollIn.style = 'width:' + (68.4 * value + 6.4) + 'vw';
+//        }
+//      },
       tipButton() {
         if (this.tipContent.button === '扫码换机') {
           this.handleScanQRCode();
@@ -734,23 +768,37 @@
       },
       task_now(newValue,oldValue){
         if(newValue.recharge_bounty !== oldValue.recharge_bounty){
-//          this.changeTaskGameProgress();
+          this.changeTaskGameProgress();
         }
 //        if(this.activity_bounty.voucher_batch.value <= newValue.recharge_bounty ){
 //          this.openTip('receive');
 //        }
       },
       //来设置图形的位置
-      activity_bounty(newValue){
-        var taskGiftList = document.querySelector('.task-gift');
-        var len = newValue.length;
-        for(var i=0;i<len;i++){
-          var n = newValue[i].voucher_batch.value/newValue[len-1].voucher_batch.value;
-          //根据角度获取圆环上的坐标点来进行定位
-          
+      activity_bounty(newValue) {
+        setTimeout(()=>{
+          var taskGiftList = document.querySelectorAll('.task-gift');
+          var len = newValue.length;
+          for(var i=0;i<len;i++){
+            var n = newValue[i].voucher_batch.value/newValue[len-1].voucher_batch.value;
+            //根据角度获取圆环上的坐标点来进行定位
+            console.log(n);
+//            var x1 = 215 -  202 * Math.cos(n* 3.14) -45;
+//            var y1 = 209 -  202 * Math.sin(n* 3.14) - 90;
+            var x1 = 215 -  202 * Math.cos(n* 3.14);
+            var y1 = 209 -  202 * Math.sin(n* 3.14);
+            console.log(x1);
+            console.log(y1);
+            var nowX1 = x1/7.5.toFixed(3)+'vw';
+            var nowY1 = y1/7.5.toFixed(3)+'vw';
+            console.log('nowX1----'+nowX1);
+            console.log('nowY1----'+nowY1);
+            taskGiftList[i].style = `left:${nowX1};top:${nowY1}`;
+          }
+        },0)
+
         }
 
-      }
     },
     filters:{
       handleEndTime(value){
@@ -774,6 +822,15 @@
 </script>
 
 <style lang="scss" scoped>
+  @keyframes wave-animation {
+    0% {
+      background-position: 0 top;
+    }
+
+    100% {
+      background-position: 235px top;
+    }
+  }
   @mixin tipButton {
     width: 118px;
     height: 56px;
@@ -1337,6 +1394,74 @@
     }
   }
 
+  .bg-center15{
+      width: 640px;
+      height: 700px;
+      background-color: #3a3dca;
+      border-radius: 20px;
+    @include center;
+    >img{
+      display: block;
+      width: 302px;
+      margin: 81px auto 79px auto;
+    }
+    .water{
+      width: 255px;
+      height: 255px;
+      background-color: #999999;
+      border: solid 10px #ffffff;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+      margin: 53px auto 80px auto;
+      .bol{
+        width: 100%;
+        background: url("./../assets/task/b_bg2.png") repeat-x;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        animation: wave-animation 1s infinite linear;
+        transition: all 1s linear;
+        background-size: 235px 255px;
+      }
+      .game-num{
+        font-size: 48px;
+        color: #fff;
+        line-height: 235px;
+        b{
+          font-size: 80px;
+        }
+      }
+    }
+    p{
+      width: 100%;
+        font-size: 40px;
+      text-align: center;
+        color: #ffd510;
+      line-height: 40px;
+      &:last-of-type{
+        color: #fff;
+        font-size: 36px;
+        line-height: 36px;
+        margin: 22px 0 61px 0;
+      }
+    }
+    button{
+      outline: none;
+      border: none;
+      width: 556px;
+      height: 94px;
+      background-color: #fec47b;
+      box-shadow: 0px 3px 18px 0px
+      rgba(46, 46, 114, 0.13),
+      0px 5px 32px 0px
+      rgba(46, 46, 114, 0.33);
+      border-radius: 47px;
+      font-size: 36px;
+      color: #2e339b;
+    }
+  }
+
   .price {
     position: absolute;
     width: 298px;
@@ -1810,37 +1935,38 @@
     /*border-radius: 10px;*/
     position: relative;
     background: #fff;
-    overflow: hidden;
+    /*overflow: hidden;*/
   }
 
   .main .centerout .center .ring{
-    z-index: 5;
+    /*z-index: 5;*/
+    z-index: 7;
     position: absolute;
     /*width: 392px;*/
     /*height: 213px;*/
     width: 417px;
     height: 240px;
-    /*background: red;*/
     left: 50%;
     top:36px;
     transform: translateX(calc(-50% - 8px));
     /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
     background: url("http://res.catchme.com.cn/activity/ring/process_bg2.png");
     background-size: 100% 100%;
+    pointer-events: none;
     /*padding: 0.1px;*/
   }
 
 
     .main .centerout .center .ring .icon{
-    width: 54px;
-    height: 54px;
+    width: 48px;
+    height: 47px;
     position: absolute;
     /*left: 7px;*/
     /*bottom:12px;*/
     font-size: 20px;
-    background: blue;
-    left: 8px;
-    bottom:12px;
+    /*background: blue;*/
+    left: 13px;
+    bottom:16px;
     background: url("./../assets/ring/process_r.png");
     background-size: 100% 100%;
     color: #fff;
@@ -1942,27 +2068,34 @@
       right:-120px;
   }
     .main .centerout .center .ring .task-gift{
-      width:119px;
+      width:204px;
+      height: 157px;
       position: absolute;
+      left: 0;
+      top:0;
+      pointer-events: auto;
+      background: red;
     }
     .main .centerout .center .ring .task-gift>img{
       width: 100%;
     }
-
+    /*
     .main .centerout .center .ring .task-gift .ring-tip{
       position: absolute;
       right: -70px;
       bottom: -40px;
     }
+    */
   .main .centerout .center .ring .task-gift .ring-tip p{
     position: absolute;
-    right: 0;
+    left: 5px;
     top:0;
     font-size: 26px;
     color: #2e339b;
-    width: 110px;
+    width: 114px;
     height: 38px;
     line-height: 42px;
+    font-weight: 600;
     text-align: center;
   }
   .main .centerout .center .ring .ringicon2{
@@ -2143,7 +2276,7 @@
     min-height: 310px;
     position: relative;
     /*padding: 0.36px 0.22px 0 0.22px;*/
-    overflow: hidden;
+    /*overflow: hidden;*/
   }
 
   /*@media only screen and (min-device-aspect-ratio: 3/5) {*/
@@ -2185,11 +2318,13 @@
 
   .jo-version2 .main {
     /*height: 60%;*/
-    height: 44.5%;
+    /*height: 44.5%;*/
+    height: 44%;
   }
 
   .jo-version2 .activitys {
-    height: 15.5%;
+    /*height: 15.5%;*/
+    height: 16%;
   }
 
   .jo-version2 .main .center .game-num {
@@ -2218,6 +2353,7 @@
 
   .jo-version2 .main .centerout {
     /*margin: 0.1px 0 0 0;*/
+    padding: 22px 18px;
   }
 
   .jo-version2 .main .centerout .center {
@@ -2226,6 +2362,7 @@
 
   .jo-version2 .header > div {
     top: 55%;
+    padding: 0 0 0 18px;
   }
 
   .jo-version2 .main .center .tip {

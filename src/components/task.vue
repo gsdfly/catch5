@@ -1,41 +1,35 @@
 <template>
   <div class="task" :class="{'task-version2':version2}">
-    <img class="task-bg" src="./../assets/task/free.png" alt="" @click.prevent=""/>
-    <img class="free-bg" src="./../assets/task/free_catch.png" alt="">
+    <img class="task-bg" :src="img1_1" alt="" @click.prevent=""/>
+    <img class="free-bg" :src="img2_2" alt="">
     <ul>
       <li @click="consumer" v-if="gzh_operation.id">
-        <div>
           <div>
             <img class="liImg1" src="./../assets/task/a.png" alt=""/>
           </div>
           <p v-if="gzh_operation.coupon.status !== 2">免费领币</p>
           <p class="hasDown" v-else="">已领取</p>
-        </div>
       </li>
       <li>
-        <img v-if="task_game.task_count < task_game.num && task_now.game_bounty>=task_game.value" class="ling" src="./../assets/task/ling.png" alt="" @click="receiveTask(task_game)" />
-       <div v-else="">
          <div>
-           <img  v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value"  src="" alt="">
-           <div>
-             <span v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value" class="game-num"><b>{{task_now.game_bounty}}/</b>{{task_game.value}}</span>
+           <div @click="openTip('taskGameTip')" class="water"  v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value" >
+             <div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>
+             <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{task_game.value/info.coin_num}}</span>
            </div>
+           <img v-if="task_game.task_count < task_game.num && task_now.game_bounty>=task_game.value" class="liImg2" src="./../assets/task/b_ling.png" alt="" @click="receiveTask(task_game)" />
            <img v-if="task_game.task_count >= task_game.num" class="liImg2" src="./../assets/task/b_done.png" alt=""/>
          </div>
          <p v-if="task_game.task_count < task_game.num">投币送币</p>
          <p class="hasDown" v-else="">已领取</p>
-       </div>
       </li>
       <li>
-        <img v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty>=task_wawa.value" class="ling" src="./../assets/task/ling.png" alt="" @click="receiveTask(task_wawa)"/>
-        <div v-else="">
           <div>
-            <img v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty<task_wawa.value" class="liImg3" src="./../assets/task/c_box.png" alt=""/>
+            <img v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty>=task_wawa.value" class="liImg4" src="./../assets/task/c_ling.png" alt="" @click="receiveTask(task_wawa)"/>
+            <img @click="openTip('taskWawaTip')" v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty<task_wawa.value" class="liImg3" src="./../assets/task/c_box.png" alt=""/>
             <img v-if="task_wawa.task_count >= task_wawa.num"  src="./../assets/task/c_done.png" class="liImg3" alt="">
           </div>
           <p v-if="task_wawa.task_count < task_wawa.num">抓中送币</p>
           <p class="hasDown" v-else="">已领取</p>
-        </div>
       </li>
     </ul>
   </div>
@@ -48,10 +42,18 @@
     name:'task',
     data(){
       return {
-        isRequest:false
+        isRequest:false,
+        img1_1:require('./../assets/task/free.png'),
+        img1_2:require('./../assets/task/free_bg.png'),
+        img2_1:require('./../assets/task/free_catch.png'),
+        img2_2:require('./../assets/task/free_catch2.png'),
       }
     },
     mounted(){
+      if (this.version2) {
+        this.img1_1 = this.img1_2;
+        this.img2_1 = this.img2_2;
+      }
       this.$store.dispatch('getOperations').then(()=>{
         this.$store.dispatch('getActivityBountyInfo')
       })
@@ -61,11 +63,18 @@
       task_game: state => state.user.task_game,
       task_now:state => state.user.task_now,
       task_wawa:state => state.user.task_wawa,
+      info: state => state.user.info,
     }),
     methods:{
+      openTip(value){
+          this.$emit('openTip',value);
+      },
       consumer(){
         if(CONFIG.isWx){
           this.$emit('openTip','free',this.gzh_operation.mp_url);
+          return;
+        }
+        if(this.gzh_operation.coupon.status === 2){
           return;
         }
         this.$store.dispatch('getFreeCoin', {coin_price_id: this.gzh_operation.coin_price.coin_price_id, coupon_id: this.gzh_operation.coupon.id}).then((data) => {
@@ -101,6 +110,15 @@
 </script>
 
 <style lang="scss" scoped>
+  @keyframes wave-animation {
+    0% {
+      background-position: 0 top;
+    }
+
+    100% {
+      background-position: 102px top;
+    }
+  }
   .task{
     width: 100%;
     height: 100%;
@@ -126,17 +144,35 @@
         height: 100%;
         float: left;
         position: relative;
-        >div{
-          width: 100%;
-          height: 100%;
           >div{
-            width: 144px;
+            width: 147px;
             height: 117px;
             display: flex;
             align-items: flex-end;
             justify-content: center;
             margin: 14px auto 8px auto;
             position: relative;
+            .water{
+              width: 114px;
+              height: 114px;
+              background-color: #999999;
+              border: solid 6px #ffffff;
+              border-radius: 50%;
+              overflow: hidden;
+              position: relative;
+              display: flex;
+              align-items: flex-end;
+              .bol{
+                width: 100%;
+                background: url("./../assets/task/b_bg.png");
+                /*position: absolute;*/
+                /*bottom: 0;*/
+                /*left: 0;*/
+                animation: wave-animation 1s infinite linear;
+                transition: all 1s linear;
+                background-size: 102px 116px;
+              }
+            }
             .game-num{
               position: absolute;
               left: 50%;
@@ -158,6 +194,9 @@
               &.liImg3{
                 width: 144px;
               }
+              &.liImg4{
+                width: 147px;
+              }
             }
           }
           p{
@@ -176,14 +215,19 @@
             }
           }
         }
-        .ling{
-          position: absolute;
-          left: 50%;
-          top:50%;
-          transform: translate(-50%,-50%);
-          width: 193px;
-        }
       }
+    }
+
+  .task-version2{
+    padding: 0 18px;
+    .task-bg{
+      width: 714px;
+      position: absolute;
+      left: 18px;
+      bottom: 0;
+    }
+    ul{
+      width: 714px;
     }
   }
 </style>

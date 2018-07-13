@@ -311,12 +311,13 @@
     z-index: 2;
   }
 
-  .version2 .recharge-lists {
+  .version2 {
     padding: 0 18px;
   }
 
-  .version2 .recharge-lists > div {
+  .version2  > div {
     width: 348px;
+    margin: 0 0 18px 0;
   }
 
   .version2 .recharge-item-t {
@@ -344,10 +345,6 @@
   .version2 .recharge-item-t span.infinite {
     width: 56px;
     height: 58px;
-  }
-
-  .version2 .recharge-lists > div {
-    margin: 0 0 18px 0;
   }
 
   /*.version2 .recharge-has, .version2 .recharge-hot {*/
