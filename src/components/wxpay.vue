@@ -317,7 +317,7 @@
 
   /*.version2  > div {*/
     /*width: 348px;*/
-    /*margin: 0 0 18px 0;*/
+    /*margin: 0 0 20px 0;*/
   /*}*/
 
   .version2 .recharge-item-t {

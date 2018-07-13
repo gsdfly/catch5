@@ -1889,8 +1889,8 @@
 
   .main {
     width: 100%;
-    height: 45.8%;
-    min-height: 542px;
+    height: 45.6%;
+    min-height: 538px;
     /*height: calc(100% - 4.98px);*/
     position: relative;
   }
@@ -1900,7 +1900,7 @@
     /*overflow: hidden;*/
     /*padding: 0 0.22px;*/
     /*height: 2.04px;*/
-    height: 15.2%;
+    height: 15.4%;
     /*min-height: 178px;*/
     min-height: 182px;
     /*padding: 0 22px;*/
@@ -1958,15 +1958,15 @@
 
 
     .main .centerout .center .ring .icon{
-    width: 48px;
-    height: 47px;
+    width: 50px;
+    height: 50px;
     position: absolute;
     /*left: 7px;*/
     /*bottom:12px;*/
     font-size: 20px;
     /*background: blue;*/
     left: 12px;
-    bottom:18px;
+    bottom:20px;
     background: url("./../assets/ring/process_r.png");
     background-size: 100% 100%;
     color: #fff;
@@ -2319,7 +2319,7 @@
   .jo-version2 .main {
     /*height: 60%;*/
     /*height: 44.5%;*/
-    height: 44%;
+    height: 43.5%;
   }
 
   .jo-version2 .activitys {
@@ -2370,7 +2370,7 @@
   }
 
   .jo-version2 .footer {
-    height: 28%;
+    height: 28.5%;
   }
 
   .jo-version2 .header .header-main h4 {

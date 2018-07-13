@@ -209,6 +209,7 @@
             color: #2e339b;
             text-align: center;
             margin: 0 auto;
+            font-weight: 600;
             &.hasDown{
               background-color: #9a9a9a;
               color: #ffffff;
