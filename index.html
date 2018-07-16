@@ -20,6 +20,8 @@
   <script>
     if(!localStorage.getItem('startTime2')){
       localStorage.setItem('startTime2',performance.timing.navigationStart);
+    }else {
+      localStorage.setItem('auto','true');
     }
 
     if(!localStorage.getItem('log_id')){

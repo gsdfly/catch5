@@ -50,6 +50,8 @@ FastClick.attach(document.body)
           if(getParamByName('auth_type')){
             localStorage.setItem('auth_type',auth_type);
             localStorage.setItem('auth_id',auth_id);
+            var newUrl = window.location.href.slice(0,index);
+            window.history.pushState({},'',newUrl);
           }
           api.getToken({auth_type:auth_type,auth_id:auth_id.split('').reverse().join('')}).then((res)=>{
             //这里可以得到用户信息将用户信息存储到vuex里面，将用户id存储到本地存储中
@@ -60,10 +62,11 @@ FastClick.attach(document.body)
             delete res.data.encrypt;
             store.commit('setUser',res.data);
             if(index === -1){
-              api.machineLogin({machine_no:CONFIG.machine_no,token:CONFIG.token});
-            }else {
-              var newUrl = window.location.href.slice(0,index);
-              window.history.pushState({},'',newUrl);
+              if(!localStorage.getItem('auto')){
+                api.machineLogin({machine_no:CONFIG.machine_no,token:CONFIG.token});
+              }else {
+                localStorage.removeItem('auto')
+              }
             }
           });
         }else {
