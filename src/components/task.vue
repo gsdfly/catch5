@@ -54,9 +54,7 @@
         this.img1_1 = this.img1_2;
         this.img2_1 = this.img2_2;
       }
-      this.$store.dispatch('getOperations').then(()=>{
-        this.$store.dispatch('getActivityBountyInfo')
-      })
+      this.mountedStart();
     },
     computed: mapState({
       gzh_operation: state => state.user.gzh_operation,
@@ -66,6 +64,39 @@
       info: state => state.user.info,
     }),
     methods:{
+      mountedStart(){
+        this.$store.dispatch('getOperations').then(()=>{
+          this.$store.dispatch('getActivityBountyInfo')
+          //运营位获取完成时间
+          var coupon_time = Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart)
+          localStorage.removeItem('startTime2')
+          if(localStorage.getItem('userTime') && localStorage.getItem('domTime')){
+            this.sendTimeOthers(coupon_time);
+          }else {
+            var inter = setInterval(()=>{
+              if(localStorage.getItem('userTime') && localStorage.getItem('domTime')){
+                this.sendTimeOthers(coupon_time);
+                clearInterval(inter);
+              }
+            },500)
+          }
+        })
+      },
+      sendTimeOthers(coupon_time){
+        api.timeOthers({
+          token:CONFIG.token,
+          log_id:localStorage.getItem('log_id'),
+          auth_time:localStorage.getItem('warrantTime') ? localStorage.getItem('warrantTime') : 0,
+          dom_time:localStorage.getItem('domTime'),
+          coupon_time:coupon_time,
+          use_time:localStorage.getItem('userTime')
+        })
+        localStorage.removeItem('log_id');
+        localStorage.removeItem('warrantTime');
+        localStorage.removeItem('userTime');
+        localStorage.removeItem('domTime');
+      },
+
       openTip(value){
           this.$emit('openTip',value);
       },
