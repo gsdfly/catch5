@@ -60,9 +60,10 @@ FastClick.attach(document.body)
             delete res.data.encrypt;
             store.commit('setUser',res.data);
             if(index === -1){
+              api.machineLogin({machine_no:CONFIG.machine_no,token:CONFIG.token});
+            }else {
               var newUrl = window.location.href.slice(0,index);
               window.history.pushState({},'',newUrl);
-              api.machineLogin({machine_no:CONFIG.machine_no,token:CONFIG.token});
             }
           });
         }else {
