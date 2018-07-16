@@ -39,15 +39,16 @@ FastClick.attach(document.body)
           store.commit('changeIsLogin');
           delete res.data.token;
           store.commit('setUser',res.data);
+          api.machineLogin({machine_no:CONFIG.machine_no,token:CONFIG.token});
         })
       }else {
         var auth_type = getParamByName('auth_type') || localStorage.getItem('auth_type');
         if(auth_type){
           var auth_id = getParamByName('auth_id') || localStorage.getItem('auth_id');
+          var index = window.location.href.indexOf('&');
           if(getParamByName('auth_type')){
             localStorage.setItem('auth_type',auth_type);
             localStorage.setItem('auth_id',auth_id);
-            var index = window.location.href.indexOf('&');
             var newUrl = window.location.href.slice(0,index);
             window.history.pushState({},'',newUrl);
           }
@@ -59,6 +60,9 @@ FastClick.attach(document.body)
             delete res.data.token;
             delete res.data.encrypt;
             store.commit('setUser',res.data);
+            if(index === -1){
+              api.machineLogin({machine_no:CONFIG.machine_no,token:CONFIG.token});
+            }
           });
         }else {
           if (CONFIG.isAlipay) {
@@ -71,6 +75,7 @@ FastClick.attach(document.body)
         }
       }
     }else {
+      api.machineLogin({machine_no:CONFIG.machine_no,token:CONFIG.token});
       store.commit('changeIsLogin');
       store.dispatch('getUser');
     }
