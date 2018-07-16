@@ -477,7 +477,7 @@
         this.showHtml = true;
         this.isGetImg = true;
       })
-      this.$store.dispatch('getUser')
+//      this.$store.dispatch('getUser')
     },
     methods: {
       receiveGift(gift){

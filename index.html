@@ -21,6 +21,33 @@
     if(!localStorage.getItem('startTime2')){
       localStorage.setItem('startTime2',performance.timing.navigationStart);
     }
+    if(!localStorage.getItem('log_id')){
+      ajax('api/time', getParamByName('machine') || 'CATCH_100024', function (res) {
+        var data = JSON.parse(res);
+        localStorage.setItem('log_id', data.data.log_id);
+      });
+    }
+
+    function ajax(url, machine_no, callback) {
+      var baseUrl = document.URL.indexOf('catchme') !== -1 ? 'http://front.catchme.com.cn/' : 'http://front.5zhua.cn/'
+      var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+      xmlhttp.open("POST", baseUrl + url, true);
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+          callback(xmlhttp.response);
+        }
+      }
+      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xmlhttp.send("machine_no=" + machine_no);
+    }
+
+    function getParamByName(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i")
+      var r = window.location.search.substr(1).match(reg)
+      if (r != null) return unescape(r[2]);
+      return null
+    }
+
     window.onload = function () {
       var domTime = Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart);
       localStorage.setItem('domTime',domTime);

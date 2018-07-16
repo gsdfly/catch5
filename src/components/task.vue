@@ -38,6 +38,8 @@
 <script>
   import CONFIG from '../config'
   import {mapState} from 'vuex'
+  import api from './../api/index'
+
   export default {
     name:'task',
     data(){
@@ -54,9 +56,9 @@
         this.img1_1 = this.img1_2;
         this.img2_1 = this.img2_2;
       }
-      this.$store.dispatch('getOperations').then(()=>{
-        this.$store.dispatch('getActivityBountyInfo')
-      })
+      if(this.isLogin){
+        this.mountedStart();
+      }
     },
     computed: mapState({
       gzh_operation: state => state.user.gzh_operation,
@@ -64,8 +66,39 @@
       task_now:state => state.user.task_now,
       task_wawa:state => state.user.task_wawa,
       info: state => state.user.info,
+      isLogin: state => state.user.isLogin,
     }),
     methods:{
+      mountedStart(){
+        this.$store.dispatch('getOperations').then(()=>{
+          this.$store.dispatch('getActivityBountyInfo')
+          var coupon_time = Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart);
+          localStorage.removeItem('startTime2')
+          if(localStorage.getItem('userTime') && localStorage.getItem('domTime')){
+            this.sendTimeOthers(coupon_time);
+          }else {
+            var inter = setInterval(()=>{
+              if(localStorage.getItem('userTime') && localStorage.getItem('domTime')){
+                this.sendTimeOthers(coupon_time);
+                clearInterval(inter);
+              }
+            },500)
+          }
+        })
+      },
+      sendTimeOthers(coupon_time){
+        api.timeOthers({
+          token:CONFIG.token,
+          log_id:localStorage.getItem('log_id'),
+          auth_time:localStorage.getItem('warrantTime') ? localStorage.getItem('warrantTime') : 0,
+          dom_time:localStorage.getItem('domTime'),
+          coupon_time:coupon_time,
+          use_time:localStorage.getItem('userTime')
+        })
+        localStorage.removeItem('warrantTime');
+        localStorage.removeItem('userTime');
+        localStorage.removeItem('domTime');
+      },
       openTip(value){
           this.$emit('openTip',value);
       },
@@ -104,8 +137,12 @@
           })
         }
       }
+    },
+    watch:{
+      isLogin(){
+        this.mountedStart();
+      }
     }
-
   }
 </script>
 

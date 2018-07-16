@@ -3,6 +3,7 @@ import api from './../api/index'
 import {changeTipOperation} from "../util/index";
 
 const state = {
+  isLogin:false,
   user: {
     avatar: '',
     coins: 0,
@@ -69,6 +70,9 @@ const state = {
 }
 
 const mutations = {
+  changeIsLogin(state){
+    state.isLogin = true;
+  },
   setUser(state, user) {
     state.user = user
   },

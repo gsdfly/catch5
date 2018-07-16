@@ -33,10 +33,13 @@
       info: state => state.user.info,
       hide_coupons: state => state.user.hide_coupons,
       tip_operation: state => state.user.tip_operation,
+      isLogin:state => state.user.isLogin
     }),
     mounted() {
 //      this.getCoinList()
+      if(this.isLogin){
         this.$store.dispatch('getCoinList');
+      }
     },
     methods: {
       handlePayBefore(pay) {
@@ -151,6 +154,11 @@
         }
       }
     },
+    watch:{
+      isLogin(){
+        this.$store.dispatch('getCoinList');
+      }
+    }
   }
 </script>
 
