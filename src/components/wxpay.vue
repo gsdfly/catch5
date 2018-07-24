@@ -182,6 +182,8 @@
     /*border-radius: 0.15px;*/
     color: #494949;
     position: relative;
+    /*overflow: hidden;*/
+    border-radius: 16px;
   }
 
   .recharge-lists .active {
@@ -219,13 +221,13 @@
   }
 
   .recharge-item-b {
-    height: 61px;
-    line-height: 61px;
+    height: 63px;
+    line-height: 63px;
     /*font-size: 0.32px;*/
     font-size: 34px;
     background: #fb643b;
     color: #fff;
-    /*border-radius: 0 0 0.15px 0.15px;*/
+    border-radius: 0 0 12px 12px;
     text-align: center;
   }
 
@@ -243,7 +245,7 @@
     line-height: 68px;
     text-align: center;
     background: #fff;
-    /*border-radius: 0.15px 0.15px 0 0;*/
+    border-radius: 16px 16px 0 0;
   }
 
   .recharge-item-t span {
