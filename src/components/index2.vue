@@ -64,19 +64,29 @@
             <div class="center">
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
               <div class="ring" v-if="activity_bounty.length>0">
-                <div class="d">
-                  <div class="dd" :style="ringStyle">
-                    <div>
-                      <img class="img" src="./../assets/task-2/processed_bg.png" alt="">
-                      <!--<img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">-->
-                      <div class="star" :class="{'animation':starClass==='animation'}">
-                        <img class="star1" src="./../assets/ring/star1.png" alt="">
-                        <img class="star2" src="./../assets/ring/star2.png" alt="">
-                        <img class="star3" src="./../assets/ring/star3.png" alt="">
-                      </div>
+                <!--<div class="ring-d1">-->
+                  <div class="d" :style="ringStyle">
+                    <img class="img" src="./../assets/task-2/processed_bg.png" alt="">
+                    <div class="star" :class="{'animation':starClass==='animation'}">
+                      <img class="star1" src="./../assets/ring/star1.png" alt="">
+                      <img class="star2" src="./../assets/ring/star2.png" alt="">
+                      <img class="star3" src="./../assets/ring/star3.png" alt="">
                     </div>
                   </div>
-                </div>
+                <!--</div>-->
+                <!--<div class="d">-->
+                  <!--&lt;!&ndash;<div class="dd" :style="ringStyle">&ndash;&gt;-->
+                    <!--<div class="dd" :style="ringStyle">-->
+                      <!--&lt;!&ndash;<img class="img" src="./../assets/task-2/processed_bg.png" alt="">&ndash;&gt;-->
+                      <!--&lt;!&ndash;<img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">&ndash;&gt;-->
+                      <!--&lt;!&ndash;<div class="star" :class="{'animation':starClass==='animation'}">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img class="star1" src="./../assets/ring/star1.png" alt="">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img class="star2" src="./../assets/ring/star2.png" alt="">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img class="star3" src="./../assets/ring/star3.png" alt="">&ndash;&gt;-->
+                      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                  <!--</div>-->
+                <!--</div>-->
 
                 <span class="icon"></span>
                 <!--<span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>-->
@@ -593,7 +603,7 @@
         setTimeout(() => {
           this.starClass = '';
         }, 1000);
-        this.ringStyle = `transform:  rotate(${n}deg);`
+        this.ringStyle = `transform:  rotate(${n}deg);transform-origin: center bottom; `
 
       },
       receiveCoupon() {
@@ -2092,22 +2102,30 @@
     /*height: 213px;*/
     /*width: 417px;*/
     /*height: 240px;*/
-    width: 460px;
-    height: 261px;
+    width: 450px;
+    height: 243px;
     left: 50%;
     /*top: 36px;*/
     top:40px;
-    transform: translateX(calc(-50% - 8px));
+    transform: translateX(-50%);
+    /*transform: translateX(calc(-50% - 8px));*/
     /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/process_bg2.png");*/
-    background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");
+    /*background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");*/
+    background: url("./../assets/task-2/process_bg2.png");
     /*background: red;*/
     background-size: 100% 100%;
     pointer-events: none;
     /*padding: 0.1px;*/
   }
+  .main .centerout .center .ring .ring-d1{
+    width: 437px;
+    height: 221px;
+    overflow: hidden;
+  }
 
-  .main .centerout .center .ring .icon {
+
+    .main .centerout .center .ring .icon {
     width: 42px;
     height: 42px;
     /*width: 50px;*/
@@ -2117,8 +2135,8 @@
     /*bottom:12px;*/
     font-size: 20px;
     /*background: blue;*/
-    left: 12px;
-    bottom: 20px;
+    left: 2px;
+    bottom: -12px;
     /*background: url("./../assets/ring/process_r.png");*/
     background: url("./../assets/task-2/process_bg_circular.png");
     background-size: 100% 100%;
@@ -2126,6 +2144,7 @@
     text-align: center;
     line-height: 58px;
     letter-spacing: -25;
+    /*display: none;*/
   }
 
   .main .centerout .center .ring .icon b {
@@ -2137,28 +2156,32 @@
     height: 215px;
     /*width: 380px;*/
     /*height: 196px;*/
-    margin: 0 0 0 21.4px;
-    padding: 6px 0 0 0;
+    /*margin: 6px 0 0 13px;*/
+    /*padding: 6px 0 0 0;*/
     overflow: hidden;
-    /*background: blue;*/
-  }
-
-  .main .centerout .center .ring .d .dd {
-    width: 100%;
-    /*height: 380px;*/
-    height: 430px;
+    background: blue;
     transform: rotate(180deg);
+    transform-origin: center bottom;
     transition: transform 1s linear;
-    /*display: none;*/
-    /*animation: turn 1s linear infinite;*/
+  }
+
+  /*.main .centerout .center .ring .d .dd {*/
+    /*width: 424px;*/
+    /*!*height: 380px;*!*/
+    /*height: 215px;*/
+    /*transform: rotate(180deg);*/
+    /*transform-origin: center bottom;*/
+    /*transition: transform 1s linear;*/
+    /*!*display: none;*!*/
+    /*!*animation: turn 1s linear infinite;*!*/
     /*background: pink;*/
-  }
+  /*}*/
 
-  .main .centerout .center .ring .d .dd > div {
-    position: relative;
-  }
+  /*.main .centerout .center .ring .d .dd > div {*/
+    /*position: relative;*/
+  /*}*/
 
-  .main .centerout .center .ring .d .dd .star {
+  .main .centerout .center .ring .d .star {
     width: 30px;
     height: 30px;
     /*background: red;*/
@@ -2168,11 +2191,11 @@
     /*z-index: 999;*/
   }
 
-  .main .centerout .center .ring .d .dd .animation img {
-    animation: turn 1s linear infinite;
+  .main .centerout .center .ring .d  .animation img {
+    /*animation: turn 1s linear infinite;*/
   }
 
-  .main .centerout .center .ring .d .dd .star .star1 {
+  .main .centerout .center .ring .d  .star .star1 {
     width: 18px;
     height: 18px;
     position: absolute;
@@ -2181,7 +2204,7 @@
     /*animation: turn 1s linear infinite;*/
   }
 
-  .main .centerout .center .ring .d .dd .star .star2 {
+  .main .centerout .center .ring .d  .star .star2 {
     width: 21.5px;
     height: 21.5px;
     position: absolute;
@@ -2190,7 +2213,7 @@
     /*animation: turn 1s linear infinite;*/
   }
 
-  .main .centerout .center .ring .d .dd .star .star3 {
+  .main .centerout .center .ring .d  .star .star3 {
     width: 16px;
     height: 16px;
     position: absolute;
@@ -2199,7 +2222,7 @@
     /*animation: turn 1s linear infinite;*/
   }
 
-  .main .centerout .center .ring .d .dd .img {
+  .main .centerout .center .ring .d  .img {
     width: 424px;
     height: 215px;
     /*width: 380px;*/
