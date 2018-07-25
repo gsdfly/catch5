@@ -252,7 +252,7 @@
             <div>
               <h3 class="tipTitle"><span></span><b>{{couponInfo.name}}</b></h3>
               <div class="scroll">
-                <h3 id="copy">{{couponInfo.code}}</h3>
+                <span class="spanh3" id="copy">{{couponInfo.code}}</span>
                 <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                 <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy">复制</button>
               </div>
@@ -621,6 +621,7 @@
       copy() {
         var clipboard = new Clipboard('.btncopy');
         clipboard.on('success', e => {
+          console.log(e)
           Toast({
             message: '复制成功',
             position: 'middle',
@@ -896,6 +897,9 @@
   @mixin tipButton {
     width: 118px;
     height: 56px;
+    text-align: center;
+    -webkit-appearance:none;
+    line-height: 56px;
     outline: none;
     font-size: 30px;
     border: none;
@@ -1223,7 +1227,8 @@
           padding: 0.1px;
           @include centerX;
           top: 112px;
-          h3 {
+          .spanh3 {
+            display: inline-block;
             font-size: 44px;
             line-height: 44px;
             margin: 40px 0 20px 0;
