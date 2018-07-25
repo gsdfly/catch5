@@ -243,7 +243,7 @@
             <div>
               <h3 class="tipTitle"><span></span><b>5元“买娃娃”红包</b></h3>
               <div class="scroll">
-                  <h3 id="copy">{{couponInfo.code}}</h3>
+                  <span class="spanh3" id="copy">{{couponInfo.code}}</span>
                   <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                   <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy">复制</button>
               </div>
@@ -1130,10 +1130,11 @@
           padding: 0.1px;
           @include centerX;
           top:112px;
-          h3{
+          .spanh3{
             font-size: 44px;
             line-height: 44px;
             margin: 40px 0 20px 0;
+            display: inline-block;
           }
           p{
             font-size: 24px;

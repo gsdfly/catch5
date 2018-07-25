@@ -56,4 +56,9 @@ ul,li,dl{
   /*list-style: none;*/
   list-style-type:none;
 }
+  button{
+    margin: 0;
+    padding: 0;
+    outline: none;
+  }
 </style>
