@@ -185,6 +185,11 @@
     /*overflow: hidden;*/
     border-radius: 16px;
   }
+  .recharge-lists > div:last-of-type,  .recharge-lists > div:nth-last-of-type(2)
+  {
+    margin: 0;
+  }
+
 
   .recharge-lists .active {
     color: #666;

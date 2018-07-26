@@ -2036,7 +2036,7 @@
 
   .main {
     width: 100%;
-    height: 45.6%;
+    height: 46.6%;
     min-height: 538px;
     /*height: calc(100% - 4.98px);*/
     position: relative;
@@ -2047,7 +2047,7 @@
     /*overflow: hidden;*/
     /*padding: 0 0.22px;*/
     /*height: 2.04px;*/
-    height: 15.4%;
+    height: 14.4%;
     /*min-height: 178px;*/
     min-height: 168px;
     /*padding: 0 22px;*/
