@@ -85,7 +85,7 @@
                   <div class="ring-tip" @click="handleRed(item.voucher_batch.value <= task_now.recharge_bounty,item)">
                     <div class="ring-tip-bg">
                       <div class="ring-quan"  :class="{'ring-tip-ling':item.voucher_batch.value <= task_now.recharge_bounty}">
-                        <img class="ringicon ringicon2" :src="item.voucher_batch.image" alt=""/>
+                        <img v-if="item.voucher_batch.image" class="ringicon ringicon2" :src="item.voucher_batch.image" alt=""/>
                       </div>
                       <div class="ring-content"
                            :class="{'last':(index+1)/activity_bounty.length>=0.6,'nolast':(index+1)/activity_bounty.length<0.6}">
@@ -284,7 +284,7 @@
           <div>
             <div class="bg-center11-top">
               <img class="top-img" src="./../assets/task-2/congratulate_bg.png" alt=""/>
-              <img class="top-wawa" :src="currentGift.voucher_batch.big_image" alt="">
+              <img v-if="currentGift.voucher_batch.big_image" class="top-wawa" :src="currentGift.voucher_batch.big_image" alt="">
             </div>
             <div class="bg-center11-main">
               <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="" class="imgBg" @click.prevent=""/>-->
