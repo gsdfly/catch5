@@ -11,7 +11,7 @@ import Indicator from 'mint-ui/lib/indicator'
 import api from './api'
 import {GetCookie, getParamByName, SetCookie} from "./util/index";
 
-// require('./util/vconsole')
+require('./util/vconsole')
 
 FastClick.attach(document.body)
 
@@ -91,14 +91,34 @@ FastClick.attach(document.body)
       sc.onload = function () {
         wxFc()
       }
-    } else {
+    } else if(CONFIG.isAlipay){
       sc.src = 'https://a.alipayobjects.com/g/h5-lib/alipayjsapi/3.0.5/alipayjsapi.inc.min.js'
       document.getElementsByTagName('body')[0].appendChild(sc)
+    }else {
+      sc.src = '//g.alicdn.com/tmapp/tida/3.3.26/tida.js?appkey=24981050'
+      document.getElementsByTagName('body')[0].appendChild(sc)
+      sc.onload = function () {
+        Tida.isLogin(function (res) {
+          if(res.isLogin){
+            alert(res.mixnick)
+            Tida.user.openuid(function (d) {
+              alert(JSON.stringify(d))
+            }, function (d) {
+              alert(JSON.stringify(d))
+            })
+          }else {
+            alert('请您先登录淘宝')
+          }
+        });
+      }
     }
   }else {
     store.commit('changeIsLogin');
     store.dispatch('getUser');
   }
+
+  store.commit('changeIsLogin');
+  store.dispatch('getUser');
 
   store.commit('setMachineNo');
 

@@ -20,9 +20,10 @@ let CONFIG = {
   version: '1.0.0',
   scene:1,
   site_version_id:GetCookie('site_version_id') || 0,
-  get token(){
-    return   process.env.NODE_ENV === 'development' ? 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZnJvbnQuNXpodWEuY24vYXBpL2F1dGgvdG9rZW4iLCJpYXQiOjE1MzI1ODcwMjUsImV4cCI6MTUzMjgwMzAyNSwibmJmIjoxNTMyNTg3MDI1LCJqdGkiOiJObHIySmRqb0l0RDVkZ1AxIiwic3ViIjoyfQ.WlihWxESTZisC5my8uCd45QVXRAl8CBbFhXxkrTu-FA' : GetCookie('token_')
-  },
+  // get token(){
+  //   return   process.env.NODE_ENV === 'development' ? 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZnJvbnQuNXpodWEuY24vYXBpL2F1dGgvdG9rZW4iLCJpYXQiOjE1MzI1ODcwMjUsImV4cCI6MTUzMjgwMzAyNSwibmJmIjoxNTMyNTg3MDI1LCJqdGkiOiJObHIySmRqb0l0RDVkZ1AxIiwic3ViIjoyfQ.WlihWxESTZisC5my8uCd45QVXRAl8CBbFhXxkrTu-FA' : GetCookie('token_')
+  // },
+  token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZnJvbnQuNXpodWEuY24vYXBpL2F1dGgvdG9rZW4iLCJpYXQiOjE1MzI1ODcwMjUsImV4cCI6MTUzMjgwMzAyNSwibmJmIjoxNTMyNTg3MDI1LCJqdGkiOiJObHIySmRqb0l0RDVkZ1AxIiwic3ViIjoyfQ.WlihWxESTZisC5my8uCd45QVXRAl8CBbFhXxkrTu-FA',
   machine_no: getParamByName('machine') || 'CATCH_100024',
   u: function () {
     return `?machine=${this.machine_no}&token=${this.token}`
