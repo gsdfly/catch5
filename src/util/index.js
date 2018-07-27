@@ -202,8 +202,9 @@ export const changeTipOperation = (tipOperationObj, loalStorageName, store) => {
 
 export const payment = (CONFIG, params, self, callback) => {
   console.log(self);
-  if (CONFIG.isAlipay) {
-    self.$store.dispatch('getPayAlipay', params).then((data) => {
+  alert(CONFIG.isTaobao)
+  if (CONFIG.isAlipay || CONFIG.isTaobao) {
+    self.$store.dispatch('getPayTpp', params).then((data) => {
       AlipayJSBridge.call("tradePay", {
         tradeNO: data.data.trade_no
       }, function (result) {

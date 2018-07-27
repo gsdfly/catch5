@@ -6,6 +6,7 @@ function IsWeixinOrAlipay() {
   if (ua.match(/MicroMessenger/i) == 'micromessenger') return "WeiXin"
   //判断是不是支付宝
   if (ua.match(/AlipayClient/i) == 'alipayclient') return "Alipay"
+  if (ua.match(/taobao/i) == 'taobao') return "taobao"
   //判断是不是淘票票
   if (ua.match(/tbmovie/i) == 'tbmovie') return "Tpp"
   //哪个都不是
@@ -30,6 +31,7 @@ let CONFIG = {
   },
   isWx: expName === 'WeiXin' ? true : false,
   isAlipay: expName === 'Alipay' ? true : false,
+  isTaobao: expName === 'taobao' ? true : false,
   isTpp: expName === 'Tpp' ? true : false
 }
 
