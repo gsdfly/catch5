@@ -100,8 +100,10 @@ FastClick.attach(document.body)
       sc.onload = function () {
         Tida.isLogin(function (res) {
           if(res.isLogin){
+            console.log(res.mixnick)
             alert(res.mixnick)
             Tida.user.openuid(function (d) {
+              console.log(JSON.stringify(d))
               alert(JSON.stringify(d))
             }, function (d) {
               alert(JSON.stringify(d))
