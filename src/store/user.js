@@ -220,10 +220,10 @@ const actions = {
       }
     })
   },
-  getPayTpp(ctx, id) {
+  getPayTpp(ctx, params) {
     return new Promise((success, error) => {
       api.getPayTpp({
-        coin_price_id: id,
+        coin_price_id: params.coin_price_id,
         machine_no: ctx.state.machine_no,
         token:CONFIG.token
       }).then((data) => {
