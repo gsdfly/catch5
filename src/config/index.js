@@ -24,7 +24,7 @@ let CONFIG = {
   // get token(){
   //   return   process.env.NODE_ENV === 'development' ? 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZnJvbnQuNXpodWEuY24vYXBpL2F1dGgvdG9rZW4iLCJpYXQiOjE1MzI1ODcwMjUsImV4cCI6MTUzMjgwMzAyNSwibmJmIjoxNTMyNTg3MDI1LCJqdGkiOiJObHIySmRqb0l0RDVkZ1AxIiwic3ViIjoyfQ.WlihWxESTZisC5my8uCd45QVXRAl8CBbFhXxkrTu-FA' : GetCookie('token_')
   // },
-  token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZnJvbnQuNXpodWEuY24iLCJpYXQiOjE1MzI2ODY0MzgsImV4cCI6MTUzMjkwMjQzOCwibmJmIjoxNTMyNjg2NDM4LCJqdGkiOiJ2aTVnQ0YwT3NzOTY1MUhxIiwic3ViIjozfQ.0q6ta1XBab51i_Jx0xUyYtC7jvYdZ2Gu8YPmEVrF464',
+  token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZnJvbnQuNXpodWEuY24iLCJpYXQiOjE1MzI5MjI2NjgsImV4cCI6MTUzMzEzODY2OCwibmJmIjoxNTMyOTIyNjY4LCJqdGkiOiJBdVhWN3dZZzlDZUNIZTZSIiwic3ViIjozfQ.nILWEPIUnMB7HPzuz_ZdssBzq-bwwpb9AoT5E3qf1sk',
   machine_no: getParamByName('machine') || 'CATCH_100024',
   u: function () {
     return `?machine=${this.machine_no}&token=${this.token}`

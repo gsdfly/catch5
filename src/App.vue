@@ -6,7 +6,7 @@
 export default {
   name: 'app',
   mounted() {
-    if (process.env.NODE_ENV == 'development') this.$router.push('/catch/sendcoupon')
+    if (process.env.NODE_ENV == 'development') this.$router.push('/taobao/taobao')
   }
 }
 </script>
