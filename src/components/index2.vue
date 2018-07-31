@@ -256,7 +256,7 @@
               <div class="scroll">
                   <span class="spanh3" id="copy">{{couponInfo.code}}</span>
                   <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
-                  <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy">复制</button>
+                  <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy" id="copyBtn">复制</button>
               </div>
               <img src="http://res.catchme.com.cn/activity/catch3/shuoming2.png" alt="" @click.prevent="" class="imgBg"/>
               <!--<div class="phone">-->
@@ -343,7 +343,7 @@
                         <p>有效期至：{{item.end_time | handleEndTime}}</p>
                       </dt>
                       <dd>
-                        <button @click="useCoupon(item.code,item.end_time)">使用</button>
+                        <button id="useCoupon" @click="useCoupon(item.code,item.end_time)">使用</button>
                       </dd>
                     </dl>
                   </div>
@@ -530,6 +530,7 @@
         })
       },
       useCoupon(code,end_time) {
+        _hmt.push(['_trackEvent','打开使用优惠券弹窗', '点击', '优惠券为：5元买娃娃红包', '优惠券码为：'+code]);
         this.contentShow = 'exchange2';
         this.couponInfo.code = code;
         this.couponInfo.end_time = end_time;
@@ -538,6 +539,7 @@
       copy() {
         var clipboard = new Clipboard('.btncopy');
         clipboard.on('success', e => {
+          _hmt.push(['_trackEvent','点击复制优惠券', '点击', '优惠券为：5元“买娃娃”红包', '优惠券码为：'+this.couponInfo.code]);
           Toast({
             message: '复制成功',
             position: 'middle',

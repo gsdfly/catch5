@@ -1,7 +1,7 @@
 <template>
   <div class="quanprogress" :class="{'quan-version2':version2}">
     <p class="p1" @click="openActivityRule">活动规则</p>
-    <p class="p2" @click="goExchange">我的红包:{{activity_bounty.vouchers.length}}<span></span></p>
+    <p class="p2" @click="goExchange" id="couponList">我的红包:{{activity_bounty.vouchers.length}}<span></span></p>
     <div>
       <img @click.prevent="" :src="img1" alt="">
       <div class="progress-out">
@@ -69,6 +69,7 @@
         if (this.activity_bounty.vouchers && this.activity_bounty.vouchers.length === 0) {
           this.$emit('openTip', 'notExchange');
         } else {
+          _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为：'+this.activity_bounty.voucher_batch.name, '']);
 //          this.$emit('openTip', 'exchange');
           this.$emit('openTip', 'couponList');
         }
