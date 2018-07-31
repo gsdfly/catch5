@@ -82,7 +82,7 @@
                 <!--<span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>-->
                 <div class="task-gift" v-for="(item,index) in activity_bounty">
                   <!--<img class="ling" v-if="item.voucher_batch.value <= task_now.recharge_bounty" src="./../assets/task/red_ling.png" alt="" @click="receiveGift(item)" />-->
-                  <div class="ring-tip" @click="handleRed(item.voucher_batch.value <= task_now.recharge_bounty,item)">
+                  <div class="ring-tip" id="couponList" @click="handleRed(item.voucher_batch.value <= task_now.recharge_bounty,item)">
                     <div class="ring-tip-bg">
                       <div class="ring-quan"  :class="{'ring-tip-ling':item.voucher_batch.value <= task_now.recharge_bounty}">
                         <img v-if="item.voucher_batch.image" class="ringicon ringicon2" :src="item.voucher_batch.image" alt=""/>
@@ -254,7 +254,7 @@
               <div class="scroll">
                 <span class="spanh3" id="copy">{{couponInfo.code}}</span>
                 <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
-                <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy">复制</button>
+                <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy" id="copyBtn">复制</button>
               </div>
               <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="" @click.prevent=""
                    class="imgBg"/>
@@ -339,7 +339,7 @@
                           <p>有效期至：{{item.end_time | handleEndTime}}</p>
                         </dt>
                         <dd>
-                          <button @click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name)">使用</button>
+                          <button id="useCoupon" @click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name)">使用</button>
                         </dd>
                       </dl>
                     </div>
@@ -535,11 +535,11 @@
         this.openTip('receive');
       },
       couponList() {
-        console.log('11111')
         var len = this.activity_bounty.length;
         for (var i = 0; i < len; i++) {
           if (this.activity_bounty[i].vouchers.length > 0) {
             this.openTip('couponList');
+            _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为：'+this.activity_bounty[i].voucher_batch.name, '']);
             return;
           }
         }
@@ -612,6 +612,7 @@
         })
       },
       useCoupon(code, end_time,name) {
+        _hmt.push(['_trackEvent','打开使用优惠券列表弹窗', '点击', '优惠券为：'+name, '优惠券码为：'+code]);
         this.contentShow = 'exchange2';
         this.couponInfo.name = name;
         this.couponInfo.code = code;
@@ -622,6 +623,7 @@
         var clipboard = new Clipboard('.btncopy');
         clipboard.on('success', e => {
           console.log(e)
+          _hmt.push(['_trackEvent','点击复制优惠券', '点击', '优惠券为：'+this.couponInfo.name, '优惠券码为：'+this.couponInfo.code]);
           Toast({
             message: '复制成功',
             position: 'middle',
