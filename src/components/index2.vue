@@ -430,7 +430,7 @@
         ringStyle:'',
         isRequest:false,
         centerStyle:'',
-        starClass:''
+        starClass:'',
       }
     },
     created() {
