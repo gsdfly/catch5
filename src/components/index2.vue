@@ -9,7 +9,7 @@
       </div>
       <div class="header">
         <div>
-          <div class="head-portrait">
+          <div class="head-portrait" @click="goProfile">
             <img v-if="user.avatar" :src="user.avatar" alt="" style="border-radius: 50%">
             <!--<img v-else="" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_portrait.png" alt="">-->
             <img v-else="" src="./../assets/small/icon_portrait.png" alt="">
@@ -523,6 +523,10 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      goProfile(){
+        console.log('1111')
+        window.location.href = CONFIG.localtionUrl2+'profile'
+      },
       handleRed(flag, item) {
         if (flag) {
           this.receiveGift(item)
@@ -543,6 +547,7 @@
             return;
           }
         }
+        _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为0', '']);
         this.openTip('notExchange');
       },
       receiveTaskGame() {
@@ -612,7 +617,7 @@
         })
       },
       useCoupon(code, end_time,name) {
-        _hmt.push(['_trackEvent','打开使用优惠券弹窗', '点击', '优惠券为：'+name, '优惠券码为：'+code]);
+        _hmt.push(['_trackEvent','打开使用优惠券弹窗', '点击', '优惠券为：'+name+'--优惠券码为：'+code, '']);
         this.contentShow = 'exchange2';
         this.couponInfo.name = name;
         this.couponInfo.code = code;
@@ -623,7 +628,7 @@
         var clipboard = new Clipboard('.btncopy');
         clipboard.on('success', e => {
           console.log(e)
-          _hmt.push(['_trackEvent','点击复制优惠券', '点击', '优惠券为：'+this.couponInfo.name, '优惠券码为：'+this.couponInfo.code]);
+          _hmt.push(['_trackEvent','点击复制优惠券', '点击', '优惠券为：'+this.couponInfo.name+'--优惠券码为：'+this.couponInfo.code, '']);
           Toast({
             message: '复制成功',
             position: 'middle',
@@ -1920,6 +1925,7 @@
     position: absolute;
     left: 0;
     top: 0;
+    pointer-events: none;
   }
 
   .header .header-main h4 {
@@ -2011,6 +2017,7 @@
     right: 0;
     padding: 0 22px;
     border-radius: 15px 0 0 15px;
+    pointer-events: auto;
   }
 
   .header .header-main .kefu > p {
