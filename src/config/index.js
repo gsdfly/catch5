@@ -16,8 +16,8 @@ function IsWeixinOrAlipay() {
 var expName = IsWeixinOrAlipay();
 
 let CONFIG = {
-  url: document.URL.indexOf('catchme') !== -1 ?  'http://front.catchme.com.cn/' : 'http://front.5zhua.cn/',
-  localtionUrl: document.URL.indexOf('catchme') !== -1 ? 'http://www.catchme.com.cn/catch/':'http://www.5zhua.cn/catch/',
+  url: document.URL.indexOf('catchme.com') !== -1 ?  'http://front.catchme.com.cn/' : 'http://front.5zhua.cn/',
+  localtionUrl: document.URL.indexOf('catchme.com') !== -1 ? 'http://www.catchme.com.cn/catch/':'http://www.5zhua.cn/catch/',
   version: '1.0.0',
   scene:1,
   site_version_id:GetCookie('site_version_id') || 0,
