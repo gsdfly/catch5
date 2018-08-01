@@ -8,7 +8,7 @@
         <div class="progress-in" :style="styleLong"></div>
       </div>
       <img v-if="activity_bounty.voucher_batch.value <= task_now.recharge_bounty && activity_bounty.voucher_batch.value !== 0" class="ling" @click.stop="goReceive" src="./../assets/catch3/ling.png" alt="">
-      <div class="right" v-else="">还差<span>{{(activity_bounty.voucher_batch.value - task_now.recharge_bounty).toFixed(2)}}</span>元</div>
+      <div class="right" v-else="">还差<span>{{Math.ceil((activity_bounty.voucher_batch.value - task_now.recharge_bounty)/info.coin_num)}}</span>次</div>
     </div>
   </div>
 </template>
@@ -37,6 +37,7 @@
         activity_promocode: state => state.user.activity_promocode,
         activity_bounty: state => state.user.activity_bounty,
         task_now: state => state.user.task_now,
+        info: state => state.user.info,
       })
     },
     mounted() {
