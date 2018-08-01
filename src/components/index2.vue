@@ -617,7 +617,7 @@
         })
       },
       useCoupon(code, end_time,name) {
-        _hmt.push(['_trackEvent','打开使用优惠券弹窗', '点击', '优惠券为：'+name+'--优惠券码为：'+code, '']);
+        _hmt.push(['_trackEvent','打开使用优惠券弹窗', '点击', '使用优惠券为：'+name, '']);
         this.contentShow = 'exchange2';
         this.couponInfo.name = name;
         this.couponInfo.code = code;
@@ -628,7 +628,7 @@
         var clipboard = new Clipboard('.btncopy');
         clipboard.on('success', e => {
           console.log(e)
-          _hmt.push(['_trackEvent','点击复制优惠券', '点击', '优惠券为：'+this.couponInfo.name+'--优惠券码为：'+this.couponInfo.code, '']);
+          _hmt.push(['_trackEvent','点击复制优惠券', '点击', '复制优惠券为：'+this.couponInfo.name,'']);
           Toast({
             message: '复制成功',
             position: 'middle',
