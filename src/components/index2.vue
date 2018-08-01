@@ -609,6 +609,7 @@
         _hmt.push(['_trackEvent', '主按钮投币', '点击', '投币-游戏次数-' + this.gameNum, '']);
         this.$store.dispatch('startingDevice', this.gameNum * this.info.coin_num)
           .then(() => {
+            this.$store.dispatch('getActivityBountyInfo');
             this.is_lamp_after = true
             this.is_start = false
             this.start_desc = '投币启动'
