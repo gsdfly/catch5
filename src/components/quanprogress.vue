@@ -172,7 +172,7 @@
 //          }
         console.log('2222222')
         //这里需要判断是不是充值之后改变的
-        if(newActivity.game_bounty !== oldActivity.game_bounty || newActivity.prize_bounty !== oldActivity.prize_bounty){
+        if(newActivity.prize_bounty !== oldActivity.prize_bounty){
           return;
         }
         console.log('333333')
