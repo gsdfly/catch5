@@ -530,7 +530,7 @@
         })
       },
       useCoupon(code,end_time) {
-        _hmt.push(['_trackEvent','打开使用优惠券弹窗', '点击', '优惠券为：'+this.activity_bounty.voucher_batch.name, '优惠券码为：'+code]);
+        _hmt.push(['_trackEvent','打开使用优惠券弹窗', '点击', '优惠券为：'+this.activity_bounty.voucher_batch.name+'--优惠券码为：'+code,'']);
         this.contentShow = 'exchange2';
         this.couponInfo.code = code;
         this.couponInfo.end_time = end_time;
@@ -539,7 +539,7 @@
       copy() {
         var clipboard = new Clipboard('.btncopy');
         clipboard.on('success', e => {
-          _hmt.push(['_trackEvent','点击复制优惠券', '点击', '优惠券为：'+this.activity_bounty.voucher_batch.name, '优惠券码为：'+this.couponInfo.code]);
+          _hmt.push(['_trackEvent','点击复制优惠券', '点击', '优惠券为：'+this.activity_bounty.voucher_batch.name+'--优惠券码为：'+this.couponInfo.code,'']);
           Toast({
             message: '复制成功',
             position: 'middle',
