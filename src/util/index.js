@@ -265,7 +265,7 @@ export const payment = (CONFIG, params, self, callback) => {
       self.isRequest = false;
     })
   }else {
-      window.location.href = `https://catchme.ewssh.m.jaeapp.com/index.php/api/taobao/order?machine_no=${CONFIG.machine_no}&coin_price_id=${params.coin_price_id}&token=${CONFIG.token}`
+      window.location.href = `https://catchme.ewssh.m.jaeapp.com/index.php/api/taobao/order?machine_no=${CONFIG.machine_no}&coin_price_id=${params.coin_price_id}&token=${CONFIG.token}&callback=${document.URL}`
     }
 }
 
