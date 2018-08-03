@@ -71,9 +71,8 @@ FastClick.attach(document.body)
         }else {
           if (CONFIG.isAlipay) {
             window.location.href = CONFIG.url+'v2/alipay/oauth?callback='+document.URL;
-          }
-          else if(CONFIG.isTaobao){
-            alert('淘宝授权');
+          } else if(CONFIG.isTaobao){
+            window.location.href = 'https://catchme.ewssh.m.jaeapp.com/index.php/taobao/oauth?callback='+document.URL.replace('?','&');
           }else {
             window.location.href = CONFIG.url+'v2/wechat/oauth_scope?callback='+document.URL
           }
