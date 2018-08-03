@@ -547,7 +547,7 @@
             return;
           }
         }
-        _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为0', '']);
+        _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为：0', '']);
         this.openTip('notExchange');
       },
       receiveTaskGame() {
