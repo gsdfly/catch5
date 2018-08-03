@@ -55,7 +55,7 @@
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
-        <task @receiveBiSuccess="receiveBiSuccess" @openTip="openTip"></task>
+        <task @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" ></task>
       </div>
 
       <div class="main">
@@ -394,6 +394,15 @@
           <p>您还没有抓中哦</p>
           <button @click="closeBg">去抓娃娃</button>
         </div>
+
+        <div class="bg-center16" v-if="contentShow == 'shopList'" @click.stop="">
+          <div v-for="item in shop_operation.slice(0,1)">
+            <img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>
+            <p>关注{{item.title}}送币</p>
+            <button @click="gzShop(item)">关注店铺</button>
+          </div>
+        </div>
+
       </div>
 
       <tipOperation></tipOperation>
@@ -487,6 +496,7 @@
       activity_bounty: state => state.user.activity_bounty,
       task_game: state => state.user.task_game,
       task_now: state => state.user.task_now,
+      shop_operation: state => state.user.shop_operation,
     }),
     components: {
       joPay,
@@ -523,6 +533,27 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      gzShop(item){
+        var self = this;
+        Tida.subscribe.add({
+          accountId:item.account_id
+        },function(data) {
+          alert('关注成功');
+          self.$store.dispatch('getActivityBountyExchange', item.id).then((res) => {
+            self.$store.dispatch('getFreeCoin', {
+              coin_price_id: item.coin_price.coin_price_id,
+              coupon_id: item.coupon.id
+            }).then((data) => {
+              self.bgShow = false;
+              self.$store.commit('setCoins', data.data.coin_num);
+              self.$store.dispatch('getUser');
+              self.$store.dispatch('getOperations');
+            })
+          })
+          }, function (e) {
+            alert(JSON.stringify(e))
+          })
+      },
       handleRed(flag, item) {
         if (flag) {
           this.receiveGift(item)
@@ -1545,8 +1576,8 @@
   .bg-center15 {
     width: 666px;
     height: 750px;
-    background: url("http://res.catchme.com.cn/activity/task2/window_bg.png") no-repeat;
-    background-size: 100% 100%;
+    /*background: url("http://res.catchme.com.cn/activity/task2/window_bg.png") no-repeat;*/
+    /*background-size: 100% 100%;*/
     border-radius: 20px;
     @include center;
     > img {
@@ -1745,7 +1776,8 @@
     position: fixed;
     left: 0;
     top: 0;
-    background: rgba(0, 0, 0, 0.72);
+    background: red;
+    /*background: rgba(0, 0, 0, 0.72);*/
     z-index: 999;
     width: 100%;
     height: 100%;

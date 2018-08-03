@@ -3,17 +3,22 @@
     <!--<img class="task-bg" :src="img1_1" alt="" @click.prevent=""/>-->
     <!--<img class="free-bg" :src="img2_2" alt="">-->
     <ul>
-      <li @click="consumer" v-if="gzh_operation.id">
-          <!--<div>-->
-            <!--<img class="liImg1" src="./../assets/task/a.png" alt=""/>-->
-          <img :class="{'is_down':gzh_operation.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
-          <img v-if="gzh_operation.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-          <!--</div>-->
-          <p :class="{'is_down':gzh_operation.coupon.status === 2}">免费领币</p>
-          <!--<p v-if="gzh_operation.coupon.status !== 2">免费领币</p>-->
-          <!--<p class="hasDown" v-else="">已领取</p>-->
+      <!--<li @click="consumer" v-if="gzh_operation.id">-->
+          <!--&lt;!&ndash;<div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<img class="liImg1" src="./../assets/task/a.png" alt=""/>&ndash;&gt;-->
+          <!--<img :class="{'is_down':gzh_operation.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>-->
+          <!--<img v-if="gzh_operation.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--<p :class="{'is_down':gzh_operation.coupon.status === 2}">免费领币</p>-->
+          <!--&lt;!&ndash;<p v-if="gzh_operation.coupon.status !== 2">免费领币</p>&ndash;&gt;-->
+          <!--&lt;!&ndash;<p class="hasDown" v-else="">已领取</p>&ndash;&gt;-->
+      <!--</li>-->
+      <li @click="openShopFree" v-if="shop_operation.length>0">
+        <img :class="{'is_down':shop_operation[0].task_count >= shop_operation[0].num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+        <img v-if="shop_operation[0].task_count >= shop_operation[0].num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+        <p :class="{'is_down':shop_operation[0].task_count >= shop_operation[0].num}">免费领币</p>
       </li>
-      <li>
+      <li v-if="task_game.num>0">
         <div @click="openTip('taskGameTip')" class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">
           <div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>
           <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{task_game.value/info.coin_num}}</span>
@@ -33,7 +38,7 @@
          <!--<p v-if="task_game.task_count < task_game.num">投币送币</p>-->
          <!--<p class="hasDown" v-else="">已领取</p>-->
       </li>
-      <li>
+      <li v-if="task_wawa.num>0">
         <img @click="openTip('taskWawaTip')" v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty<task_wawa.value" src="./../assets/task-2/icon_free_c.png" alt=""/>
         <img :class="{'is_down':task_wawa.task_count >= task_wawa.num}" @click="receiveTask(task_wawa)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
         <img v-if="task_wawa.task_count >= task_wawa.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
@@ -82,8 +87,15 @@
       task_wawa:state => state.user.task_wawa,
       info: state => state.user.info,
       isLogin: state => state.user.isLogin,
-    }),
+      shop_operation: state => state.user.shop_operation,
+  }),
     methods:{
+      openShopFree(){
+        if(this.shop_operation[0].task_count >= this.shop_operation[0].num){
+          return;
+        }
+        this.$emit('openTip','shopList');
+      },
       mountedStart(){
         this.$store.dispatch('getOperations').then(()=>{
           this.$store.dispatch('getActivityBountyInfo')

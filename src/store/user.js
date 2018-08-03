@@ -56,7 +56,7 @@ const state = {
     coin_price:{}//优惠券绑定的充值项
   },
   task_wawa:{
-    num:1, //任务可以完成多少次
+    num:0, //任务可以完成多少次
     value:1,//任务值
     task_count:0,//任务已经完成的次数
     coupon:{},//任务绑定的优惠券
@@ -67,6 +67,7 @@ const state = {
     game_bounty:-1,//用户当前任务的进度
     prize_bounty:-1//掉落的娃娃数
   },
+  shop_operation:[]
 }
 
 const mutations = {
@@ -133,6 +134,9 @@ const mutations = {
   setGzhOperation(state,obj){
     state.gzh_operation = obj;
   },
+  setShopOperation(state,arr){
+    state.shop_operation = arr
+  }
 }
 
 const actions = {
@@ -320,6 +324,7 @@ const actions = {
         var operationsList = [];
         var hideCoupons = [];
         var activity_bounty = [];
+        var shopOperations = [];
 
         for(var i=0;i<res.length;i++){
           if(res[i].type ===1){
@@ -368,8 +373,12 @@ const actions = {
           }else if(res[i].type === 10){
             //type为10时为掉落任务运营位
             ctx.commit('setTaskWawa',res[i]);
+          }else if(res[i].type === 11){
+            //type为11时为关注店铺运营位
+            shopOperations.push(res[i])
           }
         }
+        ctx.commit('setShopOperation',shopOperations);
         let len = activity_bounty.length;
         for(var j=0;j<len;j++){
           for(var k=0;k<len-1-j;k++){
