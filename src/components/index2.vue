@@ -566,14 +566,15 @@
         this.openTip('receive');
       },
       couponList() {
-        console.log('11111')
         var len = this.activity_bounty.length;
         for (var i = 0; i < len; i++) {
           if (this.activity_bounty[i].vouchers.length > 0) {
+            _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为：'+this.activity_bounty[0].voucher_batch.name, '']);
             this.openTip('couponList');
             return;
           }
         }
+        _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为：0', '']);
         this.openTip('notExchange');
       },
       receiveTaskGame() {
@@ -643,6 +644,7 @@
         })
       },
       useCoupon(code, end_time,name) {
+        _hmt.push(['_trackEvent','打开使用优惠券弹窗', '点击', '使用优惠券为：'+name,'']);
         this.contentShow = 'exchange2';
         this.couponInfo.name = name;
         this.couponInfo.code = code;
@@ -653,6 +655,7 @@
         var clipboard = new Clipboard('.btncopy');
         clipboard.on('success', e => {
           console.log(e)
+          _hmt.push(['_trackEvent','点击复制优惠券', '点击', '复制优惠券为：'+this.couponInfo.name,'']);
           Toast({
             message: '复制成功',
             position: 'middle',
@@ -1646,6 +1649,12 @@
     }
   }
 
+  .bg-center16{
+    width: 100%;
+    height: 100%;
+    background: red;
+  }
+
   .price {
     position: absolute;
     width: 298px;
@@ -1776,8 +1785,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    background: red;
-    /*background: rgba(0, 0, 0, 0.72);*/
+    background: rgba(0, 0, 0, 0.72);
     z-index: 999;
     width: 100%;
     height: 100%;

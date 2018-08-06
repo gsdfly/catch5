@@ -91,9 +91,9 @@
   }),
     methods:{
       openShopFree(){
-        if(this.shop_operation[0].task_count >= this.shop_operation[0].num){
-          return;
-        }
+//        if(this.shop_operation[0].task_count >= this.shop_operation[0].num){
+//          return;
+//        }
         this.$emit('openTip','shopList');
       },
       mountedStart(){
