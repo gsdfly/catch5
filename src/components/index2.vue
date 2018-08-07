@@ -395,25 +395,14 @@
           <button @click="closeBg">去抓娃娃</button>
         </div>
 
-        <div class="bg-center16" v-if="contentShow == 'shopList'" >
-          <div v-for="item in shop_operation.slice(0,1)" @click.stop="">
-            <img class="text" src="./../assets/tb/free_catch.png" alt="" >
-            <div class="shopContent">
-              <img class="shopImg" src="./../assets/tb/image.png" alt="">
-              <img class="shopLogo" src="./../assets/tb/logo.png" alt="">
-            </div>
-            <div class="shopBottom">
-              <img class="leftImg" src="./../assets/tb/bi1.png" alt="">
-              <img class="rightImg" src="./../assets/tb/bi2.png" alt="">
-              <p>关注{{item.title}}</p>
-              <p>拿免费游戏币！</p>
-              <button @click="gzShop(item)">关注店铺</button>
-            </div>
+        <div class="bg-center16" v-if="contentShow == 'shopList'" @click.stop="">
+          <div v-for="item in shop_operation.slice(0,1)" >
+            <img class="bgImg" :src="item.url" alt="" >
+            <button @click="gzShop(item)">关注店铺</button>
           </div>
           <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                @click="closeBg"/>
         </div>
-
       </div>
 
       <tipOperation></tipOperation>
@@ -946,7 +935,23 @@
       background-position: 235px top;
     }
   }
-
+  @mixin longButton{
+      outline: none;
+      border: none;
+      width: 360px;
+      height: 70px;
+      background-image: linear-gradient(0deg,
+        rgba(253, 102, 59, 0.65) 0%,
+        rgba(254, 127, 66, 0.65) 100%),
+      linear-gradient(
+          #fd663b,
+          #fd663b);
+      box-shadow: 0px 3px 18px 0px rgba(134, 106, 49, 0.13),
+      0px 5px 32px 0px rgba(134, 106, 49, 0.33);
+      border-radius: 35px;
+      font-size: 32px;
+      color: #fff;
+  }
   @mixin tipButton {
     width: 118px;
     height: 56px;
@@ -1644,94 +1649,21 @@
       }
     }
     button {
-      outline: none;
-      border: none;
-      width: 360px;
-      height: 70px;
-      background-image: linear-gradient(0deg,
-        rgba(253, 102, 59, 0.65) 0%,
-        rgba(254, 127, 66, 0.65) 100%),
-      linear-gradient(
-          #fd663b,
-          #fd663b);
-      box-shadow: 0px 3px 18px 0px rgba(134, 106, 49, 0.13),
-      0px 5px 32px 0px rgba(134, 106, 49, 0.33);
-      border-radius: 35px;
-      font-size: 32px;
-      color: #fff;
+      @include longButton;
     }
   }
 
   .bg-center16{
-    width: 100%;
-    height: 100%;
-    .close{
-      position: fixed;
-      bottom: 70px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    >div{
-      width: 100%;
-      height: 90%;
-      background: url("./../assets/tb/free_bg.png") no-repeat;
-      background-size: 100% 100%;
-      transform: scale(0.85,0.85);
-      .text{
-        width: 100%;
-        display: block;
+    @include center;
+    div{
+      position: relative;
+      .bgImg{
+        width: 725px;
       }
-      .shopContent{
-        width: 706px;
-        height: 706px;
-        margin:  0 auto;
-        position: relative;
-        .shopImg{
-          width: 706px;
-          height: 706px;
-        }
-        .shopLogo{
-          width: 126px;
-          height: 126px;
-          position: absolute;
-          bottom: -52px;
-          left: 50%;
-          transform: translateX(-50%);
-        }
-      }
-      .shopBottom{
-        width: 100%;
-        position: relative;
-        margin: 58px 0 0 0;
-        p{
-          font-size: 30px;
-          color:#fff ;
-          line-height: 52px;
-        }
-        button{
-          margin: 28px 0 0 0;
-          width: 360px;
-          height: 70px;
-          background:linear-gradient(to bottom,#fff ,#f0e5de);
-          border: none;
-          outline: none;
-          color: #fe7640;
-          border-radius: 35px;
-        }
-        .leftImg{
-          width:60px;
-          height: 67px;
-          position: absolute;
-          left: 21px;
-          top:64px;
-        }
-        .rightImg{
-          width: 47px;
-          height: 48px;
-          position: absolute;
-          right: 25px;
-          top:15px;
-        }
+      button {
+        @include centerX;
+        @include longButton;
+        bottom: 84px;
       }
     }
   }

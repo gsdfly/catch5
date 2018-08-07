@@ -28,6 +28,7 @@ instance.interceptors.response.use(function(response) {
   //   await callbackUrl();
   // }
   if (error.response.data.status_code === 401) {
+    localStorage.clear();
     location.reload();
     return;
   }
