@@ -395,12 +395,23 @@
           <button @click="closeBg">去抓娃娃</button>
         </div>
 
-        <div class="bg-center16" v-if="contentShow == 'shopList'" @click.stop="">
-          <div v-for="item in shop_operation.slice(0,1)">
-            <img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>
-            <p>关注{{item.title}}送币</p>
-            <button @click="gzShop(item)">关注店铺</button>
+        <div class="bg-center16" v-if="contentShow == 'shopList'" >
+          <div v-for="item in shop_operation.slice(0,1)" @click.stop="">
+            <img class="text" src="./../assets/tb/free_catch.png" alt="" >
+            <div class="shopContent">
+              <img class="shopImg" src="./../assets/tb/image.png" alt="">
+              <img class="shopLogo" src="./../assets/tb/logo.png" alt="">
+            </div>
+            <div class="shopBottom">
+              <img class="leftImg" src="./../assets/tb/bi1.png" alt="">
+              <img class="rightImg" src="./../assets/tb/bi2.png" alt="">
+              <p>关注{{item.title}}</p>
+              <p>拿免费游戏币！</p>
+              <button @click="gzShop(item)">关注店铺</button>
+            </div>
           </div>
+          <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+               @click="closeBg"/>
         </div>
 
       </div>
@@ -538,7 +549,6 @@
         Tida.subscribe.add({
           accountId:item.account_id
         },function(data) {
-          alert('关注成功');
           self.$store.dispatch('getActivityBountyExchange', item.id).then((res) => {
             self.$store.dispatch('getFreeCoin', {
               coin_price_id: item.coin_price.coin_price_id,
@@ -551,7 +561,7 @@
             })
           })
           }, function (e) {
-            alert(JSON.stringify(e))
+            self.bgShow = false;
           })
       },
       handleRed(flag, item) {
@@ -723,6 +733,7 @@
         }, 60000)
       },
       closeBg(value) {
+        console.log('11111')
         if (value === 'red') {
           _hmt.push(['_trackEvent', '关闭红包弹窗', '点击', '', '']);
         } else if (value === 'hide') {
@@ -837,7 +848,9 @@
         }else {
           Tida.scanCode(function(res){
             if (res.code) {
-              window.location.href = res.code
+              if(res.type !== 'ERROR'){
+                window.location.href = res.code
+              }
             }
           });
         }
@@ -1652,7 +1665,75 @@
   .bg-center16{
     width: 100%;
     height: 100%;
-    background: red;
+    .close{
+      position: fixed;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    >div{
+      width: 100%;
+      height: 90%;
+      background: url("./../assets/tb/free_bg.png") no-repeat;
+      background-size: 100% 100%;
+      transform: scale(0.85,0.85);
+      .text{
+        width: 100%;
+        display: block;
+      }
+      .shopContent{
+        width: 706px;
+        height: 706px;
+        margin:  0 auto;
+        position: relative;
+        .shopImg{
+          width: 706px;
+          height: 706px;
+        }
+        .shopLogo{
+          width: 126px;
+          height: 126px;
+          position: absolute;
+          bottom: -52px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+      }
+      .shopBottom{
+        width: 100%;
+        position: relative;
+        margin: 58px 0 0 0;
+        p{
+          font-size: 30px;
+          color:#fff ;
+          line-height: 52px;
+        }
+        button{
+          margin: 28px 0 0 0;
+          width: 360px;
+          height: 70px;
+          background:linear-gradient(to bottom,#fff ,#f0e5de);
+          border: none;
+          outline: none;
+          color: #fe7640;
+          border-radius: 35px;
+        }
+        .leftImg{
+          width:60px;
+          height: 67px;
+          position: absolute;
+          left: 21px;
+          top:64px;
+        }
+        .rightImg{
+          width: 47px;
+          height: 48px;
+          position: absolute;
+          right: 25px;
+          top:15px;
+        }
+      }
+    }
   }
 
   .price {
