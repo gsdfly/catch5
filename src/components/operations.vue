@@ -91,6 +91,7 @@
         this.gzhImg1 = this.gzhImg2;
       }
 //      需要根据优惠券的样式类型判断
+
         this.mountedStart();
     },
     data() {

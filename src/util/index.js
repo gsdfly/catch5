@@ -21,6 +21,14 @@ export const SetCookie = (name, value) => {
   document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString()
 }
 
+export const clearAllCookie = () => {
+  var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+  if(keys) {
+    for(var i = keys.length; i--;)
+      document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
+  }
+}
+
 // //测试淘票票生成唯一id
 // export const generateUUID = () => {
 //   var d = new Date().getTime();

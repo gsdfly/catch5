@@ -11,7 +11,7 @@ import Indicator from 'mint-ui/lib/indicator'
 import api from './api'
 import {GetCookie, getParamByName, SetCookie} from "./util/index";
 
-require('./util/vconsole')
+// require('./util/vconsole')
 
 FastClick.attach(document.body)
 
@@ -33,7 +33,7 @@ FastClick.attach(document.body)
     if(!CONFIG.token){
       var encrypt = localStorage.getItem('encrypt') || getParamByName('encrypt');
       if(encrypt){
-        api.getToken2({encrypt:encrypt}).then((res)=>{
+       api.getToken2({encrypt:encrypt}).then((res)=>{
           console.log('getToken2-----------------------------'+res);
           SetCookie('token_', res.data.token);
           store.commit('changeIsLogin');
@@ -104,10 +104,6 @@ FastClick.attach(document.body)
     store.commit('changeIsLogin');
     store.dispatch('getUser');
   }
-
-  store.commit('changeIsLogin');
-  store.dispatch('getUser');
-
   store.commit('setMachineNo');
 
   Vue.prototype.version2 = false;
