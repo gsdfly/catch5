@@ -1424,7 +1424,7 @@
         height: 230px;
         position: relative;
         .top-wawa{
-          width: 230px;
+          /*width: 230px;*/
           height: 230px;
           position: absolute;
           bottom: 0;
