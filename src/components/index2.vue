@@ -82,7 +82,7 @@
                 <!--<span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>-->
                 <div class="task-gift" v-for="(item,index) in activity_bounty">
                   <!--<img class="ling" v-if="item.voucher_batch.value <= task_now.recharge_bounty" src="./../assets/task/red_ling.png" alt="" @click="receiveGift(item)" />-->
-                  <div class="ring-tip" id="couponList" @click="handleRed(item.voucher_batch.value <= task_now.recharge_bounty,item)">
+                  <div class="ring-tip" id="couponList" @click="handleRed(item.voucher_batch.value,item)">
                     <div class="ring-tip-bg">
                       <div class="ring-quan"  :class="{'ring-tip-ling':item.voucher_batch.value <= task_now.recharge_bounty}">
                         <img v-if="item.voucher_batch.image" class="ringicon ringicon2" :src="item.voucher_batch.image" alt=""/>
@@ -394,6 +394,13 @@
           <p>您还没有抓中哦</p>
           <button @click="closeBg">去抓娃娃</button>
         </div>
+
+        <div class="bg-center15" v-if="contentShow == 'taskTip'" @click.stop="">
+          <img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>
+          <p>屏幕上还有币哦</p>
+          <p>请先玩完</p>
+          <button @click="closeBg">我知道了</button>
+        </div>
       </div>
 
       <tipOperation></tipOperation>
@@ -527,12 +534,35 @@
         console.log('1111')
         window.location.href = CONFIG.localtionUrl2+'profile'
       },
-      handleRed(flag, item) {
-        if (flag) {
-          this.receiveGift(item)
-        } else {
-          this.couponList()
-        }
+      handleRed(value, item) {
+        //在每次领取之前，我需要先同步一次奖励金，判断是否满足可以领取的
+        this.$store.dispatch('getActivityBountyInfo').then((res)=>{
+          if(res.recharge_bounty>=value){
+            //在这里需要发送一个请求去判断是否可以领取优惠券及用户所消耗的游戏币是否满足条件
+            this.$store.dispatch('getActivityBountyStatus',item.id).then((res2)=>{
+              if(res2.can_exchange){
+                this.receiveGift(item)
+              }else {
+                //这里弹出让用户玩完所有的游戏币提示
+                this.bgShow = true;
+                this.contentShow = 'taskTip';
+              }
+            })
+          }else {
+            this.couponList()
+          }
+        })
+//        if (flag) {
+//          //在这里需要发送一个请求去判断是否可以领取优惠券及用户所消耗的游戏币是否满足条件
+//          if(true){
+//            this.receiveGift(item)
+//          }else {
+//            //这里弹出让用户玩完所有的游戏币提示
+//
+//          }
+//        } else {
+//          this.couponList()
+//        }
       },
       receiveGift(gift) {
         this.currentGift = gift;
@@ -895,7 +925,6 @@
     0% {
       background-position: 0 top;
     }
-
     100% {
       background-position: 235px top;
     }
