@@ -32,7 +32,7 @@
     }
 
     function ajax(url, machine_no, callback) {
-      var baseUrl = document.URL.indexOf('catchme') !== -1 ? 'http://front.catchme.com.cn/' : 'http://front.5zhua.cn/'
+      var baseUrl = document.URL.indexOf('catchme') !== -1 ? 'https://front.catchme.com.cn/' : 'https://front.5zhua.cn/'
       var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
       xmlhttp.open("POST", baseUrl + url, true);
       xmlhttp.onreadystatechange = function () {

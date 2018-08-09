@@ -11,12 +11,11 @@ import Indicator from 'mint-ui/lib/indicator'
 import api from './api'
 import {GetCookie, getParamByName, SetCookie} from "./util/index";
 
-// require('./util/vconsole')
+require('./util/vconsole')
 
 FastClick.attach(document.body)
 
 !async function () {
-
   try {
     if(CONFIG.site_version_id === 0){
       var result = await api.getVersion({machine_no:CONFIG.machine_no});

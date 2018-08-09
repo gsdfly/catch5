@@ -6,7 +6,7 @@ function IsWeixinOrAlipay() {
   if (ua.match(/MicroMessenger/i) == 'micromessenger') return "WeiXin"
   //判断是不是支付宝
   if (ua.match(/AlipayClient/i) == 'alipayclient') return "Alipay"
-  if (ua.match(/taobao/i) == 'taobao') return "taobao"
+  if (ua.match(/aliapp\(tb/i) == 'aliapp\(tb') return "taobao"
   //判断是不是淘票票
   if (ua.match(/tbmovie/i) == 'tbmovie') return "Tpp"
   //哪个都不是
@@ -16,7 +16,7 @@ function IsWeixinOrAlipay() {
 var expName = IsWeixinOrAlipay();
 
 let CONFIG = {
-  url: document.URL.indexOf('catchme') !== -1 ?  'http://front.catchme.com.cn/' : 'http://front.5zhua.cn/',
+  url: document.URL.indexOf('catchme') !== -1 ?  'https://front.catchme.com.cn/' : 'https://front.5zhua.cn/',
   localtionUrl: document.URL.indexOf('catchme') !== -1 ? 'http://www.catchme.com.cn/catch/':'http://www.5zhua.cn/catch/',
   localtionUrl2:document.URL.indexOf('catchme') !== -1 ? 'https://catchme.ewssh.m.jaeapp.com/' : 'https://zhua.ewssh.m.jaeapp.com/',
   version: '1.0.0',
