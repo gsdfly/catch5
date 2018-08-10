@@ -528,6 +528,7 @@
         window.location.href = CONFIG.localtionUrl2+'profile'
       },
       handleRed(flag, item) {
+        _hmt.push(['_trackEvent','点击娃娃', '点击', '点击娃娃', '']);
         if (flag) {
           this.receiveGift(item)
         } else {

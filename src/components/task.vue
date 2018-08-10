@@ -13,7 +13,7 @@
           <!--<p v-if="gzh_operation.coupon.status !== 2">免费领币</p>-->
           <!--<p class="hasDown" v-else="">已领取</p>-->
       </li>
-      <li>
+      <li v-if="task_game.num>0">
         <div @click="openTip('taskGameTip')" class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">
           <div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>
           <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{task_game.value/info.coin_num}}</span>
@@ -33,7 +33,7 @@
          <!--<p v-if="task_game.task_count < task_game.num">投币送币</p>-->
          <!--<p class="hasDown" v-else="">已领取</p>-->
       </li>
-      <li>
+      <li  v-if="task_wawa.num>0">
         <img @click="openTip('taskWawaTip')" v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty<task_wawa.value" src="./../assets/task-2/icon_free_c.png" alt=""/>
         <img :class="{'is_down':task_wawa.task_count >= task_wawa.num}" @click="receiveTask(task_wawa)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
         <img v-if="task_wawa.task_count >= task_wawa.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
@@ -115,16 +115,23 @@
         localStorage.removeItem('domTime');
       },
       openTip(value){
+        if(value === 'taskGameTip'){
+          _hmt.push(['_trackEvent', '任务：投币送币', '点击', '投币送币：未完成', '']);
+        }else if(value === 'taskWawaTip'){
+          _hmt.push(['_trackEvent', '任务：抓中送币', '点击', '抓中送币：未完成', '']);
+        }
           this.$emit('openTip',value);
       },
       consumer(){
         if(CONFIG.isWx){
           this.$emit('openTip','free',this.gzh_operation.mp_url);
+          _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：微信', '']);
           return;
         }
         if(this.gzh_operation.coupon.status === 2){
           return;
         }
+        _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：支付宝', '']);
         this.$store.dispatch('getFreeCoin', {coin_price_id: this.gzh_operation.coin_price.coin_price_id, coupon_id: this.gzh_operation.coupon.id}).then((data) => {
           console.log(data);
           this.$store.commit('setCoins', data.data.coin_num);
@@ -135,6 +142,11 @@
       receiveTask(task){
         //领取任务的游戏币
         if(!this.isRequest){
+          if(task.type === 9){
+            _hmt.push(['_trackEvent', '任务：投币送币', '点击', '投币送币：领币', '']);
+          }else if(task.type === 10){
+            _hmt.push(['_trackEvent', '任务：抓中送币', '点击', '抓中送币：领币', '']);
+          }
           this.isRequest = true;
           this.$store.dispatch('getActivityBountyExchange',task.id).then((res)=>{
             this.$store.dispatch('getFreeCoin',{coin_price_id: task.coin_price.coin_price_id, coupon_id: task.coupon.id}).then(()=>{
