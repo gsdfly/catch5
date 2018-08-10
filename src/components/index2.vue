@@ -1355,7 +1355,6 @@
         }*/
       }
     }
-
   }
 
   .bg-center11 {
@@ -2297,10 +2296,10 @@
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-quan img {
-    width: 70px;
+    width: 100%;
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -6px;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .last {
