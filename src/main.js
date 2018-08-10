@@ -11,7 +11,7 @@ import Indicator from 'mint-ui/lib/indicator'
 import api from './api'
 import {GetCookie, getParamByName, SetCookie} from "./util/index";
 
-require('./util/vconsole')
+// require('./util/vconsole')
 
 FastClick.attach(document.body)
 
