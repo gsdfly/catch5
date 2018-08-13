@@ -421,11 +421,12 @@
   import Clipboard from 'clipboard';
   import quanprogress from './quanprogress.vue'
   import task from './task.vue'
-
+  import socketio from 'socket.io-client';
 
   export default {
     data() {
       return {
+        io:{},
         start_desc: '投币启动',
         gameNum: 1,
         is_start: false,
@@ -504,6 +505,17 @@
       task
     },
     mounted() {
+      var self = this;
+      self.io = socketio(CONFIG.socketUrl, {
+        query: 'machine='+CONFIG.machine_no,
+        transports: ['websocket', 'polling'],
+        reconnection:true
+      })
+      self.io.on('connect',function () {
+        self.io.on('prize', function () {
+          self.$store.dispatch('getActivityBountyInfo')
+        })
+      })
       if (CONFIG.isWx) {
         document.addEventListener('visibilitychange', function () {
           if (!document.hidden) {
@@ -531,7 +543,6 @@
     },
     methods: {
       goProfile(){
-        console.log('1111')
         window.location.href = CONFIG.localtionUrl2+'profile'
       },
       handleRed(value, item) {
