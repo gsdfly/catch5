@@ -401,6 +401,12 @@
           <p>请先玩完</p>
           <button @click="closeBg">我知道了</button>
         </div>
+        <div class="bg-center15" v-if="contentShow == 'wawaTip'" @click.stop="">
+          <img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>
+          <p>恭喜你抓中了</p>
+          <p>积分清零</p>
+          <button @click="closeBg">我知道了</button>
+        </div>
       </div>
 
       <tipOperation></tipOperation>
@@ -426,6 +432,7 @@
   export default {
     data() {
       return {
+        isConnectScoket:false,
         io:{},
         start_desc: '投币启动',
         gameNum: 1,
@@ -505,17 +512,6 @@
       task
     },
     mounted() {
-      var self = this;
-      self.io = socketio(CONFIG.socketUrl, {
-        query: 'machine='+CONFIG.machine_no,
-        transports: ['websocket', 'polling'],
-        reconnection:true
-      })
-      self.io.on('connect',function () {
-        self.io.on('prize', function () {
-          self.$store.dispatch('getActivityBountyInfo')
-        })
-      })
       if (CONFIG.isWx) {
         document.addEventListener('visibilitychange', function () {
           if (!document.hidden) {
@@ -542,6 +538,28 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      socket(){
+        var self = this;
+        if(!this.isConnectScoket){
+          self.io = socketio(CONFIG.socketUrl, {
+            query: 'machine='+CONFIG.machine_no,
+            transports: ['websocket', 'polling'],
+            reconnection:true,
+            reconnectionAttempts:5
+          })
+          self.io.on('connect',function () {
+            self.isConnectScoket = true
+            self.io.on('prize', function () {
+              self.bgShow = true;
+              self.contentShow = 'wawaTip';
+              self.$store.dispatch('getActivityBountyInfo')
+            })
+          })
+          self.io.on('disconnect',function () {
+            self.isConnectScoket = false
+          })
+        }
+      },
       goProfile(){
         window.location.href = CONFIG.localtionUrl2+'profile'
       },
@@ -814,6 +832,10 @@
         this.$store.dispatch('startingDevice', this.gameNum * this.info.coin_num)
           .then(() => {
             //投币成功，重新调用获取task_now的接口
+
+            this.socket();
+
+
             this.$store.dispatch('getActivityBountyInfo');
             this.is_lamp_after = true
             this.is_start = false
