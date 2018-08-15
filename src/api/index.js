@@ -28,6 +28,7 @@ instance.interceptors.response.use(function(response) {
   //   await callbackUrl();
   // }
   if (error.response.data.status_code === 401) {
+    SetCookie('token_', '')
     location.reload();
     return;
   }
@@ -39,7 +40,6 @@ instance.interceptors.response.use(function(response) {
     isShow:true
   });
   console.log(store.state.user.tipContent)
-  SetCookie('token_', '')
   return Promise.reject(error);
 })
 

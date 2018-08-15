@@ -6,7 +6,7 @@
       <li @click="consumer" v-if="gzh_operation.id">
           <!--<div>-->
             <!--<img class="liImg1" src="./../assets/task/a.png" alt=""/>-->
-          <img :class="{'is_down':gzh_operation.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':gzh_operation.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
           <img v-if="gzh_operation.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <!--</div>-->
           <p :class="{'is_down':gzh_operation.coupon.status === 2}">免费领币</p>
@@ -86,6 +86,14 @@
     methods:{
       mountedStart(){
         this.$store.dispatch('getOperations').then(()=>{
+          //获取本地的guide
+          var guideTime = localStorage.getItem('guideTime');
+          var date = new Date();
+          var nowTime = date.getMonth()+''+date.getDate();
+          if(!(guideTime === nowTime)){
+              this.$store.commit('changeIsGuide',true);
+              localStorage.setItem('guideTime',nowTime)
+          }
           this.$store.dispatch('getActivityBountyInfo')
           var coupon_time = Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart);
           localStorage.removeItem('startTime2')
@@ -211,6 +219,17 @@
         height: 100%;
         float: left;
         position: relative;
+        /*&:first-of-type{*/
+          /*clip-path:circle(52px at 118px 65px);*/
+          /*z-index: 9999;*/
+          /*background: #fff;*/
+        /*}*/
+        /*.task-free{*/
+          /*position: relative;*/
+          /*z-index: 9999;*/
+          /*border: 3px solid #fff;*/
+          /*border-radius: 50%;*/
+        /*}*/
         img{
           width: 110px;
           height: 110px;

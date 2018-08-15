@@ -59,7 +59,7 @@
       </div>
 
       <div class="main">
-        <div>
+        <div class="main-center">
           <div class="centerout">
             <div class="center">
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
@@ -77,7 +77,6 @@
                     </div>
                   </div>
                 </div>
-
                 <span class="icon"></span>
                 <!--<span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>-->
                 <div class="task-gift" v-for="(item,index) in activity_bounty">
@@ -95,7 +94,6 @@
                     </div>
                   </div>
                 </div>
-
                 <!--<img @click="openTip('receive')" class="ringicon ringicon1" v-if="activity_bounty[activity_bounty.length-1].voucher_batch.value <= task_now.recharge_bounty" src="./../assets/ring/lingbi.png" alt=""/>-->
 
                 <!--<div class="ring-tip" v-else="" @click="openTip('couponList')">-->
@@ -399,6 +397,7 @@
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
+    <guide v-if="isShowGuide"></guide>
   </div>
 </template>
 
@@ -414,7 +413,8 @@
   import Clipboard from 'clipboard';
   import quanprogress from './quanprogress.vue'
   import task from './task.vue'
-
+  import guide from './guide.vue'
+  
 
   export default {
     data() {
@@ -487,6 +487,7 @@
       activity_bounty: state => state.user.activity_bounty,
       task_game: state => state.user.task_game,
       task_now: state => state.user.task_now,
+      isShowGuide: state => state.user.isShowGuide,
     }),
     components: {
       joPay,
@@ -494,7 +495,8 @@
       tip,
       tipOperation,
       quanprogress,
-      task
+      task,
+      guide
     },
     mounted() {
       if (CONFIG.isWx) {
@@ -901,6 +903,19 @@
       background-position: 235px top;
     }
   }
+
+  .test{
+    position: fixed;
+    left: 71vw;
+    width: 100px;
+    height: 100px;
+    background: rgba(0,0,0,0.72);
+    z-index: 1000;
+    top:47vh;
+    overflow: hidden;
+    /*border-radius: 50%;*/
+  }
+
 
   @mixin tipButton {
     width: 118px;
@@ -2050,7 +2065,21 @@
     /*height: calc(100% - 4.98px);*/
     position: relative;
   }
-
+  .main .guide{
+    position: absolute;
+    background: rgba(0,0,0,0.72);
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    .guideImg2{
+      width: 560px;
+      position: absolute;
+      right: 100px;
+      top:46%;
+    }
+  }
   .activitys {
     width: 100%;
     /*overflow: hidden;*/
@@ -2063,8 +2092,9 @@
     position: relative;
   }
 
-  .main > div {
+  .main .main-center {
     width: 100%;
+    height: 100%;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -2079,9 +2109,17 @@
     /*padding: 0.22px;*/
     padding: 20px;
     /*margin: 0.05px 0 0 0;*/
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    >div{
+      position: relative;
+      z-index: 9999;
+      background: #fff;
+    }
   }
 
-  .main .centerout .center {
+    .main .centerout .center {
     width: 100%;
     /*height: 5px;*/
     background: #fff;
@@ -2115,7 +2153,6 @@
     /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/process_bg2.png");*/
     background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");
-    /*background: red;*/
     background-size: 100% 100%;
     pointer-events: none;
     /*padding: 0.1px;*/
@@ -2253,8 +2290,11 @@
     left: 0;
     top: 0;
     pointer-events: auto;
+    z-index: 666;
+    /*border-radius: 50%;*/
     /*display: none;*/
-    /*background: red;*/
+    /*background: rgba(0,0,0,0.72);*/
+
   }
 
   .main .centerout .center .ring .task-gift > img {
@@ -2265,13 +2305,13 @@
   }
 
   .main .centerout .center .ring .task-gift .ring-tip {
-    /*background: red;*/
+    /*background: rgba(0,0,0,0.72);*/
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg {
     width: 92px;
     height: 92px;
-    background: url("./../assets/task-2/progress_doll_bg.png") no-repeat;
+    background:url("./../assets/task-2/progress_doll_bg.png") no-repeat;
     /*background: red;*/
     background-size: 100% 100%;
     position: relative;
