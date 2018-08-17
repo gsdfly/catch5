@@ -43,7 +43,7 @@ export const getErrMsg = (errCode, message) => {
       case 1004:
         m = {
           imgSrc: "http://res.catchme.com.cn/imgs-2018-02-05/tip/tip1.png",
-          content: ['娃娃机出了点状况', '请更换机器'],
+          content: ['娃娃机出了点状况'+errCode, '请更换机器'],
           button: '扫码换机',
           isShow: true
         }
@@ -76,7 +76,7 @@ export const getErrMsg = (errCode, message) => {
       case 1009:
         m = {
           imgSrc: "http://res.catchme.com.cn/imgs-2018-02-05/tip/tip2.png",
-          content: ['尚有分，还能继续玩哦', '请玩完在上分'],
+          content: ['尚有分，还能继续玩哦'+errCode, '请玩完在上分'],
           button: '知道了',
           isShow: true
         }

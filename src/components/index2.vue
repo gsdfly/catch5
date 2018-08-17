@@ -403,18 +403,29 @@
           <p>您还没有抓中哦</p>
           <button @click="closeBg">去抓娃娃</button>
         </div>
-        <div class="bg-center15" v-if="contentShow == 'wawaTip'" @click.stop="">
-          <img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>
-          <p>恭喜您抓中娃娃</p>
-          <p>获得一次抽奖机会</p>
-          <button>去抽奖</button>
+
+        <div class="bg-center16" v-if="contentShow == 'guideTip'" @click.stop="">
+          <div class="center16-main">
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/congradution.png" alt=""/>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+            <p>本活动的最终解释权归深圳市我抓科技有限公司</p>
+          </div>
+        </div>
+
+        <div class="bg-center17" v-if="contentShow == 'wawaTip'" @click.stop="">
+          <div class="center17-main">
+            <img @touchstart="guide1" @touchend="guide2" class="imgBg" src="http://res.catchme.com.cn/activity/guide/congradutiona.png" alt=""/>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
         </div>
       </div>
 
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <guide v-if="isShowGuide"></guide>
+    <!--<guide v-if="isShowGuide"></guide>-->
   </div>
 </template>
 
@@ -488,7 +499,9 @@
             value: 1600,
             voucher_batch_id: 3
           }]
-        }
+        },
+        guideTime:'',
+        touchTime:0
       }
     },
     created() {
@@ -518,20 +531,29 @@
       guide
     },
     mounted() {
+      var date = new Date();
+      var time = date.getMonth()+''+date.getDate();
+      this.guideTime = time;
+      if(time === '717'){
+        this.bgShow = true;
+        this.contentShow = 'guideTip';
+      }
+
       if (CONFIG.isWx) {
         document.addEventListener('visibilitychange', function () {
           if (!document.hidden) {
             this.$store.dispatch('getUser');
             this.$store.dispatch('getOperations');
-            this.$store.dispatch('getActivityBountyInfo')
-            this.bgShow = false;
+            this.handleActivityBountyInfo();
+//            this.bgShow = false;
           }
         }.bind(this));
       } else if (CONFIG.isAlipay) {
         document.addEventListener('resume', function () {
-//              this.$store.dispatch('getUser');
+              this.$store.dispatch('getUser');
           this.$store.dispatch('getActivityBountyInfo')
-          this.bgShow = false;
+          this.handleActivityBountyInfo();
+//          this.bgShow = false;
         }.bind(this));
       }
       this.$store.dispatch('judgeMachine').then(() => {
@@ -544,6 +566,15 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      guide1(){
+        this.touchTime = new Date().getTime();
+      },
+      guide2(){
+        var nowTime = new Date().getTime();
+        if((nowTime - this.touchTime)>500){
+          _hmt.push(['_trackEvent', '跳转七夕活动页面', '长按', '跳转七夕活动页面', '']);
+        }
+      },
       socket() {
         var self = this;
         if (!self.isConnectScoket) {
@@ -556,19 +587,23 @@
           self.io.on('connect', function () {
             self.isConnectScoket = true
             self.io.on('prize', function () {
-              var prize_bounty = localStorage.getItem('prize_bounty')
-              self.$store.dispatch('getActivityBountyInfo').then((res) => {
-                if (res.prize_bounty > prize_bounty) {
-                  self.bgShow = true;
-                  self.contentShow = 'wawaTip';
-                }
-              })
+              self.handleActivityBountyInfo();
             })
           })
           self.io.on('disconnect', function () {
             self.isConnectScoket = false
           })
         }
+      },
+      handleActivityBountyInfo(){
+        var prize_bounty = localStorage.getItem('prize_bounty')
+        this.$store.dispatch('getActivityBountyInfo').then((res) => {
+          if (res.prize_bounty > prize_bounty && this.guideTime==='717') {
+            this.bgShow = true;
+            this.contentShow = 'wawaTip';
+          }
+          localStorage.setItem('prize_bounty',res.prize_bounty);
+        })
       },
       goProfile() {
         window.location.href = CONFIG.localtionUrl2 + 'profile'
@@ -1672,6 +1707,38 @@
       border-radius: 35px;
       font-size: 32px;
       color: #fff;
+    }
+  }
+
+  .bg-center16{
+    .center16-main{
+      position: relative;
+      width: 698px;
+      padding: 0 0 0 2px;
+      @include center;
+      .imgBg{
+        width: 100%;
+      }
+      p{
+        font-size: 20px;
+        color: #251b38;
+        line-height: 20px;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        bottom: 165px;
+      }
+    }
+  }
+  .bg-center17{
+    .center17-main{
+      width: 722px;
+      padding: 0 0 0 14px;
+      @include center;
+      .imgBg{
+        width: 100%;
+      }
     }
   }
 
