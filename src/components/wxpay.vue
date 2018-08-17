@@ -162,7 +162,8 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
+  @import "./../scss/common";
   .recharge-lists {
     width: 100%;
     position: absolute;
@@ -176,13 +177,10 @@
     font-size: 36px;
     float: right;
     width: 345px;
-    /*height: 1.28px;*/
     height: 37.87%;
-    border: 1px solid #fd643b;
-    /*border-radius: 0.15px;*/
+    border: 1px solid $footerItemBorderColor;
     color: #494949;
     position: relative;
-    /*overflow: hidden;*/
     border-radius: 16px;
   }
   .recharge-lists > div:last-of-type,  .recharge-lists > div:nth-last-of-type(2)
@@ -230,8 +228,8 @@
     line-height: 63px;
     /*font-size: 0.32px;*/
     font-size: 34px;
-    background: #fb643b;
-    color: #fff;
+    background: $footerItemDownBgColor;
+    color: $footerItemDownColor;
     border-radius: 0 0 12px 12px;
     text-align: center;
   }
@@ -246,10 +244,10 @@
   .recharge-item-t {
     height: 68px;
     font-size: 36px;
-    color: #353535;
+    color: $footerItemTopColor;
     line-height: 68px;
     text-align: center;
-    background: #fff;
+    background: $footerItemTopBgColor;
     border-radius: 16px 16px 0 0;
   }
 
@@ -290,7 +288,7 @@
     top: -10px;
     color: #fff;
     /*background: url("./../assets/jiewu/bg_limit.png") no-repeat;*/
-    background: url("./../assets/small/recharge_tab2.png") no-repeat;
+    background: url("./../assets/mogui/recharge_tab.png") no-repeat;
     background-size: 100% 100%;
     font-size: 24px;
     /*text-align: center;*/
@@ -321,19 +319,8 @@
   }
 
   .hot-top {
-    /*padding: 0 0.26px 0 0.1px;*/
-    /*min-width: 1.3px;*/
     z-index: 2;
   }
-
-  /*.version2 {*/
-    /*padding: 0 18px;*/
-  /*}*/
-
-  /*.version2  > div {*/
-    /*width: 348px;*/
-    /*margin: 0 0 20px 0;*/
-  /*}*/
 
   .version2 .recharge-item-t {
     height: 84px;

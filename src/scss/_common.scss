@@ -1,0 +1,90 @@
+//$pageBgImgUrl:'http://res.catchme.com.cn/activity/cake/bg.png';
+//
+//$headerTopColor:#3b52c7;
+//$headerColor:#445ee4;
+//$headerBgColor:#fff;
+//
+//$mainBgImgUrl:'http://res.catchme.com.cn/activity/card/toubi_bg.png';
+//$mainColor:#445ee4;
+//
+//
+//$bgColor:#445ee4;
+//$bgRadius:20px;
+//
+//
+//@mixin imgBg($background){
+//  background: url($background) no-repeat;
+//  background-size: 100% 100%;
+//}
+//
+//@mixin tipButton {
+//  width: 118px;
+//  height: 56px;
+//  outline: none;
+//  border:3px solid #25edff;
+//  font-size: 30px;
+//  color: #fff;
+//  background: #374cc6;
+//}
+//@mixin center {
+//  position: absolute;
+//  left: 50%;
+//  top:50%;
+//  transform: translate(-50%,-50%);
+//}
+//@mixin centerX {
+//  position: absolute;
+//  left: 50%;
+//  transform: translateX(-50%);
+//}
+//@mixin centerY {
+//  position: absolute;
+//  top:50%;
+//  transform: translateY(-50%);
+//}
+
+//页面可变样式元素
+//mixin
+@mixin center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin centerX {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin centerY {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+//body
+$bodyImgUrl:'http://res.catchme.com.cn/activity/mogui/bg.png';
+
+//header
+$headerColor:#fff;
+$headerBgColor:#c80000;
+
+//main
+$scanCodeBgColor:#ff0000;
+$scanCodeColor:#fff;
+
+
+//footer
+$footerItemTopColor:#353535;
+$footerItemDownColor:#fff;
+
+$footerItemTopBgColor:#fff;
+$footerItemDownBgColor:#c80000;
+
+$footerItemBorderColor:#c80000;
+
+$hotImgUrl:''
+
+

@@ -12,7 +12,7 @@
           <div class="head-portrait" @click="goProfile">
             <img v-if="user.avatar" :src="user.avatar" alt="" style="border-radius: 50%">
             <!--<img v-else="" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_portrait.png" alt="">-->
-            <img v-else="" src="./../assets/small/icon_portrait.png" alt="">
+            <img v-else="" src="./../assets/mogui/portrait.png" alt="">
             <!--<img src="http://res.catchme.com.cn/imgs-2018-02-05/portrait.png" alt="">-->
             <p>{{user.player_id}}</p>
           </div>
@@ -30,7 +30,7 @@
             <div class="kefu" @click.stop="">
               <p id="support" @click="showKefu">
                 <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_kefu.png" alt=""><span>客服</span>-->
-                <img src="./../assets/small/icon_kefu.png" alt=""><span>客服</span>
+                <img src="./../assets/mogui/icon_kefu.png" alt=""><span>客服</span>
               </p>
               <div class="kefu2" :style="isKefuStyle">
                 <div class="kefu2-right">
@@ -892,6 +892,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "./../scss/common";
   @keyframes wave-animation {
     0% {
       background-position: 0 top;
@@ -901,6 +902,15 @@
       background-position: 235px top;
     }
   }
+  @keyframes turn {
+    from {
+      transform: rotateZ(0deg)
+    }
+    to {
+      transform: rotateZ(360deg)
+    }
+  }
+
 
   @mixin tipButton {
     width: 118px;
@@ -927,33 +937,166 @@
 
   $bgColor: #fd673b;
   $bgRadius: 20px;
-  @mixin center {
+
+  /** {*/
+    /*box-sizing: border-box;*/
+  /*}*/
+  .jo-index {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .jo-index .jo-index-div {
+    width: 100%;
+    height: 100%;
+    background:url($bodyImgUrl);
+    background-size: 100% 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  /*头部开始*/
+  .header {
+    width: 100%;
+    height: 12%;
+    min-height: 140px;
+    position: relative;
+    z-index: 666;
+  }
+  .header > div {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 0 0 20px;
+    height: 112px;
+  }
+  .header .head-portrait {
+    width: 102px;
+    height: 102px;
+    background: #feccbc;
+    border-radius: 50%;
+    position: relative;
+    margin: -10px 0 0 0;
+  }
+  .header .head-portrait p {
+    position: absolute;
+    left: -5px;
+    bottom: -18px;
+    text-align: center;
+    background: url("./../assets/imgs/bg_id.png") no-repeat;
+    background-size: 100% 100%;
+    width: 112px;
+    height: 35px;
+    line-height: 40px;
+    font-size: 18px;
+    color: #a65a4e;
+  }
+  .header .head-portrait img {
+    width: 98px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
   }
-
-  @mixin centerX {
+  .header .header-main {
+    width: 100%;
+    padding: 0 22px 0 140px;
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    top: 0;
+    pointer-events: none;
   }
-
-  @mixin centerY {
+  .header .header-main h4 {
+    font-size: 26px;
+    color: $headerColor;
+    margin: 0 0 12px 0;
+    line-height: 26px;
+    height: 26px;
+  }
+  .header .header-main h4 span {
+    float: right;
+    font-size: 20px;
+  }
+  .header .header-main .game {
+    height: 62px;
+    padding: 0 22px;
+    line-height: 62px;
+    border-radius: 31px;
+    background: $headerBgColor;
+    float: left;
+    position: relative;
+    text-align: center;
+  }
+  .header .header-main .game > div {
+    min-width: 160px;
+    height: 62px;
+  }
+  .header .header-main .game span.coins-num {
+    font-size: 36px;
+    color: $headerColor;
+    font-weight: 600;
+    margin: 0 0 0 10px;
+    line-height: 70px;
+    position: relative;
+  }
+  .header .header-main .game i {
+    font-size: 40px;
+    color: #fe5f5b;
+    font-weight: 500;
+    text-align: center;
+  }
+  .header .header-main .game i.icon-jinbi {
+    width: 32px;
+    height: 36px;
+    line-height: 66px;
+    display: inline-block;
+    background: url("./../assets/mogui/icon_portrait_bi.png") no-repeat;
+    background-size: 100% 100%;
+    font-size: 0;
+  }
+  .header .header-main .game span {
+    font-size: 28px;
+    color: #fe5f5b;
+    display: inline-block;
+  }
+  .header .header-main .game-quan {
+    margin: 0 0 0 20px;
+  }
+  .header .header-main .kefu {
+    height: 62px;
+    background: $headerBgColor;
+    position: absolute;
+    right: 0;
+    padding: 0 22px;
+    border-radius: 15px 0 0 15px;
+    pointer-events: auto;
+  }
+  .header .header-main .kefu > p {
+    width: 100%;
+    height: 100%;
+    line-height: 62px;
+  }
+  .header .header-main .kefu p > img {
+    width: 50px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
   }
-
-  @keyframes turn {
-    from {
-      transform: rotateZ(0deg)
-    }
-    to {
-      transform: rotateZ(360deg)
-    }
+  .header .header-main .kefu > p > span {
+    color: $headerColor;
+    font-size: 28px;
+    height: 28px;
+    line-height: 70px;
+    margin: 0 0 0 55px;
   }
+  /*头部结束*/
+
+
+
+
+
+
+
 
   .tipTitle {
     width: 100%;
@@ -1841,216 +1984,6 @@
     padding: 0 22.5px 0 0;
   }
 
-  .jo-index {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    /*height: calc(100% - 1.25px);*/
-    /*padding: 0 0.22px;*/
-    /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg.png");*/
-    /*background: url("http://res.catchme.com.cn/imgs-2018-02-05/bg.png") no-repeat;*/
-    /*background-size: 100% 100%;*/
-    /*overflow: auto;*/
-  }
-
-  .jo-index .jo-index-div {
-    width: 100%;
-    height: 100%;
-    background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");
-    background-size: 100% 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  .header {
-    width: 100%;
-    height: 12%;
-    min-height: 140px;
-    /*background: red;*/
-    position: relative;
-    z-index: 666;
-    /*overflow-x: hidden;*/
-  }
-
-  .header > div {
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0 0 0 20px;
-    height: 112px;
-  }
-
-  .header .head-portrait {
-    width: 102px;
-    height: 102px;
-    background: #feccbc;
-    border-radius: 50%;
-    position: relative;
-    margin: -10px 0 0 0;
-  }
-
-  .header .head-portrait p {
-    position: absolute;
-    left: -5px;
-    bottom: -18px;
-    text-align: center;
-    background: url("./../assets/imgs/bg_id.png") no-repeat;
-    background-size: 100% 100%;
-    width: 112px;
-    height: 35px;
-    /*line-height: 0.35px;*/
-    line-height: 40px;
-    font-size: 18px;
-    color: #a65a4e;
-  }
-
-  .header .head-portrait img {
-    /*width: 70%;*/
-    width: 98px;
-    /*max-height: 80%;*/
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .header .header-main {
-    width: 100%;
-    padding: 0 22px 0 140px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-  }
-
-  .header .header-main h4 {
-    /*font-size: 0.24px;*/
-    font-size: 26px;
-    color: #ffe7e0;
-    /*line-height: 44px;*/
-    margin: 0 0 12px 0;
-    line-height: 26px;
-    height: 26px;
-    /*margin: 0.04px 0 0 0;*/
-    /*text-indent: 0.15px;*/
-  }
-
-  .header .header-main h4 span {
-    float: right;
-    font-size: 20px;
-  }
-
-  .header .header-main .game {
-    height: 62px;
-    padding: 0 22px;
-    line-height: 62px;
-    border-radius: 31px;
-    background: #fff2ee;
-    float: left;
-    /*min-width: 2px;*/
-    position: relative;
-    text-align: center;
-  }
-
-  .header .header-main .game > div {
-    min-width: 160px;
-    height: 62px;
-  }
-
-  /*position: absolute;*/
-  /*left: 50%;*/
-  /*top:50%;*/
-  /*transform: translate(-50%,-50%);*/
-  /*height: 0.62px;*/
-  /*}*/
-
-  .header .header-main .game i {
-    font-size: 40px;
-    color: #fe5f5b;
-    font-weight: 500;
-    text-align: center;
-  }
-
-  .header .header-main .game i.icon-jinbi {
-    width: 32px;
-    height: 36px;
-    line-height: 66px;
-    display: inline-block;
-    /*background: url("http://res.catchme.com.cn/imgs-2018-04-10/icon_portrait_bi.png") no-repeat;*/
-    background: url("./../assets/small/icon_portrait_bi.png") no-repeat;
-    background-size: 100% 100%;
-    font-size: 0;
-  }
-
-  .header .header-main .game span {
-    font-size: 28px;
-    color: #fe5f5b;
-    display: inline-block;
-  }
-
-  .header .header-main .game span.coins-num {
-    font-size: 36px;
-    color: #fe5f5b;
-    font-weight: 600;
-    margin: 0 0 0 10px;
-    line-height: 70px;
-    position: relative;
-  }
-
-  .header .header-main .game-quan {
-    margin: 0 0 0 20px;
-  }
-
-  .header .header-main .kefu {
-    /*width: 0.62px;*/
-    height: 62px;
-    background: #fff2ee;
-    /*border-radius: 50%;*/
-    /*float: right;*/
-    /*position: relative;*/
-    position: absolute;
-    right: 0;
-    padding: 0 22px;
-    border-radius: 15px 0 0 15px;
-    pointer-events: auto;
-  }
-
-  .header .header-main .kefu > p {
-    width: 100%;
-    height: 100%;
-    line-height: 62px;
-  }
-
-  .header .header-main .kefu p > img {
-    width: 50px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .header .header-main .kefu > p > span {
-    /*display: inline-block;*/
-    color: #fd643b;
-    font-size: 28px;
-    height: 28px;
-    line-height: 70px;
-    margin: 0 0 0 55px;
-    /*vertical-align: middle;*/
-  }
-
-  .main {
-    width: 100%;
-    height: 46.6%;
-    min-height: 538px;
-    /*height: calc(100% - 4.98px);*/
-    position: relative;
-  }
-
   .activitys {
     width: 100%;
     /*overflow: hidden;*/
@@ -2063,6 +1996,14 @@
     position: relative;
   }
 
+
+  .main {
+    width: 100%;
+    height: 46.6%;
+    min-height: 538px;
+    /*height: calc(100% - 4.98px);*/
+    position: relative;
+  }
   .main > div {
     width: 100%;
     position: absolute;
