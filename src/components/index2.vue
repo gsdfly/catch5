@@ -404,28 +404,46 @@
           <button @click="closeBg">去抓娃娃</button>
         </div>
 
-        <div class="bg-center16" v-if="contentShow == 'guideTip'" @click.stop="">
+        <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="" >
           <div class="center16-main">
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/congradution.png" alt=""/>
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
-            <p>本活动的最终解释权归深圳市我抓科技有限公司</p>
+            <img class="imgBg" src="./../assets/guide/jieshi.png" alt=""/>
+            <div class="btn" @click="closeBg">我知道啦</div>
+            <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"  @click="closeBg"/>
           </div>
         </div>
 
-        <div class="bg-center17" v-if="contentShow == 'wawaTip'" @click.stop="">
-          <div class="center17-main">
-            <img @touchstart="guide1" @touchend="guide2" class="imgBg" src="http://res.catchme.com.cn/activity/guide/congradutiona.png" alt=""/>
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
+        <div class="bg-center16" v-if="contentShow == 'shuoming'" @click.stop="" >
+          <div class="center16-main">
+            <img class="imgBg" src="./../assets/guide/shuoming.png" alt=""/>
+            <div class="btn" @click="closeBg">我知道啦</div>
+            <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"  @click="closeBg"/>
           </div>
         </div>
+
+   <!--<div class="bg-center16" v-if="contentShow == 'guideTip'" @click.stop="">-->
+          <!--<div class="center16-main">-->
+            <!--<img class="imgBg" src="http://res.catchme.com.cn/activity/guide/congradution.png" alt=""/>-->
+            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg"/>-->
+            <!--<p>本活动的最终解释权归深圳市我抓科技有限公司</p>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center17" v-if="contentShow == 'wawaTip'" @click.stop="">-->
+          <!--<div class="center17-main">-->
+            <!--<img @touchstart="guide1" @touchend="guide2" class="imgBg" src="http://res.catchme.com.cn/activity/guide/congradutiona.png" alt=""/>-->
+            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg"/>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
 
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <!--<guide v-if="isShowGuide"></guide>-->
+    <guide v-if="isShowGuide"></guide>
   </div>
 </template>
 
@@ -500,8 +518,8 @@
             voucher_batch_id: 3
           }]
         },
-        guideTime:'',
-        touchTime:0
+//        guideTime:'',
+//        touchTime:0
       }
     },
     created() {
@@ -531,28 +549,28 @@
       guide
     },
     mounted() {
-      var date = new Date();
-      var time = date.getMonth()+''+date.getDate();
-      this.guideTime = time;
-      if(time === '717'){
-        this.bgShow = true;
-        this.contentShow = 'guideTip';
-      }
-
+//      var date = new Date();
+//      var time = date.getMonth()+''+date.getDate();
+//      this.guideTime = time;
+//      if(time === '717'){
+//        this.bgShow = true;
+//        this.contentShow = 'guideTip';
+//      }
       if (CONFIG.isWx) {
         document.addEventListener('visibilitychange', function () {
           if (!document.hidden) {
             this.$store.dispatch('getUser');
             this.$store.dispatch('getOperations');
-            this.handleActivityBountyInfo();
+            this.$store.dispatch('getActivityBountyInfo');
+//            this.handleActivityBountyInfo();
 //            this.bgShow = false;
           }
         }.bind(this));
       } else if (CONFIG.isAlipay) {
         document.addEventListener('resume', function () {
-              this.$store.dispatch('getUser');
-          this.$store.dispatch('getActivityBountyInfo')
-          this.handleActivityBountyInfo();
+          this.$store.dispatch('getUser');
+          this.$store.dispatch('getActivityBountyInfo');
+//          this.handleActivityBountyInfo();
 //          this.bgShow = false;
         }.bind(this));
       }
@@ -566,15 +584,15 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
-      guide1(){
-        this.touchTime = new Date().getTime();
-      },
-      guide2(){
-        var nowTime = new Date().getTime();
-        if((nowTime - this.touchTime)>500){
-          _hmt.push(['_trackEvent', '跳转七夕活动页面', '长按', '跳转七夕活动页面', '']);
-        }
-      },
+//      guide1(){
+//        this.touchTime = new Date().getTime();
+//      },
+//      guide2(){
+//        var nowTime = new Date().getTime();
+//        if((nowTime - this.touchTime)>500){
+//          _hmt.push(['_trackEvent', '跳转七夕活动页面', '长按', '跳转七夕活动页面', '']);
+//        }
+//      },
       socket() {
         var self = this;
         if (!self.isConnectScoket) {
@@ -587,7 +605,8 @@
           self.io.on('connect', function () {
             self.isConnectScoket = true
             self.io.on('prize', function () {
-              self.handleActivityBountyInfo();
+              self.$store.dispatch('getActivityBountyInfo');
+//              self.handleActivityBountyInfo();
             })
           })
           self.io.on('disconnect', function () {
@@ -595,16 +614,16 @@
           })
         }
       },
-      handleActivityBountyInfo(){
-        var prize_bounty = localStorage.getItem('prize_bounty')
-        this.$store.dispatch('getActivityBountyInfo').then((res) => {
-          if (res.prize_bounty > prize_bounty && this.guideTime==='717') {
-            this.bgShow = true;
-            this.contentShow = 'wawaTip';
-          }
-          localStorage.setItem('prize_bounty',res.prize_bounty);
-        })
-      },
+//      handleActivityBountyInfo(){
+//        var prize_bounty = localStorage.getItem('prize_bounty')
+//        this.$store.dispatch('getActivityBountyInfo').then((res) => {
+//          if (res.prize_bounty > prize_bounty && this.guideTime==='717') {
+//            this.bgShow = true;
+//            this.contentShow = 'wawaTip';
+//          }
+//          localStorage.setItem('prize_bounty',res.prize_bounty);
+//        })
+//      },
       goProfile() {
         window.location.href = CONFIG.localtionUrl2 + 'profile'
       },
@@ -630,7 +649,7 @@
           }
         }
         _hmt.push(['_trackEvent', '打开优惠券列表弹窗', '点击', '优惠券为：0', '']);
-        this.openTip('notExchange');
+        this.openTip('jieshi');
       },
       receiveTaskGame() {
         //这里需要防止重复点击
@@ -1713,22 +1732,33 @@
   .bg-center16{
     .center16-main{
       position: relative;
-      width: 698px;
-      padding: 0 0 0 2px;
+      width: 640px;
       @include center;
       .imgBg{
         width: 100%;
       }
-      p{
-        font-size: 20px;
-        color: #251b38;
-        line-height: 20px;
+      .btn{
+        width: 414px;
+        height: 124px;
+        background: url("./../assets/guide/press_iknow.png");
+        background-size: 100% 100%;
         position: absolute;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        bottom: 165px;
+        @include centerX;
+        top: 668px;
+        font-size: 32px;
+        color: #fd673b;
+        line-height: 76px;
       }
+      /*p{*/
+        /*font-size: 20px;*/
+        /*color: #251b38;*/
+        /*line-height: 20px;*/
+        /*position: absolute;*/
+        /*left: 0;*/
+        /*width: 100%;*/
+        /*text-align: center;*/
+        /*bottom: 165px;*/
+      /*}*/
     }
   }
   .bg-center17{
