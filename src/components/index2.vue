@@ -43,7 +43,7 @@
                 </div>
                 <div class="kefu2-left" @click="hideKefu">
                   <!--<img src="http://res.catchme.com.cn/imgs-2018-04-10/icon_close1.png" alt="">-->
-                  <img src="./../assets/small/icon_close1.png" alt="">
+                  <img src="./../assets/mogui/icon_close1.png" alt="">
                 </div>
               </div>
             </div>
@@ -379,7 +379,7 @@
 
         <div class="bg-center15" v-if="contentShow == 'taskGameTip'" @click.stop="">
           <div class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">
-            <div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>
+            <!--<div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>-->
             <span
               class="game-num"><b>{{task_now.game_bounty / info.coin_num}}/</b>{{task_game.value / info.coin_num}}</span>
           </div>
@@ -389,7 +389,7 @@
         </div>
 
         <div class="bg-center15" v-if="contentShow == 'taskWawaTip'" @click.stop="">
-          <img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>
+          <img src="./../assets/mogui/window_free_c.png" alt=""/>
           <p>抓中送币</p>
           <p>您还没有抓中哦</p>
           <button @click="closeBg">去抓娃娃</button>
@@ -430,8 +430,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: false,
-        contentShow: '',
+        bgShow: true,
+        contentShow: 'taskWawaTip',
         currentCoupon: {},
         pay: {},
         currentCouponPay: {},
@@ -1216,7 +1216,7 @@
         font-size: 22px;
         text-align: center;
         a {
-          color: #576b95;
+          color: #fd643b;
         }
         span {
           display: inline-block;
@@ -1689,40 +1689,42 @@
   .bg-center15 {
     width: 666px;
     height: 750px;
-    background: url("http://res.catchme.com.cn/activity/task2/window_bg.png") no-repeat;
+    background: url("./../assets/mogui/window_bg.png") no-repeat;
+    /*background: url("http://res.catchme.com.cn/activity/task2/window_bg.png") no-repeat;*/
     background-size: 100% 100%;
     border-radius: 20px;
     @include center;
     > img {
       display: block;
-      width: 308px;
-      margin: 0 auto;
+      width: 249px;
+      margin: 0 auto 39px auto;
     }
     .water {
       width: 280px;
       height: 280px;
-      background-color: #999999;
-      /*border: solid 10px #ffffff;*/
+      background-color: #ff0000;
+      box-shadow: 0px 5px 5px 0px
+      rgba(200, 0, 0, 0.4);
+      border: solid 18px #fceb46;
       border-radius: 50%;
       overflow: hidden;
       position: relative;
       margin: 76px auto 59px auto;
-      box-shadow: 0 11px 50px rgba(134, 106, 49, 0.49);
-      .bol {
-        width: 100%;
-        background: url("./../assets/task/b_bg2.png") repeat-x;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        animation: wave-animation 1s infinite linear;
-        transition: all 1s linear;
-        background-size: 235px 255px;
-      }
+      /*.bol {*/
+        /*width: 100%;*/
+        /*background: url("./../assets/task/b_bg2.png") repeat-x;*/
+        /*position: absolute;*/
+        /*bottom: 0;*/
+        /*left: 0;*/
+        /*animation: wave-animation 1s infinite linear;*/
+        /*transition: all 1s linear;*/
+        /*background-size: 235px 255px;*/
+      /*}*/
       .game-num {
         position: relative;
         font-size: 60px;
         color: #fff;
-        line-height: 280px;
+        line-height: 244px;
         b {
           font-size: 100px;
         }
@@ -1746,13 +1748,15 @@
       width: 360px;
       height: 70px;
       background-image: linear-gradient(0deg,
-        rgba(253, 102, 59, 0.65) 0%,
-        rgba(254, 127, 66, 0.65) 100%),
+        rgba(200, 0, 0, 0.65) 0%,
+        rgba(254, 66, 66, 0.65) 100%),
       linear-gradient(
-          #fd663b,
-          #fd663b);
-      box-shadow: 0px 3px 18px 0px rgba(134, 106, 49, 0.13),
-      0px 5px 32px 0px rgba(134, 106, 49, 0.33);
+          #ff0000,
+          #ff0000);
+      background-blend-mode: normal,
+      normal;
+      box-shadow: 0px 4px 4px 0px
+      rgba(200, 0, 0, 0.4);
       border-radius: 35px;
       font-size: 32px;
       color: #fff;
