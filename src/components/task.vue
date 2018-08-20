@@ -2,30 +2,28 @@
   <div class="task" :class="{'task-version2':version2}">
     <ul>
       <li @click="consumer" v-if="gzh_operation.id">
-          <img :class="{'is_down':gzh_operation.coupon.status === 2}" src="./../assets/mogui/icon_free_a.png" alt=""/>
-          <img v-if="gzh_operation.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+          <img v-if="gzh_operation.coupon.status !== 2" :class="{'is_down':gzh_operation.coupon.status === 2}" src="./../assets/mogui/icon_free_a.png" alt=""/>
+          <img v-if="gzh_operation.coupon.status === 2" class="img_down" src="./../assets/mogui/icon_free_a_used.png" alt=""/>
+
           <p :class="{'is_down':gzh_operation.coupon.status === 2}">免费领币</p>
       </li>
 
       <li v-if="task_game.num>0">
         <div @click="openTip('taskGameTip')" class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">
-          <div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>
           <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{task_game.value/info.coin_num}}</span>
         </div>
 
-
         <div @click="receiveTask(task_game)" v-if="task_game.task_count < task_game.num && task_now.game_bounty>=task_game.value" class="m-water">领币</div>
 
-        <div v-if="task_game.task_count >= task_game.num" class="m-water is_down">领币</div>
-        <img v-if="task_game.task_count >= task_game.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+        <img v-if="task_game.task_count >= task_game.num" class="img_down" src="./../assets/mogui/icon_free_c_used.png" alt=""/>
 
         <p :class="{'is_down':task_game.task_count >= task_game.num}">投币送币</p>
       </li>
 
       <li  v-if="task_wawa.num>0">
         <img @click="openTip('taskWawaTip')" v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty<task_wawa.value" src="./../assets/mogui/icon_free_c.png" alt=""/>
-        <img :class="{'is_down':task_wawa.task_count >= task_wawa.num}" @click="receiveTask(task_wawa)" v-else="" src="./../assets/mogui/icon_free_receive_c.png" alt="">
-        <img v-if="task_wawa.task_count >= task_wawa.num" class="img_down" src="./../assets/mogui/icon_free_receive_c.png" alt=""/>
+        <img v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty>=task_wawa.value" :class="{'is_down':task_wawa.task_count >= task_wawa.num}" @click="receiveTask(task_wawa)"  src="./../assets/mogui/icon_free_receive_c.png" alt="">
+        <img v-if="task_wawa.task_count >= task_wawa.num" class="img_down" src="./../assets/mogui/received.png" alt=""/>
         <p :class="{'is_down':task_wawa.task_count >= task_wawa.num}">抓中送币</p>
       </li>
     </ul>
@@ -190,6 +188,9 @@
           height: 93px;
           display: block;
           margin: 19px auto 11px auto;
+        }
+        .img_down{
+          width: 160px;
         }
         .m-water{
           width: 90px;

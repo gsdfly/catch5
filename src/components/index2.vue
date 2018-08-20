@@ -67,7 +67,7 @@
                 <div class="d">
                   <div class="dd" :style="ringStyle">
                     <div>
-                      <img class="img" src="./../assets/task-2/processed_bg.png" alt="">
+                      <img class="img" src="./../assets/mogui/processed_bg.png" alt="">
                       <!--<img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">-->
                       <div class="star" :class="{'animation':starClass==='animation'}">
                         <img class="star1" src="./../assets/ring/star1.png" alt="">
@@ -2051,11 +2051,12 @@
     height: 261px;
     left: 50%;
     /*top: 36px;*/
-    top:40px;
-    transform: translateX(calc(-50% - 8px));
+    top:32px;
+    transform: translateX(calc(-50% - 4px));
     /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/process_bg2.png");*/
-    background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");
+    /*background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");*/
+    background: url("./../assets/mogui/process_bg.png");
     /*background: red;*/
     background-size: 100% 100%;
     pointer-events: none;
@@ -2075,7 +2076,7 @@
     left: 12px;
     bottom: 20px;
     /*background: url("./../assets/ring/process_r.png");*/
-    background: url("./../assets/task-2/process_bg_circular.png");
+    background: url("./../assets/mogui/process_bg_circular.png");
     background-size: 100% 100%;
     color: #fff;
     text-align: center;
@@ -2212,9 +2213,10 @@
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg {
     width: 92px;
     height: 92px;
-    background: url("./../assets/task-2/progress_doll_bg.png") no-repeat;
-    /*background: red;*/
-    background-size: 100% 100%;
+    /*background: url("./../assets/task-2/progress_doll_bg.png") no-repeat;*/
+    background: #ff0000;
+    border-radius: 50%;
+    /*background-size: 100% 100%;*/
     position: relative;
   }
 
@@ -2234,22 +2236,24 @@
   }
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-tip-ling {
     /*background: url("./../assets/task-2/progress_doll_receive_bg.png") no-repeat;*/
-    border: 4px solid #e8453d;
+    //border: 4px solid $wawaTipBgColor;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-quan img {
     width: 100%;
     position: absolute;
     left: 0;
-    bottom: -6px;
+    bottom: 0;
+   //bottom: -6px;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .last {
-    right: -40px;
+    //right: -40px;
+    right: -70px;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .nolast {
-    left: -40px;
+    left: -70px;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-content {
@@ -2267,7 +2271,7 @@
     line-height: 32px;
     padding: 0 10px;
     color: #fff;
-    background: #f76058;
+    background: $wawaTipBgColor;
     display: inline-block;
     border-radius: 12px;
     /*position: absolute;
@@ -2331,15 +2335,19 @@
   }
 
   .main .center > h3 {
-    width: 226px;
-    height: 90px;
+    width: 194px;
+    height: 74px;
+    line-height: 74px;
+    /*width: 226px;*/
+    /*height: 90px;*/
+    font-size: 30px;
     /*font-size: 0.32px;*/
-    font-size: 34px;
-    color: #fd643b;
+    /*font-size: 34px;*/
+    color: $scanCodeColor;
     /*margin: 0 0 0.1px 0;*/
     /*height: 0.64px;*/
-    background: #feedd7;
-    line-height: 90px;
+    background: $scanCodeBgColor;
+    /*line-height: 90px;*/
     position: absolute;
     border-radius: 0 16px 0 0;
     right: 0px;
@@ -2354,14 +2362,16 @@
   }
 
   .main .center .startgame {
-    /*width: 306px;*/
-    /*height: 306px;*/
-    width: 358px;
-    height: 361px;
+    width: 314px;
+    height: 314px;
+    /*width: 358px;*/
+    /*height: 361px;*/
+    padding: 13px 22px 34px 22px;
     text-align: center;
-    line-height: 306px;
+    line-height: 290px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
-    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
+    /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
+    background: url("./../assets/mogui/press_begin.png");
     background-size: 100% 100%;
     border: none;
     outline: none;
@@ -2384,12 +2394,12 @@
   .main .center .game-num {
     width: 418px;
     height: 93px;
-    border: 1px solid #ff784e;
+    border: 1px solid $gameNumColor;
     border-radius: 18px;
     font-size: 24px;
     line-height: 91px;
-    // margin: -63px auto 0 auto;
-    margin: -118px auto 0 auto;
+    margin: -88px auto 0 auto;
+    //margin: -118px auto 0 auto;
     background: #fff;
     color: #7e7e7e;
     text-align: center;
@@ -2410,19 +2420,19 @@
     width: 20%;
     float: left;
     font-size: 50px;
-    color: #ff784e;
+    color: $gameNumColor;
     text-align: center;
     height: 71px;
     line-height: 71px;
     /*height: 67px;*/
     /*line-height: 67px;*/
-    border-right: 1px solid #ff784e;
+    border-right: 1px solid $gameNumColor;
     margin: 10px 0;
   }
 
   .main .center .game-num i:last-of-type {
     border-right: none;
-    border-left: 1px solid #ff784e;
+    border-left: 1px solid $gameNumColor;
     float: right;
   }
 
@@ -2441,7 +2451,7 @@
   .main .center .game-num > div h3 {
     /*font-size: 0.42px;*/
     font-size: 40px;
-    color: #ff784e;
+    color:$gameNumColor;
     font-weight: 600;
     /*line-height: 0.42px;*/
     line-height: 40px;
@@ -2535,7 +2545,8 @@
   .jo-version2 .main .center .game-num {
     width: 430px;
     height: 96px;
-    margin: -118px auto 0 auto;
+    margin: -80px auto 0 auto;
+    //margin: -118px auto 0 auto;
   }
 
   /*.jo-version2 .main .center .game-num > div h3 {*/
@@ -2550,7 +2561,7 @@
   .jo-version2 .main .centerout .center .ring {
     /*top:52px;*/
     /*top: 40px;*/
-    top:68px;
+    top:52px;
   }
 
   .jo-version2 .main .center .startgame {
