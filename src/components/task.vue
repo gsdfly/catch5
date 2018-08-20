@@ -95,7 +95,7 @@
               localStorage.setItem('guideTime',nowTime)
           }
           var prize_bounty = localStorage.getItem('prize_bounty')
-          //在第一次进入页面或取到奖励金的时候需要将娃娃的奖励金存到本地
+          //在第一次进入页面或取到任务值的时候需要将娃娃的任务值存到本地
           this.$store.dispatch('getActivityBountyInfo').then((res)=>{
             if(prize_bounty && res.prize_bounty>prize_bounty){
               //弹出抓中娃娃的弹窗

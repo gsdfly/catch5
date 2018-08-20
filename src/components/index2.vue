@@ -6,6 +6,8 @@
         <!--<img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="">-->
         <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="">-->
         <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/guide/shuoming.png" alt="">
       </div>
       <div class="header">
         <div>
@@ -293,14 +295,14 @@
             <div class="bg-center11-main">
               <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="" class="imgBg" @click.prevent=""/>-->
               <div class="content">
-                <h3 class="tipTitle"><span></span><b>恭喜获得奖励金</b></h3>
+                <h3 class="tipTitle"><span></span><b>恭喜获得任务值</b></h3>
                 <h5><span class="home_icon_bi"></span>{{task_now.recharge_bounty}}</h5>
-                <p>我的奖励金</p>
+                <p>我的任务值</p>
                 <div v-if="!isReceive">
                   <dl class="dlCoupon">
                     <dt>
                       <h4>{{currentGift.voucher_batch.name}}</h4>
-                      <p>(消耗{{currentGift.voucher_batch.value}}个奖励金)</p>
+                      <p>(消耗{{currentGift.voucher_batch.value}}个任务值)</p>
                     </dt>
                     <dd>
                       <button @click="receiveCoupon">兑换</button>
@@ -321,6 +323,7 @@
                     </dd>
                   </dl>
                 </div>
+                <p class="go-shuoming" @click="openTip('shuoming')">查看活动说明</p>
                 <a class="go-coupon-list" href="javascript:void(0)"
                    @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
                   class="iconfont icon-shuangjiantouyou"></i></a>
@@ -404,36 +407,46 @@
           <button @click="closeBg">去抓娃娃</button>
         </div>
 
-        <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="" >
+        <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="">
           <div class="center16-main">
-            <img class="imgBg" src="./../assets/guide/jieshi.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>
+            <h3>
+              累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
+            </h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
             <a class="go-coupon-list" href="javascript:void(0)"
                @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
               class="iconfont icon-shuangjiantouyou"></i></a>
             <div class="btn" @click="closeBg">我知道啦</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"  @click="closeBg"/>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
           </div>
         </div>
 
-        <div class="bg-center16" v-if="contentShow == 'shuoming'" @click.stop="" >
+        <div class="bg-center16" v-if="contentShow == 'shuoming'" @click.stop="">
           <div class="center16-main">
-            <img class="imgBg" src="./../assets/guide/shuoming.png" alt=""/>
-            <div class="btn" @click="closeBg">我知道啦</div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/shuoming.png" alt=""/>
+            <div class="back" @click="goPre"><i></i>返回</div>
+            <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center16" v-if="contentShow == 'wawaTip'" @click.stop="">
+          <div class="center16-main">
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/catch.png" alt=""/>
+            <h3>+0.01元换购将重新开始积分<br/>开始新一轮的挑战吧<i></i></h3>
+            <p @click="openTip('shuoming')">查看活动说明</p>
             <a class="go-coupon-list" href="javascript:void(0)"
                @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
               class="iconfont icon-shuangjiantouyou"></i></a>
+            <div class="btn" @click="closeBg">我知道啦</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"  @click="closeBg"/>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
           </div>
-        </div>
-
-        <div class="bg-center17" v-if="contentShow == 'wawaTip'" @click.stop="">
-          <img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>
-          <p>恭喜你抓中娃娃</p>
-          <p>积分重新累计</p>
-          <button @click="closeBg">去抓娃娃</button>
         </div>
       </div>
 
@@ -515,6 +528,7 @@
             voucher_batch_id: 3
           }]
         },
+        shuomingPre:''
 //        guideTime:'',
 //        touchTime:0
       }
@@ -574,6 +588,9 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      goPre(){
+        this.openTip(this.shuomingPre)
+      },
       socket() {
         var self = this;
         if (!self.isConnectScoket) {
@@ -594,14 +611,14 @@
           })
         }
       },
-      handleActivityBountyInfo(){
+      handleActivityBountyInfo() {
         var prize_bounty = localStorage.getItem('prize_bounty')
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
-          if (res.prize_bounty > prize_bounty ) {
+          if (res.prize_bounty > prize_bounty) {
             this.bgShow = true;
             this.contentShow = 'wawaTip';
           }
-          localStorage.setItem('prize_bounty',res.prize_bounty);
+          localStorage.setItem('prize_bounty', res.prize_bounty);
         })
       },
       goProfile() {
@@ -625,21 +642,21 @@
 //        } else {
 //          this.couponList()
 //        }
-        //在每次领取之前，我需要先同步一次奖励金，判断是否满足可以领取的
-        this.$store.dispatch('getActivityBountyInfo').then((res)=>{
-          if(res.recharge_bounty>=value){
+        //在每次领取之前，我需要先同步一次任务值，判断是否满足可以领取的
+        this.$store.dispatch('getActivityBountyInfo').then((res) => {
+          if (res.recharge_bounty >= value) {
             //在这里需要发送一个请求去判断是否可以领取优惠券及用户所消耗的游戏币是否满足条件
-            this.$store.dispatch('getActivityBountyStatus',item.id).then((res2)=>{
-              if(res2.can_exchange){
+            this.$store.dispatch('getActivityBountyStatus', item.id).then((res2) => {
+              if (res2.can_exchange) {
                 this.receiveGift(item)
-              }else {
+              } else {
                 //这里弹出让用户玩完所有的游戏币提示
                 this.bgShow = true;
                 this.contentShow = 'jieshi';
                 _hmt.push(['_trackEvent', '弹出解释弹出', '点击', '币没玩完弹出', '']);
               }
             })
-          }else {
+          } else {
             this.couponList()
           }
         })
@@ -724,7 +741,7 @@
         this.$store.dispatch('getActivityBountyExchange', this.currentGift.id).then((res) => {
           this.couponInfo = res.data;
           this.isReceive = true;
-          //重新获取奖励金信息,并更新本地娃娃奖励金
+          //重新获取任务值信息,并更新本地娃娃任务值
           this.$store.dispatch('getActivityBountyInfo')
           this.$store.dispatch('getOperations');
         })
@@ -767,7 +784,8 @@
         this.bgShow = false
       },
       openTip(value, value2 = '') {
-        if(value === 'shuoming'){
+        if (value === 'shuoming') {
+          this.shuomingPre = this.contentShow;
           _hmt.push(['_trackEvent', '打开活动说明', '点击', '打开活动说明', '']);
         }
         this.freeTipImg = value2;
@@ -993,6 +1011,13 @@
           sum += item.vouchers.length;
         }
         return sum
+      },
+      handleDes(value) {
+        if (parseInt(value)) {
+          return parseInt(value)
+        } else {
+          return 0
+        }
       }
 //      handleArr(arr){
 //        var max = 0;
@@ -1571,6 +1596,15 @@
               font-size: 18px;
             }
           }
+          .go-shuoming {
+            position: absolute;
+            font-size: 22px;
+            line-height: 22px;
+            left: 0;
+            bottom: -42px;
+            margin: 0;
+            text-decoration:underline;
+          }
         }
       }
 
@@ -1744,25 +1778,45 @@
     }
   }
 
-  .bg-center16{
-    .center16-main{
+  .bg-center16 {
+    .center16-main {
       position: relative;
       width: 640px;
       @include center;
-      .imgBg{
+      .imgBg {
         width: 100%;
       }
-      p{
+      .back{
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        left: 0;
+        top: 734px;
+        color: #fff;
+        font-size: 32px;
+        line-height: 32px;
+        text-shadow: 2px 2px 9px rgba(136,80,35,0.56);
+        i{
+          width: 37px;
+          height: 26px;
+          display: inline-block;
+          background: url("./../assets/guide/icon_back.png") no-repeat;
+          background-size: 100% 100%;
+          vertical-align: middle;
+          margin: 0 3px 0 0;
+        }
+      }
+      p {
         position: absolute;
         @include centerX;
-        top:598px;
+        top: 598px;
         text-decoration: underline;
         font-size: 24px;
         letter-spacing: 1.2px;
         color: #ffffff;
         opacity: 0.9;
       }
-      .btn{
+      .btn {
         width: 414px;
         height: 124px;
         background: url("./../assets/guide/press_iknow.png");
@@ -1774,14 +1828,32 @@
         color: #fd673b;
         line-height: 80px;
       }
+      h3 {
+        font-size: 34px;
+        color: #fff;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        left: 0;
+        top: 475px;
+        line-height: 55px;
+        i {
+          display: inline-block;
+          width: 40px;
+          height: 37px;
+          background: url("./../assets/guide/smlie.png") no-repeat;
+          background-size: 100% 100%;
+          vertical-align: middle;
+          margin: -5px 0 0 10px;
+        }
+      }
       .go-coupon-list {
         color: #fff;
         font-size: 22px;
         text-decoration: none;
-        position: absolute;
         line-height: 22px;
-        right: 50px;
-        bottom: 180px;
+        @include centerX;
+        bottom: 176px;
         i {
           font-size: 18px;
         }
