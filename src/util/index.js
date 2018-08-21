@@ -201,35 +201,7 @@ export const changeTipOperation = (tipOperationObj, loalStorageName, store) => {
 
 
 export const payment = (CONFIG, params, self, callback) => {
-  console.log(self);
-  if (CONFIG.isAlipay) {
-    self.$store.dispatch('getPayAlipay', params).then((data) => {
-      AlipayJSBridge.call("tradePay", {
-        tradeNO: data.data.trade_no
-      }, function (result) {
-        if (result.resultCode == '9000') {
-          // self.isRequest = false
-          //   if(self.tip_operation.recharged){
-          //     changeTipOperation(self.tip_operation.recharged,'alreadyTipEnterRecharged',self.$store);
-          //   }
-          //   if (type !== 1) {
-          //     self.$store.commit('setCoins', coin)
-          //     self.$emit('closeBg');
-          //   } else {
-          //     self.$store.dispatch('InfiniteGame').then(() => {
-          //       self.$emit('changeTip');
-          //     })
-          //   }
-          //   self.getCoinList()
-          callback();
-        } else {
-          self.isRequest = false;
-        }
-      });
-    }).catch(() => {
-      self.isRequest = false;
-    })
-  } else if (CONFIG.isWx) {
+  if (CONFIG.isWx) {
     self.$store.dispatch('getPayJssdk', params)
       .then((data) => {
         if (data.status_code === 200) {
@@ -265,6 +237,37 @@ export const payment = (CONFIG, params, self, callback) => {
       }).catch(() => {
       self.isRequest = false;
     })
+  }else if(CONFIG.isAlipay){
+    self.$store.dispatch('getPayAlipay', params).then((data) => {
+      AlipayJSBridge.call("tradePay", {
+        tradeNO: data.data.trade_no
+      }, function (result) {
+        if (result.resultCode == '9000') {
+          // self.isRequest = false
+          //   if(self.tip_operation.recharged){
+          //     changeTipOperation(self.tip_operation.recharged,'alreadyTipEnterRecharged',self.$store);
+          //   }
+          //   if (type !== 1) {
+          //     self.$store.commit('setCoins', coin)
+          //     self.$emit('closeBg');
+          //   } else {
+          //     self.$store.dispatch('InfiniteGame').then(() => {
+          //       self.$emit('changeTip');
+          //     })
+          //   }
+          //   self.getCoinList()
+          callback();
+        } else {
+          self.isRequest = false;
+        }
+      });
+    }).catch(() => {
+      self.isRequest = false;
+    })
+  }else {
+    self.isRequest = false;
+
+    window.location.href = `${CONFIG.localtionUrl2}index.php/api/taobao/order?machine_no=${CONFIG.machine_no}&coin_price_id=${params.coin_price_id}&token=${CONFIG.token}&callback=${document.URL}`
   }
 }
 
