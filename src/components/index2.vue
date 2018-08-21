@@ -450,9 +450,9 @@
             <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/catch.png" alt=""/>
             <h3>抓中公仔将重新开始累积任务值<br/>开始新一轮的挑战吧<i></i></h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
-            <a class="go-coupon-list" href="javascript:void(0)"
-               @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
-              class="iconfont icon-shuangjiantouyou"></i></a>
+            <!--<a class="go-coupon-list" href="javascript:void(0)"-->
+               <!--@click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i-->
+              <!--class="iconfont icon-shuangjiantouyou"></i></a>-->
             <div class="btn" @click="closeBg">我知道啦</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
