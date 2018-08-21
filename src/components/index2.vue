@@ -425,9 +425,9 @@
               累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
             </h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
-            <a class="go-coupon-list" href="javascript:void(0)"
-               @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
-              class="iconfont icon-shuangjiantouyou"></i></a>
+            <!--<a class="go-coupon-list" href="javascript:void(0)"-->
+               <!--@click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i-->
+              <!--class="iconfont icon-shuangjiantouyou"></i></a>-->
             <div class="btn" @click="closeBg">我知道啦</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -1829,9 +1829,10 @@
       p {
         position: absolute;
         @include centerX;
-        top: 598px;
+        top: 768px;
         text-decoration: underline;
         font-size: 24px;
+        line-height: 24px;
         letter-spacing: 1.2px;
         color: #ffffff;
         opacity: 0.9;
@@ -1843,7 +1844,7 @@
         background-size: 100% 100%;
         position: absolute;
         @include centerX;
-        top: 668px;
+        top: 647px;
         font-size: 32px;
         color: #fd673b;
         line-height: 80px;
@@ -1855,7 +1856,7 @@
         width: 100%;
         text-align: center;
         left: 0;
-        top: 475px;
+        top: 502px;
         line-height: 55px;
         i {
           display: inline-block;
