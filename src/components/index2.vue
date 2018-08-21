@@ -625,7 +625,7 @@
       handleActivityBountyInfo() {
         var prize_bounty = localStorage.getItem('prize_bounty')
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
-          if (res.prize_bounty > prize_bounty) {
+          if(res.prize_bounty > prize_bounty) {
             this.bgShow = true;
             this.contentShow = 'wawaTip';
           }
