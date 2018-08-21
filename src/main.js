@@ -93,8 +93,11 @@ FastClick.attach(document.body)
       sc.onload = function () {
         wxFc()
       }
-    } else {
+    } else if(CONFIG.isAlipay){
       sc.src = 'https://a.alipayobjects.com/g/h5-lib/alipayjsapi/3.0.5/alipayjsapi.inc.min.js'
+      document.getElementsByTagName('body')[0].appendChild(sc)
+    } else {
+      sc.src = '//g.alicdn.com/tmapp/tida/3.3.26/tida.js?appkey=24981050'
       document.getElementsByTagName('body')[0].appendChild(sc)
     }
   } else {
