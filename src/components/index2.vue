@@ -290,32 +290,43 @@
             <div class="bg-center11-main">
               <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="" class="imgBg" @click.prevent=""/>-->
               <div class="content">
-                <h3 class="tipTitle"><span></span><b>恭喜获得奖励金</b></h3>
+                <h3 class="tipTitle"><span></span><b>恭喜获得任务值</b></h3>
                 <h5><span class="home_icon_bi"></span>{{task_now.recharge_bounty}}</h5>
-                <p>我的奖励金</p>
-                <div v-if="!isReceive">
+                <p>我的任务值</p>
+                <div>
                   <dl class="dlCoupon">
                     <dt>
                       <h4>{{currentGift.voucher_batch.name}}</h4>
-                      <p>(消耗{{currentGift.voucher_batch.value}}个奖励金)</p>
+                      <p>(消耗{{currentGift.voucher_batch.value}}个任务值)</p>
                     </dt>
                     <dd>
                       <button @click="receiveCoupon">领取</button>
                     </dd>
                   </dl>
                 </div>
-                <div v-else="">
-                  <dl class="dlCoupon">
-                    <dt>
-                      <h4>{{currentGift.voucher_batch.name}}</h4>
-                      <p>{{couponInfo.code}}</p>
-                      <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
-                    </dt>
-                    <dd>
-                      <button @click="useCoupon(couponInfo.code,couponInfo.end_time,currentGift.voucher_batch.name)">使用</button>
-                    </dd>
-                  </dl>
-                </div>
+                <!--<div v-if="!isReceive">-->
+                  <!--<dl class="dlCoupon">-->
+                    <!--<dt>-->
+                      <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
+                      <!--<p>(消耗{{currentGift.voucher_batch.value}}个任务值)</p>-->
+                    <!--</dt>-->
+                    <!--<dd>-->
+                      <!--<button @click="receiveCoupon">领取</button>-->
+                    <!--</dd>-->
+                  <!--</dl>-->
+                <!--</div>-->
+                <!--<div v-else="">-->
+                  <!--<dl class="dlCoupon">-->
+                    <!--<dt>-->
+                      <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
+                      <!--<p>{{couponInfo.code}}</p>-->
+                      <!--<p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>-->
+                    <!--</dt>-->
+                    <!--<dd>-->
+                      <!--<button @click="useCoupon(couponInfo.code,couponInfo.end_time,currentGift.voucher_batch.name)">使用</button>-->
+                    <!--</dd>-->
+                  <!--</dl>-->
+                <!--</div>-->
                 <a class="go-coupon-list" href="javascript:void(0)" @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
                   class="iconfont icon-shuangjiantouyou"></i></a>
               </div>
@@ -428,9 +439,6 @@
             <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/catch.png" alt=""/>
             <h3>+0.01元换购将重新开始积分<br/>开始新一轮的挑战吧<i></i></h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
-            <a class="go-coupon-list" href="javascript:void(0)"
-               @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
-              class="iconfont icon-shuangjiantouyou"></i></a>
             <div class="btn" @click="closeBg">我知道啦</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -720,8 +728,10 @@
 //        })
         this.$store.dispatch('getActivityBountyExchange', this.currentGift.id).then((res) => {
           this.couponInfo = res.data;
-          this.isReceive = true;
-          //重新获取奖励金信息
+//          this.isReceive = true;
+          this.bgShow = true;
+          this.contentShow = 'couponList';
+          //重新获取任务值信息
           this.$store.dispatch('getActivityBountyInfo');
           this.$store.dispatch('getOperations');
         })
@@ -2454,12 +2464,11 @@
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .last {
-    //right: -40px;
-    right: -70px;
+    right: -40px;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .nolast {
-    left: -70px;
+    left: -40px;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-content {

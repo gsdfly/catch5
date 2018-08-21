@@ -64,7 +64,7 @@
     .bg2{
       width: 100%;
       /*height: 22%;*/
-      height: 18.3%;
+      height: 19%;
       background: url("./../assets/guide/bg.png");
       /*background: rgba(0,0,0,0.72);*/
     }
