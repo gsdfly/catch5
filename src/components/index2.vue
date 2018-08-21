@@ -298,7 +298,7 @@
                 <h3 class="tipTitle"><span></span><b>恭喜获得任务值</b></h3>
                 <h5><span class="home_icon_bi"></span>{{task_now.recharge_bounty}}</h5>
                 <p>我的任务值</p>
-                <div v-if="!isReceive">
+                <div>
                   <dl class="dlCoupon">
                     <dt>
                       <h4>{{currentGift.voucher_batch.name}}</h4>
@@ -309,20 +309,31 @@
                     </dd>
                   </dl>
                 </div>
-                <div v-else="">
-                  <dl class="dlCoupon">
-                    <dt>
-                      <h4>{{currentGift.voucher_batch.name}}</h4>
-                      <p>{{couponInfo.code}}</p>
-                      <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
-                    </dt>
-                    <dd>
-                      <button @click="useCoupon(couponInfo.code,couponInfo.end_time,currentGift.voucher_batch.name)">
-                        使用
-                      </button>
-                    </dd>
-                  </dl>
-                </div>
+                <!--<div v-if="!isReceive">-->
+                  <!--<dl class="dlCoupon">-->
+                    <!--<dt>-->
+                      <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
+                      <!--<p>(消耗{{currentGift.voucher_batch.value}}个任务值)</p>-->
+                    <!--</dt>-->
+                    <!--<dd>-->
+                      <!--<button @click="receiveCoupon">兑换</button>-->
+                    <!--</dd>-->
+                  <!--</dl>-->
+                <!--</div>-->
+                <!--<div v-else="">-->
+                  <!--<dl class="dlCoupon">-->
+                    <!--<dt>-->
+                      <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
+                      <!--<p>{{couponInfo.code}}</p>-->
+                      <!--<p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>-->
+                    <!--</dt>-->
+                    <!--<dd>-->
+                      <!--<button @click="useCoupon(couponInfo.code,couponInfo.end_time,currentGift.voucher_batch.name)">-->
+                        <!--使用-->
+                      <!--</button>-->
+                    <!--</dd>-->
+                  <!--</dl>-->
+                <!--</div>-->
                 <p class="go-shuoming" @click="openTip('shuoming')">查看活动说明</p>
                 <a class="go-coupon-list" href="javascript:void(0)"
                    @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
@@ -643,7 +654,14 @@
 //          this.couponList()
 //        }
         //在每次领取之前，我需要先同步一次任务值，判断是否满足可以领取的
+        var prize_bounty = localStorage.getItem('prize_bounty')
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
+          if (res.prize_bounty > prize_bounty) {
+            this.bgShow = true;
+            this.contentShow = 'wawaTip';
+            localStorage.setItem('prize_bounty', res.prize_bounty);
+            return;
+          }
           if (res.recharge_bounty >= value) {
             //在这里需要发送一个请求去判断是否可以领取优惠券及用户所消耗的游戏币是否满足条件
             this.$store.dispatch('getActivityBountyStatus', item.id).then((res2) => {
@@ -740,7 +758,9 @@
 //        })
         this.$store.dispatch('getActivityBountyExchange', this.currentGift.id).then((res) => {
           this.couponInfo = res.data;
-          this.isReceive = true;
+//          this.isReceive = true;
+          this.bgShow = true;
+          this.contentShow = 'couponList';
           //重新获取任务值信息,并更新本地娃娃任务值
           this.$store.dispatch('getActivityBountyInfo')
           this.$store.dispatch('getOperations');
