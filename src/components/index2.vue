@@ -922,17 +922,10 @@
     font-size: 30px;
     border: none;
     color: #fff;
-    background-image: linear-gradient(0deg,
-      rgba(253, 102, 59, 0.65) 0%,
-      rgba(254, 127, 66, 0.65) 100%),
-    linear-gradient(
-        #fe7940,
-        #fe7940);
-    background-blend-mode: normal,
-    normal;
-    box-shadow: 0px 3px 18px rgba(134, 106, 49, 0.13),
-    0px 5px 32px rgba(134, 106, 49, 0.33);
-    border-radius: 27px;
+    background-color: #c80000;
+    box-shadow: 0px 2px 2px 0px
+    rgba(200, 0, 0, 0.4);
+    border-radius: 28px;
   }
 
   $bgColor: #fd673b;
@@ -1601,7 +1594,7 @@
       > div {
         width: 640px;
         height: 900px;
-        background: $bgColor;
+        background: $tipBgColor;
         border-radius: $bgRadius;
         padding: 34px 0 0 0;
         ul {
@@ -1610,10 +1603,10 @@
           height: 790px;
           overflow: auto;
           li {
-            background: red;
             width: 584px;
             height: 180px;
-            background: url("http://res.catchme.com.cn/activity/task2/ticket_bg.png") no-repeat;
+            /*background: url("http://res.catchme.com.cn/activity/task2/ticket_bg.png") no-repeat;*/
+            background: url("./../assets/mogui/ticket_bg.png") no-repeat;
             background-size: 100% 100%;
             margin: 0 auto 9px auto;
             position: relative;
