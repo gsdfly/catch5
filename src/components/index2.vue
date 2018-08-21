@@ -230,9 +230,10 @@
         <div class="bg-center8" v-if="contentShow == 'notExchange'" @click.stop="">
           <div>
             <div>
-              <h3 class="tipTitle"><span></span><b>我的优惠券</b></h3>
-              <img src="./../assets/catch3/image_nothing.png" alt="" class="imgBg" @click.prevent="">
-              <p>暂时没有优惠券哦</p>
+              <img src="./../assets/mogui/nothing.png" alt=""/>
+              <!--<h3 class="tipTitle"><span></span><b>我的优惠券</b></h3>-->
+              <!--<img src="./../assets/catch3/image_nothing.png" alt="" class="imgBg" @click.prevent="">-->
+              <!--<p>暂时没有优惠券哦</p>-->
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg">
@@ -256,7 +257,7 @@
                 <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                 <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy" id="copyBtn">复制</button>
               </div>
-              <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="" @click.prevent=""
+              <img src="http://res.catchme.com.cn/activity/mogui/shuoming.png" alt="" @click.prevent=""
                    class="imgBg"/>
               <a class="go-coupon-list" href="javascript:void(0)" @click.stop="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
                 class="iconfont icon-shuangjiantouyou"></i></a>
@@ -430,8 +431,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: true,
-        contentShow: 'taskWawaTip',
+        bgShow: false,
+        contentShow: '',
         currentCoupon: {},
         pay: {},
         currentCouponPay: {},
@@ -1084,13 +1085,6 @@
   }
   /*头部结束*/
 
-
-
-
-
-
-
-
   .tipTitle {
     width: 100%;
     font-size: 36px;
@@ -1101,7 +1095,7 @@
     margin: 0 0 42px 0;
     b {
       padding: 0 10px;
-      background: #fd673b;
+      background: #ff0000;
       position: absolute;
       left: 50%;
       top: 0;
@@ -1245,14 +1239,18 @@
       > div {
         width: 100%;
         height: 700px;
-        background: $bgColor;
+       // background: $bgColor;
         border-radius: 20px;
-        padding: 34px 0 0 0;
-        img {
-          width: 328px;
-          height: 361px;
-          margin: 54px 0 0 0;
+        img{
+          width: 100%;
+          height: 100%;
         }
+        /*padding: 34px 0 0 0;*/
+        /*img {*/
+          /*width: 328px;*/
+          /*height: 361px;*/
+          /*margin: 54px 0 0 0;*/
+        /*}*/
         p {
           font-size: 28px;
           line-height: 28px;
@@ -1528,7 +1526,7 @@
       .bg-center11-main{
           width: 640px;
           height: 490px;
-          background-color: #fd673b;
+          background-color: #ff0000;
           border-radius: 20px;
         position: relative;
         .content {
@@ -1545,7 +1543,8 @@
             position: relative;
             width: 100%;
             height: 180px;
-            background: url("http://res.catchme.com.cn/activity/task2/ticket_bg.png") no-repeat;
+            /*background: url("http://res.catchme.com.cn/activity/task2/ticket_bg.png") no-repeat;*/
+            background: url("./../assets/mogui/ticket_bg.png") no-repeat;
             background-size: 100% 100%;
           }
           h5 {
