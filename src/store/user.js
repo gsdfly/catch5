@@ -3,6 +3,7 @@ import api from './../api/index'
 import {changeTipOperation} from "../util/index";
 
 const state = {
+  isShowGuide:false,
   isLogin:false,
   user: {
     avatar: '',
@@ -70,6 +71,9 @@ const state = {
 }
 
 const mutations = {
+  changeIsGuide(state,value){
+    state.isShowGuide = value;
+  },
   changeIsLogin(state){
     state.isLogin = true;
   },
@@ -464,6 +468,16 @@ const actions = {
         success(data);
       }).catch((err)=>{
         error(err);
+      })
+    })
+  },
+  //查询是否可以领券
+  getActivityBountyStatus:function (ctx,operation_id) {
+    return new Promise((success,error)=>{
+      api.getBountyStatus({token:CONFIG.token,operation_id:operation_id,machine_no:ctx.state.machine_no}).then((data)=>{
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
       })
     })
   }

@@ -177,7 +177,7 @@
         <div class="bg-center4" v-if="contentShow == 'hideCoupon'" @click.stop="">
           <div class="bg-center-center">
             <img class="bg-center4-img" @click.prevent=""
-                 src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png"
+                 src="http://res.catchme.com.cn/activity/mogui/recharge.png"
                  alt="">
             <h3 class="coupon-num" :class="{'coupon-infinity':currentCouponPay.type===1}">
               {{Number(currentCouponPay.coin_price).toFixed(2) | handleNum}}元<span
@@ -395,11 +395,53 @@
           <p>您还没有抓中哦</p>
           <button @click="closeBg">去抓娃娃</button>
         </div>
-      </div>
 
+        <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="">
+          <div class="center16-main">
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>
+            <h3>
+              累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
+            </h3>
+            <p @click="openTip('shuoming')">查看活动说明</p>
+            <a class="go-coupon-list" href="javascript:void(0)"
+               @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
+              class="iconfont icon-shuangjiantouyou"></i></a>
+            <div class="btn" @click="closeBg">我知道啦</div>
+            <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center16" v-if="contentShow == 'shuoming'" @click.stop="">
+          <div class="center16-main">
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/shuoming.png" alt=""/>
+            <div class="back" @click="goPre"><i></i>返回</div>
+            <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center16" v-if="contentShow == 'wawaTip'" @click.stop="">
+          <div class="center16-main">
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/catch.png" alt=""/>
+            <h3>+0.01元换购将重新开始积分<br/>开始新一轮的挑战吧<i></i></h3>
+            <p @click="openTip('shuoming')">查看活动说明</p>
+            <a class="go-coupon-list" href="javascript:void(0)"
+               @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
+              class="iconfont icon-shuangjiantouyou"></i></a>
+            <div class="btn" @click="closeBg">我知道啦</div>
+            <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+      </div>
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
+    <guide v-if="isShowGuide"></guide>
   </div>
 </template>
 
@@ -415,11 +457,14 @@
   import Clipboard from 'clipboard';
   import quanprogress from './quanprogress.vue'
   import task from './task.vue'
-
+  import guide from './guide.vue'
+  import socketio from 'socket.io-client';
 
   export default {
     data() {
       return {
+        isConnectScoket: false,
+        io: {},
         start_desc: '投币启动',
         gameNum: 1,
         is_start: false,
@@ -470,7 +515,8 @@
             value: 1600,
             voucher_batch_id: 3
           }]
-        }
+        },
+        shuomingPre:''
       }
     },
     created() {
@@ -488,6 +534,7 @@
       activity_bounty: state => state.user.activity_bounty,
       task_game: state => state.user.task_game,
       task_now: state => state.user.task_now,
+      isShowGuide: state => state.user.isShowGuide,
     }),
     components: {
       joPay,
@@ -495,7 +542,8 @@
       tip,
       tipOperation,
       quanprogress,
-      task
+      task,
+      guide
     },
     mounted() {
       if (CONFIG.isWx) {
@@ -503,15 +551,17 @@
           if (!document.hidden) {
             this.$store.dispatch('getUser');
             this.$store.dispatch('getOperations');
-            this.$store.dispatch('getActivityBountyInfo')
-            this.bgShow = false;
+            this.handleActivityBountyInfo();
+//            this.$store.dispatch('getActivityBountyInfo')
+//            this.bgShow = false;
           }
         }.bind(this));
       } else if (CONFIG.isAlipay) {
         document.addEventListener('resume', function () {
-//              this.$store.dispatch('getUser');
-          this.$store.dispatch('getActivityBountyInfo')
-          this.bgShow = false;
+            this.$store.dispatch('getUser');
+            this.handleActivityBountyInfo();
+//          this.$store.dispatch('getActivityBountyInfo')
+//          this.bgShow = false;
         }.bind(this));
       }
       this.$store.dispatch('judgeMachine').then(() => {
@@ -524,8 +574,40 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      goPre(){
+        this.openTip(this.shuomingPre)
+      },
+      socket() {
+        var self = this;
+        if (!self.isConnectScoket) {
+          self.io = socketio(CONFIG.socketUrl, {
+            query: 'machine=' + CONFIG.machine_no,
+            transports: ['websocket', 'polling'],
+            reconnection: true,
+            reconnectionAttempts: 5
+          })
+          self.io.on('connect', function () {
+            self.isConnectScoket = true
+            self.io.on('prize', function () {
+              self.handleActivityBountyInfo();
+            })
+          })
+          self.io.on('disconnect', function () {
+            self.isConnectScoket = false
+          })
+        }
+      },
+      handleActivityBountyInfo() {
+        var prize_bounty = localStorage.getItem('prize_bounty')
+        this.$store.dispatch('getActivityBountyInfo').then((res) => {
+          if(res.prize_bounty > prize_bounty) {
+            this.bgShow = true;
+            this.contentShow = 'wawaTip';
+          }
+          localStorage.setItem('prize_bounty', res.prize_bounty);
+        })
+      },
       goProfile(){
-        console.log('1111')
         window.location.href = CONFIG.localtionUrl2+'profile'
       },
       handleRed(flag, item) {
@@ -656,6 +738,10 @@
         this.bgShow = false
       },
       openTip(value, value2 = '') {
+        if (value === 'shuoming') {
+          this.shuomingPre = this.contentShow;
+          _hmt.push(['_trackEvent', '打开活动说明', '点击', '打开活动说明', '']);
+        }
         this.freeTipImg = value2;
         this.bgShow = true;
         this.contentShow = value;
@@ -774,6 +860,7 @@
         _hmt.push(['_trackEvent', '主按钮投币', '点击', '投币-游戏次数-' + this.gameNum, '']);
         this.$store.dispatch('startingDevice', this.gameNum * this.info.coin_num)
           .then(() => {
+            this.socket();
             //投币成功，重新调用获取task_now的接口
             this.$store.dispatch('getActivityBountyInfo');
             this.is_lamp_after = true
@@ -878,6 +965,13 @@
           sum += item.vouchers.length;
         }
         return sum
+      },
+      handleDes(value) {
+        if (parseInt(value)) {
+          return parseInt(value)
+        } else {
+          return 0
+        }
       }
 //      handleArr(arr){
 //        var max = 0;
@@ -1755,6 +1849,89 @@
     }
   }
 
+  .bg-center16 {
+    .center16-main {
+      position: relative;
+      width: 640px;
+      @include center;
+      .imgBg {
+        width: 100%;
+      }
+      .back{
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        left: 0;
+        top: 734px;
+        color: #fff;
+        font-size: 32px;
+        line-height: 32px;
+        text-shadow: 2px 2px 9px rgba(136,80,35,0.56);
+        i{
+          width: 37px;
+          height: 26px;
+          display: inline-block;
+          background: url("./../assets/guide/icon_back.png") no-repeat;
+          background-size: 100% 100%;
+          vertical-align: middle;
+          margin: 0 3px 0 0;
+        }
+      }
+      p {
+        position: absolute;
+        @include centerX;
+        top: 598px;
+        text-decoration: underline;
+        font-size: 24px;
+        letter-spacing: 1.2px;
+        color: #ffffff;
+        opacity: 0.9;
+      }
+      .btn {
+        width: 414px;
+        height: 124px;
+        background: url("./../assets/guide/press_iknow.png");
+        background-size: 100% 100%;
+        position: absolute;
+        @include centerX;
+        top: 668px;
+        font-size: 32px;
+        color: #fd673b;
+        line-height: 80px;
+      }
+      h3 {
+        font-size: 34px;
+        color: #fff;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        left: 0;
+        top: 475px;
+        line-height: 55px;
+        i {
+          display: inline-block;
+          width: 40px;
+          height: 37px;
+          background: url("./../assets/guide/smlie.png") no-repeat;
+          background-size: 100% 100%;
+          vertical-align: middle;
+          margin: -5px 0 0 10px;
+        }
+      }
+      .go-coupon-list {
+        color: #fff;
+        font-size: 22px;
+        text-decoration: none;
+        line-height: 22px;
+        @include centerX;
+        bottom: 176px;
+        i {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
   .price {
     position: absolute;
     width: 298px;
@@ -1794,18 +1971,21 @@
     font-size: 36px;
     color: #fff;
     text-shadow: 2px 2px 3px #cd1d00;
-    background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/press_default.png") no-repeat;
-    background-size: 100% 100%;
+    background-color: #c80000;
+    box-shadow: 0px 3px 3px 0px rgba(200, 0, 0, 0.75);
+    /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/press_default.png") no-repeat;*/
+    /*background-size: 100% 100%;*/
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    border-radius: 50px;
   }
 
   .bg-center4 button.btn2 {
-    color: #fc6612;
-    text-shadow: none;
-    background: url("http://res.catchme.com.cn/imgs-2018-04-10/press_recharge_default.png") no-repeat;
-    background-size: 100% 100%;
+    /*color: #fc6612;*/
+    /*text-shadow: none;*/
+    /*background: url("http://res.catchme.com.cn/imgs-2018-04-10/press_recharge_default.png") no-repeat;*/
+    /*background-size: 100% 100%;*/
   }
 
   .bg-center5 button {
@@ -2383,7 +2563,8 @@
 
   .main .center .hasclick {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_ing.png");*/
-    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
+    /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
+    background: url("./../assets/mogui/press_begin.png");
     background-size: 100% 100%;
   }
 

@@ -69,7 +69,25 @@
     methods: {
       mountedStart() {
         this.$store.dispatch('getOperations').then(() => {
-          this.$store.dispatch('getActivityBountyInfo')
+          //获取本地的guide
+          var guideTime = localStorage.getItem('guideTime');
+          var date = new Date();
+          var nowTime = date.getMonth()+''+date.getDate();
+          if(!(guideTime === nowTime)){
+            this.$store.commit('changeIsGuide',true);
+            localStorage.setItem('guideTime',nowTime)
+          }
+          var prize_bounty = localStorage.getItem('prize_bounty')
+          //在第一次进入页面或取到任务值的时候需要将娃娃的任务值存到本地
+          this.$store.dispatch('getActivityBountyInfo').then((res)=>{
+            if(prize_bounty && res.prize_bounty>prize_bounty){
+              //弹出抓中娃娃的弹窗
+              this.$emit('openTip','wawaTip');
+            }
+            localStorage.setItem('prize_bounty',res.prize_bounty);
+          })
+
+//          this.$store.dispatch('getActivityBountyInfo')
           var coupon_time = Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart);
           localStorage.removeItem('startTime2')
           if (localStorage.getItem('userTime') && localStorage.getItem('domTime')) {

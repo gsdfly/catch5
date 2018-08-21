@@ -176,5 +176,9 @@ export default {
       params: params
     });
   },
-
+  getBountyStatus:function (params) {
+    return instance.get(CONFIG.url + 'api/bounty/status', {
+      params: params
+    });
+  }
 }
