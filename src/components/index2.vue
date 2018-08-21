@@ -82,7 +82,7 @@
                 <!--<span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>-->
                 <div class="task-gift" v-for="(item,index) in activity_bounty">
                   <!--<img class="ling" v-if="item.voucher_batch.value <= task_now.recharge_bounty" src="./../assets/task/red_ling.png" alt="" @click="receiveGift(item)" />-->
-                  <div class="ring-tip" id="couponList" @click="handleRed(item.voucher_batch.value <= task_now.recharge_bounty,item)">
+                  <div class="ring-tip" id="couponList" @click="handleRed(item.voucher_batch.value,item)">
                     <div class="ring-tip-bg">
                       <div class="ring-quan"  :class="{'ring-tip-ling':item.voucher_batch.value <= task_now.recharge_bounty}">
                         <img v-if="item.voucher_batch.image" class="ringicon ringicon2" :src="item.voucher_batch.image" alt=""/>
@@ -610,13 +610,39 @@
       goProfile(){
         window.location.href = CONFIG.localtionUrl2+'profile'
       },
-      handleRed(flag, item) {
+      handleRed(value, item) {
         _hmt.push(['_trackEvent','点击娃娃', '点击', '点击娃娃', '']);
-        if (flag) {
-          this.receiveGift(item)
-        } else {
-          this.couponList()
-        }
+//        if (flag) {
+//          this.receiveGift(item)
+//        } else {
+//          this.couponList()
+//        }
+
+        //在每次领取之前，我需要先同步一次任务值，判断是否满足可以领取的
+        var prize_bounty = localStorage.getItem('prize_bounty')
+        this.$store.dispatch('getActivityBountyInfo').then((res) => {
+          if (res.prize_bounty > prize_bounty) {
+            this.bgShow = true;
+            this.contentShow = 'wawaTip';
+            localStorage.setItem('prize_bounty', res.prize_bounty);
+            return;
+          }
+          if (res.recharge_bounty >= value) {
+            //在这里需要发送一个请求去判断是否可以领取优惠券及用户所消耗的游戏币是否满足条件
+            this.$store.dispatch('getActivityBountyStatus', item.id).then((res2) => {
+              if (res2.can_exchange) {
+                this.receiveGift(item)
+              } else {
+                //这里弹出让用户玩完所有的游戏币提示
+                this.bgShow = true;
+                this.contentShow = 'jieshi';
+                _hmt.push(['_trackEvent', '弹出解释弹出', '点击', '币没玩完弹出', '']);
+              }
+            })
+          } else {
+            this.couponList()
+          }
+        })
       },
       receiveGift(gift) {
         this.currentGift = gift;
@@ -1257,7 +1283,7 @@
       float: right;
       width: 58px;
       height: 62px;
-      background: #fff2ee;
+      background: #fff;
       border-radius: 18px 0 0 18px;
       line-height: 62px;
       text-align: center;
@@ -1272,18 +1298,22 @@
       height: 352px;
       padding: 30px 0 0 0;
       float: right;
-      background: #fff2ee;
+      background: #fff;
       border-radius: 0 0 0 18px;
       .kefu2-img {
-        width: 158px;
-        height: 158px;
-        padding: 9px;
+        /*width: 158px;*/
+        /*height: 158px;*/
+        /*background: #fff;*/
+        width: 146px;
+        height: 146px;
+        background: #ff0000;
+        padding: 3px;
         margin: 0 auto;
-        background: #fff;
         border-radius: 4px;
         img {
           width: 140px;
           height: 140px;
+          border: 3px solid #ff0000;
         }
       }
       h3 {
