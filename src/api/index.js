@@ -18,6 +18,12 @@ instance.interceptors.response.use(function(response) {
   if (res.status_code !== 200) {
     // sendError({code:response.data.status_code,message:response.data.message,url:response.config.url});
     store.commit('changeTipContent',getErrMsg(res.status_code, res.message))
+    if(res.status_code === 1014){
+      SetCookie('token_', '')
+      localStorage.removeItem('encrypt')
+      localStorage.removeItem('auth_type')
+      location.reload();
+    }
     return Promise.reject(res);
   }
   return res
@@ -27,12 +33,13 @@ instance.interceptors.response.use(function(response) {
   // if(error.response.data.status_code === 401){
   //   await callbackUrl();
   // }
-  // if (error.response.data.status_code === 401) {
-  //   clearAllCookie();
-  //   localStorage.clear();
-  //   location.reload();
-  //   return;
-  // }
+  if (error.response.data.status_code === 401) {
+    SetCookie('token_', '')
+    // clearAllCookie();
+    // localStorage.clear();
+    location.reload();
+    return;
+  }
   console.log(error, '全局err')
   store.commit('changeTipContent',{
     imgSrc:"http://res.catchme.com.cn/imgs-2018-02-05/tip/tip1.png",
@@ -41,7 +48,6 @@ instance.interceptors.response.use(function(response) {
     isShow:true
   });
   console.log(store.state.user.tipContent)
-  SetCookie('token_', '')
   return Promise.reject(error);
 })
 
