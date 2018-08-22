@@ -18,6 +18,12 @@ instance.interceptors.response.use(function(response) {
   if (res.status_code !== 200) {
     // sendError({code:response.data.status_code,message:response.data.message,url:response.config.url});
     store.commit('changeTipContent',getErrMsg(res.status_code, res.message))
+    if(res.status_code === 1014){
+      SetCookie('token_', '')
+      localStorage.removeItem('encrypt')
+      localStorage.removeItem('auth_type')
+      location.reload();
+    }
     return Promise.reject(res);
   }
   return res
