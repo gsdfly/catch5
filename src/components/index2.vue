@@ -576,7 +576,7 @@
           if (!document.hidden) {
             this.$store.dispatch('getUser');
             this.$store.dispatch('getOperations');
-            this.handleActivityBountyInfo();
+            this.handleActivityBountyInfo(2);
 //            this.$store.dispatch('getActivityBountyInfo');
 //            this.bgShow = false;
           }
@@ -584,7 +584,7 @@
       } else if (CONFIG.isAlipay) {
         document.addEventListener('resume', function () {
           this.$store.dispatch('getUser');
-          this.handleActivityBountyInfo();
+          this.handleActivityBountyInfo(2);
 //          this.$store.dispatch('getActivityBountyInfo')
 //          this.bgShow = false;
         }.bind(this));
@@ -614,7 +614,7 @@
           self.io.on('connect', function () {
             self.isConnectScoket = true
             self.io.on('prize', function () {
-              self.handleActivityBountyInfo();
+              self.handleActivityBountyInfo(1);
             })
           })
           self.io.on('disconnect', function () {
@@ -622,12 +622,16 @@
           })
         }
       },
-      handleActivityBountyInfo() {
+      handleActivityBountyInfo(scene) {
         var prize_bounty = localStorage.getItem('prize_bounty')
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
           if(res.prize_bounty > prize_bounty) {
             this.bgShow = true;
             this.contentShow = 'wawaTip';
+            switch (scene){
+              case 1: _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', 'websocket返回弹出', '']);break;
+              case 2: _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', '页面重新可见时弹出', '']);break;
+            }
           }
           localStorage.setItem('prize_bounty', res.prize_bounty);
         })
@@ -657,6 +661,7 @@
         var prize_bounty = localStorage.getItem('prize_bounty')
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
           if (res.prize_bounty > prize_bounty) {
+            _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', '点击时娃娃是弹出', '']);
             this.bgShow = true;
             this.contentShow = 'wawaTip';
             localStorage.setItem('prize_bounty', res.prize_bounty);
