@@ -81,6 +81,7 @@ FastClick.attach(document.body)
         }
       }
     } else {
+      console.log('1111111111')
       api.machineLogin({machine_no: CONFIG.machine_no, token: CONFIG.token});
       store.commit('changeIsLogin');
       store.dispatch('getUser');
