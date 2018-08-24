@@ -82,6 +82,7 @@
       task_wawa:state => state.user.task_wawa,
       info: state => state.user.info,
       isLogin: state => state.user.isLogin,
+      activity_bounty:state => state.user.activity_bounty
     }),
     methods:{
       mountedStart(){
@@ -97,7 +98,7 @@
           var prize_bounty = localStorage.getItem('prize_bounty')
           //在第一次进入页面或取到任务值的时候需要将娃娃的任务值存到本地
           this.$store.dispatch('getActivityBountyInfo').then((res)=>{
-            if(prize_bounty && res.prize_bounty>prize_bounty){
+            if(prize_bounty && res.prize_bounty>prize_bounty && this.activity_bounty.length>0){
               _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', '进入页面时弹出', '']);
               //弹出抓中娃娃的弹窗
               this.$emit('openTip','wawaTip');
