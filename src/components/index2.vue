@@ -464,7 +464,7 @@
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <guide v-if="isShowGuide"></guide>
+    <guide v-if="isShowGuide && activity_bounty.length>0"></guide>
   </div>
 </template>
 
@@ -625,7 +625,7 @@
       handleActivityBountyInfo(scene) {
         var prize_bounty = localStorage.getItem('prize_bounty')
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
-          if(res.prize_bounty > prize_bounty) {
+          if(res.prize_bounty > prize_bounty && this.activity_bounty.length>0) {
             this.bgShow = true;
             this.contentShow = 'wawaTip';
             switch (scene){
@@ -998,6 +998,9 @@
         }
       },
       task_now(newValue, oldValue) {
+        if(this.activity_bounty.length === 0){
+          return;
+        }
         if (newValue.recharge_bounty !== oldValue.recharge_bounty) {
           this.changeTaskGameProgress();
         }
