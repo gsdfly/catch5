@@ -17,7 +17,7 @@ var expName = IsWeixinOrAlipay();
 
 let CONFIG = {
   url: document.URL.indexOf('catchme') !== -1 ?  'https://front.catchme.com.cn/' : 'https://front.5zhua.cn/',
-  localtionUrl: document.URL.indexOf('catchme') !== -1 ? 'https://www.catchme.com.cn/catch/':'https://www.5zhua.cn/catch/',
+  localtionUrl: document.URL.indexOf('catchme') !== -1 ? 'http://www.catchme.com.cn/catch/':'http://www.5zhua.cn/catch/',
   localtionUrl2:document.URL.indexOf('catchme') !== -1 ? 'https://catchme.ewssh.m.jaeapp.com/' : 'https://zhua.ewssh.m.jaeapp.com/',
   socketUrl: document.URL.indexOf('catchme') !== -1 ? 'ws://ws.catchme.com.cn/':'ws://ws.5zhua.cn/',
   version: '1.0.0',
