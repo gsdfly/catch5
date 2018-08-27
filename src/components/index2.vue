@@ -1048,8 +1048,8 @@
         return sum
       },
       handleDes(value) {
-        if (parseInt(value)) {
-          return parseInt(value)
+        if (parseFloat(value)) {
+          return parseFloat(value)
         } else {
           return 0
         }
