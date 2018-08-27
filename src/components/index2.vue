@@ -437,7 +437,14 @@
 
         <div class="bg-center16" v-if="contentShow == 'shuoming'" @click.stop="">
           <div class="center16-main">
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/shuoming.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt=""/>
+            <ul class="content">
+              <li>1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值可兑换{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元加购券1张，该券可在“趣东西商城以{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元价格购买对应商品；”</li>
+              <li>2、若{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次内抓中，任务值将会归零；</li>
+              <li>3、归零后继续游戏，重新开始累计任务值；</li>
+              <li>4、每日早上6:00任务值归零；</li>
+              <li>5、本活动的最终解释权归深圳市我抓科技有限公司所有。</li>
+            </ul>
             <div class="back" @click="goPre"><i></i>返回</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -1821,6 +1828,20 @@
       @include center;
       .imgBg {
         width: 100%;
+      }
+      .content{
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top:201px;
+        li{
+          font-size: 28px;
+          color: #fff;
+          line-height: 48px;
+          text-align: left;
+          padding: 0 40px 0 48px;
+          margin: 0 0 0 0;
+        }
       }
       .back{
         position: absolute;
