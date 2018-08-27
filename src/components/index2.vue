@@ -422,7 +422,7 @@
           <div class="center16-main">
             <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>
             <h3>
-              累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
+              累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/info.coin_num}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
             </h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
             <!--<a class="go-coupon-list" href="javascript:void(0)"-->
@@ -1056,8 +1056,8 @@
         return sum
       },
       handleDes(value) {
-        if (parseInt(value)) {
-          return parseInt(value)
+        if (parseFloat(value)) {
+          return parseFloat(value)
         } else {
           return 0
         }
