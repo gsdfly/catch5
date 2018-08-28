@@ -472,6 +472,7 @@
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
     <guide v-if="isShowGuide && activity_bounty.length>0"></guide>
+    <guide2 v-if="isShowGuide2" @closeGuide2="closeGuide2"></guide2>
   </div>
 </template>
 
@@ -488,6 +489,7 @@
   import quanprogress from './quanprogress.vue'
   import task from './task.vue'
   import guide from './guide.vue'
+  import guide2 from './guide2.vue'
   import socketio from 'socket.io-client';
 
   export default {
@@ -546,7 +548,8 @@
             voucher_batch_id: 3
           }]
         },
-        shuomingPre:''
+        shuomingPre:'',
+        isShowGuide2:false
 //        guideTime:'',
 //        touchTime:0
       }
@@ -575,7 +578,8 @@
       tipOperation,
       quanprogress,
       task,
-      guide
+      guide,
+      guide2
     },
     mounted() {
       if (CONFIG.isWx) {
@@ -606,6 +610,9 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      closeGuide2(){
+        this.isShowGuide2 = false;
+      },
       goPre(){
         this.openTip(this.shuomingPre)
       },
@@ -681,8 +688,9 @@
                 this.receiveGift(item)
               } else {
                 //这里弹出让用户玩完所有的游戏币提示
-                this.bgShow = true;
-                this.contentShow = 'jieshi';
+                this.isShowGuide2 = true
+//                this.bgShow = true;
+//                this.contentShow = 'jieshi';
                 _hmt.push(['_trackEvent', '弹出解释弹出', '点击', '币没玩完弹出', '']);
               }
             })
