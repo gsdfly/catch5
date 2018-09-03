@@ -137,7 +137,7 @@ export const getErrMsg = (errCode, message) => {
           button: '扫码换机',
           isShow: true
         }
-        SetCookie('token_', '')
+        // SetCookie('token_', '')
         break
     }
   }

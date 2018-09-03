@@ -188,5 +188,10 @@ export default {
     return instance.get(CONFIG.url + 'api/bounty/status', {
       params: params
     });
+  },
+  //领取红包
+  // url: CONFIG.url + 'api/envelope/receive',
+  getEnvelopeReceive:function (params) {
+    return instance.post(CONFIG.url+'api/envelope/receive',jsonToStr(params))
   }
-}
+  }

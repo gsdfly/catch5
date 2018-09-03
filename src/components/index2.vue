@@ -483,7 +483,7 @@
   import operations from './operations.vue'
   import tip from './tip.vue'
   import tipOperation from './tipoperation.vue'
-  import {getErrMsg} from './../util/index'
+  import {getErrMsg,getParamByName} from './../util/index'
   import Toast from 'mint-ui/lib/Toast'
   import Clipboard from 'clipboard';
   import quanprogress from './quanprogress.vue'
@@ -570,6 +570,7 @@
       task_game: state => state.user.task_game,
       task_now: state => state.user.task_now,
       isShowGuide: state => state.user.isShowGuide,
+      isLogin:state => state.user.isLogin
     }),
     components: {
       joPay,
@@ -582,6 +583,16 @@
       guide2
     },
     mounted() {
+      var re = localStorage.getItem('re');
+      if(re && this.isLogin){
+        this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
+          console.log(res)
+          console.log('领取红包成功')
+          localStorage.removeItem('re')
+        }).catch((res)=>{
+          localStorage.removeItem('re')
+        })
+      }
       if (CONFIG.isWx) {
         document.addEventListener('visibilitychange', function () {
           if (!document.hidden) {
@@ -994,6 +1005,18 @@
       }
     },
     watch: {
+        isLogin(){
+          var re = localStorage.getItem('re');
+          if(re){
+            this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
+              console.log(res)
+              console.log('领取成功')
+              localStorage.removeItem('re')
+            }).catch(()=>{
+              localStorage.removeItem('re')
+            })
+          }
+        },
       user(newUser, oldUser) {
         if (oldUser.coins === 0) {
           return;

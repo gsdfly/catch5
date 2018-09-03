@@ -480,7 +480,16 @@ const actions = {
         error(err)
       })
     })
-  }
+  },
+  getEnvelopeReceiveAction:function (ctx,re) {
+    return new Promise((success,error)=>{
+      api.getEnvelopeReceive({token:CONFIG.token,re:encodeURIComponent(re),machine_no:ctx.state.machine_no}).then((data)=>{
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+  },
 }
 
 export default {
