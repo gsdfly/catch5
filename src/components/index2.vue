@@ -67,7 +67,7 @@
                 <div class="d">
                   <div class="dd" :style="ringStyle">
                     <div>
-                      <img class="img" src="./../assets/mogui/processed_bg.png" alt="">
+                      <img class="img" src="http://res.catchme.com.cn/activity/mogui/processed_bg.png" alt="">
                       <!--<img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">-->
                       <div class="star" :class="{'animation':starClass==='animation'}">
                         <img class="star1" src="./../assets/ring/star1.png" alt="">
@@ -230,7 +230,7 @@
         <div class="bg-center8" v-if="contentShow == 'notExchange'" @click.stop="">
           <div>
             <div>
-              <img src="./../assets/mogui/nothing.png" alt=""/>
+              <img src="http://res.catchme.com.cn/activity/mogui/nothing.png" alt=""/>
               <!--<h3 class="tipTitle"><span></span><b>我的优惠券</b></h3>-->
               <!--<img src="./../assets/catch3/image_nothing.png" alt="" class="imgBg" @click.prevent="">-->
               <!--<p>暂时没有优惠券哦</p>-->
@@ -401,7 +401,7 @@
         </div>
 
         <div class="bg-center15" v-if="contentShow == 'taskWawaTip'" @click.stop="">
-          <img src="./../assets/mogui/window_free_c.png" alt=""/>
+          <img src="http://res.catchme.com.cn/activity/mogui/window_free_c.png" alt=""/>
           <p>抓中送币</p>
           <p>您还没有抓中哦</p>
           <button @click="closeBg">去抓娃娃</button>
@@ -427,7 +427,14 @@
         <div class="bg-center16" v-if="contentShow == 'shuoming'" @click.stop="">
           <div class="center16-main">
             <img class="imgBg" src="http://res.catchme.com.cn/activity/mogui/shuoming_a.png" alt=""/>
-
+            <h2>活动说明</h2>
+            <ul class="content">
+              <li>1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值可兑换{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元加购券1张，该券可在“趣东西商城以{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元价格购买对应商品；”</li>
+              <li>2、若{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次内抓中，任务值将会归零；</li>
+              <li>3、归零后继续游戏，重新开始累计任务值；</li>
+              <li>4、每日早上6:00任务值归零；</li>
+              <li>5、本活动的最终解释权归深圳市我抓科技有限公司所有。</li>
+            </ul>
             <div class="back" @click="goPre"><i></i>返回</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -450,8 +457,8 @@
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <!--<guide v-if="isShowGuide"></guide>-->
-    <guide></guide>
+    <guide v-if="isShowGuide"></guide>
+    <guide2 v-if="isShowGuide2" @closeGuide2="closeGuide2"></guide2>
   </div>
 </template>
 
@@ -468,6 +475,7 @@
   import quanprogress from './quanprogress.vue'
   import task from './task.vue'
   import guide from './guide.vue'
+  import guide2 from './guide2.vue'
   import socketio from 'socket.io-client';
 
   export default {
@@ -526,7 +534,8 @@
             voucher_batch_id: 3
           }]
         },
-        shuomingPre:''
+        shuomingPre:'',
+        isShowGuide2:false
       }
     },
     created() {
@@ -553,7 +562,8 @@
       tipOperation,
       quanprogress,
       task,
-      guide
+      guide,
+      guide2
     },
     mounted() {
       if (CONFIG.isWx) {
@@ -584,6 +594,9 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      closeGuide2(){
+        this.isShowGuide2 = false;
+      },
       goPre(){
         this.openTip(this.shuomingPre)
       },
@@ -649,8 +662,9 @@
                 this.receiveGift(item)
               } else {
                 //这里弹出让用户玩完所有的游戏币提示
-                this.bgShow = true;
-                this.contentShow = 'jieshi';
+                this.isShowGuide2 = true
+//                this.bgShow = true;
+//                this.contentShow = 'jieshi';
                 _hmt.push(['_trackEvent', '弹出解释弹出', '点击', '币没玩完弹出', '']);
               }
             })
@@ -673,7 +687,7 @@
           }
         }
         _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为：0', '']);
-        this.openTip('notExchange');
+        this.openTip('jieshi');
       },
       receiveTaskGame() {
         //这里需要防止重复点击
@@ -1904,6 +1918,30 @@
       .imgBg {
         width: 100%;
       }
+      h2{
+        font-size: 34px;
+        color: #fff;
+        line-height: 34px;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        left: 0;
+        top:79px;
+      }
+      .content{
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top:201px;
+        li{
+          font-size: 28px;
+          color: #fff;
+          line-height: 48px;
+          text-align: left;
+          padding: 0 40px 0 48px;
+          margin: 0 0 0 0;
+        }
+      }
       .back{
         position: absolute;
         text-align: center;
@@ -2281,7 +2319,7 @@
     /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/process_bg2.png");*/
     /*background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");*/
-    background: url("./../assets/mogui/process_bg.png");
+    background: url("http://res.catchme.com.cn/activity/mogui/process_bg.png");
     /*background: red;*/
     background-size: 100% 100%;
     pointer-events: none;
@@ -2439,7 +2477,7 @@
     width: 92px;
     height: 92px;
     /*background: url("./../assets/task-2/progress_doll_bg.png") no-repeat;*/
-    background: #ff0000;
+    background: #ff3b3b;
     border-radius: 50%;
     /*background-size: 100% 100%;*/
     position: relative;
@@ -2473,11 +2511,11 @@
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .last {
-    right: -40px;
+    right: -60px;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .nolast {
-    left: -40px;
+    left: -60px;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-content {

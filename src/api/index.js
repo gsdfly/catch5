@@ -29,6 +29,8 @@ instance.interceptors.response.use(function(response) {
   // }
   if (error.response.data.status_code === 401) {
     SetCookie('token_', '')
+    localStorage.removeItem('encrypt')
+    localStorage.removeItem('auth_type')
     location.reload();
     return;
   }

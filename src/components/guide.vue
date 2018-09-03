@@ -64,8 +64,8 @@
     .bg2{
       width: 100%;
       /*height: 22%;*/
-      /*height: 19%;*/
-      height: 18.3%;
+      height: 19%;
+      /*height: 18.3%;*/
       background: url("./../assets/guide/bg.png");
       /*background: rgba(0,0,0,0.72);*/
     }
@@ -109,7 +109,10 @@
     .bg1{
       height: calc(26.5% - 184px);
     }
-    .guideDiv1{
+    .bg2 {
+      height: 18.3%;
+    }
+      .guideDiv1{
       height: 184px;
     }
     }
