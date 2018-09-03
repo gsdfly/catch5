@@ -409,7 +409,7 @@
 
         <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="">
           <div class="center16-main">
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/mogui/jieshi.png" alt=""/>
             <h3>
               累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
             </h3>
@@ -426,7 +426,8 @@
 
         <div class="bg-center16" v-if="contentShow == 'shuoming'" @click.stop="">
           <div class="center16-main">
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/shuoming.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/mogui/shuoming_a.png" alt=""/>
+
             <div class="back" @click="goPre"><i></i>返回</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -436,7 +437,7 @@
 
         <div class="bg-center16" v-if="contentShow == 'wawaTip'" @click.stop="">
           <div class="center16-main">
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/catch.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/mogui/catch.png" alt=""/>
             <h3>抓中公仔将重新开始累积任务值<br/>开始新一轮的挑战吧<i></i></h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
             <div class="btn" @click="closeBg">我知道啦</div>
@@ -449,7 +450,8 @@
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <guide v-if="isShowGuide"></guide>
+    <!--<guide v-if="isShowGuide"></guide>-->
+    <guide></guide>
   </div>
 </template>
 
@@ -1936,13 +1938,14 @@
       .btn {
         width: 414px;
         height: 124px;
-        background: url("./../assets/guide/press_iknow.png");
+        background: url("./../assets/mogui/press_iknow.png");
         background-size: 100% 100%;
         position: absolute;
         @include centerX;
         top: 647px;
-        font-size: 32px;
-        color: #fd673b;
+        /*font-size: 32px;*/
+        font-size: 0;
+        color: #f90505;
         line-height: 80px;
       }
       h3 {

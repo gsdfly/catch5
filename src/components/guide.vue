@@ -8,9 +8,9 @@
     <img v-if="gzh_operation.coupon.status !=2" class="guideImg1" :src="img1" alt="">
     <div v-else="" class="guideDiv1"></div>
     <div class="bg2"></div>
-    <img class="guideImg2" src="./../assets/guide/guideImg2.png" alt="">
+    <img class="guideImg2" src="./../assets/mogui/guideImg2.png" alt="">
     <div class="bg3"></div>
-    <img @click="closeGuide" class="guideImg3" src="./../assets/guide/press_known.png" alt=""/>
+    <img @click="closeGuide" class="guideImg3" src="./../assets/mogui/press_known.png" alt=""/>
   </div>
 </template>
 
@@ -20,8 +20,8 @@
     name:'guide',
     data(){
       return {
-        img1:require('./../assets/guide/bg1-2.png'),
-        img2:require('./../assets/guide/bg1-1.png'),
+        img1:require('./../assets/mogui/bg1-2.png'),
+        img2:require('./../assets/mogui/bg1-1.png'),
       }
     },
     mounted(){
@@ -64,7 +64,8 @@
     .bg2{
       width: 100%;
       /*height: 22%;*/
-      height: 19%;
+      /*height: 19%;*/
+      height: 18.3%;
       background: url("./../assets/guide/bg.png");
       /*background: rgba(0,0,0,0.72);*/
     }
