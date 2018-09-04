@@ -10,7 +10,9 @@ import Indicator from 'mint-ui/lib/indicator'
 import api from './api'
 import {getParamByName, SetCookie} from "./util/index";
 
-// require('./util/vconsole')
+if (document.URL.indexOf('5zhua') !== -1){
+  require('./util/vconsole')
+}
 
 FastClick.attach(document.body)
 

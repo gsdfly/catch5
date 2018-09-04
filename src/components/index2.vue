@@ -272,6 +272,32 @@
           <div style="width: 100%;height: 100%;position: absolute;z-index:1000" @click="closeBg2"></div>
         </div>
 
+        <div class="bg-center9-2" v-show="contentShow == 'exchange3'" style="width: 100%;height: 100%">
+          <div class="bg-center9-center">
+            <div>
+              <h3 class="tipTitle"><span></span><b>观影小食兑换券</b></h3>
+              <div class="food">
+                <div class="food-top">
+                  <img src="./../assets/catch4/food.png" alt="">
+                  <h4>32oz爆米花+12oz可乐</h4>
+                  <p>有效期至：{{couponInfo.end_time | handleEndTime2}}</p>
+                </div>
+                <div class="exchange-code">
+                  <barcode :value="couponInfo.code" style="height: 100%;" :height="45" :width="2" :fontSize="14" :margin="5" :marginTop="7"></barcode>
+                </div>
+              </div>
+              <div class="bottom">
+                <img src="./../assets/catch4/horn.png" alt="">
+                <p>赶紧到服务台免费兑换奖品吧~</p>
+              </div>
+            </div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg2"/>
+          </div>
+          <div style="width: 100%;height: 100%;position: absolute;z-index:1000" @click="closeBg2"></div>
+        </div>
+
+
         <div class="bg-center10" v-if="contentShow == 'coin'" @click.stop="">
           <div>
             <div>
@@ -361,7 +387,7 @@
                         </dt>
                         <dd>
                           <button id="useCoupon"
-                                  @click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name)">使用
+                                  @click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name,activity_bountyItem.voucher_batch.category)">使用
                           </button>
                         </dd>
                       </dl>
@@ -438,8 +464,10 @@
         <div class="bg-center16" v-if="contentShow == 'shuoming'" @click.stop="">
           <div class="center16-main">
             <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt=""/>
+            <h2>活动说明</h2>
             <ul class="content">
-              <li>1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值可兑换{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元加购券1张，该券可在“趣东西商城以{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元价格购买对应商品；”</li>
+              <li v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===1">1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值可兑换{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元加购券1张，该券可在“趣东西商城以{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元价格购买对应商品；”</li>
+              <li v-else>1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值，可兑换影院观影小食兑换券1张，该券可在影城兑换32oz爆米花+12oz可乐一份；”</li>
               <li>2、若{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次内抓中，任务值将会归零；</li>
               <li>3、归零后继续游戏，重新开始累计任务值；</li>
               <li>4、每日早上6:00任务值归零；</li>
@@ -491,6 +519,7 @@
   import guide from './guide.vue'
   import guide2 from './guide2.vue'
   import socketio from 'socket.io-client';
+  import vueBarcode from 'vue-barcode'
 
   export default {
     data() {
@@ -579,7 +608,8 @@
       quanprogress,
       task,
       guide,
-      guide2
+      guide2,
+      barcode:vueBarcode
     },
     mounted() {
       if (CONFIG.isWx) {
@@ -784,9 +814,13 @@
           this.$store.dispatch('getOperations');
         })
       },
-      useCoupon(code, end_time, name) {
+      useCoupon(code, end_time, name,category) {
         _hmt.push(['_trackEvent', '打开使用优惠券弹窗', '点击', '使用优惠券为：' + name, '']);
-        this.contentShow = 'exchange2';
+        if(category === 0){
+          this.contentShow = 'exchange3';
+        }else {
+          this.contentShow = 'exchange2';
+        }
         this.couponInfo.name = name;
         this.couponInfo.code = code;
         this.couponInfo.end_time = end_time;
@@ -1053,6 +1087,10 @@
         } else {
           return value;
         }
+      },
+      handleEndTime2(value){
+        var arr = value.split(' ')[0].split('-');
+        return arr[0]+'年'+arr[1]+'月'+arr[2]+'日';
       },
       handleActivityBounty(value) {
         var sum = 0;
@@ -1504,6 +1542,82 @@
 
   }
 
+  .bg-center9-2{
+      .bg-center9-center {
+        position: absolute;
+        z-index: 1001;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        /*margin: 0 0 0 15px;*/
+        >div{
+          width: 640px;
+          height: 840px;
+          background: #fd673b;
+          position: relative;
+          border-radius: 20px;
+          padding: 36px 0 0 0;
+          .food{
+            width: 576px;
+            height: 549px;
+            background: url("./../assets/catch4/food_bg.png") no-repeat;
+            background-size: 100% 100%;
+            margin: 44px auto 0 auto;
+            position: relative;
+            .food-top{
+              padding: 0.1px;
+              img{
+                width: 192px;
+                height: 187px;
+                display: block;
+                margin: 42px auto 0 auto;
+              }
+              h4{
+                font-size: 28px;
+                line-height: 28px;
+                margin: 32px 0 16px 0;
+                color: #494949;
+              }
+              p{
+                font-size: 22px;
+                color: #666;
+                line-height: 22px;
+              }
+            }
+            .exchange-code{
+              width: 100%;
+              height: 164px;
+              /*background: red;*/
+              position: absolute;
+              left: 0;
+              bottom: 0;
+              padding: 8px 0 0 0;
+            }
+          }
+          .bottom{
+            margin: 38px 0 0 0;
+            /*background: red;*/
+            img{
+              width: 148px;
+              height: 90px;
+              float: left;
+              margin: 0 0 0 54px;
+            }
+            p{
+              font-size: 30px;
+              color: #fff;
+              float: left;
+              margin: 14px 0 0 -30px;
+            }
+          }
+
+        }
+        .close {
+          margin: 40px 0 0 0;
+        }
+      }
+  }
+
   .bg-center10 {
     > div {
       width: 622px;
@@ -1834,6 +1948,16 @@
       @include center;
       .imgBg {
         width: 100%;
+      }
+      h2{
+        font-size: 34px;
+        line-height: 34px;
+        color: #fff;
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        left: 0;
+        top:80px;
       }
       .content{
         width: 100%;
