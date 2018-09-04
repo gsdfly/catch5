@@ -73,10 +73,7 @@ FastClick.attach(document.body)
         } else {
           if (CONFIG.isAlipay) {
             window.location.href = CONFIG.url + 'v2/alipay/oauth?callback=' + document.URL;
-          } else if (CONFIG.isTaobao) {
-            // var local = document.URL.indexOf('catchme') !== -1 ? 'https://catchme.ewssh.m.jaeapp.com/' : 'https://zhua.ewssh.m.jaeapp.com/';
-            window.location.href = CONFIG.localtionUrl2 + 'index.php/taobao/oauth?callback=' + document.URL.replace('?', '&');
-          } else {
+          }  else {
             window.location.href = CONFIG.url + 'v2/wechat/oauth_scope?callback=' + document.URL
           }
           return;

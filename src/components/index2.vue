@@ -313,7 +313,10 @@
 
         <div class="bg-center11" v-if="contentShow == 'receive'" @click.stop="">
           <div>
-            <div class="bg-center11-top">
+            <div class="bg-center11-top" v-if="currentGift.voucher_batch.category ===0">
+              <img class="con_bg" src="http://res.catchme.com.cn/activity/task-2/con_bg_top.png" alt=""/>
+            </div>
+            <div class="bg-center11-top" v-else>
               <img class="top-img" src="./../assets/task-2/congratulate_bg.png" alt=""/>
               <img v-if="currentGift.voucher_batch.big_image" class="top-wawa"
                    :src="currentGift.voucher_batch.big_image" alt="">
@@ -731,7 +734,14 @@
       },
       receiveGift(gift) {
         this.currentGift = gift;
+        console.log(gift);
         this.openTip('receive');
+
+//        if(gift.voucher_batch.category === 0){
+//          this.openTip('receive2');
+//        }else {
+//          this.openTip('receive');
+//        }
       },
       couponList() {
         var len = this.activity_bounty.length;
@@ -795,7 +805,6 @@
           this.starClass = '';
         }, 1000);
         this.ringStyle = `transform:  rotate(${n}deg);`
-
       },
       receiveCoupon() {
 //        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
@@ -1554,6 +1563,8 @@
           width: 640px;
           height: 840px;
           background: #fd673b;
+          /*background: url("http://res.catchme.com.cn/activity/task-2/snack_bg.png") no-repeat;*/
+          /*background-size: 100% 100%;*/
           position: relative;
           border-radius: 20px;
           padding: 36px 0 0 0;
@@ -1688,6 +1699,15 @@
         width: 100%;
         height: 230px;
         position: relative;
+        .con_bg{
+          width: 556px;
+          height: 189px;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom:-12px;
+          z-index: 999;
+        }
         .top-wawa {
           /*width: 230px;*/
           height: 230px;
@@ -1709,6 +1729,8 @@
         width: 640px;
         height: 490px;
         background-color: #fd673b;
+        /*background: url("./../assets/task-2/con_bg.png") no-repeat;*/
+        /*background-size: 100% 100%;*/
         border-radius: 20px;
         position: relative;
         .content {
@@ -2847,6 +2869,7 @@
     left: 0;
     top: 0;
     padding: 15px;
+    pointer-events:none;
   }
 
   .main .center > h3 {
