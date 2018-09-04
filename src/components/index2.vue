@@ -438,6 +438,7 @@
         <div class="bg-center16" v-if="contentShow == 'shuoming'" @click.stop="">
           <div class="center16-main">
             <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt=""/>
+            <h2>活动说明</h2>
             <ul class="content">
               <li>1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值可兑换{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元加购券1张，该券可在“趣东西商城以{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元价格购买对应商品；”</li>
               <li>2、若{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次内抓中，任务值将会归零；</li>
@@ -465,6 +466,17 @@
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
           </div>
+        </div>
+
+        <div class="bg-center15" v-if="contentShow == 'redTip'" @click.stop="">
+          <img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>
+          <p>恭喜您领取红包成功</p>
+          <button @click="closeBg">去抓娃娃</button>
+        </div>
+        <div class="bg-center15" v-if="contentShow == 'redTip2'" @click.stop="">
+          <img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>
+          <p>您今天已经领取过了</p>
+          <button @click="closeBg">去抓娃娃</button>
         </div>
       </div>
 
@@ -588,8 +600,13 @@
         this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
           console.log(res)
           console.log('领取红包成功')
+          this.bgShow = true;
+          this.contentShow = 'redTip'
           localStorage.removeItem('re')
+          this.$store.dispatch('getUser');
         }).catch((res)=>{
+          this.bgShow = true;
+          this.contentShow = 'redTip2'
           localStorage.removeItem('re')
         })
       }
@@ -1011,8 +1028,13 @@
             this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
               console.log(res)
               console.log('领取成功')
+              this.bgShow = true;
+              this.contentShow = 'redTip'
               localStorage.removeItem('re')
+              this.$store.dispatch('getUser');
             }).catch(()=>{
+              this.bgShow = true;
+              this.contentShow = 'redTip2'
               localStorage.removeItem('re')
             })
           }
@@ -1851,6 +1873,16 @@
       @include center;
       .imgBg {
         width: 100%;
+      }
+      h2{
+        font-size: 34px;
+        line-height: 34px;
+        color: #fff;
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        left: 0;
+        top:80px;
       }
       .content{
         width: 100%;
