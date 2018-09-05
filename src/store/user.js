@@ -68,6 +68,7 @@ const state = {
     game_bounty:-1,//用户当前任务的进度
     prize_bounty:-1//掉落的娃娃数
   },
+  task_opes:[]
 }
 
 const mutations = {
@@ -136,6 +137,9 @@ const mutations = {
   },
   setGzhOperation(state,obj){
     state.gzh_operation = obj;
+  },
+  setTaskOpes(state,arr){
+    state.task_opes = arr;
   },
 }
 
@@ -324,6 +328,8 @@ const actions = {
         var operationsList = [];
         var hideCoupons = [];
         var activity_bounty = [];
+        var completeOpe = [];
+        var undoneOpe = [];
 
         for(var i=0;i<res.length;i++){
           if(res[i].type ===1){
@@ -352,7 +358,12 @@ const actions = {
           }else if(res[i].type ===5 ){
             hideCoupons.push(res[i]);
           }else if(res[i].type === 2){
-            operationsList.push(res[i]);
+            if(res[i].task_count >= res[i].num){
+              completeOpe.push(res[i])
+            }else {
+              undoneOpe.push(res[i])
+            }
+            // operationsList.push(res[i]);
           }else if(res[i].type === 6){
             var endTime = res[i].end_time.replace(/-/g,',');
             endTime = new Date(endTime).getTime();
@@ -361,19 +372,43 @@ const actions = {
               ctx.commit('setTipOperation',res[i]);
             }
           }else if(res[i].type === 7){
-            ctx.commit('setGzhOperation',res[i]);
+            // ctx.commit('setGzhOperation',res[i]);
+            if(res[i].coupon.status ===2){
+              completeOpe.push(res[i])
+            }else {
+              undoneOpe.push(res[i])
+            }
           }
           else if(res[i].type === 8){
             // console.log(ctx.state.activity_bounty);
             activity_bounty.push(res[i]);
           }else if(res[i].type === 9){
+            if(res[i].task_count >= res[i].num){
+              completeOpe.push(res[i])
+            }else {
+              undoneOpe.push(res[i])
+            }
             //type为9时为游戏次数运营位
-            ctx.commit('setTaskGame',res[i]);
+            // ctx.commit('setTaskGame',res[i]);
           }else if(res[i].type === 10){
             //type为10时为掉落任务运营位
-            ctx.commit('setTaskWawa',res[i]);
+            if(res[i].task_count >= res[i].num){
+              completeOpe.push(res[i])
+            }else {
+              undoneOpe.push(res[i])
+            }
+            // ctx.commit('setTaskWawa',res[i]);
           }
         }
+        //每次改变一个运营位之后需要重新获取运营位的状态，在这里对operationsList做处理，只截取3个，
+        ctx.commit('setTaskOpes',undoneOpe.concat(completeOpe))
+
+        // if(undoneOpe.length<3){
+        //   ctx.commit('setTaskOpes',undoneOpe.concat(completeOpe))
+        // }else {
+        //   ctx.commit('setTaskOpes',undoneOpe)
+        // }
+
         let len = activity_bounty.length;
         for(var j=0;j<len;j++){
           for(var k=0;k<len-1-j;k++){
@@ -384,9 +419,11 @@ const actions = {
             }
           }
         }
+
         ctx.commit('setActivityBounty',activity_bounty);
         ctx.commit('setHideCoupons',hideCoupons);
         ctx.commit('setOperations',operationsList)
+
         success(operationsList)
       }).catch(()=>{
 
@@ -475,6 +512,15 @@ const actions = {
   getActivityBountyStatus:function (ctx,operation_id) {
     return new Promise((success,error)=>{
       api.getBountyStatus({token:CONFIG.token,operation_id:operation_id,machine_no:ctx.state.machine_no}).then((data)=>{
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+  },
+  playerAddressAction:function (ctx,params) {
+    return new Promise((success,error)=>{
+      api.playerAddress({token:CONFIG.token,operation_id:params.operation_id,name:params.username,phone:params.phone}).then((data)=>{
         success(data.data)
       }).catch((err)=>{
         error(err)

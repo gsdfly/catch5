@@ -188,5 +188,9 @@ export default {
     return instance.get(CONFIG.url + 'api/bounty/status', {
       params: params
     });
-  }
+  },
+  playerAddress:function (params) {
+    return instance.post(CONFIG.url + 'api/player/address',jsonToStr(params));
+  },
+
 }

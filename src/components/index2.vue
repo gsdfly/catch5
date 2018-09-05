@@ -57,7 +57,7 @@
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
-        <task @receiveBiSuccess="receiveBiSuccess" @openTip="openTip"></task>
+        <task @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard"></task>
       </div>
 
       <div class="main">
@@ -498,8 +498,15 @@
                  @click="closeBg"/>
           </div>
         </div>
-      </div>
 
+        <div class="bg-center17" v-if="contentShow == 'bankCard'" @click.stop="" style="background: #fff">
+          <h3>活动规则</h3>
+          <p>大师多拉斯柯达那打的</p>
+          姓名：<input type="text" name="username" id="username" v-model="bankUserInfo.username"/><br/>
+          手机号：<input type="text" name="phone" id="phone" v-model="bankUserInfo.phone"/>
+          <button @click="sendUserInfo">确定</button>
+        </div>
+      </div>
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
@@ -512,7 +519,7 @@
   import CONFIG from '../config'
   import {mapState} from 'vuex'
   import joPay from './wxpay'
-  import operations from './operations.vue'
+//  import operations from './operations.vue'
   import tip from './tip.vue'
   import tipOperation from './tipoperation.vue'
   import {getErrMsg} from './../util/index'
@@ -582,7 +589,14 @@
           }]
         },
         shuomingPre:'',
-        isShowGuide2:false
+        isShowGuide2:false,
+        task_game:{},
+        bankUserInfo:{
+          username:'',
+          phone:''
+        },
+        bankOpe:{},
+        isRequest:false
 //        guideTime:'',
 //        touchTime:0
       }
@@ -600,13 +614,13 @@
       tip_operation: state => state.user.tip_operation,
 //      activity_promocode: state => state.user.activity_promocode, //已经舍弃
       activity_bounty: state => state.user.activity_bounty,
-      task_game: state => state.user.task_game,
+//      task_game: state => state.user.task_game,
       task_now: state => state.user.task_now,
       isShowGuide: state => state.user.isShowGuide,
     }),
     components: {
       joPay,
-      operations,
+//      operations,
       tip,
       tipOperation,
       quanprogress,
@@ -644,6 +658,44 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      bankCard(info){
+        this.bankOpe = info
+      },
+      sendUserInfo(){
+
+        var reg = /^[\u4E00-\u9FA5]{2,4}$/;
+        var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+        if(!reg.test(this.bankUserInfo.username.trim())){
+            alert('用户名不符合标准')
+          this.bankUserInfo.username= ''
+          return;
+        }
+        if(!myreg.test(this.bankUserInfo.phone.trim())){
+          alert('手机号不符合标准')
+          this.bankUserInfo.phone= ''
+          return;
+        }
+        if(!this.isRequest){
+          this.isRequest = true
+          this.$store.dispatch('playerAddressAction',{username:this.bankUserInfo.username,phone:this.bankUserInfo.phone,operation_id:this.bankOpe.id}).then(()=>{
+            this.$store.dispatch('getFreeCoin', {coin_price_id: this.bankOpe.coin_price.coin_price_id, coupon_id: this.bankOpe.coupon.id}).then((data) => {
+              this.isRequest = false
+              this.bgShow = false
+              this.$store.commit('setCoins', data.data.coin_num);
+              this.$store.dispatch('getUser');
+              this.$store.dispatch('getOperations');
+              window.location.href  = this.bankOpe.url
+            }).catch(()=>{
+              this.isRequest = false
+            })
+          }).catch(()=>{
+            this.isRequest = false
+          })
+        }
+      },
+      taskGame(value){
+        this.task_game=value
+      },
       closeGuide2(){
         this.isShowGuide2 = false
       },

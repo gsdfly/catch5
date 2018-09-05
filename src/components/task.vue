@@ -3,49 +3,77 @@
     <!--<img class="task-bg" :src="img1_1" alt="" @click.prevent=""/>-->
     <!--<img class="free-bg" :src="img2_2" alt="">-->
     <ul>
-      <li @click="consumer" v-if="gzh_operation.id">
-          <!--<div>-->
-            <!--<img class="liImg1" src="./../assets/task/a.png" alt=""/>-->
-          <img class="task-free" :class="{'is_down':gzh_operation.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
-          <img v-if="gzh_operation.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-          <!--</div>-->
-          <p :class="{'is_down':gzh_operation.coupon.status === 2}">免费领币</p>
-          <!--<p v-if="gzh_operation.coupon.status !== 2">免费领币</p>-->
-          <!--<p class="hasDown" v-else="">已领取</p>-->
-      </li>
-      <li v-if="task_game.num>0">
-        <div @click="openTip('taskGameTip')" class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">
-          <div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>
-          <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{task_game.value/info.coin_num}}</span>
+      <li v-for="item in task_opes.slice(0,3)">
+        <div v-if="item.type === 7" @click="consumer(item)">
+          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+          <p :class="{'is_down':item.coupon.status === 2}">免费领币</p>
         </div>
-        <div @click="receiveTask(task_game)" v-if="task_game.task_count < task_game.num && task_now.game_bounty>=task_game.value" class="m-water">领币</div>
-        <!--<div>-->
-           <!--<div @click="openTip('taskGameTip')" class="water"  v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value" >-->
-             <!--<div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>-->
-             <!--<span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{task_game.value/info.coin_num}}</span>-->
-           <!--</div>-->
-        <div v-if="task_game.task_count >= task_game.num" class="m-water is_down">领币</div>
-        <img v-if="task_game.task_count >= task_game.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-        <p :class="{'is_down':task_game.task_count >= task_game.num}">投币送币</p>
-           <!--<img v-if="task_game.task_count < task_game.num && task_now.game_bounty>=task_game.value" class="liImg2" src="./../assets/task/b_ling.png" alt="" @click="receiveTask(task_game)" />-->
-           <!--<img v-if="task_game.task_count >= task_game.num" class="liImg2" src="./../assets/task/b_done.png" alt=""/>-->
-         <!--</div>-->
-         <!--<p v-if="task_game.task_count < task_game.num">投币送币</p>-->
-         <!--<p class="hasDown" v-else="">已领取</p>-->
+        <div v-if="item.type === 9">
+          <div @click="openTip('taskGameTip',item)" class="water" v-if="item.task_count < item.num && task_now.game_bounty<item.value">
+            <div class="bol" :style="'height:'+task_now.game_bounty/item.value*100+'%'"></div>
+            <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{item.value/info.coin_num}}</span>
+          </div>
+          <div @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value" class="m-water">领币</div>
+          <div v-if="item.task_count >= item.num" class="m-water is_down">领币</div>
+          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+          <p :class="{'is_down':item.task_count >= item.num}">投币送币</p>
+        </div>
+        <div v-if="item.type === 10">
+          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/task-2/icon_free_c.png" alt=""/>
+          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
+          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+          <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
+        </div>
+        <div v-if="item.type === 2" @click="openTip('bankCard',item)">
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img v-if="item.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+          <p :class="{'is_down':item.task_count >= item.num}">办卡送币</p>
+        </div>
       </li>
-      <li  v-if="task_wawa.num>0">
-        <img @click="openTip('taskWawaTip')" v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty<task_wawa.value" src="./../assets/task-2/icon_free_c.png" alt=""/>
-        <img :class="{'is_down':task_wawa.task_count >= task_wawa.num}" @click="receiveTask(task_wawa)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
-        <img v-if="task_wawa.task_count >= task_wawa.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-        <p :class="{'is_down':task_wawa.task_count >= task_wawa.num}">抓中送币</p>
-          <!--<div>-->
-            <!--<img v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty>=task_wawa.value" class="liImg4" src="./../assets/task/c_ling.png" alt="" @click="receiveTask(task_wawa)"/>-->
-            <!--<img @click="openTip('taskWawaTip')" v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty<task_wawa.value" class="liImg3" src="./../assets/task/c_box.png" alt=""/>-->
-            <!--<img v-if="task_wawa.task_count >= task_wawa.num"  src="./../assets/task/c_done.png" class="liImg3" alt="">-->
-          <!--</div>-->
-          <!--<p v-if="task_wawa.task_count < task_wawa.num">抓中送币</p>-->
-          <!--<p class="hasDown" v-else="">已领取</p>-->
-      </li>
+      <!--<li @click="consumer" v-if="gzh_operation.id">-->
+          <!--&lt;!&ndash;<div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<img class="liImg1" src="./../assets/task/a.png" alt=""/>&ndash;&gt;-->
+          <!--<img class="task-free" :class="{'is_down':gzh_operation.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>-->
+          <!--<img v-if="gzh_operation.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--<p :class="{'is_down':gzh_operation.coupon.status === 2}">免费领币</p>-->
+          <!--&lt;!&ndash;<p v-if="gzh_operation.coupon.status !== 2">免费领币</p>&ndash;&gt;-->
+          <!--&lt;!&ndash;<p class="hasDown" v-else="">已领取</p>&ndash;&gt;-->
+      <!--</li>-->
+      <!--<li v-if="task_game.num>0">-->
+        <!--<div @click="openTip('taskGameTip')" class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">-->
+          <!--<div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>-->
+          <!--<span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{task_game.value/info.coin_num}}</span>-->
+        <!--</div>-->
+        <!--<div @click="receiveTask(task_game)" v-if="task_game.task_count < task_game.num && task_now.game_bounty>=task_game.value" class="m-water">领币</div>-->
+        <!--&lt;!&ndash;<div>&ndash;&gt;-->
+           <!--&lt;!&ndash;<div @click="openTip('taskGameTip')" class="water"  v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value" >&ndash;&gt;-->
+             <!--&lt;!&ndash;<div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>&ndash;&gt;-->
+             <!--&lt;!&ndash;<span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{task_game.value/info.coin_num}}</span>&ndash;&gt;-->
+           <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<div v-if="task_game.task_count >= task_game.num" class="m-water is_down">领币</div>-->
+        <!--<img v-if="task_game.task_count >= task_game.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>-->
+        <!--<p :class="{'is_down':task_game.task_count >= task_game.num}">投币送币</p>-->
+           <!--&lt;!&ndash;<img v-if="task_game.task_count < task_game.num && task_now.game_bounty>=task_game.value" class="liImg2" src="./../assets/task/b_ling.png" alt="" @click="receiveTask(task_game)" />&ndash;&gt;-->
+           <!--&lt;!&ndash;<img v-if="task_game.task_count >= task_game.num" class="liImg2" src="./../assets/task/b_done.png" alt=""/>&ndash;&gt;-->
+         <!--&lt;!&ndash;</div>&ndash;&gt;-->
+         <!--&lt;!&ndash;<p v-if="task_game.task_count < task_game.num">投币送币</p>&ndash;&gt;-->
+         <!--&lt;!&ndash;<p class="hasDown" v-else="">已领取</p>&ndash;&gt;-->
+      <!--</li>-->
+      <!--<li  v-if="task_wawa.num>0">-->
+        <!--<img @click="openTip('taskWawaTip')" v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty<task_wawa.value" src="./../assets/task-2/icon_free_c.png" alt=""/>-->
+        <!--<img :class="{'is_down':task_wawa.task_count >= task_wawa.num}" @click="receiveTask(task_wawa)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">-->
+        <!--<img v-if="task_wawa.task_count >= task_wawa.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>-->
+        <!--<p :class="{'is_down':task_wawa.task_count >= task_wawa.num}">抓中送币</p>-->
+          <!--&lt;!&ndash;<div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<img v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty>=task_wawa.value" class="liImg4" src="./../assets/task/c_ling.png" alt="" @click="receiveTask(task_wawa)"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<img @click="openTip('taskWawaTip')" v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty<task_wawa.value" class="liImg3" src="./../assets/task/c_box.png" alt=""/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<img v-if="task_wawa.task_count >= task_wawa.num"  src="./../assets/task/c_done.png" class="liImg3" alt="">&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--&lt;!&ndash;<p v-if="task_wawa.task_count < task_wawa.num">抓中送币</p>&ndash;&gt;-->
+          <!--&lt;!&ndash;<p class="hasDown" v-else="">已领取</p>&ndash;&gt;-->
+      <!--</li>-->
     </ul>
   </div>
 </template>
@@ -76,13 +104,14 @@
       }
     },
     computed: mapState({
-      gzh_operation: state => state.user.gzh_operation,
-      task_game: state => state.user.task_game,
+//      gzh_operation: state => state.user.gzh_operation,
+//      task_game: state => state.user.task_game,
+//      task_wawa:state => state.user.task_wawa,
       task_now:state => state.user.task_now,
-      task_wawa:state => state.user.task_wawa,
       info: state => state.user.info,
       isLogin: state => state.user.isLogin,
       activity_bounty: state => state.user.activity_bounty,
+      task_opes: state => state.user.task_opes
     }),
     methods:{
       mountedStart(){
@@ -133,25 +162,29 @@
         localStorage.removeItem('userTime');
         localStorage.removeItem('domTime');
       },
-      openTip(value){
+      openTip(value,info){
         if(value === 'taskGameTip'){
           _hmt.push(['_trackEvent', '任务：投币送币', '点击', '投币送币：未完成', '']);
+          this.$emit('taskGame',info);
         }else if(value === 'taskWawaTip'){
           _hmt.push(['_trackEvent', '任务：抓中送币', '点击', '抓中送币：未完成', '']);
         }
+        if(value === 'bankCard'){
+          this.$emit('bankCard',info);
+        }
           this.$emit('openTip',value);
       },
-      consumer(){
+      consumer(gzh_operation){
         if(CONFIG.isWx){
-          this.$emit('openTip','free',this.gzh_operation.mp_url);
+          this.$emit('openTip','free',gzh_operation.mp_url);
           _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：微信', '']);
           return;
         }
-        if(this.gzh_operation.coupon.status === 2){
+        if(gzh_operation.coupon.status === 2){
           return;
         }
         _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：支付宝', '']);
-        this.$store.dispatch('getFreeCoin', {coin_price_id: this.gzh_operation.coin_price.coin_price_id, coupon_id: this.gzh_operation.coupon.id}).then((data) => {
+        this.$store.dispatch('getFreeCoin', {coin_price_id: gzh_operation.coin_price.coin_price_id, coupon_id: gzh_operation.coupon.id}).then((data) => {
           console.log(data);
           this.$store.commit('setCoins', data.data.coin_num);
           this.$store.dispatch('getUser');
@@ -232,110 +265,65 @@
         height: 100%;
         float: left;
         position: relative;
-        /*&:first-of-type{*/
-          /*clip-path:circle(52px at 118px 65px);*/
-          /*z-index: 9999;*/
-          /*background: #fff;*/
-        /*}*/
-        /*.task-free{*/
-          /*position: relative;*/
-          /*z-index: 9999;*/
-          /*border: 3px solid #fff;*/
-          /*border-radius: 50%;*/
-        /*}*/
-        img{
-          width: 110px;
-          height: 110px;
-          display: block;
-          margin: 13px auto 0 auto;
-          &.img_down{
-            width: 160px;
-            height: 88px;
-            position: absolute;
-            left: 50%;
-            top:26px;
-            margin: 0;
-            transform: translateX(-50%);
-          }
-          &.is_down{
-            opacity: 0.5;
-          }
-        }
-        .m-water{
-          width: 90px;
-          height: 90px;
-          background: url("./../assets/task-2/water.png") no-repeat;
-          background-size: 100% 100%;
-          border-radius: 50%;
-          font-size: 30px;
-          color: #fff;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin: 19px auto 14px auto;
-          box-shadow: 0 4px 12px rgba(180,149,84,0.4);
-          &.is_down{
-            opacity: 0.5;
-          }
-        }
-        .water{
-          width: 90px;
-          height: 90px;
-          background-color: #999999;
-          /*border: solid 6px #ffffff;*/
-          border-radius: 50%;
-          overflow: hidden;
-          position: relative;
-          display: flex;
-          align-items: flex-end;
-          margin: 19px auto 14px auto;
-          box-shadow: 0 4px 12px rgba(180,149,84,0.4);
-          /*box-shadow: inset 0px 3px 13px 0px*/
-          /*rgba(242, 123, 0, 0.51);*/
-          .bol{
-            width: 100%;
-            background: url("./../assets/task/b_bg.png");
-            animation: wave-animation 1s infinite linear;
-            transition: all 1s linear;
-            background-size: 102px 116px;
-          }
-          .game-num{
-            position: absolute;
-            left: 50%;
-            top:50%;
-            font-size: 28px;
-            color: #fff;
-            transform: translate(-50%,-50%);
-            b{
-              font-size: 40px;
+        >div{
+          width: 100%;
+          height: 100%;
+          padding: 0.1px;
+          img{
+            width: 110px;
+            height: 110px;
+            display: block;
+            margin: 13px auto 0 auto;
+            &.img_down{
+              width: 160px;
+              height: 88px;
+              position: absolute;
+              left: 50%;
+              top:26px;
+              margin: 0;
+              transform: translateX(-50%);
+            }
+            &.is_down{
+              opacity: 0.5;
             }
           }
-        }
-         /* >div{
-            width: 147px;
-            height: 117px;
+          .m-water{
+            width: 90px;
+            height: 90px;
+            background: url("./../assets/task-2/water.png") no-repeat;
+            background-size: 100% 100%;
+            border-radius: 50%;
+            font-size: 30px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 19px auto 18px auto;
+            box-shadow: 0 4px 12px rgba(180,149,84,0.4);
+            &.is_down{
+              opacity: 0.5;
+            }
+          }
+          .water{
+            width: 90px;
+            height: 90px;
+            background-color: #999999;
+            /*border: solid 6px #ffffff;*/
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
             display: flex;
             align-items: flex-end;
-            justify-content: center;
-            margin: 14px auto 8px auto;
-            position: relative;
-            .water{
-              width: 114px;
-              height: 114px;
-              background-color: #999999;
-              border: solid 6px #ffffff;
-              border-radius: 50%;
-              overflow: hidden;
-              position: relative;
-              display: flex;
-              align-items: flex-end;
-              .bol{
-                width: 100%;
-                background: url("./../assets/task/b_bg.png");
-                animation: wave-animation 1s infinite linear;
-                transition: all 1s linear;
-                background-size: 102px 116px;
-              }
+            margin: 19px auto 14px auto;
+            box-shadow: 0 4px 12px rgba(180,149,84,0.4);
+            /*box-shadow: inset 0px 3px 13px 0px*/
+            /*rgba(242, 123, 0, 0.51);*/
+            .bol{
+              width: 100%;
+              background: url("./../assets/task/b_bg.png");
+              animation: wave-animation 1s infinite linear;
+              transition: all 1s linear;
+              background-size: 102px 116px;
             }
             .game-num{
               position: absolute;
@@ -348,46 +336,19 @@
                 font-size: 40px;
               }
             }
-            img{
-              width: 110px;
-              height: 110px;
-              &.liImg1{
-                width: 135px;
-              }
-              &.liImg2{
-                width: 114px;
-              }
-              &.liImg3{
-                width: 144px;
-              }
-              &.liImg4{
-                width: 147px;
-              }
-            }
           }
-  */
           p{
-            /*width: 93px;*/
             text-align: center;
             height: 24px;
             font-size: 24px;
             line-height: 24px;
             color: #494949;
             margin: 4px 0 0 0;
-            /*width: 130px;*/
-            /*height: 32px;*/
-            /*background-color: #fec47b;*/
-            /*border-radius: 16px;*/
-            /*font-size: 22px;*/
-            /*line-height: 32px;*/
-            /*color: #2e339b;*/
-            /*text-align: center;*/
-            /*margin: 0 auto;*/
-            /*font-weight: 600;*/
             &.is_down{
               color: #b3b3b3;
             }
           }
+        }
         }
       }
     }
