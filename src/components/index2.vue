@@ -506,6 +506,44 @@
           手机号：<input type="text" name="phone" id="phone" v-model="bankUserInfo.phone"/>
           <button @click="sendUserInfo">确定</button>
         </div>
+
+        <div class="bg-center18" v-if="contentShow == 'coinred'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_bi.png" alt="">
+            <h3>恭喜获得</h3>
+            <h2>{{redCoinNum}}个免费游戏币</h2>
+            <p>点击“投币启动”按钮，开始抓娃娃吧</p>
+            <div class="btn" @click="closeBg">我知道啦</div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center19" v-if="contentShow == 'moneyred'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_cash.png" alt="">
+            <h3>恭喜获得</h3>
+            <h2>现金红包</h2>
+            <p>红包已通过“趣东西服务”发送至您的微信上啦<br/>注意查收哦</p>
+            <div class="btn" @click="closeBg">我知道啦</div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center20" v-if="contentShow == 'failred'" @click.stop="">
+          <div>
+            <div class="content">
+              <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_image.png" alt="">
+              <h3>领取失败</h3>
+              <p>{{message}}</p>
+              <div class="btn" @click="closeBg">我知道啦</div>
+            </div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
       </div>
       <tipOperation></tipOperation>
     </div>
@@ -596,9 +634,11 @@
           phone:''
         },
         bankOpe:{},
-        isRequest:false
+        isRequest:false,
+        redCoinNum:0,
 //        guideTime:'',
 //        touchTime:0
+        message:''
       }
     },
     created() {
@@ -617,6 +657,7 @@
 //      task_game: state => state.user.task_game,
       task_now: state => state.user.task_now,
       isShowGuide: state => state.user.isShowGuide,
+      isLogin:state => state.user.isLogin
     }),
     components: {
       joPay,
@@ -630,6 +671,26 @@
       barcode:vueBarcode
     },
     mounted() {
+      var re = localStorage.getItem('re');
+      if(re && this.isLogin){
+        this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
+          this.bgShow = true;
+          if(res.type === 're'){
+            this.contentShow = 'moneyred'
+          }else {
+            this.contentShow = 'coinred'
+            this.redCoinNum = res.coin_num;
+            this.$store.dispatch('getUser');
+          }
+          console.log(res.dd.mm)
+          localStorage.removeItem('re')
+        }).catch((res)=>{
+          this.bgShow = true;
+          this.contentShow = 'failred'
+          this.message = res.message
+          localStorage.removeItem('re')
+        })
+      }
       if (CONFIG.isWx) {
         document.addEventListener('visibilitychange', function () {
           if (!document.hidden) {
@@ -1096,6 +1157,23 @@
       }
     },
     watch: {
+      isLogin(){
+        var re = localStorage.getItem('re');
+        if(re){
+          this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
+            console.log(res)
+            console.log('领取成功')
+            this.bgShow = true;
+            this.contentShow = 'redTip'
+            localStorage.removeItem('re')
+            this.$store.dispatch('getUser');
+          }).catch(()=>{
+            this.bgShow = true;
+            this.contentShow = 'redTip2'
+            localStorage.removeItem('re')
+          })
+        }
+      },
       user(newUser, oldUser) {
         if (oldUser.coins === 0) {
           return;
@@ -2018,7 +2096,6 @@
 
   .bg-center16 {
     .center16-main {
-      position: relative;
       width: 640px;
       @include center;
       .imgBg {
@@ -2124,6 +2201,138 @@
     }
   }
 
+  .bg-center18,.bg-center19,.bg-center20{
+    .btn{
+      width: 360px;
+      height: 70px;
+      line-height: 70px;
+      background-image: linear-gradient(0deg,
+        rgba(193, 193, 193, 0.65) 0%,
+        rgba(255, 255, 255, 0.65) 99%),
+      linear-gradient(
+          #ffffff,
+          #ffffff);
+      background-blend-mode: normal,
+      normal;
+      border-radius: 35px;
+      font-size: 32px;
+      color: #fd673b;
+      @include centerX;
+    }
+  }
+
+  .bg-center18{
+    >div{
+      @include center;
+      color: #fff;
+      .imgBg{
+        width: 640px;
+      }
+      h3{
+        font-size: 32px;
+        line-height: 32px;
+        width: 100%;
+        position:absolute;
+        left: 0;
+        top:476px;
+        text-align: center;
+      }
+      h2{
+        font-size: 48px;
+        line-height: 48px;
+        width: 100%;
+        position:absolute;
+        left: 0;
+        top:529px;
+        text-align: center;
+      }
+      p{
+        font-size: 24px;
+        line-height: 24px;
+        width: 100%;
+        position:absolute;
+        left: 0;
+        top:600px;
+        text-align: center;
+      }
+      .btn{
+        top:687px;
+      }
+    }
+  }
+
+  .bg-center19{
+    >div{
+      @include center;
+      color: #fff;
+      .imgBg{
+        width: 697px;
+      }
+      h3{
+        font-size: 32px;
+        line-height: 32px;
+        width: 100%;
+        position:absolute;
+        left: 0;
+        top:464px;
+        text-align: center;
+        color: #fff787;
+      }
+      h2{
+        font-size: 60px;
+        line-height: 60px;
+        width: 100%;
+        position:absolute;
+        left: 0;
+        top:522px;
+        text-align: center;
+        color: #fff787;
+      }
+      p{
+        font-size: 24px;
+        line-height: 32px;
+        width: 100%;
+        position:absolute;
+        left: 0;
+        top:614px;
+        text-align: center;
+      }
+      .btn{
+        top:721px;
+      }
+    }
+  }
+
+  .bg-center20{
+    @include center;
+    >div{
+      .content{
+        width: 640px;
+        height: 860px;
+        background: #fd673b;
+        border-radius: 36px;
+        padding: 0.1px;
+        color: #fff;
+        .imgBg{
+          width: 474px;
+          height: 337px;
+          display: block;
+          margin: 125px auto 95px auto;
+        }
+        h3{
+          font-size: 34px;
+          line-height: 34px;
+        }
+        p{
+          font-size: 24px;
+          line-height: 24px;
+          margin: 30px 0 0 0;
+        }
+        .btn{
+          top:721px;
+        }
+    }
+  }}
   .price {
     position: absolute;
     width: 298px;

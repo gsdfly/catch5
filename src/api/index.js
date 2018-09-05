@@ -17,7 +17,9 @@ instance.interceptors.response.use(function(response) {
   let res = response.data
   if (res.status_code !== 200) {
     // sendError({code:response.data.status_code,message:response.data.message,url:response.config.url});
-    store.commit('changeTipContent',getErrMsg(res.status_code, res.message))
+    if(res.status_code !== 1015){
+      store.commit('changeTipContent',getErrMsg(res.status_code, res.message))
+    }
     // if(res.status_code === 1014){
     //   SetCookie('token_', '')
     //   localStorage.removeItem('encrypt')
@@ -41,12 +43,12 @@ instance.interceptors.response.use(function(response) {
     return;
   }
   console.log(error, '全局err')
-  store.commit('changeTipContent',{
-    imgSrc:"http://res.catchme.com.cn/imgs-2018-02-05/tip/tip1.png",
-    content:['娃娃机出了点状况','请跟换机器'],
-    button:'扫码换机',
-    isShow:true
-  });
+  // store.commit('changeTipContent',{
+  //   imgSrc:"http://res.catchme.com.cn/imgs-2018-02-05/tip/tip1.png",
+  //   content:['娃娃机出了点状况','请跟换机器'],
+  //   button:'扫码换机',
+  //   isShow:true
+  // });
   console.log(store.state.user.tipContent)
   return Promise.reject(error);
 })
@@ -192,5 +194,10 @@ export default {
   playerAddress:function (params) {
     return instance.post(CONFIG.url + 'api/player/address',jsonToStr(params));
   },
+  //领取红包
+  // url: CONFIG.url + 'api/envelope/receive',
+  getEnvelopeReceive:function (params) {
+    return instance.post(CONFIG.url+'api/envelope/receive',jsonToStr(params))
+  }
 
 }
