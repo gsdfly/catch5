@@ -450,7 +450,8 @@
         <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="">
           <div class="center16-main">
             <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>
-            <h3>
+            <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0"> 累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/info.coin_num}}次没抓中?<br/>可乐爆米花免费领取</h3>
+            <h3 v-else>
               累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/info.coin_num}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
             </h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
