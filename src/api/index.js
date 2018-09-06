@@ -43,12 +43,12 @@ instance.interceptors.response.use(function(response) {
     return;
   }
   console.log(error, '全局err')
-  // store.commit('changeTipContent',{
-  //   imgSrc:"http://res.catchme.com.cn/imgs-2018-02-05/tip/tip1.png",
-  //   content:['娃娃机出了点状况','请跟换机器'],
-  //   button:'扫码换机',
-  //   isShow:true
-  // });
+  store.commit('changeTipContent',{
+    imgSrc:"http://res.catchme.com.cn/imgs-2018-02-05/tip/tip1.png",
+    content:['娃娃机出了点状况','请跟换机器'],
+    button:'扫码换机',
+    isShow:true
+  });
   console.log(store.state.user.tipContent)
   return Promise.reject(error);
 })

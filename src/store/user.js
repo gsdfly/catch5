@@ -372,7 +372,7 @@ const actions = {
               ctx.commit('setTipOperation',res[i]);
             }
           }else if(res[i].type === 7){
-            // ctx.commit('setGzhOperation',res[i]);
+            ctx.commit('setGzhOperation',res[i]);
             if(res[i].coupon.status ===2){
               completeOpe.push(res[i])
             }else {

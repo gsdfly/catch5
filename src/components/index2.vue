@@ -682,7 +682,6 @@
             this.redCoinNum = res.coin_num;
             this.$store.dispatch('getUser');
           }
-          console.log(res.dd.mm)
           localStorage.removeItem('re')
         }).catch((res)=>{
           this.bgShow = true;
@@ -723,7 +722,6 @@
         this.bankOpe = info
       },
       sendUserInfo(){
-
         var reg = /^[\u4E00-\u9FA5]{2,4}$/;
         var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
         if(!reg.test(this.bankUserInfo.username.trim())){
@@ -798,7 +796,7 @@
         })
       },
       goProfile() {
-        window.location.href = CONFIG.localtionUrl2 + 'profile'
+        window.location.href = CONFIG.localtionUrl + 'profile'
       },
       handleRed(value, item) {
         _hmt.push(['_trackEvent', '点击娃娃', '点击', '点击娃娃', '']);
