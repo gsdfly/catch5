@@ -10,7 +10,7 @@ import Indicator from 'mint-ui/lib/indicator'
 import api from './api'
 import {getParamByName, SetCookie} from "./util/index";
 
-if (document.URL.indexOf('5zhua') !== -1)
+if (document.URL.indexOf('5zhua') !== -1){
   require('./util/vconsole')
 }
 
