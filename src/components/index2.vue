@@ -685,7 +685,7 @@
         })
       },
       goProfile() {
-        window.location.href = CONFIG.profileUrl + 'profile'
+        window.location.href = CONFIG.localtionUrl + 'profile'
       },
       handleRed(value, item) {
         _hmt.push(['_trackEvent', '点击娃娃', '点击', '点击娃娃', '']);
