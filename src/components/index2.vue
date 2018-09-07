@@ -22,6 +22,7 @@
               <div>
                 <i class="icon-jinbi"></i><span class="coins-num">{{user.coins}}</span>
               </div>
+              <img v-show="isShowCoinTip" class="animated coin-tip" :class="{'zoomOutLeft':isShowCoinTip}" src="./../assets/small/coin_tip.png" alt="">
             </div>
             <!--<div class="game game-quan" v-show="user.game_ticket>0">-->
             <!--<i class="iconfont icon-quan"></i>-->
@@ -477,6 +478,8 @@
   import guide from './guide.vue'
   import guide2 from './guide2.vue'
   import socketio from 'socket.io-client';
+  import animate from 'animate.css'
+  import api from './../api'
 
   export default {
     data() {
@@ -535,7 +538,8 @@
           }]
         },
         shuomingPre:'',
-        isShowGuide2:false
+        isShowGuide2:false,
+        isShowCoinTip:false,
       }
     },
     created() {
@@ -566,12 +570,38 @@
       guide2
     },
     mounted() {
+      //判断是否是充gzh关注之后过来的
+      var isgzh = localStorage.getItem('isgzh');
+      if (isgzh) {
+        var coin_price_id = document.URL.indexOf('catchme') !== -1 ? 104 : 17;
+        var coupon_id = document.URL.indexOf('catchme') !== -1 ? 9 : 13;
+        api.getFreeCoin({
+          coin_price_id: coin_price_id,
+          machine_no: 'CATCH_199999',
+          coupon_id: coupon_id,
+          token: CONFIG.token
+        }).then((res) => {
+          console.log(res)
+          //正常领取成功
+          this.isShowCoinTip = true;
+          setTimeout(()=>{
+            this.$store.commit('setCoins', res.data.coin_num);
+            this.$store.dispatch('getUser');
+            this.$store.dispatch('getOperations');
+          },1500)
+        })
+        localStorage.removeItem('isgzh')
+      }
+
       if (CONFIG.isWx) {
         document.addEventListener('visibilitychange', function () {
           if (!document.hidden) {
             this.$store.dispatch('getUser');
             this.$store.dispatch('getOperations');
             this.handleActivityBountyInfo(2);
+            if(this.contentShow = 'free'){
+              this.bgShow = false;
+            }
 //            this.$store.dispatch('getActivityBountyInfo')
 //            this.bgShow = false;
           }
@@ -585,6 +615,7 @@
         }.bind(this));
       }
       this.$store.dispatch('judgeMachine').then(() => {
+        localStorage.setItem('machine_url', document.URL);
         //用户可以操作时间
         localStorage.setItem('userTime', (Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart)))
         this.Indicator.close();
@@ -1176,6 +1207,16 @@
     min-width: 160px;
     height: 62px;
   }
+  .header .header-main .game  .coin-tip{
+    width: 128px;
+    height: 56px;
+    position: absolute;
+    right:-80px;
+    top:0;
+    animation-duration:2.5s;
+    /*transition: all 1s;*/
+  }
+
   .header .header-main .game span.coins-num {
     font-size: 36px;
     color: $headerColor;

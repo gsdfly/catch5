@@ -125,13 +125,13 @@
         this.$emit('openTip', value);
       },
       consumer() {
+        if (this.gzh_operation.coupon.status === 2) {
+          return;
+        }
         if (CONFIG.isWx) {
 //          this.$emit('openTip','free',this.gzh_operation.mp_url);
           this.$emit('openTip', 'free', 'http://res.catchme.com.cn/activity/guide/image_free.png');
           _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：微信', '']);
-          return;
-        }
-        if (this.gzh_operation.coupon.status === 2) {
           return;
         }
         _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：支付宝', '']);
