@@ -480,7 +480,8 @@ const actions = {
         error(err)
       })
     })
-  }
+  },
+
 }
 
 export default {

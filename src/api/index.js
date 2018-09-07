@@ -40,7 +40,16 @@ instance.interceptors.response.use(function(response) {
     location.reload();
     return;
   }
-  console.log(error, '全局err')
+  if (error.response.data.status_code === 429) {
+    store.commit('changeTipContent',{
+      imgSrc: "http://res.catchme.com.cn/imgs-2018-02-05/tip/tip8.png",
+      content: ['已经使用过了'],
+      button: '知道了',
+      isShow: true
+    });
+    return Promise.reject(error);
+  }
+    console.log(error, '全局err')
   store.commit('changeTipContent',{
     imgSrc:"http://res.catchme.com.cn/imgs-2018-02-05/tip/tip1.png",
     content:['娃娃机出了点状况','请跟换机器'],
@@ -188,5 +197,6 @@ export default {
     return instance.get(CONFIG.url + 'api/bounty/status', {
       params: params
     });
-  }
+  },
+
 }
