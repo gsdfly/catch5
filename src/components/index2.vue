@@ -290,7 +290,7 @@
               </div>
               <div class="bottom">
                 <img src="./../assets/catch4/horn.png" alt="">
-                <p>赶紧到服务台免费兑换奖品吧~</p>
+                <p>赶紧到“影院卖品部”免费兑换吧~</p>
               </div>
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -514,7 +514,7 @@
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <guide v-if="isShowGuide && activity_bounty.length>0"></guide>
+    <guide v-if="isShowGuide && activity_bounty.length>0 && activity_bounty[activity_bounty.length-1].voucher_batch.category !== 0"></guide>
     <guide2 v-if="isShowGuide2" @closeGuide2="closeGuide2"></guide2>
   </div>
 </template>
