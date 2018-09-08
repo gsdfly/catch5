@@ -454,12 +454,14 @@
         </div>
 
         <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="">
-          <div class="center16-main">
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>
+          <div class="center16-main" :class="{'main-baomihua':activity_bounty[activity_bounty.length - 1].voucher_batch.category===0}">
+            <img v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0" class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi2.png" alt="">
+            <img v-else class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>
             <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0">
-              累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次没抓中?<br/>可乐爆米花免费领取
+              累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次没抓中?
             </h3>
-            <h3 v-else>
+            <img class="baomihua" src="./../assets/guide/baomihua.png" alt="" />
+            <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category!==0">
               累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
             </h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
@@ -514,7 +516,7 @@
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <guide v-if="isShowGuide && activity_bounty.length>0 && activity_bounty[activity_bounty.length-1].voucher_batch.category !== 0"></guide>
+    <guide v-if="isShowGuide && activity_bounty.length>0"></guide>
     <guide2 v-if="isShowGuide2" @closeGuide2="closeGuide2"></guide2>
   </div>
 </template>
@@ -2098,6 +2100,7 @@
         letter-spacing: 1.2px;
         color: #ffffff;
         opacity: 0.9;
+        z-index: 666;
       }
       .btn {
         width: 414px;
@@ -2130,6 +2133,12 @@
           margin: -5px 0 0 10px;
         }
       }
+      .baomihua{
+        width: 244px;
+        height: 136px;
+        @include centerX;
+        top:536px;
+      }
       .go-coupon-list {
         color: #fff;
         font-size: 22px;
@@ -2140,6 +2149,17 @@
         i {
           font-size: 18px;
         }
+      }
+    }
+    .main-baomihua{
+      h3{
+        top:484px;
+      }
+      .btn{
+        top:676px;
+      }
+      p{
+        top:790px;
       }
     }
   }
