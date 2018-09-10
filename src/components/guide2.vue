@@ -1,15 +1,20 @@
 <template>
   <div class="guide2" :class="{'guide2-version2':version2}">
     <div class="top"></div>
-    <img class="tip" src="http://res.catchme.com.cn/activity/guide/tip1.png" alt="">
+    <img v-if="activity_bounty[activity_bounty.length-1].voucher_batch.category === 0" class="tip" src="http://res.catchme.com.cn/activity/guide/tip2.png" alt="">
+    <img v-else class="tip" src="http://res.catchme.com.cn/activity/guide/tip1.png" alt="">
     <div class="bottom"></div>
     <img @click="closeGuide2" class="btn" src="./../assets/guide/press_iknown.png" alt="">
   </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   export default {
     name:'guide2',
+    computed: mapState({
+      activity_bounty:state => state.user.activity_bounty,
+    }),
     methods:{
       closeGuide2(){
         this.$emit('closeGuide2')

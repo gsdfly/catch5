@@ -4,7 +4,7 @@
     <!--<img class="free-bg" :src="img2_2" alt="">-->
     <ul>
       <li v-for="item in task_opes.slice(0,3)">
-        <div v-if="item.type === 7" @click="consumer(item)">
+        <div v-if="item.type === 7 || item.type === 12" @click="consumer(item)">
           <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
           <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.coupon.status === 2}">免费领币</p>
@@ -104,7 +104,7 @@
       }
     },
     computed: mapState({
-//      gzh_operation: state => state.user.gzh_operation,
+      gzh_operation: state => state.user.gzh_operation,
 //      task_game: state => state.user.task_game,
 //      task_wawa:state => state.user.task_wawa,
       task_now:state => state.user.task_now,
@@ -115,7 +115,28 @@
     }),
     methods:{
       mountedStart(){
-        this.$store.dispatch('getOperations').then(()=>{
+        this.$store.dispatch('getOperations').then((res)=>{
+          //获取是否是从别人公众号过来的gzh_code
+          var gzh_code = localStorage.getItem('gzh_code');
+          if(gzh_code){
+           //这里需要找到对应的公众号运营位，来领取免费币
+            for (let item of res){
+              if(item.type === 12 && item.code === gzh_code){
+                //这里请求
+                this.$store.dispatch('getActivityBountyExchange',item.id).then((res)=>{
+                  this.$store.dispatch('getFreeCoin',{coin_price_id: item.coin_price.coin_price_id, coupon_id: item.coupon.id}).then((res)=>{
+                    //领取成功调用动画
+                    this.$emit('handleGzh')
+                    setTimeout(()=>{
+                      this.$store.commit('setCoins', res.data.coin_num);
+                      this.$store.dispatch('getUser');
+                      this.$store.dispatch('getOperations');
+                    },1500)
+                  })
+                })
+              }
+            }
+          }
           //获取本地的guide
           var guideTime = localStorage.getItem('guideTime');
           var date = new Date();
@@ -175,12 +196,12 @@
           this.$emit('openTip',value);
       },
       consumer(gzh_operation){
-        if(CONFIG.isWx){
-          this.$emit('openTip','free',gzh_operation.mp_url);
-          _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：微信', '']);
+        if(gzh_operation.coupon.status === 2){
           return;
         }
-        if(gzh_operation.coupon.status === 2){
+        if(CONFIG.isWx || gzh_operation.type === 12){
+          this.$emit('openTip','free',gzh_operation.mp_url);
+          _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：微信', '']);
           return;
         }
         _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：支付宝', '']);
@@ -205,7 +226,7 @@
               this.isRequest = false;
               this.$emit('receiveBiSuccess');
               //领取成功
-              this.$store.dispatch('getUser')
+              this.$store.dispatch('getUser');
               this.$store.dispatch('getActivityBountyInfo').then((res)=>{
                 localStorage.setItem('prize_bounty',res.prize_bounty);
               })

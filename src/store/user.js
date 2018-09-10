@@ -398,12 +398,19 @@ const actions = {
               undoneOpe.push(res[i])
             }
             // ctx.commit('setTaskWawa',res[i]);
+          }else if(res[i].type === 12){
+            //type为10时为掉落任务运营位
+            if(res[i].task_count >= res[i].num){
+              completeOpe.push(res[i])
+            }else {
+              undoneOpe.push(res[i])
+            }
           }
-
         }
 
         //每次改变一个运营位之后需要重新获取运营位的状态，在这里对operationsList做处理，只截取3个，
-        ctx.commit('setTaskOpes',undoneOpe.concat(completeOpe))
+        var task_opes = undoneOpe.concat(completeOpe);
+        ctx.commit('setTaskOpes',task_opes)
 
         // if(undoneOpe.length<3){
         //   ctx.commit('setTaskOpes',undoneOpe.concat(completeOpe))
@@ -425,8 +432,7 @@ const actions = {
         ctx.commit('setActivityBounty',activity_bounty);
         ctx.commit('setHideCoupons',hideCoupons);
         ctx.commit('setOperations',operationsList)
-
-        success(operationsList)
+        success(task_opes)
       }).catch(()=>{
 
       })

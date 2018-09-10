@@ -24,6 +24,7 @@
               <div>
                 <i class="icon-jinbi"></i><span class="coins-num">{{user.coins}}</span>
               </div>
+              <img v-show="isShowCoinTip" class="animated coin-tip" :class="{'zoomOutLeft':isShowCoinTip}" src="./../assets/small/coin_tip.png" alt="">
             </div>
             <!--<div class="game game-quan" v-show="user.game_ticket>0">-->
             <!--<i class="iconfont icon-quan"></i>-->
@@ -57,7 +58,7 @@
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
-        <task @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard"></task>
+        <task @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
       </div>
 
       <div class="main">
@@ -283,12 +284,13 @@
                   <p>有效期至：{{couponInfo.end_time | handleEndTime2}}</p>
                 </div>
                 <div class="exchange-code">
-                  <barcode :value="couponInfo.code" style="height: 100%;" :height="45" :width="2" :fontSize="14" :margin="5" :marginTop="7"></barcode>
+                  <barcode :value="couponInfo.code" style="height: 100%;" :height="45" :width="2" :fontSize="14"
+                           :margin="5" :marginTop="7"></barcode>
                 </div>
               </div>
               <div class="bottom">
                 <img src="./../assets/catch4/horn.png" alt="">
-                <p>赶紧到服务台免费兑换奖品吧~</p>
+                <p>赶紧到“影院卖品部”免费兑换吧~</p>
               </div>
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -339,29 +341,29 @@
                   </dl>
                 </div>
                 <!--<div v-if="!isReceive">-->
-                  <!--<dl class="dlCoupon">-->
-                    <!--<dt>-->
-                      <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
-                      <!--<p>(消耗{{currentGift.voucher_batch.value}}个任务值)</p>-->
-                    <!--</dt>-->
-                    <!--<dd>-->
-                      <!--<button @click="receiveCoupon">兑换</button>-->
-                    <!--</dd>-->
-                  <!--</dl>-->
+                <!--<dl class="dlCoupon">-->
+                <!--<dt>-->
+                <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
+                <!--<p>(消耗{{currentGift.voucher_batch.value}}个任务值)</p>-->
+                <!--</dt>-->
+                <!--<dd>-->
+                <!--<button @click="receiveCoupon">兑换</button>-->
+                <!--</dd>-->
+                <!--</dl>-->
                 <!--</div>-->
                 <!--<div v-else="">-->
-                  <!--<dl class="dlCoupon">-->
-                    <!--<dt>-->
-                      <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
-                      <!--<p>{{couponInfo.code}}</p>-->
-                      <!--<p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>-->
-                    <!--</dt>-->
-                    <!--<dd>-->
-                      <!--<button @click="useCoupon(couponInfo.code,couponInfo.end_time,currentGift.voucher_batch.name)">-->
-                        <!--使用-->
-                      <!--</button>-->
-                    <!--</dd>-->
-                  <!--</dl>-->
+                <!--<dl class="dlCoupon">-->
+                <!--<dt>-->
+                <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
+                <!--<p>{{couponInfo.code}}</p>-->
+                <!--<p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>-->
+                <!--</dt>-->
+                <!--<dd>-->
+                <!--<button @click="useCoupon(couponInfo.code,couponInfo.end_time,currentGift.voucher_batch.name)">-->
+                <!--使用-->
+                <!--</button>-->
+                <!--</dd>-->
+                <!--</dl>-->
                 <!--</div>-->
                 <p class="go-shuoming" @click="openTip('shuoming')">查看活动说明</p>
                 <a class="go-coupon-list" href="javascript:void(0)"
@@ -390,7 +392,8 @@
                         </dt>
                         <dd>
                           <button id="useCoupon"
-                                  @click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name,activity_bountyItem.voucher_batch.category)">使用
+                                  @click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name,activity_bountyItem.voucher_batch.category)">
+                            使用
                           </button>
                         </dd>
                       </dl>
@@ -406,7 +409,10 @@
 
         <div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">
           <div>
-            <img @click.prevent="" :src="freeTipImg" alt="" class="imgBg"/>
+            <img @click.prevent="" src="http://res.catchme.com.cn/activity/guide/image_free3.png" alt="" class="imgBg"/>
+            <img class="btn" src="./../assets/guide/press_go_catch.png" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1"/>
+            <!--<img class="qrcode" src="./../assets/guide/code.png"  v-show="isShowGzhImg" alt=""/>-->
+            <img :style="gzhCodeStyle" @click.prevent="" :src="freeTipImg" alt="" class="qrcode"/>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
           </div>
@@ -448,16 +454,20 @@
         </div>
 
         <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="">
-          <div class="center16-main">
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>
-            <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0"> 累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/info.coin_num}}次没抓中?<br/>可乐爆米花免费领取</h3>
-            <h3 v-else>
-              累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/info.coin_num}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
+          <div class="center16-main" :class="{'main-baomihua':activity_bounty[activity_bounty.length - 1].voucher_batch.category===0}">
+            <img v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0" class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi2.png" alt="">
+            <img v-else class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>
+            <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0">
+              累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次没抓中?
+            </h3>
+            <img class="baomihua" src="./../assets/guide/baomihua.png" alt="" />
+            <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category!==0">
+              累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
             </h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
             <!--<a class="go-coupon-list" href="javascript:void(0)"-->
-               <!--@click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i-->
-              <!--class="iconfont icon-shuangjiantouyou"></i></a>-->
+            <!--@click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i-->
+            <!--class="iconfont icon-shuangjiantouyou"></i></a>-->
             <div class="btn" @click="closeBg">我知道啦</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -470,9 +480,12 @@
             <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt=""/>
             <h2>活动说明</h2>
             <ul class="content">
-              <li v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===1">1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值可兑换{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元加购券1张，该券可在“趣东西商城以{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元价格购买对应商品；”</li>
-              <li v-else>1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值，可兑换影院观影小食兑换券1张，该券可在影城兑换32oz爆米花+12oz可乐一份；”</li>
-              <li>2、若{{activity_bounty[activity_bounty.length - 1].voucher_batch.value/ info.coin_num}}次内抓中，任务值将会归零；</li>
+              <li v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===1">
+                1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值可兑换{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元加购券1张，该券可在“趣东西商城以{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元价格购买对应商品；”
+              </li>
+              <li v-else>1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值，可兑换影院观影小食兑换券1张，该券可在影城兑换32oz爆米花+12oz可乐一份；”</li>
+              <li>2、若{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次内抓中，任务值将会归零；
+              </li>
               <li>3、归零后继续游戏，重新开始累计任务值；</li>
               <li>4、每日早上6:00任务值归零；</li>
               <li>5、本活动的最终解释权归深圳市我抓科技有限公司所有。</li>
@@ -490,8 +503,8 @@
             <h3>抓中公仔将重新开始累积任务值<br/>开始新一轮的挑战吧<i></i></h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
             <!--<a class="go-coupon-list" href="javascript:void(0)"-->
-               <!--@click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i-->
-              <!--class="iconfont icon-shuangjiantouyou"></i></a>-->
+            <!--@click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i-->
+            <!--class="iconfont icon-shuangjiantouyou"></i></a>-->
             <div class="btn" @click="closeBg">我知道啦</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -569,6 +582,8 @@
   import guide2 from './guide2.vue'
   import socketio from 'socket.io-client';
   import vueBarcode from 'vue-barcode'
+  import animate from 'animate.css'
+  import api from './../api'
 
   export default {
     data() {
@@ -603,7 +618,6 @@
         },
         freeTipImg: '',
         ringStyle: '',
-        isRequest: false,
         centerStyle: '',
         starClass: '',
 //        currentGift:{}
@@ -626,8 +640,6 @@
             voucher_batch_id: 3
           }]
         },
-        shuomingPre:'',
-        isShowGuide2:false,
         task_game:{},
         bankUserInfo:{
           username:'',
@@ -636,6 +648,13 @@
         bankOpe:{},
         isRequest:false,
         redCoinNum:0,
+        shuomingPre: '',
+        isShowGuide2: false,
+        freeAnimate:'',
+        isShowCoinTip:false,
+        isShowGzhButtton:true,
+        isShowGzhImg:false,
+        gzhCodeStyle:'visibility: hidden',
 //        guideTime:'',
 //        touchTime:0
         message:''
@@ -668,7 +687,7 @@
       task,
       guide,
       guide2,
-      barcode:vueBarcode
+      barcode: vueBarcode
     },
     mounted() {
       var re = localStorage.getItem('re');
@@ -690,6 +709,28 @@
           localStorage.removeItem('re')
         })
       }
+      //判断是否是充gzh关注之后过来的
+      var isgzh = localStorage.getItem('isgzh');
+      if (isgzh) {
+        var coin_price_id = document.URL.indexOf('catchme') !== -1 ? 104 : 17;
+        var coupon_id = document.URL.indexOf('catchme') !== -1 ? 9 : 13;
+        api.getFreeCoin({
+          coin_price_id: coin_price_id,
+          machine_no: 'CATCH_199999',
+          coupon_id: coupon_id,
+          token: CONFIG.token
+        }).then((res) => {
+          console.log(res)
+          //正常领取成功
+          this.isShowCoinTip = true;
+          setTimeout(()=>{
+            this.$store.commit('setCoins', res.data.coin_num);
+            this.$store.dispatch('getUser');
+            this.$store.dispatch('getOperations');
+          },1500)
+        })
+        localStorage.removeItem('isgzh')
+      }
       if (CONFIG.isWx) {
         document.addEventListener('visibilitychange', function () {
           if (!document.hidden) {
@@ -697,7 +738,9 @@
             this.$store.dispatch('getOperations');
             this.handleActivityBountyInfo(2);
 //            this.$store.dispatch('getActivityBountyInfo');
-//            this.bgShow = false;
+            if(this.contentShow = 'free'){
+               this.bgShow = false;
+            }
           }
         }.bind(this));
       } else if (CONFIG.isAlipay) {
@@ -709,6 +752,7 @@
         }.bind(this));
       }
       this.$store.dispatch('judgeMachine').then(() => {
+        localStorage.setItem('machine_obj', JSON.stringify({'url':document.URL,'time':new Date().getTime()}));
         //用户可以操作时间
         localStorage.setItem('userTime', (Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart)))
         this.Indicator.close();
@@ -718,6 +762,9 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      handleGzh(){
+        this.isShowCoinTip = true;
+      },
       bankCard(info){
         this.bankOpe = info
       },
@@ -755,10 +802,19 @@
       taskGame(value){
         this.task_game=value
       },
-      closeGuide2(){
+      press1(){
+        setTimeout(()=>{
+//          this.isShowGzhImg = true
+          this.gzhCodeStyle = 'visibility: visible'
+        },100)
+        setTimeout(()=>{
+          this.isShowGzhButtton = false
+        },400)
+      },
+      closeGuide2() {
         this.isShowGuide2 = false
       },
-      goPre(){
+      goPre() {
         this.openTip(this.shuomingPre)
       },
       socket() {
@@ -784,12 +840,16 @@
       handleActivityBountyInfo(scene) {
         var prize_bounty = localStorage.getItem('prize_bounty')
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
-          if(res.prize_bounty > prize_bounty && this.activity_bounty.length>0) {
+          if (res.prize_bounty > prize_bounty && this.activity_bounty.length > 0) {
             this.bgShow = true;
             this.contentShow = 'wawaTip';
-            switch (scene){
-              case 1: _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', 'websocket返回弹出', '']);break;
-              case 2: _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', '页面重新可见时弹出', '']);break;
+            switch (scene) {
+              case 1:
+                _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', 'websocket返回弹出', '']);
+                break;
+              case 2:
+                _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', '页面重新可见时弹出', '']);
+                break;
             }
           }
           localStorage.setItem('prize_bounty', res.prize_bounty);
@@ -868,25 +928,6 @@
         _hmt.push(['_trackEvent', '弹出解释弹出', '点击', '币没满足且无兑换券', '']);
         this.openTip('jieshi');
       },
-      receiveTaskGame() {
-        //这里需要防止重复点击
-        if (!this.isRequest) {
-          this.isRequest = true;
-          this.$store.dispatch('getActivityBountyExchange', this.task_game.id).then((res) => {
-            this.$store.dispatch('getFreeCoin', {
-              coin_price_id: this.task_game.coin_price.coin_price_id,
-              coupon_id: this.task_game.coupon.id
-            }).then(() => {
-              this.isRequest = false;
-              this.receiveBiSuccess();
-              this.$store.dispatch('getUser')
-              this.$store.dispatch('getActivityBountyInfo')
-              this.$store.dispatch('getOperations')
-            })
-          })
-        }
-        //运营位id
-      },
       receiveBiSuccess() {
         this.bgShow = true;
         this.contentShow = 'receiveBi';
@@ -935,11 +976,11 @@
           this.$store.dispatch('getOperations');
         })
       },
-      useCoupon(code, end_time, name,category) {
+      useCoupon(code, end_time, name, category) {
         _hmt.push(['_trackEvent', '打开使用优惠券弹窗', '点击', '使用优惠券为：' + name, '']);
-        if(category === 0){
+        if (category === 0) {
           this.contentShow = 'exchange3';
-        }else {
+        } else {
           this.contentShow = 'exchange2';
         }
         this.couponInfo.name = name;
@@ -980,6 +1021,11 @@
         if (value === 'shuoming') {
           this.shuomingPre = this.contentShow;
           _hmt.push(['_trackEvent', '打开活动说明', '点击', '打开活动说明', '']);
+        }
+        if(value === 'free'){
+          this.isShowGzhButtton = true;
+          this.gzhCodeStyle = 'visibility: hidden'
+//          this.isShowGzhImg = false;
         }
         this.freeTipImg = value2;
         this.bgShow = true;
@@ -1123,7 +1169,7 @@
               window.location.href = res.code
             }
           })
-        } else if(CONFIG.isWx){
+        } else if (CONFIG.isWx) {
           wx.scanQRCode({
             needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
             scanType: ["qrCode"], // 可以指定扫二维码还是一维码，默认二者都有
@@ -1135,10 +1181,10 @@
               alert('扫码失败')
             }
           })
-        }else {
-          Tida.scanCode(function(res){
+        } else {
+          Tida.scanCode(function (res) {
             if (res.code) {
-              if(res.type !== 'ERROR'){
+              if (res.type !== 'ERROR') {
                 window.location.href = res.code
               }
             }
@@ -1183,7 +1229,7 @@
         }
       },
       task_now(newValue, oldValue) {
-        if(this.activity_bounty.length === 0){
+        if (this.activity_bounty.length === 0) {
           return;
         }
         if (newValue.recharge_bounty !== oldValue.recharge_bounty) {
@@ -1226,9 +1272,9 @@
           return value;
         }
       },
-      handleEndTime2(value){
+      handleEndTime2(value) {
         var arr = value.split(' ')[0].split('-');
-        return arr[0]+'年'+arr[1]+'月'+arr[2]+'日';
+        return arr[0] + '年' + arr[1] + '月' + arr[2] + '日';
       },
       handleActivityBounty(value) {
         var sum = 0;
@@ -1680,82 +1726,82 @@
 
   }
 
-  .bg-center9-2{
-      .bg-center9-center {
-        position: absolute;
-        z-index: 1001;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        /*margin: 0 0 0 15px;*/
-        >div{
-          width: 640px;
-          height: 840px;
-          background: #fd673b;
-          /*background: url("http://res.catchme.com.cn/activity/task-2/snack_bg.png") no-repeat;*/
-          /*background-size: 100% 100%;*/
+  .bg-center9-2 {
+    .bg-center9-center {
+      position: absolute;
+      z-index: 1001;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      /*margin: 0 0 0 15px;*/
+      > div {
+        width: 640px;
+        height: 840px;
+        background: #fd673b;
+        /*background: url("http://res.catchme.com.cn/activity/task-2/snack_bg.png") no-repeat;*/
+        /*background-size: 100% 100%;*/
+        position: relative;
+        border-radius: 20px;
+        padding: 36px 0 0 0;
+        .food {
+          width: 576px;
+          height: 549px;
+          background: url("./../assets/catch4/food_bg.png") no-repeat;
+          background-size: 100% 100%;
+          margin: 44px auto 0 auto;
           position: relative;
-          border-radius: 20px;
-          padding: 36px 0 0 0;
-          .food{
-            width: 576px;
-            height: 549px;
-            background: url("./../assets/catch4/food_bg.png") no-repeat;
-            background-size: 100% 100%;
-            margin: 44px auto 0 auto;
-            position: relative;
-            .food-top{
-              padding: 0.1px;
-              img{
-                width: 192px;
-                height: 187px;
-                display: block;
-                margin: 42px auto 0 auto;
-              }
-              h4{
-                font-size: 28px;
-                line-height: 28px;
-                margin: 32px 0 16px 0;
-                color: #494949;
-              }
-              p{
-                font-size: 22px;
-                color: #666;
-                line-height: 22px;
-              }
+          .food-top {
+            padding: 0.1px;
+            img {
+              width: 192px;
+              height: 187px;
+              display: block;
+              margin: 42px auto 0 auto;
             }
-            .exchange-code{
-              width: 100%;
-              height: 164px;
-              /*background: red;*/
-              position: absolute;
-              left: 0;
-              bottom: 0;
-              padding: 8px 0 0 0;
+            h4 {
+              font-size: 28px;
+              line-height: 28px;
+              margin: 32px 0 16px 0;
+              color: #494949;
+            }
+            p {
+              font-size: 22px;
+              color: #666;
+              line-height: 22px;
             }
           }
-          .bottom{
-            margin: 38px 0 0 0;
+          .exchange-code {
+            width: 100%;
+            height: 164px;
             /*background: red;*/
-            img{
-              width: 148px;
-              height: 90px;
-              float: left;
-              margin: 0 0 0 54px;
-            }
-            p{
-              font-size: 30px;
-              color: #fff;
-              float: left;
-              margin: 14px 0 0 -30px;
-            }
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            padding: 8px 0 0 0;
           }
+        }
+        .bottom {
+          margin: 38px 0 0 0;
+          /*background: red;*/
+          img {
+            width: 148px;
+            height: 90px;
+            float: left;
+            margin: 0 0 0 54px;
+          }
+          p {
+            font-size: 30px;
+            color: #fff;
+            float: left;
+            margin: 14px 0 0 -30px;
+          }
+        }
 
-        }
-        .close {
-          margin: 40px 0 0 0;
-        }
       }
+      .close {
+        margin: 40px 0 0 0;
+      }
+    }
   }
 
   .bg-center10 {
@@ -1828,13 +1874,13 @@
         width: 100%;
         height: 230px;
         position: relative;
-        .con_bg{
+        .con_bg {
           width: 556px;
           height: 189px;
           position: absolute;
           left: 50%;
           transform: translateX(-50%);
-          bottom:-12px;
+          bottom: -12px;
           z-index: 999;
         }
         .top-wawa {
@@ -1917,7 +1963,7 @@
             left: 0;
             bottom: -42px;
             margin: 0;
-            text-decoration:underline;
+            text-decoration: underline;
           }
         }
       }
@@ -1961,6 +2007,19 @@
       @include center;
       .imgBg {
         width: 640px;
+      }
+      .qrcode{
+        width: 114px;
+        height: 114px;
+        @include centerX;
+        top:760px;
+      }
+      .btn{
+        width: 420px;
+        height: 130px;
+        @include centerX;
+        top:772px;
+        z-index: 666;
       }
     }
   }
@@ -2099,7 +2158,7 @@
       .imgBg {
         width: 100%;
       }
-      h2{
+      h2 {
         font-size: 34px;
         line-height: 34px;
         color: #fff;
@@ -2107,14 +2166,14 @@
         text-align: center;
         position: absolute;
         left: 0;
-        top:80px;
+        top: 80px;
       }
-      .content{
+      .content {
         width: 100%;
         position: absolute;
         left: 0;
-        top:201px;
-        li{
+        top: 201px;
+        li {
           font-size: 28px;
           color: #fff;
           line-height: 48px;
@@ -2123,7 +2182,7 @@
           margin: 0 0 0 0;
         }
       }
-      .back{
+      .back {
         position: absolute;
         text-align: center;
         width: 100%;
@@ -2132,8 +2191,8 @@
         color: #fff;
         font-size: 32px;
         line-height: 32px;
-        text-shadow: 2px 2px 9px rgba(136,80,35,0.56);
-        i{
+        text-shadow: 2px 2px 9px rgba(136, 80, 35, 0.56);
+        i {
           width: 37px;
           height: 26px;
           display: inline-block;
@@ -2153,6 +2212,7 @@
         letter-spacing: 1.2px;
         color: #ffffff;
         opacity: 0.9;
+        z-index: 666;
       }
       .btn {
         width: 414px;
@@ -2185,6 +2245,12 @@
           margin: -5px 0 0 10px;
         }
       }
+      .baomihua{
+        width: 244px;
+        height: 136px;
+        @include centerX;
+        top:536px;
+      }
       .go-coupon-list {
         color: #fff;
         font-size: 22px;
@@ -2195,6 +2261,17 @@
         i {
           font-size: 18px;
         }
+      }
+    }
+    .main-baomihua{
+      h3{
+        top:484px;
+      }
+      .btn{
+        top:676px;
+      }
+      p{
+        top:790px;
       }
     }
   }
@@ -2676,6 +2753,15 @@
     min-width: 160px;
     height: 62px;
   }
+  .header .header-main .game  .coin-tip{
+    width: 128px;
+    height: 56px;
+    position: absolute;
+    right:-80px;
+    top:0;
+    animation-duration:2.5s;
+    /*transition: all 1s;*/
+  }
 
   /*position: absolute;*/
   /*left: 50%;*/
@@ -3129,7 +3215,7 @@
     left: 0;
     top: 0;
     padding: 15px;
-    pointer-events:none;
+    pointer-events: none;
   }
 
   .main .center > h3 {
