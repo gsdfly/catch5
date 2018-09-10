@@ -399,7 +399,9 @@ const actions = {
             }
             // ctx.commit('setTaskWawa',res[i]);
           }
+
         }
+
         //每次改变一个运营位之后需要重新获取运营位的状态，在这里对operationsList做处理，只截取3个，
         ctx.commit('setTaskOpes',undoneOpe.concat(completeOpe))
 
