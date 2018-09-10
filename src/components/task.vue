@@ -26,9 +26,10 @@
           <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
         </div>
         <div v-if="item.type === 2" @click="openTip('bankCard',item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <span class="hot">hot</span>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_card.png" alt=""/>
           <img v-if="item.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-          <p :class="{'is_down':item.task_count >= item.num}">办卡送币</p>
+          <p :class="{'is_down':item.task_count >= item.num}">办卡送公仔</p>
         </div>
       </li>
       <!--<li @click="consumer" v-if="gzh_operation.id">-->
@@ -290,6 +291,28 @@
           width: 100%;
           height: 100%;
           padding: 0.1px;
+          .hot{
+            width: 54px;
+            height: 24px;
+            font-size: 20px;
+            line-height: 24px;
+            color: #fff;
+            position: absolute;
+            text-align: center;
+            right: 52px;
+            top:23px;
+            background-image: linear-gradient(-54deg,
+              #e8453d 0%,
+              #f76058 100%),
+            linear-gradient(
+                #fdebd3,
+                #fdebd3);
+            background-blend-mode: normal,
+            normal;
+            box-shadow: 0px 1px 9px 0px
+            rgba(227, 50, 41, 0.36);
+            border-radius: 12px;
+          }
           img{
             width: 110px;
             height: 110px;

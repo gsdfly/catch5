@@ -513,11 +513,15 @@
         </div>
 
         <div class="bg-center17" v-if="contentShow == 'bankCard'" @click.stop="" style="background: #fff">
-          <h3>活动规则</h3>
-          <p>大师多拉斯柯达那打的</p>
-          姓名：<input type="text" name="username" id="username" v-model="bankUserInfo.username"/><br/>
-          手机号：<input type="text" name="phone" id="phone" v-model="bankUserInfo.phone"/>
-          <button @click="sendUserInfo">确定</button>
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/task-2/minsheng.png" alt=""/>
+            <p>请先填写您的联系方式，成功办理信用卡后，<br/>将会由工作人员联系您，寄送公仔。</p>
+            <input type="text" name="username" id="username" v-model="bankUserInfo.username" placeholder="姓名"/>
+            <input type="text" name="phone" id="phone" v-model="bankUserInfo.phone" placeholder="电话"/>
+            <div class="btn" @click="sendUserInfo">去办理</div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
         </div>
 
         <div class="bg-center18" v-if="contentShow == 'coinred'" @click.stop="">
@@ -772,12 +776,20 @@
         var reg = /^[\u4E00-\u9FA5]{2,4}$/;
         var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
         if(!reg.test(this.bankUserInfo.username.trim())){
-            alert('用户名不符合标准')
+          Toast({
+            message: '用户名不符合标准',
+            position: 'middle',
+            duration: 1000
+          })
           this.bankUserInfo.username= ''
           return;
         }
         if(!myreg.test(this.bankUserInfo.phone.trim())){
-          alert('手机号不符合标准')
+          Toast({
+            message: '手机号不符合标准',
+            position: 'middle',
+            duration: 1000
+          })
           this.bankUserInfo.phone= ''
           return;
         }
@@ -2272,6 +2284,56 @@
       }
       p{
         top:790px;
+      }
+    }
+  }
+
+  .bg-center17{
+    >div{
+      width: 640px;
+      @include center;
+      .imgBg{
+        width: 640px;
+      }
+      p{
+        font-size: 24px;
+        line-height: 36px;
+        color: #fff;
+        @include centerX;
+        width: 100%;
+        text-align: center;
+        top:459px;
+      }
+      input {
+        width: 460px;
+        height: 68px;
+        color:#888888;
+        font-size: 28px;
+        text-indent: 18px;
+        background: #fff;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        @include centerX;
+        &#username{
+          top:553px;
+        }
+        &#phone{
+          top:641px;
+        }
+      }
+      .btn{
+        width: 414px;
+        height: 124px;
+        background: url("./../assets/task-2/press_go_go.png") no-repeat;
+        background-size: 100% 100%;
+        border: none;
+        outline: none;
+        font-size: 32px;
+        color: #353535;
+        top:749px;
+        line-height: 74px;
+        @include centerX;
       }
     }
   }
