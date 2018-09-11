@@ -460,7 +460,7 @@
             <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0">
               累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次没抓中?
             </h3>
-            <img class="baomihua" src="./../assets/guide/baomihua.png" alt="" />
+            <img v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0" class="baomihua" src="./../assets/guide/baomihua.png" alt="" />
             <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category!==0">
               累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
             </h3>
