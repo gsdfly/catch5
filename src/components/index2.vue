@@ -513,16 +513,16 @@
         </div>
 
         <div class="bg-center17" v-if="contentShow == 'bankCard'" @click.stop="" style="background: #fff">
-          <div>
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/task-2/minsheng.png" alt=""/>
-            <p>请先填写您的联系方式，成功办理信用卡后，<br/>将会由工作人员联系您，寄送公仔。</p>
-            <input type="text" name="username" id="username" v-model="bankUserInfo.username" placeholder="姓名"/>
-            <input type="text" name="phone" id="phone" v-model="bankUserInfo.phone" placeholder="电话"/>
-            <div class="btn" @click="sendUserInfo">去办理</div>
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
-          </div>
+        <div>
+          <img class="imgBg" src="http://res.catchme.com.cn/activity/task-2/minsheng.png" alt=""/>
+          <p>请先填写您的联系方式，成功办理信用卡后，<br/>将会由工作人员联系您，寄送公仔。</p>
+          <input type="text" name="username" class="username" v-model="activityUserInfo.username" placeholder="姓名"/>
+          <input type="text" name="phone" class="phone" v-model="activityUserInfo.phone" placeholder="电话"/>
+          <div class="btn" @click="sendUserInfo('bank')">去办理</div>
+          <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+               @click="closeBg"/>
         </div>
+      </div>
 
         <div class="bg-center18" v-if="contentShow == 'coinred'" @click.stop="">
           <div>
@@ -561,6 +561,16 @@
           </div>
         </div>
 
+        <div class="bg-center21" v-if="contentShow == 'zhongqiu'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_bi.png" alt=""/>
+            <input type="text" name="username" class="username" v-model="activityUserInfo.username" placeholder="姓名"/>
+            <input type="text" name="phone" class="phone" v-model="activityUserInfo.phone" placeholder="电话"/>
+            <div class="btn" @click="sendUserInfo('zhongqiu')">参与活动</div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
       </div>
       <tipOperation></tipOperation>
     </div>
@@ -645,7 +655,7 @@
           }]
         },
         task_game:{},
-        bankUserInfo:{
+        activityUserInfo:{
           username:'',
           phone:''
         },
@@ -661,7 +671,7 @@
         gzhCodeStyle:'visibility: hidden',
 //        guideTime:'',
 //        touchTime:0
-        message:''
+        message:'',
       }
     },
     created() {
@@ -772,43 +782,56 @@
       bankCard(info){
         this.bankOpe = info
       },
-      sendUserInfo(){
+      sendUserInfo(type){
         var reg = /^[\u4E00-\u9FA5]{2,4}$/;
         var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
-        if(!reg.test(this.bankUserInfo.username.trim())){
+        if(!reg.test(this.activityUserInfo.username.trim())){
           Toast({
             message: '用户名不符合标准',
             position: 'middle',
             duration: 1000
           })
-          this.bankUserInfo.username= ''
+          this.activityUserInfo.username= ''
           return;
         }
-        if(!myreg.test(this.bankUserInfo.phone.trim())){
+        if(!myreg.test(this.activityUserInfo.phone.trim())){
           Toast({
             message: '手机号不符合标准',
             position: 'middle',
             duration: 1000
           })
-          this.bankUserInfo.phone= ''
+          this.activityUserInfo.phone= ''
           return;
         }
         if(!this.isRequest){
           this.isRequest = true
-          this.$store.dispatch('playerAddressAction',{username:this.bankUserInfo.username,phone:this.bankUserInfo.phone,operation_id:this.bankOpe.id}).then(()=>{
-            this.$store.dispatch('getFreeCoin', {coin_price_id: this.bankOpe.coin_price.coin_price_id, coupon_id: this.bankOpe.coupon.id}).then((data) => {
-              this.isRequest = false
-              this.bgShow = false
-              this.$store.commit('setCoins', data.data.coin_num);
-              this.$store.dispatch('getUser');
-              this.$store.dispatch('getOperations');
-              window.location.href  = this.bankOpe.url
+          if(type==='bank'){
+            this.$store.dispatch('playerAddressAction',{username:this.activityUserInfo.username,phone:this.activityUserInfo.phone,operation_id:this.bankOpe.id}).then(()=>{
+              this.$store.dispatch('getFreeCoin', {coin_price_id: this.bankOpe.coin_price.coin_price_id, coupon_id: this.bankOpe.coupon.id}).then((data) => {
+                this.isRequest = false
+                this.bgShow = false
+                this.$store.commit('setCoins', data.data.coin_num);
+                this.$store.dispatch('getUser');
+                this.$store.dispatch('getOperations');
+                window.location.href  = this.bankOpe.url
+              }).catch(()=>{
+                this.isRequest = false
+              })
             }).catch(()=>{
               this.isRequest = false
             })
-          }).catch(()=>{
-            this.isRequest = false
-          })
+          }else if(type==='zhongqiu'){
+            this.$store.dispatch('playerMobileAction',{username:this.activityUserInfo.username,phone:this.activityUserInfo.phone}).then(()=>{
+              Toast({
+                message: '参与成功',
+                position: 'middle',
+                duration: 1000
+              })
+              this.isRequest = false;
+              this.bgShow = false;
+            })
+          }
+
         }
       },
       taskGame(value){
@@ -2289,54 +2312,54 @@
   }
 
   .bg-center17{
-    >div{
-      width: 640px;
-      @include center;
-      .imgBg{
-        width: 640px;
-      }
-      p{
-        font-size: 24px;
-        line-height: 36px;
-        color: #fff;
-        @include centerX;
-        width: 100%;
-        text-align: center;
-        top:459px;
-      }
-      input {
-        width: 460px;
-        height: 68px;
-        color:#888888;
-        font-size: 28px;
-        text-indent: 18px;
-        background: #fff;
-        border-radius: 8px;
-        border: none;
-        outline: none;
-        @include centerX;
-        &#username{
-          top:553px;
-        }
-        &#phone{
-          top:641px;
-        }
-      }
-      .btn{
-        width: 414px;
-        height: 124px;
-        background: url("./../assets/task-2/press_go_go.png") no-repeat;
-        background-size: 100% 100%;
-        border: none;
-        outline: none;
-        font-size: 32px;
-        color: #353535;
-        top:749px;
-        line-height: 74px;
-        @include centerX;
-      }
-    }
-  }
+     >div{
+       width: 640px;
+       @include center;
+       .imgBg{
+         width: 640px;
+       }
+       p{
+         font-size: 24px;
+         line-height: 36px;
+         color: #fff;
+         @include centerX;
+         width: 100%;
+         text-align: center;
+         top:459px;
+       }
+       input {
+         width: 460px;
+         height: 68px;
+         color:#888888;
+         font-size: 28px;
+         text-indent: 18px;
+         background: #fff;
+         border-radius: 8px;
+         border: none;
+         outline: none;
+         @include centerX;
+         &.username{
+           top:553px;
+         }
+         &.phone{
+           top:641px;
+         }
+       }
+       .btn{
+         width: 414px;
+         height: 124px;
+         background: url("./../assets/task-2/press_go_go.png") no-repeat;
+         background-size: 100% 100%;
+         border: none;
+         outline: none;
+         font-size: 32px;
+         color: #353535;
+         top:749px;
+         line-height: 74px;
+         @include centerX;
+       }
+     }
+   }
 
   .bg-center18,.bg-center19,.bg-center20{
     .btn{
@@ -2470,6 +2493,48 @@
         }
     }
   }}
+
+  .bg-center21{
+    >div{
+      width: 640px;
+      @include center;
+      .imgBg{
+        width: 640px;
+      }
+      input {
+        width: 460px;
+        height: 68px;
+        color:#888888;
+        font-size: 28px;
+        text-indent: 18px;
+        background: #fff;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        @include centerX;
+        &.username{
+          top:500px;
+        }
+        &.phone{
+          top:600px;
+        }
+      }
+      .btn{
+        width: 414px;
+        height: 124px;
+        background: url("./../assets/task-2/press_go_go.png") no-repeat;
+        background-size: 100% 100%;
+        border: none;
+        outline: none;
+        font-size: 32px;
+        color: #353535;
+        top:710px;
+        line-height: 74px;
+        @include centerX;
+      }
+    }
+  }
+
   .price {
     position: absolute;
     width: 298px;

@@ -543,6 +543,16 @@ const actions = {
         error(err)
       })
     })
+  },
+  playerMobileAction:function (ctx,params) {
+    return new Promise((success,error)=>{
+      api.playerMobile({token:CONFIG.token,username:params.username,mobile:params.phone}).then((data)=>{
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+
   }
 }
 

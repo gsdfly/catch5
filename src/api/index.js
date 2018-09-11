@@ -207,5 +207,10 @@ export default {
   // url: CONFIG.url + 'api/envelope/receive',
   getEnvelopeReceive:function (params) {
     return instance.post(CONFIG.url+'api/envelope/receive',jsonToStr(params))
-  }
+  },
+  //中秋节活动上传手机号
+  playerMobile:function (params) {
+    return instance.post(CONFIG.url+'api/player/mobile',jsonToStr(params))
+  },
+
 }
