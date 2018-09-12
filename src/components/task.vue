@@ -137,6 +137,7 @@
                 })
               }
             }
+            localStorage.removeItem('gzh_code')
           }
           //获取本地的guide
           var guideTime = localStorage.getItem('guideTime');
