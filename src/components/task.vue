@@ -26,10 +26,11 @@
           <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
         </div>
         <div v-if="item.type === 2" @click="openTip('bankCard',item)">
-          <span class="hot">hot</span>
+          <span class="hot" :class="{'is_down':item.task_count >= item.num}">hot</span>
           <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_card.png" alt=""/>
           <img v-if="item.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">办卡送公仔</p>
+          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         </div>
       </li>
       <!--<li @click="consumer" v-if="gzh_operation.id">-->
@@ -313,6 +314,10 @@
             box-shadow: 0px 1px 9px 0px
             rgba(227, 50, 41, 0.36);
             border-radius: 12px;
+            z-index: 2;
+            &.is_down{
+              opacity: 0.5;
+            }
           }
           img{
             width: 110px;
@@ -327,6 +332,7 @@
               top:26px;
               margin: 0;
               transform: translateX(-50%);
+              z-index:3;
             }
             &.is_down{
               opacity: 0.5;
