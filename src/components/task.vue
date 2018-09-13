@@ -4,10 +4,15 @@
     <!--<img class="free-bg" :src="img2_2" alt="">-->
     <ul>
       <li v-for="item in task_opes.slice(0,3)">
-        <div v-if="item.type === 7 || item.type === 12" @click="consumer(item)">
+        <div v-if="item.type === 7" @click="consumer(item)">
           <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
           <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.coupon.status === 2}">免费领币</p>
+        </div>
+        <div v-if="item.type === 12" @click="consumer(item)">
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+          <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
         <div v-if="item.type === 9">
           <div @click="openTip('taskGameTip',item)" class="water" v-if="item.task_count < item.num && task_now.game_bounty<item.value">
@@ -199,7 +204,7 @@
           this.$emit('openTip',value);
       },
       consumer(gzh_operation){
-        if(gzh_operation.coupon.status === 2){
+        if(gzh_operation.coupon.status === 2 || gzh_operation.task_count >= gzh_operation.num){
           return;
         }
         if(CONFIG.isWx || gzh_operation.type === 12){
