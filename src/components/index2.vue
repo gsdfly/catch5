@@ -877,7 +877,8 @@
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
           if (res.prize_bounty > prize_bounty && this.activity_bounty.length > 0) {
             this.bgShow = true;
-            this.contentShow = 'wawaTip';
+//            this.contentShow = 'wawaTip';
+            this.contentShow = 'zhongqiu';
             switch (scene) {
               case 1:
                 _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', 'websocket返回弹出', '']);
