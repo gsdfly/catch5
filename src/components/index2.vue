@@ -845,10 +845,11 @@
         setTimeout(()=>{
 //          this.isShowGzhImg = true
           this.gzhCodeStyle = 'visibility: visible'
-        },100)
-        setTimeout(()=>{
           this.isShowGzhButtton = false
-        },400)
+        },100)
+//        setTimeout(()=>{
+//          this.isShowGzhButtton = false
+//        },400)
         this.timeout1 = setTimeout(()=>{
           this.gzhCodeStyle = 'visibility: hidden'
           this.isShowGzhButtton = true
