@@ -615,7 +615,7 @@
         }.bind(this));
       }
       this.$store.dispatch('judgeMachine').then(() => {
-        localStorage.setItem('machine_url', document.URL);
+        localStorage.setItem('machine_obj', JSON.stringify({url:document.URL,time:new Date().getTime()}));
         //用户可以操作时间
         localStorage.setItem('userTime', (Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart)))
         this.Indicator.close();
