@@ -410,8 +410,9 @@
         <div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">
           <div>
             <img @click.prevent="" src="http://res.catchme.com.cn/activity/guide/image_free3.png" alt="" class="imgBg"/>
-            <img class="btn" src="./../assets/guide/press_go_catch.png" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1"/>
-            <img class="qrcode" src="./../assets/guide/code.png"  v-show="isShowGzhImg" alt=""/>
+            <img class="btn" src="./../assets/guide/press_go_catch.png" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2"/>
+            <!--<img class="qrcode" src="./../assets/guide/code.png" :style="gzhCodeStyle" alt=""/>-->
+            <img class="qrcode" :src="freeTipImg" :style="gzhCodeStyle" alt=""/>
             <!--<img @click.prevent="" :src="freeTipImg" alt="" class="imgBg"/>-->
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
@@ -601,7 +602,10 @@
         freeAnimate:'',
         isShowCoinTip:false,
         isShowGzhButtton:true,
-        isShowGzhImg:false
+//        isShowGzhImg:false,
+        timeout1:{},
+        timeout2:{},
+        gzhCodeStyle:'visibility: hidden'
 //        guideTime:'',
 //        touchTime:0
       }
@@ -690,11 +694,22 @@
     },
     methods: {
       press1(){
+        clearTimeout(this.timeout1)
+        clearTimeout(this.timeout2)
         setTimeout(()=>{
-          this.isShowGzhImg = true
-        },100)
-        setTimeout(()=>{
+//          this.isShowGzhImg = true
+          this.gzhCodeStyle = 'visibility: visible'
           this.isShowGzhButtton = false
+        },100)
+        this.timeout1 = setTimeout(()=>{
+          this.gzhCodeStyle = 'visibility: hidden'
+          this.isShowGzhButtton = true
+        },800)
+      },
+      press2(){
+        this.timeout2 = setTimeout(()=>{
+          this.gzhCodeStyle = 'visibility: hidden'
+          this.isShowGzhButtton = true
         },400)
       },
       closeGuide2() {
@@ -929,7 +944,7 @@
         }
         if(value === 'free'){
           this.isShowGzhButtton = true;
-          this.isShowGzhImg = false;
+          this.gzhCodeStyle='visibility: hidden';
         }
         this.freeTipImg = value2;
         this.bgShow = true;
