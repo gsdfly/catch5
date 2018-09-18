@@ -571,12 +571,23 @@
                  @click="closeBg"/>
           </div>
         </div>
+
+        <div class="bg-center21" v-if="contentShow == 'dlphb'" @click.stop="">
+          <ul>
+            <li v-for="item in dlphb">
+              <!--<img :src="item.avatar" alt="" />-->
+              <p>{{item.nickname}}<span>{{item.prize_count}}</span></p>
+            </li>
+            <p></p>
+          </ul>
+        </div>
       </div>
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
     <guide v-if="isShowGuide && activity_bounty.length>0"></guide>
     <guide2 v-if="isShowGuide2" @closeGuide2="closeGuide2"></guide2>
+    <div class="phb" @click="openPhb">掉落排行榜</div>
   </div>
 </template>
 
@@ -674,6 +685,7 @@
 //        guideTime:'',
 //        touchTime:0
         message:'',
+        dlphb:[]
       }
     },
     created() {
@@ -778,6 +790,18 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      openPhb(){
+        this.$store.dispatch('autumnRankAction').then((res)=>{
+          console.log(res.rank)
+          this.dlphb = res.rank;
+          this.bgShow = true;
+          this.contentShow = 'dlphb'
+        })
+        //自己所属的位置
+        this.$store.dispatch('autumnPlayerAction').then((res)=>{
+          console.log(res)
+        })
+      },
       handleGzh(){
         this.isShowCoinTip = true;
       },
