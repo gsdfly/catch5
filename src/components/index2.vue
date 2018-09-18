@@ -409,9 +409,10 @@
 
         <div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">
           <div>
-            <img @click.prevent="" src="http://res.catchme.com.cn/activity/guide/image_free3.png" alt="" class="imgBg"/>
+            <img @click.prevent="" src="http://res.catchme.com.cn/activity/guide/image_free4.png" alt="" class="imgBg"/>
             <img class="btn" src="./../assets/guide/press_go_catch.png" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2"/>
             <!--<img class="qrcode" src="./../assets/guide/code.png"  v-show="isShowGzhImg" alt=""/>-->
+            <p>关注公众号回复“{{freeTip}}”即可领免费币</p>
             <img :style="gzhCodeStyle" @click.prevent="" :src="freeTipImg" alt="" class="qrcode"/>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
@@ -621,6 +622,7 @@
           name: ''
         },
         freeTipImg: '',
+        freeTip:'666',
         ringStyle: '',
         centerStyle: '',
         starClass: '',
@@ -1044,7 +1046,7 @@
       closeBg2() {
         this.bgShow = false
       },
-      openTip(value, value2 = '') {
+      openTip(value, value2 = '',value3 = '') {
         if (value === 'shuoming') {
           this.shuomingPre = this.contentShow;
           _hmt.push(['_trackEvent', '打开活动说明', '点击', '打开活动说明', '']);
@@ -1055,6 +1057,7 @@
 //          this.isShowGzhImg = false;
         }
         this.freeTipImg = value2;
+        this.freeTip = value3;
         this.bgShow = true;
         this.contentShow = value;
       },
@@ -2039,13 +2042,23 @@
         width: 114px;
         height: 114px;
         @include centerX;
-        top:760px;
+        top:805px;
+      }
+      p{
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        font-size: 24px;
+        line-height: 24px;
+        color: #888888;
+        left: 0;
+        top:745px;
       }
       .btn{
         width: 420px;
         height: 130px;
         @include centerX;
-        top:772px;
+        top:817px;
         z-index: 666;
       }
     }
