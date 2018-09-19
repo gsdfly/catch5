@@ -5,28 +5,31 @@
     <ul>
       <li v-for="item in task_opes.slice(0,3)">
         <div v-if="item.type === 7" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/zhongqiu/a.png" alt=""/>
           <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.coupon.status === 2}">免费领币</p>
         </div>
         <div v-if="item.type === 12" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/zhongqiu/a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num === 2}">免费领币</p>
         </div>
         <div v-if="item.type === 9">
           <div @click="openTip('taskGameTip',item)" class="water" v-if="item.task_count < item.num && task_now.game_bounty<item.value">
+            <img class="b-sea" src="./../assets/zhongqiu/b.png" alt="">
             <div class="bol" :style="'height:'+task_now.game_bounty/item.value*100+'%'"></div>
             <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{item.value/info.coin_num}}</span>
           </div>
-          <div @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value" class="m-water">领币</div>
-          <div v-if="item.task_count >= item.num" class="m-water is_down">领币</div>
+          <img @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value" src="./../assets/zhongqiu/b_ling.png" alt=""/>
+          <img v-if="item.task_count >= item.num" class="m-water is_down" src="./../assets/zhongqiu/b_ling.png" alt="">
+          <!--<div @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value" class="m-water">领币</div>-->
+          <!--<div v-if="item.task_count >= item.num" class="m-water is_down">领币</div>-->
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">投币送币</p>
         </div>
         <div v-if="item.type === 10">
-          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/task-2/icon_free_c.png" alt=""/>
-          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
+          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/zhongqiu/c.png" alt=""/>
+          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/zhongqiu/c_ling.png" alt="">
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
         </div>
@@ -325,10 +328,10 @@
             }
           }
           img{
-            width: 110px;
-            height: 110px;
+            width: 90px;
+            height: 95px;
             display: block;
-            margin: 13px auto 0 auto;
+            margin: 18px auto 0 auto;
             &.img_down{
               width: 160px;
               height: 88px;
@@ -345,7 +348,7 @@
           }
           .m-water{
             width: 90px;
-            height: 90px;
+            height: 95px;
             background: url("./../assets/task-2/water.png") no-repeat;
             background-size: 100% 100%;
             border-radius: 50%;
@@ -354,7 +357,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 19px auto 18px auto;
+            margin: 18px auto 9px auto;
             box-shadow: 0 4px 12px rgba(180,149,84,0.4);
             &.is_down{
               opacity: 0.5;
@@ -362,31 +365,43 @@
           }
           .water{
             width: 90px;
-            height: 90px;
-            background-color: #999999;
+            height: 95px;
+            background-color: #fef2d7;
+            /*background: url("./../assets/zhongqiu/b.png") no-repeat;*/
+            /*background-size: 100% 100%;*/
             /*border: solid 6px #ffffff;*/
             border-radius: 50%;
             overflow: hidden;
             position: relative;
             display: flex;
             align-items: flex-end;
-            margin: 19px auto 14px auto;
+            margin: 18px auto 9px auto;
             box-shadow: 0 4px 12px rgba(180,149,84,0.4);
             /*box-shadow: inset 0px 3px 13px 0px*/
             /*rgba(242, 123, 0, 0.51);*/
+            .b-sea{
+              position: absolute;
+              width: 90px;
+              height: 95px;
+              left: 0;
+              top:0;
+              margin: 0;
+            }
             .bol{
               width: 100%;
-              background: url("./../assets/task/b_bg.png");
+              /*background: url("./../assets/task/b_bg.png");*/
+              background: url("./../assets/zhongqiu/b_sea.png");
               animation: wave-animation 1s infinite linear;
               transition: all 1s linear;
               background-size: 102px 116px;
+              /*display: none;*/
             }
             .game-num{
               position: absolute;
               left: 50%;
               top:50%;
               font-size: 28px;
-              color: #fff;
+              color: #825e26;
               transform: translate(-50%,-50%);
               b{
                 font-size: 40px;
@@ -398,8 +413,8 @@
             height: 24px;
             font-size: 24px;
             line-height: 24px;
-            color: #494949;
-            margin: 4px 0 0 0;
+            color: #7e5518;
+            margin: 9px 0 0 0;
             &.is_down{
               color: #b3b3b3;
             }

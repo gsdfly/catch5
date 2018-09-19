@@ -178,7 +178,7 @@
     width: 345px;
     /*height: 1.28px;*/
     height: 37.87%;
-    border: 1px solid #fd643b;
+    border: 1px solid #f18c4c;
     /*border-radius: 0.15px;*/
     color: #494949;
     position: relative;
@@ -208,7 +208,8 @@
 
   .recharge-lists .infinity .recharge-item-t span {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_charge_nbi.png") no-repeat;*/
-    background: url("./../assets/small/icon_charge_nbi.png") no-repeat;
+    /*background: url("./../assets/small/icon_charge_nbi.png") no-repeat;*/
+    background: url("./../assets/zhongqiu/icon_charge_nbi.png");
     background-size: 100% 100%;
   }
 
@@ -230,7 +231,7 @@
     line-height: 63px;
     /*font-size: 0.32px;*/
     font-size: 34px;
-    background: #fb643b;
+    background: #f18c4c;
     color: #fff;
     border-radius: 0 0 12px 12px;
     text-align: center;
@@ -246,7 +247,7 @@
   .recharge-item-t {
     height: 68px;
     font-size: 36px;
-    color: #353535;
+    color: #7e5518;
     line-height: 68px;
     text-align: center;
     background: #fff;
@@ -258,7 +259,8 @@
     height: 42px;
     display: inline-block;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_recharge_bi.png") no-repeat;*/
-    background: url("./../assets/small/icon_recharge_bi.png") no-repeat;
+    /*background: url("./../assets/small/icon_recharge_bi.png") no-repeat;*/
+    background: url("./../assets/zhongqiu/icon_recharge_bi.png");
     background-size: 100% 100%;
     margin: 0 10px 0 0;
     vertical-align: middle;
@@ -273,7 +275,8 @@
     width: 32px;
     height: 38px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_recharge_2bi.png") no-repeat;*/
-    background: url("./../assets/small/icon_recharge_2bi.png") no-repeat;
+    /*background: url("./../assets/small/icon_recharge_2bi.png") no-repeat;*/
+    background: url("./../assets/zhongqiu/icon_recharge_2bi.png");
     background-size: 100% 100%;
   }
 
@@ -290,7 +293,7 @@
     top: -10px;
     color: #fff;
     /*background: url("./../assets/jiewu/bg_limit.png") no-repeat;*/
-    background: url("./../assets/small/recharge_tab2.png") no-repeat;
+    background: url("./../assets/zhongqiu/recharge_tab.png") no-repeat;
     background-size: 100% 100%;
     font-size: 24px;
     /*text-align: center;*/

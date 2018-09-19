@@ -33,7 +33,7 @@
             <div class="kefu" @click.stop="">
               <p id="support" @click="showKefu">
                 <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_kefu.png" alt=""><span>客服</span>-->
-                <img src="./../assets/small/icon_kefu.png" alt=""><span>客服</span>
+                <img src="./../assets/zhongqiu/icon_kefu.png" alt=""><span>客服</span>
               </p>
               <div class="kefu2" :style="isKefuStyle">
                 <div class="kefu2-right">
@@ -65,12 +65,14 @@
         <div class="main-center">
           <div class="centerout">
             <div class="center">
+              <div class="phb" @click="openPhb"></div>
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
               <div class="ring" v-if="activity_bounty.length>0">
                 <div class="d">
                   <div class="dd" :style="ringStyle">
                     <div>
-                      <img class="img" src="./../assets/task-2/processed_bg.png" alt="">
+                      <!--<img class="img" src="./../assets/task-2/processed_bg.png" alt="">-->
+                      <img class="img" src="./../assets/zhongqiu/processed_bg.png" alt="">
                       <!--<img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">-->
                       <div class="star" :class="{'animation':starClass==='animation'}">
                         <img class="star1" src="./../assets/ring/star1.png" alt="">
@@ -409,9 +411,10 @@
 
         <div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">
           <div>
-            <img @click.prevent="" src="http://res.catchme.com.cn/activity/guide/image_free3.png" alt="" class="imgBg"/>
+            <img @click.prevent="" src="http://res.catchme.com.cn/activity/guide/image_free4.png" alt="" class="imgBg"/>
             <img class="btn" src="./../assets/guide/press_go_catch.png" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2"/>
             <!--<img class="qrcode" src="./../assets/guide/code.png"  v-show="isShowGzhImg" alt=""/>-->
+            <p>关注公众号回复“{{freeTip}}”即可领免费币</p>
             <img :style="gzhCodeStyle" @click.prevent="" :src="freeTipImg" alt="" class="qrcode"/>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
@@ -563,31 +566,60 @@
 
         <div class="bg-center21" v-if="contentShow == 'zhongqiu'" @click.stop="">
           <div>
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_bi.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/autumn/catched.png" alt=""/>
+            <p>请填写您的联系方式，活动结束后，<br/>排行榜前十名，将会由工作人员联系您寄送奖品。</p>
+            <h3 @click="goRule">活动规则</h3>
             <input type="text" name="username" class="username" v-model="activityUserInfo.username" placeholder="姓名"/>
             <input type="text" name="phone" class="phone" v-model="activityUserInfo.phone" placeholder="电话"/>
-            <div class="btn" @click="sendUserInfo('zhongqiu')">参与活动</div>
+            <div class="btn" @click="sendUserInfo('zhongqiu')">确定</div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
           </div>
         </div>
 
-        <div class="bg-center21" v-if="contentShow == 'dlphb'" @click.stop="">
-          <ul>
-            <li v-for="item in dlphb">
-              <!--<img :src="item.avatar" alt="" />-->
-              <p>{{item.nickname}}<span>{{item.prize_count}}</span></p>
-            </li>
-            <p></p>
-          </ul>
+        <div class="bg-center22" v-if="contentShow == 'dlphb'" @click.stop="">
+          <div>
+            <div>
+              <img class="imgBg" src="http://res.catchme.com.cn/activity/autumn/ranking_bg.png" alt=""/>
+              <div class="myphb">
+                <img :src="user.avatar" alt="">
+                <h3>{{myphb.prize_count}}个</h3>
+                <p v-if="myphb.tag">
+                  当前排名：{{myphb.rank}}
+                </p>
+                <p v-else>
+                  超过了全国{{myphb.over * 100}}%的人
+                </p>
+              </div>
+              <ul>
+                <li v-for="(item,index) in dlphb">
+                  <b>{{index+1}}</b>
+                  <img :src="item.avatar" alt="" />
+                  <p>{{item.nickname}}</p>
+                  <span>{{item.prize_count}}个</span>
+                </li>
+                <p></p>
+              </ul>
+              <img class="imgBottom" src="./../assets/zhongqiu/moon.png" alt="">
+            </div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center23" v-if="contentShow == 'rule'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/autumn/notification.png" alt=""/>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg('ruleBefore')"/>
+          </div>
         </div>
       </div>
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <guide v-if="isShowGuide && activity_bounty.length>0"></guide>
+    <guide v-if="ruleBefore && isShowGuide && activity_bounty.length>0"></guide>
     <guide2 v-if="isShowGuide2" @closeGuide2="closeGuide2"></guide2>
-    <div class="phb" @click="openPhb">掉落排行榜</div>
   </div>
 </template>
 
@@ -626,8 +658,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: false,
-        contentShow: '',
+        bgShow: true,
+        contentShow: 'rule',
         currentCoupon: {},
         pay: {},
         currentCouponPay: {},
@@ -685,7 +717,9 @@
 //        guideTime:'',
 //        touchTime:0
         message:'',
-        dlphb:[]
+        dlphb: [],
+        myphb:{},
+        ruleBefore:false //要在中秋活动关闭之后，弹出指引
       }
     },
     created() {
@@ -790,16 +824,19 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      goRule(){
+        this.bgShow = true;
+        this.contentShow = 'rule'
+      },
       openPhb(){
         this.$store.dispatch('autumnRankAction').then((res)=>{
-          console.log(res.rank)
           this.dlphb = res.rank;
           this.bgShow = true;
           this.contentShow = 'dlphb'
         })
         //自己所属的位置
         this.$store.dispatch('autumnPlayerAction').then((res)=>{
-          console.log(res)
+          this.myphb = res;
         })
       },
       handleGzh(){
@@ -809,6 +846,10 @@
         this.bankOpe = info
       },
       sendUserInfo(type){
+        if(this.activityUserInfo.username === this.user.username && this.activityUserInfo.phone === this.user.mobile){
+          this.bgShow = false
+          return
+        }
         var reg = /^[\u4E00-\u9FA5]{2,4}$/;
         var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
         if(!reg.test(this.activityUserInfo.username.trim())){
@@ -853,6 +894,7 @@
                 position: 'middle',
                 duration: 1000
               })
+              this.$store.dispatch('getUser');
               this.isRequest = false;
               this.bgShow = false;
             })
@@ -1144,6 +1186,9 @@
         }, 60000)
       },
       closeBg(value) {
+        if(value === 'ruleBefore'){
+          this.ruleBefore = true;
+        }
         if (value === 'red') {
           _hmt.push(['_trackEvent', '关闭红包弹窗', '点击', '', '']);
         } else if (value === 'hide') {
@@ -1294,6 +1339,10 @@
         }
       },
       user(newUser, oldUser) {
+        if(newUser.nick_name !== oldUser.nick_name){
+          this.activityUserInfo.username = newUser.username;
+          this.activityUserInfo.phone = newUser.mobile;
+        }
         if (oldUser.coins === 0) {
           return;
         }
@@ -2083,17 +2132,27 @@
       .imgBg {
         width: 640px;
       }
+      p{
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        font-size: 24px;
+        line-height: 24px;
+        color: #888888;
+        left: 0;
+        top:745px;
+      }
       .qrcode{
         width: 114px;
         height: 114px;
         @include centerX;
-        top:760px;
+        top:805px;
       }
       .btn{
         width: 420px;
         height: 130px;
         @include centerX;
-        top:772px;
+        top:817px;
         z-index: 666;
       }
     }
@@ -2541,6 +2600,23 @@
       .imgBg{
         width: 640px;
       }
+      p{
+        width: 100%;
+        text-align: center;
+        font-size: 24px;
+        line-height:36px;
+        color: #5d290e;
+        @include centerX;
+        top:527px;
+      }
+      h3{
+        font-size: 24px;
+        line-height: 24px;
+        color: #f2672c;
+        @include centerX;
+        top:611px;
+        text-decoration: underline;
+      }
       input {
         width: 460px;
         height: 68px;
@@ -2553,28 +2629,141 @@
         outline: none;
         @include centerX;
         &.username{
-          top:500px;
+          top:659px;
         }
         &.phone{
-          top:600px;
+          top:747px;
         }
       }
       .btn{
-        width: 414px;
-        height: 124px;
-        background: url("./../assets/task-2/press_go_go.png") no-repeat;
+        width: 420px;
+        height: 130px;
+        background: url("./../assets/zhongqiu/press_sure_catch.png") no-repeat;
         background-size: 100% 100%;
-        border: none;
-        outline: none;
         font-size: 32px;
-        color: #353535;
-        top:710px;
-        line-height: 74px;
+        line-height: 86px;
+        color: #fff;
         @include centerX;
+        top:831px;
       }
     }
   }
 
+  .bg-center22{
+    >div{
+      width: 640px;
+      @include center;
+      >div{
+        position: relative;
+        overflow: hidden;
+        border-radius: 36px;
+        .imgBg{
+          width: 640px;
+        }
+        .myphb{
+          @include centerX;
+          top:147px;
+          img{
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            border: solid 3px #ffd608;
+          }
+          h3{
+            font-size: 40px;
+            line-height: 40px;
+            margin: 12px 0 11px 0;
+            color: #ffd608;
+          }
+          p{
+            font-size:24px;
+            line-height: 24px;
+            color: #fff;
+          }
+        }
+        ul{
+          @include centerX;
+          bottom: 0;
+          height: 512px;
+          width: 100%;
+          overflow: scroll;
+          padding: 0 40px 86px 40px;
+          li{
+            width: 100%;
+            height: 86px;
+            margin: 0 0 4px 0;
+            b{
+              width: 52px;
+              height: 55px;
+              line-height: 55px;
+              text-align: center;
+              font-size: 28px;
+              float: left;
+              margin: 11px 20px 12px 0 ;
+              color: #fff;
+            }
+            &:nth-child(1){
+              b{
+                font-size: 0;
+                background: url("./../assets/zhongqiu/icon_one.png") no-repeat;
+                background-size: 100% 100%;
+              }
+            }
+            &:nth-child(2){
+              b{
+                font-size: 0;
+                background: url("./../assets/zhongqiu/icon_tow.png") no-repeat;
+                background-size: 100% 100%;
+              }
+            }
+            &:nth-child(3){
+              b{
+                font-size: 0;
+                background: url("./../assets/zhongqiu/icon_three.png") no-repeat;
+                background-size: 100% 100%;
+              }
+            }
+            img{
+              width: 72px;
+              height: 72px;
+              border-radius: 50%;
+              border: solid 1px #e1e1e1;
+              float: left;
+              margin: 7px 0;
+            }
+            p{
+              font-size: 30px;
+              color: #fff;
+              line-height: 86px;
+              float: left;
+              margin: 0 0 0 19px;
+            }
+            span{
+              font-size: 34px;
+              line-height: 86px;
+              color: #ffd608;
+              float: right;
+            }
+          }
+        }
+        .imgBottom{
+          width: 640px;
+          @include centerX;
+          bottom: 0;
+        }
+      }
+
+    }
+  }
+
+  .bg-center23{
+    >div{
+      @include center;
+      .imgBg{
+        width: 640px;
+      }
+    }
+  }
   .price {
     position: absolute;
     width: 298px;
@@ -2815,7 +3004,8 @@
   .jo-index .jo-index-div {
     width: 100%;
     height: 100%;
-    background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");
+    /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");*/
+    background: url("http://res.catchme.com.cn/activity/autumn/bg.png");
     background-size: 100% 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -2865,7 +3055,7 @@
     /*line-height: 0.35px;*/
     line-height: 40px;
     font-size: 18px;
-    color: #a65a4e;
+    color: rgba(219,116,51,0.76);
   }
 
   .header .head-portrait img {
@@ -2950,20 +3140,20 @@
     line-height: 66px;
     display: inline-block;
     /*background: url("http://res.catchme.com.cn/imgs-2018-04-10/icon_portrait_bi.png") no-repeat;*/
-    background: url("./../assets/small/icon_portrait_bi.png") no-repeat;
+    background: url("./../assets/zhongqiu/icon_portrait_bi.png") no-repeat;
     background-size: 100% 100%;
     font-size: 0;
   }
 
   .header .header-main .game span {
     font-size: 28px;
-    color: #fe5f5b;
+    color: #e97f3c;
     display: inline-block;
   }
 
   .header .header-main .game span.coins-num {
     font-size: 36px;
-    color: #fe5f5b;
+    color: #e97f3c;
     font-weight: 600;
     margin: 0 0 0 10px;
     line-height: 70px;
@@ -3003,7 +3193,7 @@
 
   .header .header-main .kefu > p > span {
     /*display: inline-block;*/
-    color: #fd643b;
+    color: #e97f3c;
     font-size: 28px;
     height: 28px;
     line-height: 70px;
@@ -3091,6 +3281,16 @@
     box-shadow: 2px 2px 10px rgba(206, 133, 74, 0.04), 0 0 18px rgba(206, 133, 74, 0.18), 0 0 24px rgba(206, 133, 74, 0.26);
   }
 
+  .main .centerout .center .phb{
+    width: 74px;
+    height: 171px;
+    position: absolute;
+    left: 43px;
+    top:0;
+    background: url("./../assets/zhongqiu/lantern.png") no-repeat;
+    background-size: 100% 100%;
+  }
+
   .main .centerout .center .ring {
     /*z-index: 5;*/
     z-index: 7;
@@ -3107,7 +3307,8 @@
     transform: translateX(calc(-50% - 8px));
     /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/process_bg2.png");*/
-    background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");
+    /*background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");*/
+    background: url("http://res.catchme.com.cn/activity/autumn/process_bg.png") no-repeat;
     background-size: 100% 100%;
     pointer-events: none;
     /*padding: 0.1px;*/
@@ -3126,7 +3327,8 @@
     left: 12px;
     bottom: 20px;
     /*background: url("./../assets/ring/process_r.png");*/
-    background: url("./../assets/task-2/process_bg_circular.png");
+    /*background: url("./../assets/task-2/process_bg_circular.png");*/
+    background: url("./../assets/zhongqiu/process_bg_circular.png");
     background-size: 100% 100%;
     color: #fff;
     text-align: center;
@@ -3287,7 +3489,7 @@
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-tip-ling {
     /*background: url("./../assets/task-2/progress_doll_receive_bg.png") no-repeat;*/
-    border: 4px solid #e8453d;
+    border: 3px solid #f18c4c;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-quan img {
@@ -3412,16 +3614,18 @@
     /*width: 306px;*/
     /*height: 306px;*/
     width: 358px;
-    height: 361px;
+    height: 358px;
     text-align: center;
     line-height: 306px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
-    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
+    /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
+    background: url("http://res.catchme.com.cn/activity/autumn/press_begin.png");
     background-size: 100% 100%;
     border: none;
     outline: none;
     /*font-size: 0.5px;*/
-    font-size: 40px;
+    font-size: 0;
+    /*font-size: 40px;*/
     color: #fff;
     display: block;
     margin: 0 auto;
@@ -3432,14 +3636,15 @@
 
   .main .center .hasclick {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_ing.png");*/
-    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
+    /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
+    background: url("http://res.catchme.com.cn/activity/autumn/press_begin.png");
     background-size: 100% 100%;
   }
 
   .main .center .game-num {
     width: 418px;
     height: 93px;
-    border: 1px solid #ff784e;
+    border: 1px solid #7e5518;
     border-radius: 18px;
     font-size: 24px;
     line-height: 91px;
@@ -3465,19 +3670,19 @@
     width: 20%;
     float: left;
     font-size: 50px;
-    color: #ff784e;
+    color: #7e5518;
     text-align: center;
     height: 71px;
     line-height: 71px;
     /*height: 67px;*/
     /*line-height: 67px;*/
-    border-right: 1px solid #ff784e;
+    border-right: 1px solid #7e5518;
     margin: 10px 0;
   }
 
   .main .center .game-num i:last-of-type {
     border-right: none;
-    border-left: 1px solid #ff784e;
+    border-left: 1px solid #7e5518;
     float: right;
   }
 
@@ -3496,7 +3701,7 @@
   .main .center .game-num > div h3 {
     /*font-size: 0.42px;*/
     font-size: 40px;
-    color: #ff784e;
+    color: #7e5518;
     font-weight: 600;
     /*line-height: 0.42px;*/
     line-height: 40px;
