@@ -7,7 +7,8 @@
         <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="">-->
         <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="">
         <img src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/guide/shuoming.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/autumn/ranking_bg.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/autumn/catched.png" alt="">
       </div>
       <div class="header">
         <div>
@@ -583,7 +584,9 @@
               <img class="imgBg" src="http://res.catchme.com.cn/activity/autumn/ranking_bg.png" alt=""/>
               <div class="myphb">
                 <img v-if="user.avatar" :src="user.avatar" alt="">
-                <img v-else="" src="./../assets/small/icon_portrait.png" alt="">
+                <div class="avatar" v-else="">
+                  <img  src="./../assets/small/icon_portrait.png" style="border: none" alt="">
+                </div>
                 <h3>{{myphb.prize_count}}个</h3>
                 <p v-if="myphb.tag">
                   当前排名：{{myphb.rank}}
@@ -596,7 +599,9 @@
                 <li v-for="(item,index) in dlphb">
                   <b>{{index+1}}</b>
                   <img v-if="item.avatar" :src="item.avatar" alt="">
-                  <img v-else="" src="./../assets/small/icon_portrait.png" alt="">
+                  <div v-else="">
+                    <img  src="./../assets/small/icon_portrait.png"  alt="">
+                  </div>
                   <p>{{item.nickname}}</p>
                   <span>{{item.prize_count}}个</span>
                 </li>
@@ -2679,13 +2684,25 @@
         .myphb{
           @include centerX;
           top:147px;
-          img{
+          >img{
             width: 105px;
             height: 105px;
             display: block;
             margin: 0 auto;
             border-radius: 50%;
             border: solid 3px #ffd608;
+          }
+          .avatar{
+            width: 105px;
+            height: 105px;
+            background: #ffd608;
+            position: relative;
+            border-radius: 50%;
+            margin: 0 auto;
+            >img{
+              width: 99px;
+              @include center;
+            }
           }
           h3{
             font-size: 42px;
@@ -2742,13 +2759,26 @@
                 background-size: 100% 100%;
               }
             }
-            img{
+            > img{
               width: 72px;
               height: 72px;
               border-radius: 50%;
               border: solid 1px #e1e1e1;
               float: left;
               margin: 7px 0;
+            }
+            >div{
+              width: 72px;
+              height: 72px;
+              border-radius: 50%;
+              background: #e1e1e1;
+              float: left;
+              margin: 7px 0;
+              position: relative;
+              img{
+                width: 70px;
+                @include center;
+              }
             }
             p{
               font-size: 30px;
