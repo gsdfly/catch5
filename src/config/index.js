@@ -6,7 +6,7 @@ function IsWeixinOrAlipay() {
   if (ua.match(/MicroMessenger/i) == 'micromessenger') return "WeiXin"
   //判断是不是支付宝
   if (ua.match(/AlipayClient/i) == 'alipayclient') return "Alipay"
-  if (ua.match(/aliapp\(tb/i) == 'aliapp\(tb') return "taobao"
+  if (ua.match(/aliapp\(tb/i) == 'aliapp\(tb' || ua.match(/tmall/i) == 'tmall') return "taobao"
   //判断是不是淘票票
   if (ua.match(/tbmovie/i) == 'tbmovie') return "Tpp"
   //哪个都不是
