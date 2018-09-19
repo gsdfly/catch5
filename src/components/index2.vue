@@ -2645,7 +2645,7 @@
         line-height: 86px;
         color: #fff;
         @include centerX;
-        top:831px;
+        top:841px;
       }
     }
   }
@@ -2667,25 +2667,27 @@
           img{
             width: 105px;
             height: 105px;
+            display: block;
+            margin: 0 auto;
             border-radius: 50%;
             border: solid 3px #ffd608;
           }
           h3{
-            font-size: 40px;
-            line-height: 40px;
-            margin: 12px 0 11px 0;
+            font-size: 42px;
+            line-height: 42px;
+            margin: 11px 0 10px 0;
             color: #ffd608;
           }
           p{
-            font-size:24px;
-            line-height: 24px;
-            color: #fff;
+            font-size:28px;
+            line-height: 28px;
+            color: #ffd608;
           }
         }
         ul{
           @include centerX;
           bottom: 0;
-          height: 512px;
+          height: 564px;
           width: 100%;
           overflow: scroll;
           padding: 0 40px 86px 40px;
