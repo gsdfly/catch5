@@ -58,7 +58,7 @@
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
-        <task @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
+        <task @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @changeIsGoRule="changeIsGoRule" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
       </div>
 
       <div class="main">
@@ -595,12 +595,13 @@
               <ul>
                 <li v-for="(item,index) in dlphb">
                   <b>{{index+1}}</b>
-                  <img :src="item.avatar" alt="" />
+                  <img v-if="item.avatar" :src="item.avatar" alt="">
+                  <img v-else="" src="./../assets/small/icon_portrait.png" alt="">
                   <p>{{item.nickname}}</p>
                   <span>{{item.prize_count}}个</span>
                 </li>
-                <p></p>
               </ul>
+              <p @click="goZhongqiu" class="goZhongqiu" v-if="myphb.prize_count > 0">填写联系方式</p>
               <img class="imgBottom" src="./../assets/zhongqiu/moon.png" alt="">
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -826,6 +827,13 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      goZhongqiu(){
+        this.bgShow = true;
+        this.contentShow = 'zhongqiu';
+      },
+      changeIsGoRule(){
+        this.isGoRule = true;
+      },
       goRule(){
         this.bgShow = true;
         this.contentShow = 'rule';
@@ -2684,6 +2692,7 @@
             line-height: 42px;
             margin: 11px 0 10px 0;
             color: #ffd608;
+            font-weight: 500;
           }
           p{
             font-size:28px;
@@ -2753,8 +2762,21 @@
               line-height: 86px;
               color: #ffd608;
               float: right;
+              font-weight: 500;
             }
           }
+        }
+        .goZhongqiu{
+          font-size: 26px;
+          line-height: 26px;
+          color: #ec6824;
+          width: 100%;
+          text-align: center;
+          @include centerX;
+          bottom: 25px;
+          z-index: 2;
+          font-weight: 500;
+          text-decoration: underline;
         }
         .imgBottom{
           width: 640px;

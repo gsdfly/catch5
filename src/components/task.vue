@@ -162,7 +162,8 @@
             if(prize_bounty && res.prize_bounty>prize_bounty && this.activity_bounty.length > 0){
               _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', '进入页面时弹出', '']);
               //弹出抓中娃娃的弹窗
-              this.$emit('openTip','zhongqiu');
+//              this.$emit('openTip','zhongqiu');
+              this.$emit('changeIsGoRule')
             }
             localStorage.setItem('prize_bounty',res.prize_bounty);
           })
