@@ -582,7 +582,8 @@
             <div>
               <img class="imgBg" src="http://res.catchme.com.cn/activity/autumn/ranking_bg.png" alt=""/>
               <div class="myphb">
-                <img :src="user.avatar" alt="">
+                <img v-if="user.avatar" :src="user.avatar" alt="">
+                <img v-else="" src="./../assets/small/icon_portrait.png" alt="">
                 <h3>{{myphb.prize_count}}个</h3>
                 <p v-if="myphb.tag">
                   当前排名：{{myphb.rank}}
