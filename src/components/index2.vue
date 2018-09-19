@@ -720,6 +720,7 @@
         message:'',
         dlphb: [],
         myphb:{},
+        isGoRule:false,
         ruleBefore:false //要在中秋活动关闭之后，弹出指引
       }
     },
@@ -827,7 +828,8 @@
     methods: {
       goRule(){
         this.bgShow = true;
-        this.contentShow = 'rule'
+        this.contentShow = 'rule';
+        this.isGoRule = true;
       },
       openPhb(){
         this.$store.dispatch('autumnRankAction').then((res)=>{
@@ -1187,6 +1189,11 @@
         }, 60000)
       },
       closeBg(value) {
+        if(this.contentShow === 'rule' && this.isGoRule){
+          this.contentShow = 'zhongqiu';
+          this.isGoRule = false;
+          return;
+        }
         if(value === 'ruleBefore'){
           this.ruleBefore = true;
         }
