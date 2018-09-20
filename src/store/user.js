@@ -49,6 +49,7 @@ const state = {
   // },
   activity_bounty:[],
   gzh_operation:{},
+  gzh_operation_other:{},
   task_game:{
     num:0, //任务可以完成多少次
     value:1,//任务值
@@ -137,6 +138,9 @@ const mutations = {
   },
   setGzhOperation(state,obj){
     state.gzh_operation = obj;
+  },
+  setGzhOperationOther(state,obj){
+    state.gzh_operation_other = obj;
   },
   setTaskOpes(state,arr){
     state.task_opes = arr;
@@ -404,6 +408,7 @@ const actions = {
               completeOpe.push(res[i])
             }else {
               undoneOpe.push(res[i])
+              ctx.commit('setGzhOperationOther',res[i]);
             }
           }
         }
