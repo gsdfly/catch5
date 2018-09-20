@@ -148,14 +148,45 @@
             }
             localStorage.removeItem('gzh_code')
           }
+
+          var hasGzh = false
+          for (let item2 of res){
+            if(item2.type===12 && item2.num>item2.task_count){
+              hasGzh = true;
+              break;
+            }
+          }
+
           //获取本地的guide
           var guideTime = localStorage.getItem('guideTime');
           var date = new Date();
           var nowTime = date.getMonth()+''+date.getDate();
-          if(!(guideTime === nowTime)){
+          if(!hasGzh){
+            if(!(guideTime === nowTime)){
               this.$store.commit('changeIsGuide',true);
               localStorage.setItem('guideTime',nowTime)
+            }
+          }else {
+            var guideNum = localStorage.getItem('guideNum');
+            if(guideNum){
+              if(guideNum == 1){
+                if(guideTime !== nowTime){
+                  this.$store.commit('changeIsGuide',true);
+                  localStorage.setItem('guideTime',nowTime);
+                  localStorage.setItem('guideNum',2)
+                }
+              }else {
+                if(guideTime !== nowTime){
+                  this.$store.commit('changeIsGuide',true);
+                  localStorage.setItem('guideNum',1)
+                }
+              }
+            }else {
+              this.$store.commit('changeIsGuide',true);
+              localStorage.setItem('guideNum',1)
+            }
           }
+
           var prize_bounty = localStorage.getItem('prize_bounty')
           //在第一次进入页面或取到任务值的时候需要将娃娃的任务值存到本地
           this.$store.dispatch('getActivityBountyInfo').then((res)=>{
