@@ -566,7 +566,7 @@
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <guide v-if="isShowGuide && activity_bounty.length>0"></guide>
+    <guide v-if="isShowGuide && ( activity_bounty.length>0 || (gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num))"></guide>
     <guide2 v-if="isShowGuide2" @closeGuide2="closeGuide2"></guide2>
   </div>
 </template>
@@ -684,7 +684,9 @@
 //      task_game: state => state.user.task_game,
       task_now: state => state.user.task_now,
       isShowGuide: state => state.user.isShowGuide,
-      isLogin:state => state.user.isLogin
+      isLogin:state => state.user.isLogin,
+      gzh_operation: state => state.user.gzh_operation,
+      gzh_operation_other: state => state.user.gzh_operation_other,
     }),
     components: {
       joPay,
