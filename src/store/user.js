@@ -140,7 +140,7 @@ const mutations = {
     state.gzh_operation = obj;
   },
   setGzhOperationOther(state,obj){
-    state.gzh_operation = obj;
+    state.gzh_operation_other = obj;
   },
   setTaskOpes(state,arr){
     state.task_opes = arr;
