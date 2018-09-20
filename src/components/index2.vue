@@ -521,8 +521,8 @@
         <div>
           <img class="imgBg" src="http://res.catchme.com.cn/activity/task-2/minsheng.png" alt=""/>
           <p>请先填写您的联系方式，成功办理信用卡后，<br/>将会由工作人员联系您，寄送公仔。</p>
-          <input type="text" name="username" class="username" v-model="activityUserInfo.username" placeholder="姓名"/>
-          <input type="text" name="phone" class="phone" v-model="activityUserInfo.phone" placeholder="电话"/>
+          <input type="text" name="username" class="username" v-model="bankUserInfo.username" placeholder="姓名"/>
+          <input type="text" name="phone" class="phone" v-model="bankUserInfo.phone" placeholder="电话"/>
           <div class="btn" @click="sendUserInfo('bank')">去办理</div>
           <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                @click="closeBg"/>
@@ -712,6 +712,10 @@
           username:'',
           phone:''
         },
+        bankUserInfo:{
+          username:'',
+          phone:''
+        },
         bankOpe:{},
         isRequest:false,
         redCoinNum:0,
@@ -869,34 +873,38 @@
         this.bankOpe = info
       },
       sendUserInfo(type){
-        if(this.activityUserInfo.username === this.user.username && this.activityUserInfo.phone === this.user.mobile){
+        if(this.activityUserInfo.username === this.user.username && this.activityUserInfo.phone === this.user.mobile && type==='zhongqiu'){
           this.bgShow = false
           return
         }
+        var activityUserInfo = this.activityUserInfo;
+        if(type === 'bank'){
+          activityUserInfo = this.bankUserInfo
+        }
         var reg = /^[\u4E00-\u9FA5]{2,4}$/;
         var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
-        if(!reg.test(this.activityUserInfo.username.trim())){
+        if(!reg.test(activityUserInfo.username.trim())){
           Toast({
             message: '用户名不符合标准',
             position: 'middle',
             duration: 1000
           })
-          this.activityUserInfo.username= ''
+          activityUserInfo.username= ''
           return;
         }
-        if(!myreg.test(this.activityUserInfo.phone.trim())){
+        if(!myreg.test(activityUserInfo.phone.trim())){
           Toast({
             message: '手机号不符合标准',
             position: 'middle',
             duration: 1000
           })
-          this.activityUserInfo.phone= ''
+          activityUserInfo.phone= ''
           return;
         }
         if(!this.isRequest){
           this.isRequest = true
           if(type==='bank'){
-            this.$store.dispatch('playerAddressAction',{username:this.activityUserInfo.username,phone:this.activityUserInfo.phone,operation_id:this.bankOpe.id}).then(()=>{
+            this.$store.dispatch('playerAddressAction',{username:activityUserInfo.username,phone:activityUserInfo.phone,operation_id:this.bankOpe.id}).then(()=>{
               this.$store.dispatch('getFreeCoin', {coin_price_id: this.bankOpe.coin_price.coin_price_id, coupon_id: this.bankOpe.coupon.id}).then((data) => {
                 this.isRequest = false
                 this.bgShow = false
@@ -911,7 +919,7 @@
               this.isRequest = false
             })
           }else if(type==='zhongqiu'){
-            this.$store.dispatch('playerMobileAction',{username:this.activityUserInfo.username,phone:this.activityUserInfo.phone}).then(()=>{
+            this.$store.dispatch('playerMobileAction',{username:activityUserInfo.username,phone:activityUserInfo.phone}).then(()=>{
               Toast({
                 message: '参与成功',
                 position: 'middle',
