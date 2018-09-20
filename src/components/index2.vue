@@ -9,6 +9,7 @@
         <img src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt="">
         <img src="http://res.catchme.com.cn/activity/autumn/ranking_bg.png" alt="">
         <img src="http://res.catchme.com.cn/activity/autumn/catched.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/autumn/contact.png" alt="">
       </div>
       <div class="header">
         <div>
@@ -567,9 +568,11 @@
 
         <div class="bg-center21" v-if="contentShow == 'zhongqiu'" @click.stop="">
           <div>
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/autumn/catched.png" alt=""/>
-            <p>请填写您的联系方式，活动结束后，<br/>排行榜前十名，将会由工作人员联系您寄送奖品。</p>
-            <h3 @click="goRule">活动规则</h3>
+            <h2 v-if="fromPhb"><span class="s1"></span>联系方式<span class="s2"></span></h2>
+            <img v-if="fromPhb" class="imgBg" src="http://res.catchme.com.cn/activity/autumn/contact.png" alt="">
+            <img v-else="" class="imgBg" src="http://res.catchme.com.cn/activity/autumn/catched.png" alt=""/>
+            <p :class="{'esp':fromPhb}">请填写您的联系方式，活动结束后，<br/>排行榜前十名，将会由工作人员联系您寄送奖品。</p>
+            <h3 :class="{'esph3':fromPhb}" @click="goRule">活动规则</h3>
             <input type="text" name="username" class="username" v-model="activityUserInfo.username" placeholder="姓名"/>
             <input type="text" name="phone" class="phone" v-model="activityUserInfo.phone" placeholder="电话"/>
             <div class="btn" @click="sendUserInfo('zhongqiu')">确定</div>
@@ -727,6 +730,7 @@
         dlphb: [],
         myphb:{},
         isGoRule:false,
+        fromPhb:false,
         ruleBefore:false //要在中秋活动关闭之后，弹出指引
       }
     },
@@ -835,6 +839,7 @@
       goZhongqiu(){
         this.bgShow = true;
         this.contentShow = 'zhongqiu';
+        this.fromPhb = true;
       },
       changeIsGoRule(){
         this.isGoRule = true;
@@ -1207,6 +1212,7 @@
           this.isGoRule = false;
           return;
         }
+        this.fromPhb = false
         if(value === 'ruleBefore'){
           this.ruleBefore = true;
         }
@@ -2618,6 +2624,25 @@
     >div{
       width: 640px;
       @include center;
+      h2{
+        font-size: 40px;
+        line-height: 40px;
+        color: #ec6824;
+        @include centerX;
+        top:27px;
+        font-weight: 500;
+        width: 100%;
+        padding: 0 20px;
+        text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        span{
+          width: calc((100% - 180px)/2);
+          height: 2px;
+          background: #ec6824;
+        }
+      }
       .imgBg{
         width: 640px;
       }
@@ -2629,6 +2654,9 @@
         color: #5d290e;
         @include centerX;
         top:527px;
+        &.esp{
+          top:525px;
+        }
       }
       h3{
         font-size: 24px;
@@ -2637,6 +2665,9 @@
         @include centerX;
         top:611px;
         text-decoration: underline;
+        &.esh3{
+          top:604px;
+        }
       }
       input {
         width: 460px;
