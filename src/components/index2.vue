@@ -873,10 +873,10 @@
         this.bankOpe = info
       },
       sendUserInfo(type){
-//        if(this.activityUserInfo.username === this.user.username && this.activityUserInfo.phone === this.user.mobile){
-//          this.bgShow = false
-//          return
-//        }
+        if(this.activityUserInfo.username === this.user.username && this.activityUserInfo.phone === this.user.mobile && type === 'zhongqiu'){
+          this.bgShow = false
+          return
+        }
         var activityUserInfo = this.activityUserInfo;
         if(type === 'bank'){
           activityUserInfo = this.bankUserInfo
@@ -930,7 +930,6 @@
               this.bgShow = false;
             })
           }
-
         }
       },
       taskGame(value){
