@@ -818,7 +818,7 @@
             this.$store.dispatch('getOperations');
             this.handleActivityBountyInfo(2);
 //            this.$store.dispatch('getActivityBountyInfo');
-            if(this.contentShow = 'free'){
+            if(this.contentShow === 'free'){
                this.bgShow = false;
             }
           }
