@@ -10,7 +10,7 @@ import Indicator from 'mint-ui/lib/indicator'
 import api from './api'
 import {getParamByName, SetCookie} from "./util/index";
 
-if (document.URL.indexOf('5zhua') !== -1){
+if (document.URL.indexOf('zhua') !== -1){
   require('./util/vconsole')
 }
 
@@ -73,6 +73,8 @@ FastClick.attach(document.body)
         } else {
           if (CONFIG.isAlipay) {
             window.location.href = CONFIG.url + 'v2/alipay/oauth?callback=' + document.URL;
+          }  else if (CONFIG.isTaobao) {
+            window.location.href = CONFIG.localtionUrl2 + 'index.php/taobao/oauth?callback=' + document.URL.replace('?', '&');
           }  else {
             window.location.href = CONFIG.url + 'v2/wechat/oauth_scope?callback=' + document.URL
           }
@@ -80,7 +82,6 @@ FastClick.attach(document.body)
         }
       }
     } else {
-      console.log('1111111111')
       api.machineLogin({machine_no: CONFIG.machine_no, token: CONFIG.token});
       store.commit('changeIsLogin');
       store.dispatch('getUser');
