@@ -34,8 +34,8 @@
           <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
         </div>
         <div v-if="item.type === 2" @click="openTip('bankCard',item)">
-          <span class="hot" :class="{'is_down':item.task_count >= item.num}">hot</span>
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_card.png" alt=""/>
+          <!--<span class="hot" :class="{'is_down':item.task_count >= item.num}">hot</span>-->
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/zhongqiu/d_card.png" alt=""/>
           <img v-if="item.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">办卡送公仔</p>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
