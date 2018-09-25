@@ -610,7 +610,8 @@
                 </li>
               </ul>
               <p @click="goZhongqiu" class="goZhongqiu" v-if="myphb.prize_count > 0">填写联系方式</p>
-              <img class="imgBottom" src="./../assets/zhongqiu/moon.png" alt="">
+              <p class="activityEnd">活动结束啦<br/>排名前十的小伙伴请确认自己的联系方式哦</p>
+              <img class="imgBottom" src="./../assets/zhongqiu/moon_big.png" alt="">
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
@@ -988,8 +989,8 @@
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
           if (res.prize_bounty > prize_bounty && this.activity_bounty.length > 0) {
             this.bgShow = true;
-//            this.contentShow = 'wawaTip';
-            this.contentShow = 'zhongqiu';
+            this.contentShow = 'wawaTip';
+//            this.contentShow = 'zhongqiu';
             switch (scene) {
               case 1:
                 _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', 'websocket返回弹出', '']);
@@ -2843,10 +2844,20 @@
           width: 100%;
           text-align: center;
           @include centerX;
-          bottom: 25px;
+          bottom: 99px;
           z-index: 2;
           font-weight: 500;
           text-decoration: underline;
+        }
+        .activityEnd {
+          font-size: 28px;
+          color: #442368;
+          line-height: 40px;
+          @include centerX;
+          bottom: 14px;
+          width: 100%;
+          text-align: center;
+          z-index: 2;
         }
         .imgBottom{
           width: 640px;
