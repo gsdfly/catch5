@@ -1,14 +1,16 @@
 <template>
   <div class="recharge-lists clearfix" :class="{'version2':version2}">
-    <div v-for="v in coin" :data-id="v.coin_price_id"
+    <img class="cat" src="./../assets/miqi/cat.png" alt="">
+    <p class="tmallp">手机天猫送你免费抓娃娃</p>
+    <div v-for="v in coin.slice(0,1)" :data-id="v.coin_price_id"
          @click="handlePayBefore(v)" :class="{'active':v.status==0,'infinity':v.type==1}">
       <div class="recharge-item-t"><span :class="{'twoCoin':v.coin_num==2}"></span><i v-if="v.type==1">无限币</i><i v-else>{{v.coin_num}}币</i>
       </div>
       <div class="recharge-item-b">{{v.coin_price}}元<span
         v-if="v.sale_state == 1 && v.original_price">({{v.original_price}}元)</span></div>
-      <div class="recharge-hot hot-limit" v-if="v.coin_buy_state==1 && v.status != 0">限购<br/>{{v.coin_buy_num}}次</div>
+      <!--<div class="recharge-hot hot-limit" v-if="v.coin_buy_state==1 && v.status != 0">限购<br/>{{v.coin_buy_num}}次</div>-->
       <div class="recharge-hot hot-top" v-if="v.remarks != null && v.remarks != '' && v.status != 0">{{v.remarks.substr(0,4)}}</div>
-      <div class="recharge-has" v-if="v.status == 0">已领取</div>
+      <!--<div class="recharge-has" v-if="v.status == 0">已领取</div>-->
     </div>
   </div>
 </template>
@@ -170,30 +172,46 @@
     top: 0;
     padding: 10px 20px 0 20px;
   }
-
+  .recharge-lists .cat{
+    width: 193px;
+    height: 85px;
+    display: block;
+    margin: 0 auto;
+  }
+  .recharge-lists .tmallp {
+    font-size: 22px;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 22px;
+    letter-spacing: 0px;
+    color: #ffffff;
+    width: 100%;
+    text-align: center;
+    margin: 23px 0 27px 0;
+  }
   .recharge-lists > div {
-    margin: 0 0 20px 0;
+    margin: 0 auto 20px auto;
     font-size: 36px;
-    float: right;
+    /*float: right;*/
     width: 345px;
     /*height: 1.28px;*/
     height: 37.87%;
-    border: 1px solid #fd643b;
+    border: 1px solid #043aa3;
     /*border-radius: 0.15px;*/
     color: #494949;
     position: relative;
     /*overflow: hidden;*/
     border-radius: 16px;
   }
-  .recharge-lists > div:last-of-type,  .recharge-lists > div:nth-last-of-type(2)
-  {
-    margin: 0;
-  }
+  /*.recharge-lists > div:last-of-type,  .recharge-lists > div:nth-last-of-type(2)*/
+  /*{*/
+    /*margin: 0;*/
+  /*}*/
 
 
   .recharge-lists .active {
     color: #666;
-    border: 1px solid #999;
+    border: 1px solid #6e6e6e;
   }
 
   .recharge-lists .active .recharge-item-t {
@@ -214,7 +232,7 @@
 
   .recharge-lists .active .recharge-item-b {
     color: #fff;
-    background: #999;
+    background: #6e6e6e;
   }
 
   .recharge-lists .active .recharge-item-b span {
@@ -222,7 +240,7 @@
   }
 
   .recharge-lists > div:nth-child(odd) {
-    float: left;
+    /*float: left;*/
   }
 
   .recharge-item-b {
@@ -230,7 +248,7 @@
     line-height: 63px;
     /*font-size: 0.32px;*/
     font-size: 34px;
-    background: #fb643b;
+    background: #043aa3;
     color: #fff;
     border-radius: 0 0 12px 12px;
     text-align: center;

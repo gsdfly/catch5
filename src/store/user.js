@@ -12,7 +12,7 @@ const state = {
     player_id: '',
     coin_infinite:false
   },
-  coin: [],
+  coin: [{status:1}],
   consume: {
     data: [],
     meta: {
