@@ -5,11 +5,11 @@
     <!--<img class="guideImg2" src="./../assets/guide/wawa.png" alt=""/>-->
     <div class="bg1"></div>
     <!--<img class="guideImg1" src="./../assets/guide/guideImg1.png" alt="">-->
-    <img v-if="(gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num) && guideNum != 2" class="guideImg1" :src="img1" alt="">
+    <img v-if="(gzh_operation.coupon && gzh_operation.coupon.status !=2) || ((gzh_operation_other.task_count < gzh_operation_other.num) && guideNum != 2)" class="guideImg1" :src="img1" alt="">
     <div v-else="" class="guideDiv1"></div>
     <div class="bg2"></div>
-    <img v-if="activity_bounty[activity_bounty.length-1].voucher_batch.category === 0 && (!((gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num)) || guideNum == 2)" class="guideImg2" src="./../assets/guide/wawa.png" alt="">
-    <img v-if="activity_bounty[activity_bounty.length-1].voucher_batch.category === 1 && (!((gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num)) || guideNum == 2)" class="guideImg2" src="./../assets/guide/guideImg2.png" alt=""/>
+    <img v-if="activity_bounty[activity_bounty.length-1].voucher_batch.category === 0 && (!((gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num)) || guideNum == 2)" class="guideImg2" src="./../assets/guoqing/wawa.png" alt="">
+    <img v-if="activity_bounty[activity_bounty.length-1].voucher_batch.category === 1 && (!((gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num)) || guideNum == 2)" class="guideImg2" src="./../assets/guoqing/guideImg2.png" alt=""/>
     <div class="bg3"></div>
     <img @click="closeGuide" class="guideImg3" src="./../assets/guide/press_known.png" alt=""/>
   </div>
@@ -21,8 +21,8 @@
     name:'guide',
     data(){
       return {
-        img1:require('./../assets/guide/bg1-2.png'),
-        img2:require('./../assets/guide/bg1-1.png'),
+        img1:require('./../assets/guoqing/bg1-2.png'),
+        img2:require('./../assets/guoqing/bg1-1.png'),
         guideNum:1
       }
     },

@@ -5,12 +5,12 @@
     <ul>
       <li v-for="item in task_opes.slice(0,3)">
         <div v-if="item.type === 7" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/guoqing/test_a.png" alt=""/>
           <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.coupon.status === 2}">免费领币</p>
         </div>
         <div v-if="item.type === 12" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/guoqing/test_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
@@ -19,14 +19,16 @@
             <div class="bol" :style="'height:'+task_now.game_bounty/item.value*100+'%'"></div>
             <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{item.value/info.coin_num}}</span>
           </div>
-          <div @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value" class="m-water">领币</div>
-          <div v-if="item.task_count >= item.num" class="m-water is_down">领币</div>
+          <!--<div @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value" class="m-water">领币</div>-->
+          <img @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value"  src="./../assets/guoqing/tasted_b.png" alt="">
+          <img v-if="item.task_count >= item.num" class="m-water is_down" src="./../assets/guoqing/tasted_b.png" alt="">
+          <!--<div v-if="item.task_count >= item.num" class="m-water is_down">领币</div>-->
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">投币送币</p>
         </div>
         <div v-if="item.type === 10">
-          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/task-2/icon_free_c.png" alt=""/>
-          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
+          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/guoqing/test_c.png" alt=""/>
+          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/guoqing/tested_c.png" alt="">
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
         </div>
@@ -394,7 +396,7 @@
           .water{
             width: 90px;
             height: 90px;
-            background-color: #999999;
+            background-color: #f8d2a1;
             /*border: solid 6px #ffffff;*/
             border-radius: 50%;
             overflow: hidden;
@@ -407,7 +409,7 @@
             /*rgba(242, 123, 0, 0.51);*/
             .bol{
               width: 100%;
-              background: url("./../assets/task/b_bg.png");
+              background: url("./../assets/guoqing/test_b.png");
               animation: wave-animation 1s infinite linear;
               transition: all 1s linear;
               background-size: 102px 116px;
@@ -417,8 +419,9 @@
               left: 50%;
               top:50%;
               font-size: 28px;
-              color: #fff;
+              color: #fdcc2a;
               transform: translate(-50%,-50%);
+              text-shadow: 1px 1.7px 0px rgba(176, 51, 50, 0.76);
               b{
                 font-size: 40px;
               }

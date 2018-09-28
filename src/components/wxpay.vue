@@ -178,7 +178,7 @@
     width: 345px;
     /*height: 1.28px;*/
     height: 37.87%;
-    border: 1px solid #fd643b;
+    border: 1px solid #ea4d4c;
     /*border-radius: 0.15px;*/
     color: #494949;
     position: relative;
@@ -230,7 +230,7 @@
     line-height: 63px;
     /*font-size: 0.32px;*/
     font-size: 34px;
-    background: #fb643b;
+    background: #ea4d4c;
     color: #fff;
     border-radius: 0 0 12px 12px;
     text-align: center;
@@ -282,15 +282,15 @@
   /*}*/
 
   .recharge-hot {
-    width: 114px;
-    height: 46px;
+    width: 124px;
+    height: 62px;
     /*line-height: 24px;*/
     position: absolute;
-    left: -16px;
-    top: -10px;
+    left: -21px;
+    top: -18px;
     color: #fff;
     /*background: url("./../assets/jiewu/bg_limit.png") no-repeat;*/
-    background: url("./../assets/small/recharge_tab2.png") no-repeat;
+    background: url("./../assets/guoqing/recharge_tab.png") no-repeat;
     background-size: 100% 100%;
     font-size: 24px;
     /*text-align: center;*/
