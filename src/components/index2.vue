@@ -537,7 +537,7 @@
     },
     methods: {
       goTmall(){
-        window.location.href = 'https://pages.tmall.com/wow/mit/act/download?iframe=1&type=web&key=https%3A%2F%2Fpages.tmall.com%2Fwow%2Fact%2F19977%2Fmickey90&mmstat=media_mickey&src=media_mickey&dl_ttid=media_mickey'
+        window.location.href = 'http://yukhj.com/s/GusrU?tm=ef976c'
       },
       gzShop(item){
         var self = this;
@@ -2543,6 +2543,7 @@
     text-align: center;
     position: relative;
     z-index: 6;
+    overflow: hidden;
   }
 
   .main .center .game-num.norecharge {
@@ -2625,6 +2626,7 @@
   }
 
   .main .center .tip > p {
+    width: 100%;
     font-size: 26px;
     color: #888888;
     line-height: 64px;
