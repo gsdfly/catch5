@@ -3,11 +3,10 @@
     <div class="jo-index-div" v-show="showHtml" @click="hideKefu">
       <div v-if="isGetImg" v-show="false">
         <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png" alt="">
-        <!--<img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="">-->
-        <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="">-->
-        <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/guide/shuoming.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/guoqing/rank.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/guoqing/jieshi.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/guoqing/shuominggo.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/guoqing/image_free.png" alt="">
       </div>
       <div class="header">
         <div>
@@ -26,7 +25,7 @@
               </div>
               <img v-show="isShowCoinTip" class="animated coin-tip" :class="{'zoomOutLeft':isShowCoinTip}" src="./../assets/small/coin_tip.png" alt="">
             </div>
-            <div class="game game-quan">
+            <div class="game game-quan" @click="openPhb">
               <div>
               <i class="iconfont icon-xingxing"></i><span>排行榜</span>
               </div>
@@ -262,7 +261,7 @@
                 <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                 <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy" id="copyBtn">复制</button>
               </div>
-              <img src="./../assets/guoqing/shuomingo.png" alt="" @click.prevent=""
+              <img src="http://res.catchme.com.cn/activity/guoqing/shuomingo.png" alt="" @click.prevent=""
                    class="imgBg"/>
               <a class="go-coupon-list" href="javascript:void(0)"
                  @click.stop="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
@@ -385,7 +384,7 @@
 
         <div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">
           <div>
-            <img @click.prevent="" src="./../assets/guoqing/image_free.png" alt="" class="imgBg"/>
+            <img @click.prevent="" src="http://res.catchme.com.cn/activity/guoqing/image_free.png" alt="" class="imgBg"/>
             <img class="btn" src="./../assets/guoqing/press_go_catch.png" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2"/>
             <!--<img class="qrcode" src="./../assets/guide/code.png"  v-show="isShowGzhImg" alt=""/>-->
             <p>关注公众号回复“{{freeTip}}”即可领免费币</p>
@@ -432,12 +431,12 @@
 
         <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="">
           <div class="center16-main" :class="{'main-baomihua':activity_bounty[activity_bounty.length - 1].voucher_batch.category===0}">
-            <img v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0" class="imgBg" src="./../assets/guoqing/jieshi.png" alt="">
-            <img v-else class="imgBg" src="./../assets/guoqing/jieshi.png" alt=""/>
+            <img v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0" class="imgBg" src="http://res.catchme.com.cn/activity/guoqing/jieshi2.png" alt="">
+            <img v-else class="imgBg" src="http://res.catchme.com.cn/activity/guoqing/jieshi.png" alt=""/>
             <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0">
               累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次没抓中?
             </h3>
-            <img v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0" class="baomihua" src="./../assets/guide/baomihua.png" alt="" />
+            <img v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0" class="baomihua" src="./../assets/guoqing/baomihua.png" alt="" />
             <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category!==0">
               累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
             </h3>
@@ -476,7 +475,7 @@
 
         <div class="bg-center16" v-if="contentShow == 'wawaTip'" @click.stop="">
           <div class="center16-main">
-            <img class="imgBg" src="./../assets/guoqing/catch.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guoqing/catch.png" alt=""/>
             <h3>抓中公仔将重新开始累积任务值<br/>开始新一轮的挑战吧<i></i></h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
             <!--<a class="go-coupon-list" href="javascript:void(0)"-->
@@ -503,7 +502,7 @@
 
         <div class="bg-center18" v-if="contentShow == 'coinred'" @click.stop="">
           <div>
-            <img class="imgBg" src="./../assets/guoqing/red_bi.png" alt="">
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guoqing/red_bi.png" alt="">
             <h3>恭喜获得</h3>
             <h2>{{redCoinNum}}个免费游戏币</h2>
             <p>点击“投币启动”按钮，开始抓娃娃吧</p>
@@ -515,7 +514,7 @@
 
         <div class="bg-center19" v-if="contentShow == 'moneyred'" @click.stop="">
           <div>
-            <img class="imgBg" src="./../assets/guoqing/red_cash.png" alt="">
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guoqing/red_cash.png" alt="">
             <h3>恭喜获得</h3>
             <h2>现金红包</h2>
             <p>红包已通过“趣东西服务”发送至您的微信上啦<br/>注意查收哦</p>
@@ -532,6 +531,41 @@
               <h3>领取失败</h3>
               <p>{{message}}</p>
               <div class="btn" @click="closeBg">我知道啦</div>
+            </div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center22" v-if="contentShow == 'dlphb'" @click.stop="">
+          <div>
+            <div>
+              <img class="imgBg" src="http://res.catchme.com.cn/activity/guoqing/rank.png" alt=""/>
+              <div class="myphb">
+                <img v-if="user.avatar" :src="user.avatar" alt="">
+                <div class="avatar" v-else="">
+                  <img  src="./../assets/small/icon_portrait.png" style="border: none" alt="">
+                </div>
+                <h3>{{myphb.prize_count}}个</h3>
+                <p v-if="myphb.tag">
+                  当前排名：{{myphb.rank}}
+                </p>
+                <p v-else>
+                  超过了全国{{myphb.over * 100}}%的人
+                </p>
+              </div>
+              <ul>
+                <li v-for="(item,index) in dlphb">
+                  <b>{{index+1}}</b>
+                  <img v-if="item.avatar" :src="item.avatar" alt="">
+                  <div v-else="">
+                    <img  src="./../assets/small/icon_portrait.png"  alt="">
+                  </div>
+                  <p>{{item.nickname}}</p>
+                  <span>{{item.prize_count}}个</span>
+                </li>
+              </ul>
+              <img class="imgBottom" src="http://res.catchme.com.cn/activity/guoqing/tiananmen.png" alt="">
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
@@ -641,7 +675,9 @@
         timeout2:{},
 //        guideTime:'',
 //        touchTime:0
-        message:''
+        message:'',
+        dlphb: [],
+        myphb:{},
       }
     },
     created() {
@@ -748,6 +784,17 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      openPhb(){
+        this.$store.dispatch('autumnRankAction').then((res)=>{
+          this.dlphb = res.rank;
+          this.bgShow = true;
+          this.contentShow = 'dlphb'
+        })
+        //自己所属的位置
+        this.$store.dispatch('autumnPlayerAction').then((res)=>{
+          this.myphb = res;
+        })
+      },
       handleGzh(){
         this.isShowCoinTip = true;
       },
@@ -863,7 +910,11 @@
         })
       },
       goProfile() {
-        window.location.href = CONFIG.localtionUrl2 + 'taobao/profile'
+        if(document.URL.indexOf('www') !== -1){
+          window.location.href = CONFIG.localtionUrl + '/profile'
+        }else {
+          window.location.href = CONFIG.localtionUrl2 + 'taobao/profile'
+        }
       },
       handleRed(value, item) {
         _hmt.push(['_trackEvent', '点击娃娃', '点击', '点击娃娃', '']);
@@ -2105,7 +2156,7 @@
   .bg-center15 {
     width: 666px;
     height: 750px;
-    background: url("./../assets/guoqing/window_bg.png") no-repeat;
+    background: url("http://res.catchme.com.cn/activity/guoqing/window_bg.png") no-repeat;
     background-size: 100% 100%;
     border-radius: 20px;
     @include center;
@@ -2126,7 +2177,7 @@
       box-shadow: 0 11px 50px rgba(134, 106, 49, 0.49);
       .bol {
         width: 100%;
-        background: url("./../assets/guoqing/window_free_b_bg.png") repeat-x;
+        background: url("http://res.catchme.com.cn/activity/guoqing/window_free_b_bg.png") repeat-x;
         position: absolute;
         bottom: 0;
         left: 0;
@@ -2484,6 +2535,144 @@
         }
     }
   }}
+
+  .bg-center22{
+    >div{
+      width: 640px;
+      @include center;
+      >div{
+        position: relative;
+        overflow: hidden;
+        border-radius: 36px;
+        .imgBg{
+          width: 640px;
+        }
+        .myphb{
+          @include centerX;
+          top:147px;
+          >img{
+            width: 105px;
+            height: 105px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: solid 3px #ea4d4c;
+          }
+          .avatar{
+            width: 105px;
+            height: 105px;
+            background: #ea4d4c;
+            position: relative;
+            border-radius: 50%;
+            margin: 0 auto;
+            >img{
+              width: 99px;
+              @include center;
+            }
+          }
+          h3{
+            font-size: 42px;
+            line-height: 42px;
+            margin: 11px 0 10px 0;
+            color: #ea4d4c;
+            font-weight: 500;
+          }
+          p{
+            font-size:28px;
+            line-height: 28px;
+            color: #ea4d4c;
+          }
+        }
+        ul{
+          @include centerX;
+          bottom: 0;
+          height: 564px;
+          width: 100%;
+          overflow: scroll;
+          padding: 0 40px 180px 40px;
+          li{
+            width: 100%;
+            height: 86px;
+            margin: 0 0 4px 0;
+            b{
+              width: 52px;
+              height: 57px;
+              line-height: 57px;
+              text-align: center;
+              font-size: 28px;
+              float: left;
+              margin: 11px 20px 12px 0 ;
+              color: #353535;
+            }
+            &:nth-child(1){
+              b{
+                font-size: 0;
+                background: url("./../assets/guoqing/icon_one.png") no-repeat;
+                background-size: 100% 100%;
+              }
+            }
+            &:nth-child(2){
+              b{
+                font-size: 0;
+                background: url("./../assets/guoqing/icon_tow.png") no-repeat;
+                background-size: 100% 100%;
+              }
+            }
+            &:nth-child(3){
+              b{
+                font-size: 0;
+                background: url("./../assets/guoqing/icon_three.png") no-repeat;
+                background-size: 100% 100%;
+              }
+            }
+            > img{
+              width: 72px;
+              height: 72px;
+              border-radius: 50%;
+              border: solid 1px #e1e1e1;
+              float: left;
+              margin: 7px 0;
+            }
+            >div{
+              width: 72px;
+              height: 72px;
+              border-radius: 50%;
+              background: #e1e1e1;
+              float: left;
+              margin: 7px 0;
+              position: relative;
+              img{
+                width: 70px;
+                @include center;
+              }
+            }
+            p{
+              font-size: 30px;
+              color: #353535;
+              line-height: 86px;
+              float: left;
+              margin: 0 0 0 19px;
+            }
+            span{
+              font-size: 34px;
+              line-height: 86px;
+              color: #ea4d4c;
+              float: right;
+              font-weight: 500;
+            }
+          }
+        }
+        .imgBottom{
+          width: 640px;
+          @include centerX;
+          bottom: 0;
+        }
+      }
+
+    }
+  }
+
+
   .price {
     position: absolute;
     width: 298px;
@@ -2725,7 +2914,7 @@
     width: 100%;
     height: 100%;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");*/
-    background: url("./../assets/guoqing/bg.png");
+    background: url("http://res.catchme.com.cn/activity/guoqing/bg.png");
     background-size: 100% 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -2789,12 +2978,11 @@
   }
 
   .header .header-main {
-    width: 100%;
-    padding: 0 22px 0 140px;
+    width: calc(100% - 102px);
+    padding: 0 22px 0 38px;
     position: absolute;
-    left: 0;
+    left: 102px;
     top: 0;
-    pointer-events: none;
   }
 
   .header .header-main h4 {
@@ -2835,7 +3023,7 @@
   }
   .header .header-main .game-quan > div {
     min-width: 140px;
-    line-height: 70px;
+    /*line-height: 70px;*/
   }
 
     .header .header-main .game  .coin-tip{
@@ -2860,7 +3048,7 @@
     color: #ec3b3d;
     font-weight: 500;
     text-align: center;
-    margin: -2px 0 0 0;
+   // margin: -2px 0 0 0;
   }
 
   .header .header-main .game i.icon-jinbi {
@@ -2878,18 +3066,18 @@
     font-size: 28px;
     color: #ec3b3d;
     display: inline-block;
-    font-weight: 600;
-    margin: 0 0 0 10px;
-    line-height: 70px;
+    /*font-weight: 600;*/
+    margin: 2px 0 0 6px;
     position: relative;
+    line-height: 28px;
   }
 
   .header .header-main .game span.coins-num {
     font-size: 36px;
     color: #ec3b3d;
-    font-weight: 600;
-    margin: 0 0 0 10px;
-    line-height: 70px;
+    /*font-weight: 600;*/
+    margin: 2px 0 0 10px;
+    line-height: 28px;
     position: relative;
   }
 
@@ -2929,7 +3117,7 @@
     color: #ec3b3d;
     font-size: 28px;
     height: 28px;
-    line-height: 70px;
+    line-height: 66px;
     margin: 0 0 0 55px;
     /*vertical-align: middle;*/
   }
@@ -3211,7 +3399,7 @@
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-tip-ling {
     /*background: url("./../assets/task-2/progress_doll_receive_bg.png") no-repeat;*/
-    border: 3px solid #fb4846;
+    border: 4px solid #fb4846;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-quan img {
@@ -3346,7 +3534,7 @@
     line-height: 306px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
-    background: url("./../assets/guoqing/press_begin.png");
+    background: url("http://res.catchme.com.cn/activity/guoqing/press_begin.png");
     background-size: 100% 100%;
     border: none;
     outline: none;
@@ -3362,8 +3550,8 @@
 
   .main .center .hasclick {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_ing.png");*/
-    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
-    background-size: 100% 100%;
+    /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
+    /*background-size: 100% 100%;*/
   }
 
   .main .center .game-num {

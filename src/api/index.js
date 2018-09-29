@@ -207,5 +207,17 @@ export default {
   // url: CONFIG.url + 'api/envelope/receive',
   getEnvelopeReceive:function (params) {
     return instance.post(CONFIG.url+'api/envelope/receive',jsonToStr(params))
-  }
+  },
+  //中秋节排行榜
+  autumnRank:function (params) {
+    return instance.get(CONFIG.url + 'api/autumn/rank', {
+      params: params
+    });
+  },
+  //获取用户自己排名
+  autumnPlayer:function (params) {
+    return instance.get(CONFIG.url + 'api/autumn/player', {
+      params: params
+    });
+  },
 }

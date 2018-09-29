@@ -9,7 +9,7 @@ export default new Router({
   routes: [
     {
       name:'index',
-      path: '/taobao/*',
+      path: document.URL.indexOf('www') !== -1 ? '/catch/*' : '/taobao/*',
       component: index
       // component: r => require.ensure([], () => r(require('@/components/index2')))
     },

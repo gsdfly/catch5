@@ -21,7 +21,7 @@
           </div>
           <!--<div @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value" class="m-water">领币</div>-->
           <img @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value"  src="./../assets/guoqing/tasted_b.png" alt="">
-          <img v-if="item.task_count >= item.num" class="m-water is_down" src="./../assets/guoqing/tasted_b.png" alt="">
+          <img v-if="item.task_count >= item.num" class="is_down" src="./../assets/guoqing/tasted_b.png" alt="">
           <!--<div v-if="item.task_count >= item.num" class="m-water is_down">领币</div>-->
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">投币送币</p>

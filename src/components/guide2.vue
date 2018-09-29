@@ -2,7 +2,7 @@
   <div class="guide2" :class="{'guide2-version2':version2}">
     <div class="top"></div>
     <img v-if="activity_bounty[activity_bounty.length-1].voucher_batch.category === 0" class="tip" src="http://res.catchme.com.cn/activity/guide/tip2.png" alt="">
-    <img v-else class="tip" src="./../assets/guoqing/tip.png" alt="">
+    <img v-else class="tip" src="http://res.catchme.com.cn/activity/guoqing/tip.png" alt="">
     <div class="bottom"></div>
     <img @click="closeGuide2" class="btn" src="./../assets/guide/press_iknown.png" alt="">
   </div>

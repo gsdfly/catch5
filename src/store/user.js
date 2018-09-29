@@ -549,7 +549,27 @@ const actions = {
         error(err)
       })
     })
-  }
+  },
+  //获取排行榜
+  autumnRankAction:function (ctx,params) {
+    return new Promise((success,error)=>{
+      api.autumnRank().then((data)=>{
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+  },
+  //获取用户自己排名
+  autumnPlayerAction:function (ctx,params) {
+    return new Promise((success,error)=>{
+      api.autumnPlayer({token:CONFIG.token}).then((data)=>{
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+  },
 }
 
 export default {
