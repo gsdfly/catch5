@@ -487,7 +487,7 @@
             <div class="back" @click="goPre"><i></i>返回</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
+                 @click="closeBg('rule')"/>
           </div>
         </div>
 
@@ -560,7 +560,7 @@
             <img class="imgBg" src="http://res.catchme.com.cn/activity/guoqing/notification.png" alt="">
             <h3>每天15:00-23:00准时发放！</h3>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
+                 @click="closeBg('rule')"/>
             <p @click="openTip('shuoming2')">活动说明</p>
           </div>
         </div>
@@ -604,7 +604,7 @@
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <guide v-if="isShowGuide && ( activity_bounty.length>0 || (gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num))"></guide>
+    <guide v-if="isShowGuide && ruleBefore && ( activity_bounty.length>0 || (gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num))"></guide>
     <guide2 v-if="isShowGuide2" @closeGuide2="closeGuide2"></guide2>
   </div>
 </template>
@@ -706,6 +706,7 @@
         message:'',
         dlphb: [],
         myphb:{},
+        ruleBefore:false //要在国庆活动关闭之后，弹出指引
       }
     },
     created() {
@@ -1163,6 +1164,8 @@
           _hmt.push(['_trackEvent', '关闭红包弹窗', '点击', '', '']);
         } else if (value === 'hide') {
           _hmt.push(['_trackEvent', '关闭' + this.pay.coin_price + '元弹窗优惠券', '点击', '', '']);
+        }else if(value === 'rule'){
+          this.ruleBefore = true
         }
         if (this.contentShow === 'exchange' || this.contentShow === 'exchange2') {
           return
