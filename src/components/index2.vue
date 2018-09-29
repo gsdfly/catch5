@@ -2063,7 +2063,7 @@
   .header .header-main .game span.coins-num {
     font-size: 36px;
     color: #043aa3;
-    font-weight: 600;
+    /*font-weight: 600;*/
     margin: 0 0 0 10px;
     line-height: 70px;
     position: relative;
@@ -2461,6 +2461,7 @@
     left: 0;
     top: 0;
     padding: 15px;
+    pointer-events: none;
   }
 
   .main .center > h3 {
