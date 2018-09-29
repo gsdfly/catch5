@@ -32,6 +32,7 @@ let CONFIG = {
   },
   isWx: expName === 'WeiXin' ? true : false,
   isAlipay: expName === 'Alipay' ? true : false,
+  isTaobao: expName === 'taobao' ? true : false,
   isTpp: expName === 'Tpp' ? true : false
 }
 

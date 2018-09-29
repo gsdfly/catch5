@@ -526,7 +526,7 @@
             <p>点击“投币启动”按钮，开始抓娃娃吧</p>
             <div class="btn" @click="closeBg">我知道啦</div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
+                 @click="closeBg('rule')"/>
           </div>
         </div>
 
@@ -538,7 +538,7 @@
             <p>红包已通过“趣东西服务”发送至您的微信上啦<br/>注意查收哦</p>
             <div class="btn" @click="closeBg">我知道啦</div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
+                 @click="closeBg('rule')"/>
           </div>
         </div>
 
@@ -551,7 +551,7 @@
               <div class="btn" @click="closeBg">我知道啦</div>
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
+                 @click="closeBg('rule')"/>
           </div>
         </div>
 
@@ -785,7 +785,7 @@
         })
         localStorage.removeItem('isgzh')
       }
-      if (CONFIG.isWx) {
+      if (CONFIG.isWx || CONFIG.isTaobao) {
         document.addEventListener('visibilitychange', function () {
           if (!document.hidden) {
             this.$store.dispatch('getUser');
@@ -1298,12 +1298,18 @@
         var re = localStorage.getItem('re');
         if(re){
           this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
-            console.log(res)
-            console.log('领取成功')
             this.bgShow = true;
-            this.contentShow = 'redTip'
+            if(res.type === 're'){
+              this.contentShow = 'moneyred'
+            }else {
+              this.contentShow = 'coinred'
+              this.redCoinNum = res.coin_num;
+              this.isShowCoinTip = true;
+              setTimeout(()=>{
+                this.$store.dispatch('getUser');
+              },1500)
+            }
             localStorage.removeItem('re')
-            this.$store.dispatch('getUser');
           }).catch(()=>{
             this.bgShow = true;
             this.contentShow = 'redTip2'
