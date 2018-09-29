@@ -473,6 +473,24 @@
           </div>
         </div>
 
+        <div class="bg-center16" v-if="contentShow == 'shuoming2'" @click.stop="">
+          <div class="center16-main">
+            <img class="imgBg" src="./../assets/guoqing/shuoming.png" alt=""/>
+            <h2>活动说明</h2>
+            <ul class="content">
+              <li>1、国庆期间，抓中娃娃屏幕出现随机二维码红包，扫码即可领取红包；</li>
+              <li>2、整点时段（15:00-23:00），场地中随机一台娃娃机屏幕出现二维码红包，扫码即可领取红包；</li>
+              <li>3、红包中随机出现现金或免费娃娃币；</li>
+              <li>4、每个账号每一天只可扫码一次；</li>
+              <li>5、本活动的最终解释权归深圳市我抓科技有限公司所有。</li>
+            </ul>
+            <div class="back" @click="goPre"><i></i>返回</div>
+            <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
         <div class="bg-center16" v-if="contentShow == 'wawaTip'" @click.stop="">
           <div class="center16-main">
             <img class="imgBg" src="http://res.catchme.com.cn/activity/guoqing/catch.png" alt=""/>
@@ -490,7 +508,7 @@
 
         <div class="bg-center17" v-if="contentShow == 'bankCard'" @click.stop="" style="background: #fff">
           <div>
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/task-2/minsheng.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guoqing/minsheng.png" alt=""/>
             <p>请先填写您的联系方式，成功办理信用卡后，<br/>将会由工作人员联系您，寄送公仔。</p>
             <input type="text" name="username" id="username" v-model="bankUserInfo.username" placeholder="姓名"/>
             <input type="text" name="phone" id="phone" v-model="bankUserInfo.phone" placeholder="电话"/>
@@ -534,6 +552,16 @@
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center21" v-if="contentShow == 'rule'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/guoqing/notification.png" alt="">
+            <h3>每天15:00-23:00准时发放！</h3>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+            <p @click="openTip('shuoming2')">活动说明</p>
           </div>
         </div>
 
@@ -616,8 +644,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: false,
-        contentShow: '',
+        bgShow: true,
+        contentShow: 'rule',
         currentCoupon: {},
         pay: {},
         currentCouponPay: {},
@@ -721,7 +749,10 @@
           }else {
             this.contentShow = 'coinred'
             this.redCoinNum = res.coin_num;
-            this.$store.dispatch('getUser');
+            this.isShowCoinTip = true;
+            setTimeout(()=>{
+              this.$store.dispatch('getUser');
+            },1500)
           }
           localStorage.removeItem('re')
         }).catch((res)=>{
@@ -1076,7 +1107,7 @@
         this.bgShow = false
       },
       openTip(value, value2 = '',value3 = '') {
-        if (value === 'shuoming') {
+        if (value === 'shuoming' || value=== 'shuoming2') {
           this.shuomingPre = this.contentShow;
           _hmt.push(['_trackEvent', '打开活动说明', '点击', '打开活动说明', '']);
         }
@@ -2394,7 +2425,7 @@
         border: none;
         outline: none;
         font-size: 32px;
-        color: #353535;
+        color: #ea4d4c;
         top:749px;
         line-height: 74px;
         @include centerX;
@@ -2536,7 +2567,35 @@
     }
   }}
 
-  .bg-center22{
+  .bg-center21{
+    >div{
+      width: 640px;
+      @include center;
+      .imgBg{
+        width: 100%;
+      }
+      h3{
+        font-size: 32px;
+        line-height: 32px;
+        color: #ea4d4c;
+        width: 100%;
+        text-align: center;
+        @include centerX;
+        top:218px;
+        font-weight: 600;
+      }
+      p{
+        font-size: 28px;
+        color: #d23736;
+        @include centerX;
+        top:848px;
+        text-decoration: underline;
+      }
+    }
+  }
+
+
+    .bg-center22{
     >div{
       width: 640px;
       @include center;

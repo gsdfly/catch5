@@ -33,56 +33,12 @@
           <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
         </div>
         <div v-if="item.type === 2" @click="openTip('bankCard',item)">
-          <span class="hot" :class="{'is_down':item.task_count >= item.num}">hot</span>
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_card.png" alt=""/>
-          <img v-if="item.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+          <!--<span class="hot" :class="{'is_down':item.task_count >= item.num}">hot</span>-->
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/guoqing/tested_d.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">办卡送公仔</p>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         </div>
       </li>
-      <!--<li @click="consumer" v-if="gzh_operation.id">-->
-          <!--&lt;!&ndash;<div>&ndash;&gt;-->
-            <!--&lt;!&ndash;<img class="liImg1" src="./../assets/task/a.png" alt=""/>&ndash;&gt;-->
-          <!--<img class="task-free" :class="{'is_down':gzh_operation.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>-->
-          <!--<img v-if="gzh_operation.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>-->
-          <!--&lt;!&ndash;</div>&ndash;&gt;-->
-          <!--<p :class="{'is_down':gzh_operation.coupon.status === 2}">免费领币</p>-->
-          <!--&lt;!&ndash;<p v-if="gzh_operation.coupon.status !== 2">免费领币</p>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p class="hasDown" v-else="">已领取</p>&ndash;&gt;-->
-      <!--</li>-->
-      <!--<li v-if="task_game.num>0">-->
-        <!--<div @click="openTip('taskGameTip')" class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">-->
-          <!--<div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>-->
-          <!--<span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{task_game.value/info.coin_num}}</span>-->
-        <!--</div>-->
-        <!--<div @click="receiveTask(task_game)" v-if="task_game.task_count < task_game.num && task_now.game_bounty>=task_game.value" class="m-water">领币</div>-->
-        <!--&lt;!&ndash;<div>&ndash;&gt;-->
-           <!--&lt;!&ndash;<div @click="openTip('taskGameTip')" class="water"  v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value" >&ndash;&gt;-->
-             <!--&lt;!&ndash;<div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>&ndash;&gt;-->
-             <!--&lt;!&ndash;<span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{task_game.value/info.coin_num}}</span>&ndash;&gt;-->
-           <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--<div v-if="task_game.task_count >= task_game.num" class="m-water is_down">领币</div>-->
-        <!--<img v-if="task_game.task_count >= task_game.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>-->
-        <!--<p :class="{'is_down':task_game.task_count >= task_game.num}">投币送币</p>-->
-           <!--&lt;!&ndash;<img v-if="task_game.task_count < task_game.num && task_now.game_bounty>=task_game.value" class="liImg2" src="./../assets/task/b_ling.png" alt="" @click="receiveTask(task_game)" />&ndash;&gt;-->
-           <!--&lt;!&ndash;<img v-if="task_game.task_count >= task_game.num" class="liImg2" src="./../assets/task/b_done.png" alt=""/>&ndash;&gt;-->
-         <!--&lt;!&ndash;</div>&ndash;&gt;-->
-         <!--&lt;!&ndash;<p v-if="task_game.task_count < task_game.num">投币送币</p>&ndash;&gt;-->
-         <!--&lt;!&ndash;<p class="hasDown" v-else="">已领取</p>&ndash;&gt;-->
-      <!--</li>-->
-      <!--<li  v-if="task_wawa.num>0">-->
-        <!--<img @click="openTip('taskWawaTip')" v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty<task_wawa.value" src="./../assets/task-2/icon_free_c.png" alt=""/>-->
-        <!--<img :class="{'is_down':task_wawa.task_count >= task_wawa.num}" @click="receiveTask(task_wawa)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">-->
-        <!--<img v-if="task_wawa.task_count >= task_wawa.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>-->
-        <!--<p :class="{'is_down':task_wawa.task_count >= task_wawa.num}">抓中送币</p>-->
-          <!--&lt;!&ndash;<div>&ndash;&gt;-->
-            <!--&lt;!&ndash;<img v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty>=task_wawa.value" class="liImg4" src="./../assets/task/c_ling.png" alt="" @click="receiveTask(task_wawa)"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<img @click="openTip('taskWawaTip')" v-if="task_wawa.task_count < task_wawa.num && task_now.prize_bounty<task_wawa.value" class="liImg3" src="./../assets/task/c_box.png" alt=""/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<img v-if="task_wawa.task_count >= task_wawa.num"  src="./../assets/task/c_done.png" class="liImg3" alt="">&ndash;&gt;-->
-          <!--&lt;!&ndash;</div>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p v-if="task_wawa.task_count < task_wawa.num">抓中送币</p>&ndash;&gt;-->
-          <!--&lt;!&ndash;<p class="hasDown" v-else="">已领取</p>&ndash;&gt;-->
-      <!--</li>-->
     </ul>
   </div>
 </template>
