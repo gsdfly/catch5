@@ -1112,6 +1112,14 @@
           this.shuomingPre = this.contentShow;
           _hmt.push(['_trackEvent', '打开活动说明', '点击', '打开活动说明', '']);
         }
+        if(value === 'wawaTip2'){
+          var re = localStorage.getItem('re')
+          if(re || this.contentShow === 'moneyred' || this.contentShow === 'coinred' || this.contentShow === 'failred'){
+            return;
+          }else {
+            value = 'wawaTip'
+          }
+        }
         if(value === 'free'){
           this.isShowGzhButtton = true;
           this.gzhCodeStyle = 'visibility: hidden'
