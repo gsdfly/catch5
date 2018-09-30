@@ -12,6 +12,9 @@ import api from './api'
 import {GetCookie, getParamByName, SetCookie} from "./util/index";
 
 // require('./util/vconsole')
+if (document.URL.indexOf('zhua') !== -1){
+  require('./util/vconsole')
+}
 
 FastClick.attach(document.body)
 
