@@ -7,6 +7,7 @@
         <img src="http://res.catchme.com.cn/activity/guoqing/jieshi.png" alt="">
         <img src="http://res.catchme.com.cn/activity/guoqing/shuomingo.png" alt="">
         <img src="http://res.catchme.com.cn/activity/guoqing/image_free.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/guoqing/jieshi2.png" alt="">
       </div>
       <div class="header">
         <div>
