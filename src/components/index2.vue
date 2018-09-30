@@ -821,6 +821,7 @@
           this.dlphb = res.rank;
           this.bgShow = true;
           this.contentShow = 'dlphb'
+          _hmt.push(['_trackEvent', '抓中娃娃排行榜', '打开', '娃娃排行榜弹窗', '']);
         })
         //自己所属的位置
         this.$store.dispatch('autumnPlayerAction').then((res)=>{
