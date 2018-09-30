@@ -5,7 +5,7 @@
         <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png" alt="">
         <img src="http://res.catchme.com.cn/activity/guoqing/rank.png" alt="">
         <img src="http://res.catchme.com.cn/activity/guoqing/jieshi.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/guoqing/shuominggo.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/guoqing/shuomingo.png" alt="">
         <img src="http://res.catchme.com.cn/activity/guoqing/image_free.png" alt="">
       </div>
       <div class="header">
