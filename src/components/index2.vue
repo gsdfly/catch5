@@ -494,7 +494,8 @@
         <div class="bg-center16" v-if="contentShow == 'wawaTip'" @click.stop="">
           <div class="center16-main">
             <img class="imgBg" src="http://res.catchme.com.cn/activity/guoqing/catch.png" alt=""/>
-            <h3>抓中公仔将重新开始累积任务值<br/>开始新一轮的挑战吧<i></i></h3>
+            <!--<h3>抓中公仔将重新开始累积任务值<br/>开始新一轮的挑战吧<i></i></h3>-->
+            <h3>抓中公仔将重新开始累积任务值</h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
             <!--<a class="go-coupon-list" href="javascript:void(0)"-->
             <!--@click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i-->
@@ -2358,7 +2359,7 @@
         width: 100%;
         text-align: center;
         left: 0;
-        top: 502px;
+        top: 562px;
         line-height: 55px;
         i {
           display: inline-block;
