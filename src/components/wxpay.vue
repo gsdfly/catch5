@@ -6,7 +6,7 @@
          @click="handlePayBefore(v)" :class="{'active':v.status==0,'infinity':v.type==1}">
       <div class="recharge-item-t"><span :class="{'twoCoin':v.coin_num==2}"></span><i v-if="v.type==1">无限币</i><i v-else>{{v.coin_num}}币</i>
       </div>
-      <div class="recharge-item-b">{{v.coin_price}}元<span
+      <div class="recharge-item-b">{{v.coin_price | handlePrice}}<span
         v-if="v.sale_state == 1 && v.original_price">({{v.original_price}}元)</span></div>
       <!--<div class="recharge-hot hot-limit" v-if="v.coin_buy_state==1 && v.status != 0">限购<br/>{{v.coin_buy_num}}次</div>-->
       <div class="recharge-hot hot-top" v-if="v.remarks != null && v.remarks != '' && v.status != 0">{{v.remarks.substr(0,4)}}</div>
@@ -159,6 +159,15 @@
     watch:{
       isLogin(){
         this.$store.dispatch('getCoinList');
+      }
+    },
+    filters: {
+      handlePrice(value){
+        if(value == '0.00'){
+          return '免费领币'
+        }else {
+          return value+'元'
+        }
       }
     }
   }

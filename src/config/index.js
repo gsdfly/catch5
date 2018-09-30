@@ -6,7 +6,7 @@ function IsWeixinOrAlipay() {
   if (ua.match(/MicroMessenger/i) == 'micromessenger') return "WeiXin"
   //判断是不是支付宝
   if (ua.match(/AlipayClient/i) == 'alipayclient') return "Alipay"
-  if (ua.match(/aliapp\(tb/i) == 'aliapp\(tb') return "taobao"
+  if (ua.match(/aliapp\(tb/i) == 'aliapp\(tb' || ua.match(/tmall/i) == 'tmall') return "taobao"
   //判断是不是淘票票
   if (ua.match(/tbmovie/i) == 'tbmovie') return "Tpp"
   //哪个都不是
@@ -23,7 +23,7 @@ let CONFIG = {
   scene:1,
   site_version_id:GetCookie('site_version_id') || 0,
   get token(){
-    return   process.env.NODE_ENV === 'development' ? 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2Zyb250LjV6aHVhLmNuL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTM4MDMxOTQ1LCJleHAiOjE1MzgyNDc5NDUsIm5iZiI6MTUzODAzMTk0NSwianRpIjoiWTJHUEhrd21XZmVyZzBQZSIsInN1YiI6Mn0.tG4-M-DvgSMXjJoLx7n3gTcSY2dUBBrYCwRugCo3Em4' : GetCookie('token_')
+    return   process.env.NODE_ENV === 'development' ? 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2Zyb250LjV6aHVhLmNuL2FwaS9hdXRoL3Rva2VuIiwiaWF0IjoxNTM4MjczNDI5LCJleHAiOjE1Mzg0ODk0MjksIm5iZiI6MTUzODI3MzQyOSwianRpIjoiYjAxU1hsdXMydDJ4OEdkTyIsInN1YiI6Mn0.QDaxs7AXYCA1u05658kiductggv4YLM0osbs6OEt9Ys' : GetCookie('token_')
   },
   machine_no: getParamByName('machine') || 'CATCH_100024',
   u: function () {
