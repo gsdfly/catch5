@@ -1,12 +1,12 @@
 <template>
   <div class="jo-index" :class="{'jo-version2':version2}">
     <div class="jo-index-div" v-show="showHtml" @click="hideKefu">
-      <div v-if="isGetImg" v-show="false">
-        <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png" alt="">
+      <!--<div v-if="isGetImg" v-show="false">-->
+        <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png" alt="">-->
         <!--<img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="">-->
         <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="">-->
-        <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="">
-      </div>
+        <!--<img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="">-->
+      <!--</div>-->
       <div class="header">
         <div>
           <div class="head-portrait">
@@ -36,7 +36,8 @@
                 <div class="kefu2-right">
                   <div class="kefu2-img">
                     <!--<img src="http://res.catchme.com.cn/imgs-2018-04-10/qrcode2.jpg" alt="">-->
-                    <img :src="kefuImg" alt="">
+                    <!--<img :src="kefuImg" alt="">-->
+                    <img src="./../assets/imgs/qrcode2.jpg" alt="">
                   </div>
                   <h3>长按关注<br/>联系客服</h3>
                   <p><span></span><a href="tel:0755-32904117">0755-32904117</a></p>
@@ -52,7 +53,8 @@
       </div>
 
       <div class="activitys" @click="goTmall">
-        <img src="http://res.catchme.com.cn/activity/miqi/image.png" alt=""/>
+        <!--<img src="http://res.catchme.com.cn/activity/miqi/image.png" alt=""/>-->
+        <img src="./../assets/miqi/image.png" alt=""/>
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
@@ -852,7 +854,7 @@
       },
       showKefu() {
         _hmt.push(['_trackEvent', '客服', '点击', '', '']);
-        this.kefuImg = 'http://res.catchme.com.cn/imgs-2018-04-10/qrcode2.jpg';
+//        this.kefuImg = 'http://res.catchme.com.cn/imgs-2018-04-10/qrcode2.jpg';
         this.isKefuStyle = ' transform: translate3d(0,0,0);';
       },
       hideKefu() {
@@ -1923,7 +1925,8 @@
     width: 100%;
     height: 100%;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");*/
-    background: url("http://res.catchme.com.cn/activity/miqi/bg.png") no-repeat;
+    /*background: url("http://res.catchme.com.cn/activity/miqi/bg.png") no-repeat;*/
+    background: url("./../assets/miqi/bg.png") no-repeat;
     background-size: 100% 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -2498,7 +2501,8 @@
     line-height: 306px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
-    background: url("http://res.catchme.com.cn/activity/miqi/press_begin.png");
+    /*background: url("http://res.catchme.com.cn/activity/miqi/press_begin.png");*/
+    background: url("./../assets/miqi/press_begin.png");
     background-size: 100% 100%;
     border: none;
     outline: none;
@@ -2525,7 +2529,8 @@
     /*background-size: 100% 100%;*/
   }
   .main .center .hasuse {
-    background: url("http://res.catchme.com.cn/activity/miqi/press_end.png") no-repeat;
+    /*background: url("http://res.catchme.com.cn/activity/miqi/press_end.png") no-repeat;*/
+    background: url("./../assets/miqi/press_end.png") no-repeat;
     background-size: 100% 100%;
   }
 
