@@ -742,7 +742,7 @@
     },
     mounted() {
       var re = localStorage.getItem('re');
-      if(re && this.isLogin){
+      if(re && this.isLogin && CONFIG.isWx){
         this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
           this.bgShow = true;
           if(res.type === 're'){
@@ -1305,7 +1305,7 @@
     watch: {
       isLogin(){
         var re = localStorage.getItem('re');
-        if(re){
+        if(re && CONFIG.isWx){
           this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
             this.bgShow = true;
             if(res.type === 're'){
