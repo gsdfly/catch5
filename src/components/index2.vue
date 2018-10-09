@@ -340,31 +340,6 @@
                     </dd>
                   </dl>
                 </div>
-                <!--<div v-if="!isReceive">-->
-                <!--<dl class="dlCoupon">-->
-                <!--<dt>-->
-                <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
-                <!--<p>(消耗{{currentGift.voucher_batch.value}}个任务值)</p>-->
-                <!--</dt>-->
-                <!--<dd>-->
-                <!--<button @click="receiveCoupon">兑换</button>-->
-                <!--</dd>-->
-                <!--</dl>-->
-                <!--</div>-->
-                <!--<div v-else="">-->
-                <!--<dl class="dlCoupon">-->
-                <!--<dt>-->
-                <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
-                <!--<p>{{couponInfo.code}}</p>-->
-                <!--<p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>-->
-                <!--</dt>-->
-                <!--<dd>-->
-                <!--<button @click="useCoupon(couponInfo.code,couponInfo.end_time,currentGift.voucher_batch.name)">-->
-                <!--使用-->
-                <!--</button>-->
-                <!--</dd>-->
-                <!--</dl>-->
-                <!--</div>-->
                 <p class="go-shuoming" @click="openTip('shuoming')">查看活动说明</p>
                 <a class="go-coupon-list" href="javascript:void(0)"
                    @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
@@ -555,6 +530,19 @@
               <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_image.png" alt="">
               <h3>领取失败</h3>
               <p>{{message}}</p>
+              <div class="btn" @click="closeBg">我知道啦</div>
+            </div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center21" v-if="contentShow == 'nobi'" @click.stop="">
+          <div>
+            <div class="content">
+              <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/image_zero.png" alt="">
+              <h3>游戏币用完啦</h3>
+              <p>差点点儿就抓到你了呢</p>
               <div class="btn" @click="closeBg">我知道啦</div>
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -861,6 +849,10 @@
             self.isConnectScoket = true
             self.io.on('prize', function () {
               self.handleActivityBountyInfo(1);
+            })
+            self.io.on('game_finish_score_0', function () {
+              self.bgShow = true;
+              self.contentShow = 'nobi'
             })
           })
           self.io.on('disconnect', function () {
@@ -2500,6 +2492,60 @@
         }
     }
   }}
+
+  .bg-center21{
+    >div{
+      @include center;
+      .content{
+        width: 640px;
+        height: 860px;
+        background: #fff;
+        border-radius: 36px;
+        padding: 0.1px;
+        .imgBg{
+          width: 474px;
+          height: 405px;
+          display: block;
+          margin: 79px auto 73px auto;
+        }
+        h3{
+          font-size: 34px;
+          line-height: 34px;
+          letter-spacing: 1.7px;
+          color: #353535;
+          width: 100%;
+          text-align: center;
+        }
+        p{
+          font-size: 24px;
+          line-height: 24px;
+          letter-spacing: 1.2px;
+          color: #353535;
+          width: 100%;
+          text-align: center;
+          margin: 29px 0 79px 0;
+        }
+        .btn{
+          width: 360px;
+          height: 70px;
+          background-image: linear-gradient(0deg,
+            rgba(253, 102, 59, 0.65) 0%,
+            rgba(254, 127, 66, 0.65) 100%),
+          linear-gradient(
+              #fd663b,
+              #fd663b);
+          background-blend-mode: normal,
+          normal;
+          border-radius: 35px;
+          font-size: 32px;
+          color: #fff;
+          line-height: 70px;
+          @include centerX;
+        }
+      }
+    }
+  }
+
   .price {
     position: absolute;
     width: 298px;

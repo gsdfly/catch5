@@ -73,7 +73,9 @@ FastClick.attach(document.body)
         } else {
           if (CONFIG.isAlipay) {
             window.location.href = CONFIG.url + 'v2/alipay/oauth?callback=' + document.URL;
-          }  else {
+          }  else if(CONFIG.isTaobao){
+
+          }else {
             window.location.href = CONFIG.url + 'v2/wechat/oauth_scope?callback=' + document.URL
           }
           return;
