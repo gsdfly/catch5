@@ -879,7 +879,11 @@
         })
       },
       goProfile() {
-        window.location.href = CONFIG.localtionUrl + 'profile'
+        if(document.URL.indexOf('www') !== -1){
+          window.location.href = CONFIG.localtionUrl + '/profile'
+        }else {
+          window.location.href = CONFIG.localtionUrl2 + 'taobao/profile'
+        }
       },
       handleRed(value, item) {
         _hmt.push(['_trackEvent', '点击娃娃', '点击', '点击娃娃', '']);

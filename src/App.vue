@@ -6,7 +6,7 @@
 export default {
   name: 'app',
   mounted() {
-    if (process.env.NODE_ENV == 'development') this.$router.push('/catch/dsad')
+    if (process.env.NODE_ENV == 'development') this.$router.push('/taobao/dsad')
   }
 }
 </script>
