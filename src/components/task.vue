@@ -230,9 +230,15 @@
           _hmt.push(['_trackEvent', '任务：抓中送币', '点击', '抓中送币：未完成', '']);
         }
         if(value === 'bankCard'){
-          this.$emit('bankCard',info);
+          if(info.task_count>=info.num){
+            _hmt.push(['_trackEvent', '任务：办卡', '点击', '办卡领币继续点击', '']);
+            location.href = info.url
+          }else {
+            _hmt.push(['_trackEvent', '任务：办卡', '点击', '办卡领币', '']);
+            this.$emit('bankCard',info);
+            this.$emit('openTip',value);
+          }
         }
-          this.$emit('openTip',value);
       },
       consumer(gzh_operation){
         if(gzh_operation.coupon.status === 2 || gzh_operation.task_count >= gzh_operation.num){
