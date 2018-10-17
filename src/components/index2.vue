@@ -502,11 +502,17 @@
 
         <div class="bg-center18" v-if="contentShow == 'coinred'" @click.stop="">
           <div>
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_bi.png" alt="">
+            <img class="imgBg" src="./../assets/red/red_bi.png" alt="">
+            <img class="avatar" :src="user.avatar" alt=""/>
             <h3>恭喜获得</h3>
             <h2>{{redCoinNum}}个免费游戏币</h2>
             <p>点击“投币启动”按钮，开始抓娃娃吧</p>
-            <div class="btn" @click="closeBg">我知道啦</div>
+            <h4>大家的手气</h4>
+            <ul>
+              <li>
+                <img src="" alt="">
+              </li>
+            </ul>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
           </div>
@@ -594,8 +600,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: false,
-        contentShow: '',
+        bgShow: true,
+        contentShow: 'coinred',
         currentCoupon: {},
         pay: {},
         currentCouponPay: {},
@@ -653,7 +659,22 @@
         timeout2:{},
 //        guideTime:'',
 //        touchTime:0
-        message:''
+        message:'',
+        redGroup:[
+          {
+            "avatar": "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJcicJmCoRogaFV9YJQBzGKDZ4Q4l4KPKE1ANQHOUJtox2EyUGy9iatbictjx2oTCpN8T1sPmJkvWsTQ/132",
+            "nickname": "crus***",
+            "type": 2, //1 红包 2 游戏币
+            "extra": "{\"type\":\"coin\",\"coin_price_id\":24}",
+            "desc": 22 // 红包的时候 就是元 游戏币的时候就是游戏币数量
+          },
+          {
+            "avatar": "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJcicJmCoRogaFV9YJQBzGKDZ4Q4l4KPKE1ANQHOUJtox2EyUGy9iatbictjx2oTCpN8T1sPmJkvWsTQ/132",
+            "nickname": "crus***",
+            "type": 1,
+            "extra": "{\"type\":\"re\",\"value\":100}",
+            "desc": 1
+          }]
       }
     },
     created() {
@@ -689,6 +710,10 @@
     },
     mounted() {
       var re = localStorage.getItem('re');
+      this.$store.dispatch('getEnvelopeGroupAction','mvoI6Jjm6ts=').then((res)=>{
+        console.log(res)
+//          this.redGroup = res.data;
+      })
       if(re && this.isLogin){
         this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
           this.bgShow = true;
@@ -705,6 +730,11 @@
           this.contentShow = 'failred'
           this.message = res.message
           localStorage.removeItem('re')
+        })
+        //获取红包领取的列表
+        this.$store.dispatch('getEnvelopeGroupAction',re).then((res)=>{
+          console.log(res)
+//          this.redGroup = res.data;
         })
       }
       //判断是否是充gzh关注之后过来的
@@ -2387,9 +2417,17 @@
   .bg-center18{
     >div{
       @include center;
-      color: #fff;
+      color: #927247;
       .imgBg{
-        width: 640px;
+        width: 671px;
+      }
+      .avatar{
+        width: 129px;
+        height: 129px;
+        border-radius: 50%;
+        border: 3px solid #ff6138;
+        @include centerX;
+        top:60px;
       }
       h3{
         font-size: 32px;
@@ -2397,7 +2435,7 @@
         width: 100%;
         position:absolute;
         left: 0;
-        top:476px;
+        top:213px;
         text-align: center;
       }
       h2{
@@ -2405,8 +2443,9 @@
         line-height: 48px;
         width: 100%;
         position:absolute;
+        font-weight: bold;
         left: 0;
-        top:529px;
+        top:258px;
         text-align: center;
       }
       p{
@@ -2415,7 +2454,7 @@
         width: 100%;
         position:absolute;
         left: 0;
-        top:600px;
+        top:335px;
         text-align: center;
       }
       .btn{
