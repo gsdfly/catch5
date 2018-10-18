@@ -502,19 +502,36 @@
 
         <div class="bg-center18" v-if="contentShow == 'coinred'" @click.stop="">
           <div>
-            <img class="imgBg" src="./../assets/red/red_bi.png" alt="">
-            <img class="avatar" :src="user.avatar" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_bi2.png" alt="">
+            <img v-if="user.avatar" class="avatar" :src="user.avatar" alt=""/>
+            <div  class="avatar-div" v-else>
+              <img src="./../assets/small/icon_portrait.png" alt="">
+            </div>
             <h3>恭喜获得</h3>
-            <h2>{{redCoinNum}}个免费游戏币</h2>
-            <p>点击“投币启动”按钮，开始抓娃娃吧</p>
-            <h4>大家的手气</h4>
+            <h2 v-if="redCoinNum > 0">{{redCoinNum}}个免费游戏币</h2>
+            <h2 v-else="">现金红包</h2>
+            <p v-if="redCoinNum > 0">点击“投币启动”按钮，开始抓娃娃吧</p>
+            <p v-else="">红包已通过“趣东西服务”发送至您的微信上啦<br/>注意查收哦</p>
+            <h4><span></span><b>大家的手气</b></h4>
             <ul>
-              <li>
-                <img src="" alt="">
+              <li v-for="item in redGroup.list">
+                <img v-if="item.avatar" class="ul-avatar" :src="item.avatar" alt="">
+                <div v-else="">
+                  <img src="./../assets/small/icon_portrait.png" alt="">
+                </div>
+                <p>{{item.nickname}}</p>
+                <span v-if="item.type == 1">{{item.desc}}元</span>
+                <span v-if="item.type == 2">{{item.desc}}币</span>
+              </li>
+              <li v-for="item2 in (redGroup.num - redGroup.list.length)">
+                <div class="red-avatar">
+                  <img src="./../assets/red/red_s.png" alt="">
+                </div>
+                <span>等待领取</span>
               </li>
             </ul>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
+                 @click="closeBg('redMachine')"/>
           </div>
         </div>
 
@@ -536,10 +553,10 @@
               <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_image.png" alt="">
               <h3>领取失败</h3>
               <p>{{message}}</p>
-              <div class="btn" @click="closeBg">我知道啦</div>
+              <div class="btn" @click="closeBg('redMachine')">我知道啦</div>
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
+                 @click="closeBg('redMachine')"/>
           </div>
         </div>
 
@@ -560,7 +577,7 @@
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <guide v-if="isShowGuide && ( activity_bounty.length>0 || (gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num))"></guide>
+    <guide v-if="isShowGuide && isAfterRed &&( activity_bounty.length>0 || (gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num))"></guide>
     <guide2 v-if="isShowGuide2" @closeGuide2="closeGuide2"></guide2>
   </div>
 </template>
@@ -600,8 +617,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: true,
-        contentShow: 'coinred',
+        bgShow: false,
+        contentShow: '',
         currentCoupon: {},
         pay: {},
         currentCouponPay: {},
@@ -660,21 +677,11 @@
 //        guideTime:'',
 //        touchTime:0
         message:'',
-        redGroup:[
-          {
-            "avatar": "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJcicJmCoRogaFV9YJQBzGKDZ4Q4l4KPKE1ANQHOUJtox2EyUGy9iatbictjx2oTCpN8T1sPmJkvWsTQ/132",
-            "nickname": "crus***",
-            "type": 2, //1 红包 2 游戏币
-            "extra": "{\"type\":\"coin\",\"coin_price_id\":24}",
-            "desc": 22 // 红包的时候 就是元 游戏币的时候就是游戏币数量
-          },
-          {
-            "avatar": "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJcicJmCoRogaFV9YJQBzGKDZ4Q4l4KPKE1ANQHOUJtox2EyUGy9iatbictjx2oTCpN8T1sPmJkvWsTQ/132",
-            "nickname": "crus***",
-            "type": 1,
-            "extra": "{\"type\":\"re\",\"value\":100}",
-            "desc": 1
-          }]
+        redGroup:{
+          num:5,
+          list:[]
+        },
+        isAfterRed:false
       }
     },
     created() {
@@ -710,32 +717,11 @@
     },
     mounted() {
       var re = localStorage.getItem('re');
-      this.$store.dispatch('getEnvelopeGroupAction','mvoI6Jjm6ts=').then((res)=>{
-        console.log(res)
-//          this.redGroup = res.data;
-      })
+      if(!re){
+        this.isAfterRed = true;
+      }
       if(re && this.isLogin){
-        this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
-          this.bgShow = true;
-          if(res.type === 're'){
-            this.contentShow = 'moneyred'
-          }else {
-            this.contentShow = 'coinred'
-            this.redCoinNum = res.coin_num;
-            this.$store.dispatch('getUser');
-          }
-          localStorage.removeItem('re')
-        }).catch((res)=>{
-          this.bgShow = true;
-          this.contentShow = 'failred'
-          this.message = res.message
-          localStorage.removeItem('re')
-        })
-        //获取红包领取的列表
-        this.$store.dispatch('getEnvelopeGroupAction',re).then((res)=>{
-          console.log(res)
-//          this.redGroup = res.data;
-        })
+       this.handleRedMachine(re)
       }
       //判断是否是充gzh关注之后过来的
       var isgzh = localStorage.getItem('isgzh');
@@ -748,7 +734,6 @@
           coupon_id: coupon_id,
           token: CONFIG.token
         }).then((res) => {
-          console.log(res)
           //正常领取成功
           this.isShowCoinTip = true;
           setTimeout(()=>{
@@ -790,6 +775,26 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      handleRedMachine(re){
+          this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
+            this.bgShow = true;
+            this.redGroup = res.group;
+            this.contentShow = 'coinred';
+            if(res.type === 'coin'){
+              this.isShowCoinTip = true;
+              this.redCoinNum = res.coin_num;
+              setTimeout(()=>{
+                this.$store.dispatch('getUser');
+              },1500)
+            }
+            localStorage.removeItem('re')
+          }).catch((res)=>{
+            this.bgShow = true;
+            this.contentShow = 'failred'
+            this.message = res.message
+            localStorage.removeItem('re')
+          })
+      },
       handleGzh(){
         this.isShowCoinTip = true;
       },
@@ -1131,6 +1136,8 @@
           _hmt.push(['_trackEvent', '关闭红包弹窗', '点击', '', '']);
         } else if (value === 'hide') {
           _hmt.push(['_trackEvent', '关闭' + this.pay.coin_price + '元弹窗优惠券', '点击', '', '']);
+        }else if(value === 'redMachine'){
+          this.isAfterRed = true;
         }
         if (this.contentShow === 'exchange' || this.contentShow === 'exchange2') {
           return
@@ -1262,18 +1269,7 @@
       isLogin(){
         var re = localStorage.getItem('re');
         if(re){
-          this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
-            console.log(res)
-            console.log('领取成功')
-            this.bgShow = true;
-            this.contentShow = 'redTip'
-            localStorage.removeItem('re')
-            this.$store.dispatch('getUser');
-          }).catch(()=>{
-            this.bgShow = true;
-            this.contentShow = 'redTip2'
-            localStorage.removeItem('re')
-          })
+          this.handleRedMachine(re)
         }
       },
       user(newUser, oldUser) {
@@ -2429,7 +2425,19 @@
         @include centerX;
         top:60px;
       }
-      h3{
+      .avatar-div{
+        width: 129px;
+        height: 129px;
+        background:#ff6138;
+        border-radius: 50%;
+        @include centerX;
+        top:60px;
+        img{
+          width: 110px;
+          @include center;
+        }
+      }
+      >h3{
         font-size: 32px;
         line-height: 32px;
         width: 100%;
@@ -2438,7 +2446,7 @@
         top:213px;
         text-align: center;
       }
-      h2{
+      >h2{
         font-size: 48px;
         line-height: 48px;
         width: 100%;
@@ -2448,7 +2456,7 @@
         top:258px;
         text-align: center;
       }
-      p{
+      >p{
         font-size: 24px;
         line-height: 24px;
         width: 100%;
@@ -2456,6 +2464,79 @@
         left: 0;
         top:335px;
         text-align: center;
+      }
+      >h4{
+        font-size: 24px;
+        line-height: 24px;
+        color: #ffb09c;
+        width: 100%;
+        text-align: center;
+        @include centerX;
+        top:493px;
+        span{
+          width: calc(100% - 98px);
+          height: 2px;
+          @include centerY;
+          left: 49px;
+          background: #ffb09c;
+          z-index: -1;
+        }
+        b{
+          background:#ff6138;
+          padding: 0 20px;
+        }
+      }
+      ul{
+        width: 100%;
+        height: 365px;
+        @include centerX;
+        top: 530px;
+        overflow: auto;
+        li{
+          width: 100%;
+          height: 65px;
+          margin: 0 0 8px 0;
+          padding: 0 50px;
+          color: #fff;
+          .ul-avatar{
+            width: 65px;
+            height: 65px;
+            border: solid 2px #ffe8da;
+            border-radius: 50%;
+            float: left;
+            /*background: #fdead4;*/
+          }
+          >div{
+            width: 65px;
+            height: 65px;
+            background: #ffe8da;
+            float: left;
+            position: relative;
+            border-radius: 50%;
+            img{
+              width: 53px;
+              @include center;
+            }
+            &.red-avatar{
+              background: #ffb09c;
+              img{
+                width: 32px;
+              }
+            }
+          }
+          p{
+            font-size: 28px;
+            line-height: 65px;
+            float: left;
+            margin: 0 0 0 10px;
+          }
+          span{
+            font-size: 30px;
+            line-height: 65px;
+            float: right;
+            font-weight: bold;
+          }
+        }
       }
       .btn{
         top:687px;

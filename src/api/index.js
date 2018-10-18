@@ -208,9 +208,4 @@ export default {
   getEnvelopeReceive:function (params) {
     return instance.post(CONFIG.url+'api/envelope/receive',jsonToStr(params))
   },
-  getEnvelopeGroup:function (params) {
-    return instance.get(CONFIG.url + 'api/envelope/group', {
-      params: params
-    });
-  },
 }

@@ -541,15 +541,6 @@ const actions = {
       })
     })
   },
-  getEnvelopeGroupAction:function (ctx,re) {
-    return new Promise((success,error)=>{
-      api.getEnvelopeGroup({token:CONFIG.token,re:re}).then((data)=>{
-        success(data.data)
-      }).catch((err)=>{
-        error(err)
-      })
-    })
-  },
   playerAddressAction:function (ctx,params) {
     return new Promise((success,error)=>{
       api.playerAddress({token:CONFIG.token,operation_id:params.operation_id,name:params.username,phone:params.phone}).then((data)=>{
