@@ -82,7 +82,7 @@
                 </div>
                 <span class="icon"></span>
                 <!--<span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>-->
-                <div class="task-gift" v-for="(item,index) in activity_bounty">
+                <div class="task-gift" v-show="isCalculated" v-for="(item,index) in activity_bounty">
                   <!--<img class="ling" v-if="item.voucher_batch.value <= task_now.recharge_bounty" src="./../assets/task/red_ling.png" alt="" @click="receiveGift(item)" />-->
                   <div class="ring-tip" id="couponList"
                        @click="handleRed(item.voucher_batch.value,item)">
@@ -573,6 +573,13 @@
           </div>
         </div>
 
+        <div class="bg-center22" v-if="contentShow == 'tencent'" @click.stop="">
+          <div>
+            <img src="https://effect.emailcar.net/zhuanke104-72-6/index.png" alt="">
+            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg('redMachine')"/>-->
+          </div>
+        </div>
       </div>
       <tipOperation></tipOperation>
     </div>
@@ -672,6 +679,7 @@
         isShowGzhButtton:true,
         isShowGzhImg:false,
         gzhCodeStyle:'visibility: hidden',
+        isCalculated:false,//娃娃位置计算完成
         timeout1:{},
         timeout2:{},
 //        guideTime:'',
@@ -1301,19 +1309,15 @@
           for (var i = 0; i < len; i++) {
             var n = newValue[i].voucher_batch.value / newValue[len - 1].voucher_batch.value;
             //根据角度获取圆环上的坐标点来进行定位
-            console.log(n);
             var x1 = 241 - 215 * Math.cos(n * 3.14) - 60;
             var y1 = 222 - 215 * Math.sin(n * 3.14) - 38;
 //            var x1 = 215 -  202 * Math.cos(n* 3.14);
 //            var y1 = 209 -  202 * Math.sin(n* 3.14);
-            console.log(x1);
-            console.log(y1);
             var nowX1 = x1 / 7.5.toFixed(3) + 'vw';
             var nowY1 = y1 / 7.5.toFixed(3) + 'vw';
-            console.log('nowX1----' + nowX1);
-            console.log('nowY1----' + nowY1);
             taskGiftList[i].style = `left:${nowX1};top:${nowY1}`;
           }
+          this.isCalculated = true;
         }, 0)
       }
 
@@ -2666,6 +2670,21 @@
           line-height: 70px;
           @include centerX;
         }
+      }
+    }
+  }
+
+  .bg-center22{
+    width: 100%;
+    height: 100%;
+    div{
+      width: 100%;
+      height: 100%;
+      background: #efefef;
+      img{
+        display: block;
+        height: 100%;
+        margin: 0 auto;
       }
     }
   }

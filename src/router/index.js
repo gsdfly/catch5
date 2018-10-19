@@ -14,6 +14,10 @@ export default new Router({
       // component: r => require.ensure([], () => r(require('@/components/index2')))
     },
     {
+      path: '/tencent',
+      component: r => require.ensure([], () => r(require('@/components/tencent')))
+    },
+    {
       path: '/404',
       component: r => require.ensure([], () => r(require('@/components/notcomponent')))
     },

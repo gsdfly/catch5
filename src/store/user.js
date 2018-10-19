@@ -411,6 +411,12 @@ const actions = {
               undoneOpe.push(res[i])
               ctx.commit('setGzhOperationOther',res[i]);
             }
+          }else if(res[i].type === 13 && CONFIG.isWx){
+            if(res[i].task_count >= res[i].num){
+              completeOpe.push(res[i])
+            }else {
+              undoneOpe.push(res[i])
+           }
           }
         }
 
