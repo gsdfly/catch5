@@ -36,9 +36,9 @@
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         </div>
         <div v-if="item.type === 13" @click="openTip('tencent')">
-          <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_weibao.png" alt=""/>
+          <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-        <p>免费腾讯微保</p>
+        <p>免费领币</p>
         </div>
       </li>
     </ul>
