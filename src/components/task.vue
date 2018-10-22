@@ -35,10 +35,10 @@
           <p :class="{'is_down':item.task_count >= item.num}">办卡送公仔</p>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         </div>
-        <div v-if="item.type === 13" @click="goTencent">
-          <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+        <div v-if="item.type === 13" @click="openTip('tencent')">
+          <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_weibao.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-        <p>微保页面</p>
+        <p>免费腾讯微保</p>
         </div>
       </li>
     </ul>
@@ -183,8 +183,7 @@
           this.$emit('taskGame',info);
         }else if(value === 'taskWawaTip'){
           _hmt.push(['_trackEvent', '任务：抓中送币', '点击', '抓中送币：未完成', '']);
-        }
-        if(value === 'bankCard'){
+        } else if(value === 'bankCard'){
           if(info.task_count>=info.num){
             _hmt.push(['_trackEvent', '任务：办卡', '点击', '办卡领币继续点击', '']);
             location.href = info.url
@@ -193,6 +192,9 @@
             _hmt.push(['_trackEvent', '任务：办卡', '点击', '办卡领币', '']);
             this.$emit('bankCard',info);
           }
+        }else if(value === 'tencent'){
+          _hmt.push(['_trackEvent', '任务：微保', '点击', '微保领币', '']);
+
         }
         this.$emit('openTip',value);
       },
@@ -363,7 +365,7 @@
             position: relative;
             display: flex;
             align-items: flex-end;
-            margin: 19px auto 14px auto;
+            margin: 19px auto 18px auto;
             box-shadow: 0 4px 12px rgba(180,149,84,0.4);
             /*box-shadow: inset 0px 3px 13px 0px*/
             /*rgba(242, 123, 0, 0.51);*/

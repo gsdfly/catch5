@@ -8,6 +8,7 @@
         <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="">
         <img src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt="">
         <img src="http://res.catchme.com.cn/activity/guide/shuoming.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/task-2/weibao.png" alt="">
       </div>
       <div class="header">
         <div>
@@ -575,9 +576,10 @@
 
         <div class="bg-center22" v-if="contentShow == 'tencent'" @click.stop="">
           <div>
-            <img src="https://effect.emailcar.net/zhuanke104-72-6/index.png" alt="">
-            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
-                 <!--@click="closeBg('redMachine')"/>-->
+            <img @touchstart="press3" @touchend="press4" class="imgBg" src="http://res.catchme.com.cn/activity/task-2/weibao.png"  alt=""/>
+            <img class="code" :src="tencentCodeImgUrl" alt="">
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg('redMachine')"/>
           </div>
         </div>
       </div>
@@ -689,7 +691,9 @@
           num:5,
           list:[]
         },
-        isAfterRed:false
+        isAfterRed:false,
+        tencentCodeImgUrl:'',
+        tencentImgtime:0
       }
     },
     created() {
@@ -872,6 +876,16 @@
           this.gzhCodeStyle = 'visibility: hidden'
           this.isShowGzhButtton = true
         },400)
+      },
+      press3(){
+        this.tencentImgTime = new Date().getTime();
+      },
+      press4(){
+        var time = new Date().getTime()
+        console.log(time - this.tencentImgTime)
+        if((time - this.tencentImgTime) > 1500){
+          _hmt.push(['_trackEvent', '任务：微保', '长按', '微保弹窗', '']);
+        }
       },
       closeGuide2() {
         this.isShowGuide2 = false
@@ -1096,6 +1110,11 @@
           this.isShowGzhButtton = true;
           this.gzhCodeStyle = 'visibility: hidden'
 //          this.isShowGzhImg = false;
+        }
+        if(value === 'tencent'){
+          var userId = this.user.reality_id;
+          userId = userId.toString(36);
+          this.tencentCodeImgUrl = 'http://api.datasuv.net/wesure/insure?m=MjRxN2J4c2F0&type=qrcode&user='+userId;
         }
         this.freeTipImg = value2;
         this.freeTip = value3;
@@ -2675,16 +2694,18 @@
   }
 
   .bg-center22{
-    width: 100%;
-    height: 100%;
     div{
-      width: 100%;
-      height: 100%;
-      background: #efefef;
-      img{
+      @include center;
+      .imgBg{
         display: block;
-        height: 100%;
+        width: 640px;
         margin: 0 auto;
+      }
+      .code{
+        width: 184px;
+        height: 184px;
+        @include centerX;
+        bottom: 255px;
       }
     }
   }

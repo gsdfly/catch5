@@ -16,7 +16,7 @@
     },
     mounted(){
       var userId = this.user.reality_id;
-      userId = Number(userId.toString(36));
+      userId = userId.toString(36);
       this.codeImg = 'http://api.datasuv.net/wesure/insure?m=MjRxN2J4c2F0&type=qrcode&user='+userId
       console.log(this.codeImg)
     },
