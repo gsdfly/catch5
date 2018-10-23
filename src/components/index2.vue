@@ -1333,7 +1333,7 @@
 //            var x1 = 215 -  202 * Math.cos(n* 3.14);
 //            var y1 = 209 -  202 * Math.sin(n* 3.14);
             var nowX1 = x1 / 7.5.toFixed(3) + 'vw';
-            var nowY1 = y1 / 7.5.toFixed(3) + 'vw';
+            var nowY1 = y1 / 7.5.toFixed(3)+0.5+ 'vw';
             taskGiftList[i].style = `left:${nowX1};top:${nowY1}`;
           }
           this.isCalculated = true;
@@ -3431,6 +3431,7 @@
     left: 0;
    // bottom: -6px;
     bottom: 0;
+    display: block;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .last {
@@ -3441,7 +3442,7 @@
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .nolast {
     //left: -40px;
-    left: -110px;
+    left: -105px;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-content {
@@ -3462,6 +3463,7 @@
     background: #f76058;
     display: inline-block;
     border-radius: 12px;
+    overflow: hidden;
     /*position: absolute;
     right: -40px;
     top:35px;
@@ -3474,7 +3476,7 @@
     line-height: 18px;
     font-size: 18px;
     color: #888888;
-    margin: 0 4px 4px 0;
+    margin: 0 14px 4px 0;
     float: right;
     /*position: absolute;*/
     /*left: 5px;*/
