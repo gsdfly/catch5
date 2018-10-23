@@ -3429,15 +3429,19 @@
     width: 100%;
     position: absolute;
     left: 0;
-    bottom: -6px;
+   // bottom: -6px;
+    bottom: 0;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .last {
-    right: -40px;
+  //  right: -40px;
+    right: -105px;
+    top:55px!important;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .nolast {
-    left: -40px;
+    //left: -40px;
+    left: -110px;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-content {
@@ -3470,7 +3474,8 @@
     line-height: 18px;
     font-size: 18px;
     color: #888888;
-    margin: 0 0 4px 0;
+    margin: 0 4px 4px 0;
+    float: right;
     /*position: absolute;*/
     /*left: 5px;*/
     /*top:0;*/
@@ -3482,8 +3487,12 @@
     /*font-weight: 600;*/
     /*text-align: center;*/
   }
+  /*.main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .last p{*/
+    /*float: right;*/
+  /*}*/
 
-  .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-content .hidden {
+
+    .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-content .hidden {
     opacity: 0;
   }
 
@@ -3585,6 +3594,7 @@
     text-align: center;
     position: relative;
     z-index: 6;
+    overflow: hidden;
   }
 
   .main .center .game-num.norecharge {
