@@ -88,11 +88,11 @@
                   <div class="ring-tip" id="couponList"
                        @click="handleRed(item.voucher_batch.value,item)">
                     <div class="ring-tip-bg">
-                      <div class="ring-quan"
-                           :class="{'ring-tip-ling':item.voucher_batch.value <= task_now.recharge_bounty}">
-                        <img v-if="item.voucher_batch.image" class="ringicon ringicon2" :src="item.voucher_batch.image"
+                      <!--<div class="ring-quan"-->
+                           <!--:class="{'ring-tip-ling':item.voucher_batch.value <= task_now.recharge_bounty}">-->
+                        <img :class="{'ring-tip-ling':item.voucher_batch.value <= task_now.recharge_bounty}" v-if="item.voucher_batch.image" class="ring-quan" :src="item.voucher_batch.image"
                              alt=""/>
-                      </div>
+                      <!--</div>-->
                       <div class="ring-content"
                            :class="{'last':(index+1)/activity_bounty.length>=0.6,'nolast':(index+1)/activity_bounty.length<0.6}">
                         <p :class="{'hidden':item.voucher_batch.value - task_now.recharge_bounty<=0}">
@@ -431,15 +431,15 @@
         </div>
 
         <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="">
-          <div class="center16-main" :class="{'main-baomihua':activity_bounty[activity_bounty.length - 1].voucher_batch.category===0}">
-            <img v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0" class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi2.png" alt="">
+          <div class="center16-main" :class="{'main-baomihua':currentActivityBounty.voucher_batch.category===0}">
+            <img v-if="currentActivityBounty.voucher_batch.category===0" class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi2.png" alt="">
             <img v-else class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>
-            <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0">
-              累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次没抓中?
+            <h3 v-if="currentActivityBounty.voucher_batch.category===0">
+              累计抓取{{currentActivityBounty.voucher_batch.value / info.coin_num}}次没抓中?
             </h3>
-            <img v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===0" class="baomihua" src="./../assets/guide/baomihua.png" alt="" />
-            <h3 v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category!==0">
-              累计抓取{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次没抓中?<br/>+{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元拿走!
+            <img v-if="currentActivityBounty.voucher_batch.category===0" class="baomihua" src="./../assets/guide/baomihua.png" alt="" />
+            <h3 v-if="currentActivityBounty.voucher_batch.category!==0">
+              累计抓取{{currentActivityBounty.voucher_batch.value / info.coin_num}}次没抓中?<br/>+{{currentActivityBounty.voucher_batch.description | handleDes}}元拿走!
             </h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
             <!--<a class="go-coupon-list" href="javascript:void(0)"-->
@@ -457,15 +457,18 @@
             <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt=""/>
             <h2>活动说明</h2>
             <ul class="content">
-              <li v-if="activity_bounty[activity_bounty.length - 1].voucher_batch.category===1">
-                1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值可兑换{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元加购券1张，该券可在“趣东西商城以{{activity_bounty[activity_bounty.length - 1].voucher_batch.description | handleDes}}元价格购买对应商品；”
+              <li v-for="(item,index) in activity_bounty">
+                <span v-if="item.voucher_batch.category===1">{{index+1}}、若累计{{item.voucher_batch.value / info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值，可兑换{{item.voucher_batch.description | handleDes}}元加购券1张，该券可在趣东西商城"{{item.voucher_batch.value / info.coin_num}}次兑换专区"购买商品；</span>
+                <span v-if="item.voucher_batch.category===0">
+                  {{index+1}}、若累计{{item.voucher_batch.value / info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值，可兑换影院观影小食兑换券1张，该券可在影城兑换32oz爆米花+12oz可乐一份；
+                </span>
               </li>
-              <li v-else>1、若累计{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次抓取，未抓中，可得任务值，累计足额任务值，可兑换影院观影小食兑换券1张，该券可在影城兑换32oz爆米花+12oz可乐一份；”</li>
-              <li>2、若{{activity_bounty[activity_bounty.length - 1].voucher_batch.value / info.coin_num}}次内抓中，任务值将会归零；
+              <li>{{activity_bounty.length+1}}、
+                抓中娃娃或领取加购券之后，任务值将会归零；
               </li>
-              <li>3、归零后继续游戏，重新开始累计任务值；</li>
-              <li>4、每日早上6:00任务值归零；</li>
-              <li>5、本活动的最终解释权归深圳市我抓科技有限公司所有。</li>
+              <li>{{activity_bounty.length+2}}、归零后继续游戏，重新开始累计任务值；</li>
+              <li>{{activity_bounty.length+3}}、每日早上6:00任务值归零；</li>
+              <li>{{activity_bounty.length+4}}、本活动的最终解释权归深圳市我抓科技有限公司所有。</li>
             </ul>
             <div class="back" @click="goPre"><i></i>返回</div>
             <!--<img class="btnImg" src="./../assets/guide/press_iknow.png" alt="">-->
@@ -693,7 +696,8 @@
         },
         isAfterRed:false,
         tencentCodeImgUrl:'',
-        tencentImgtime:0
+        tencentImgtime:0,
+        currentActivityBounty:{}
       }
     },
     created() {
@@ -984,6 +988,7 @@
               }
             })
           } else {
+            this.currentActivityBounty = item
             this.couponList()
           }
         })
@@ -2259,9 +2264,11 @@
         width: 100%;
         position: absolute;
         left: 0;
-        top: 201px;
+        /*top: 201px;*/
+        /*top:160px;*/
+        top:140px;
         li {
-          font-size: 28px;
+          font-size: 26px;
           color: #fff;
           line-height: 48px;
           text-align: left;
@@ -2274,7 +2281,8 @@
         text-align: center;
         width: 100%;
         left: 0;
-        top: 734px;
+        /*top: 734px;*/
+        top:760px;
         color: #fff;
         font-size: 32px;
         line-height: 32px;
@@ -3238,7 +3246,7 @@
     height: 261px;
     left: 50%;
     /*top: 36px;*/
-    top: 40px;
+    top: 44px;
     transform: translateX(calc(-50% - 8px));
     /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/process_bg2.png");*/
@@ -3414,7 +3422,7 @@
     border-radius: 50%;
     position: absolute;
     left: 50%;
-    bottom: 11px;
+    bottom: 12px;
     transform: translateX(-50%);
     /*border: 3px solid #e8453d;*/
     overflow: hidden;
@@ -3451,7 +3459,7 @@
     /*background: blue;*/
     position: absolute;
     text-align: center;
-    top: -20px;
+    top: -24px;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-content h3 {
@@ -3479,7 +3487,7 @@
     margin: 0 14px 4px 0;
     float: right;
     /*position: absolute;*/
-    /*left: 5px;*/
+    /*left: 5px;*/ 
     /*top:0;*/
     /*font-size: 26px;*/
     /*color: #2e339b;*/

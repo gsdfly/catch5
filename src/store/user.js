@@ -416,7 +416,10 @@ const actions = {
               completeOpe.push(res[i])
             }else {
               undoneOpe.push(res[i])
-           }
+              if(!ctx.state.gzh_operation_other.num){
+                ctx.commit('setGzhOperationOther',res[i]);
+              }
+            }
           }
         }
 

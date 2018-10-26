@@ -27,6 +27,7 @@
       }
     },
     mounted(){
+      console.log(this.activity_bounty)
       if(this.version2){
         this.img1 = this.img2;
       }
