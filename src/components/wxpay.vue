@@ -1,176 +1,215 @@
 <template>
   <div class="recharge-lists clearfix" :class="{'version2':version2}">
-    <img class="cat" src="./../assets/miqi/cat.png" alt="">
-    <p class="tmallp">手机天猫送你免费抓娃娃</p>
-    <div v-for="v in coin.slice(0,1)" :data-id="v.coin_price_id"
-         @click="handlePayBefore(v)" :class="{'active':v.status==0,'infinity':v.type==1}">
-      <div class="recharge-item-t"><span :class="{'twoCoin':v.coin_num==2}"></span><i v-if="v.type==1">无限币</i><i v-else>{{v.coin_num}}币</i>
-      </div>
-      <div class="recharge-item-b">{{v.coin_price | handlePrice}}<span
-        v-if="v.sale_state == 1 && v.original_price">({{v.original_price}}元)</span></div>
-      <!--<div class="recharge-hot hot-limit" v-if="v.coin_buy_state==1 && v.status != 0">限购<br/>{{v.coin_buy_num}}次</div>-->
-      <div class="recharge-hot hot-top" v-if="v.remarks != null && v.remarks != '' && v.status != 0">{{v.remarks.substr(0,4)}}</div>
-      <!--<div class="recharge-has" v-if="v.status == 0">已领取</div>-->
+    <img class="cat" src="./../assets/miqi/cat2.png" alt="">
+    <p class="tmallp">得宝天猫旗舰店送你免费抓娃娃</p>
+    <div @click="goShop" :class="{'active':tmall_operation.task_count >= tmall_operation.num}">
+      <div class="recharge-item-t" :class=""><span class="twoCoin"></span><i>6币</i></div>
+      <div class="recharge-item-b">免费领币</div>
     </div>
+    <!--<div v-for="v in coin.slice(0,1)" :data-id="v.coin_price_id"-->
+    <!--@click="handlePayBefore(v)" :class="{'active':v.status==0,'infinity':v.type==1}">-->
+    <!--<div class="recharge-item-t"><span :class="{'twoCoin':v.coin_num==2}"></span><i v-if="v.type==1">无限币</i><i v-else>{{v.coin_num}}币</i>-->
+    <!--</div>-->
+    <!--<div class="recharge-item-b">{{v.coin_price | handlePrice}}<span-->
+    <!--v-if="v.sale_state == 1 && v.original_price">({{v.original_price}}元)</span></div>-->
+    <!--&lt;!&ndash;<div class="recharge-hot hot-limit" v-if="v.coin_buy_state==1 && v.status != 0">限购<br/>{{v.coin_buy_num}}次</div>&ndash;&gt;-->
+    <!--<div class="recharge-hot hot-top" v-if="v.remarks != null && v.remarks != '' && v.status != 0">{{v.remarks.substr(0,4)}}</div>-->
+    <!--&lt;!&ndash;<div class="recharge-has" v-if="v.status == 0">已领取</div>&ndash;&gt;-->
+    <!--</div>-->
   </div>
 </template>
 
 <script>
-  import {instance} from '../config/common'
-  import {mapState} from 'vuex'
-  import CONFIG from '../config'
-  import {SetCookie, getErrMsg, changeTipOperation, payment} from '../util'
-
-  export default {
-    data() {
-      return {
-        isActive: false,
-        isRequest: false
+    import {mapState} from 'vuex'
+    import Toast from 'mint-ui/lib/Toast'
+    export default {
+    mounted(){
+      if (this.isLogin) {
+        this.$store.dispatch('getOperations')
       }
     },
     computed: mapState({
-      user: state => state.user.user,
-      coin: state => state.user.coin,
-      machine_no: state => state.user.machine_no,
-      info: state => state.user.info,
-      hide_coupons: state => state.user.hide_coupons,
-      tip_operation: state => state.user.tip_operation,
-      isLogin:state => state.user.isLogin
+            isLogin: state => state.user.isLogin,
+      tmall_operation: state => state.user.tmall_operation,
     }),
-    mounted() {
-//      this.getCoinList()
-      if(this.isLogin){
-        this.$store.dispatch('getCoinList');
-      }
-    },
-    methods: {
-      handlePayBefore(pay) {
-        if (pay.status === 0) {
-          return false;
-        }
-        var hideArr = JSON.parse(localStorage.getItem('hide_coupons')) || [];
-        var date = new Date();
-        var time = '' + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
-        if (hideArr.length > 0 && hideArr.indexOf(JSON.stringify({time: time, id: pay.coin_price_id})) !== -1) {
-          this.handlePay(pay.coin_price_id, pay.coin_num, pay.status, pay.coin_price, pay.type);
-        } else {
-          if (hideArr.length > 0) {
-            for (var j = 0; j < hideArr.length; j++) {
-              if (JSON.parse(hideArr[j]).id === pay.coin_price_id) {
-                hideArr.splice(j, 1);
-                break;
-              }
-            }
+    methods:{
+      goShop(){
+        if(this.tmall_operation.success){
+          if(this.tmall_operation.task_count < this.tmall_operation.num){
+            location.href = this.tmall_operation.short_url
           }
-          hideArr.push(JSON.stringify({time: time, id: pay.coin_price_id}));
-          localStorage.setItem('hide_coupons', JSON.stringify(hideArr));
-          //在这里得到充值项的优惠券
-          var currentCouponPay;
-          var len = this.hide_coupons.length;
-          for (var i = 0; i < len; i++) {
-            if (this.hide_coupons[i].after_coin_price_id) {
-              if (this.hide_coupons[i].after_coin_price_id.indexOf(pay.coin_price_id) !== -1) {
-                currentCouponPay = this.hide_coupons[i].coin_price;
-                break;
-              }
-            }
-          }
-          if (currentCouponPay) {
-            if (pay.coin_price === "2.00") {
-              _hmt.push(['_trackEvent', '弹出2元下面优惠券', '点击', '', '']);
-            } else if (pay.coin_price === "10.00") {
-              _hmt.push(['_trackEvent', '弹出10元下面优惠券', '点击', '', '']);
-            }
-            this.$emit('changeBgShow', {
-              bgShow: true,
-              contentShow: 'hideCoupon',
-              pay: pay,
-              currentCouponPay: currentCouponPay
-            });
-          } else {
-            this.handlePay(pay.coin_price_id, pay.coin_num, pay.status, pay.coin_price, pay.type);
-          }
-        }
-      },
-      handlePay(id, coin, status, price, type) {
-        if (!this.isRequest) {
-          this.isRequest = true;
-          if (this.info.online === 0) {
-            this.$store.commit('changeTipContent', getErrMsg(1001));
-            this.isRequest = false;
-            return
-          }
-          let self = this
-          //status为0不可购买
-          if (status === 0) {
-            return false;
-          }
-          if (price == '0.00') {
-            //免费请求
-            this.$store.dispatch('getFreeCoin', {coin_price_id: id}).then((data) => {
-              if (data.status_code == 200) {
-                this.$store.dispatch('getCoinList').then(() => {
-                  this.isRequest = false;
-                  this.$store.dispatch('getUser');
-                }).catch(()=>{
-                  this.isRequest = false;
-                });
-              }else {
-                this.isRequest = false;
-              }
-            }).catch(() => {
-              this.isRequest = false;
-            });
-          } else if (type == 1 && this.user.coin_infinite > 0) {
-            this.$store.dispatch('InfiniteGame').then(() => {
-              this.$emit('alertTip');
-              this.isRequest = false;
-            }).catch(() => {
-              this.isRequest = false;
-            });
-          } else {
-            payment(CONFIG, {coin_price_id: id}, self, function () {
-              self.isRequest = false;
-              try{
-              if (self.tip_operation.recharged) {
-                changeTipOperation(self.tip_operation.recharged, 'alreadyTipRecharged', self.$store);
-              }
-              }catch(err) {}
-              if (type !== 1) {
-                self.$store.commit('setCoins', coin)
-                self.$emit('closeBg');
-              } else {
-                self.$store.dispatch('InfiniteGame').then(() => {
-                  self.$emit('changeTip');
-                })
-              }
-              setTimeout(()=>{
-                self.$store.dispatch('getUser');
-                self.$store.dispatch('getCoinList');
-//                self.$store.dispatch('getActivityPromocode') //获取用户充值状态
-//                self.$store.dispatch('getActivityBounty');
-                self.$store.dispatch('getActivityBountyInfo');
-              },1000)
-            })
-          }
-        }
-      }
-    },
-    watch:{
-      isLogin(){
-        this.$store.dispatch('getCoinList');
-      }
-    },
-    filters: {
-      handlePrice(value){
-        if(value == '0.00'){
-          return '免费领币'
         }else {
-          return value+'元'
+          Toast({
+            message: '请刷新页面重试',
+            position: 'middle',
+            duration: 1000
+          })
         }
       }
-    }
+    },
+      watch: {
+      isLogin() {
+        this.$store.dispatch('getOperations')
+      }
+    },
   }
+
+//  import {instance} from '../config/common'
+//  import {mapState} from 'vuex'
+//  import CONFIG from '../config'
+//  import {SetCookie, getErrMsg, changeTipOperation, payment} from '../util'
+
+//  export default {
+//    data() {
+//      return {
+//        isActive: false,
+//        isRequest: false
+//      }
+//    },
+//    computed: mapState({
+//      user: state => state.user.user,
+//      coin: state => state.user.coin,
+//      machine_no: state => state.user.machine_no,
+//      info: state => state.user.info,
+//      hide_coupons: state => state.user.hide_coupons,
+//      tip_operation: state => state.user.tip_operation,
+//      isLogin: state => state.user.isLogin
+//    }),
+//    mounted() {
+////      this.getCoinList()
+//      if (this.isLogin) {
+//        this.$store.dispatch('getCoinList');
+//      }
+//    },
+//    methods: {
+//      handlePayBefore(pay) {
+//        if (pay.status === 0) {
+//          return false;
+//        }
+//        var hideArr = JSON.parse(localStorage.getItem('hide_coupons')) || [];
+//        var date = new Date();
+//        var time = '' + date.getFullYear() + (date.getMonth() + 1) + date.getDate();
+//        if (hideArr.length > 0 && hideArr.indexOf(JSON.stringify({time: time, id: pay.coin_price_id})) !== -1) {
+//          this.handlePay(pay.coin_price_id, pay.coin_num, pay.status, pay.coin_price, pay.type);
+//        } else {
+//          if (hideArr.length > 0) {
+//            for (var j = 0; j < hideArr.length; j++) {
+//              if (JSON.parse(hideArr[j]).id === pay.coin_price_id) {
+//                hideArr.splice(j, 1);
+//                break;
+//              }
+//            }
+//          }
+//          hideArr.push(JSON.stringify({time: time, id: pay.coin_price_id}));
+//          localStorage.setItem('hide_coupons', JSON.stringify(hideArr));
+//          //在这里得到充值项的优惠券
+//          var currentCouponPay;
+//          var len = this.hide_coupons.length;
+//          for (var i = 0; i < len; i++) {
+//            if (this.hide_coupons[i].after_coin_price_id) {
+//              if (this.hide_coupons[i].after_coin_price_id.indexOf(pay.coin_price_id) !== -1) {
+//                currentCouponPay = this.hide_coupons[i].coin_price;
+//                break;
+//              }
+//            }
+//          }
+//          if (currentCouponPay) {
+//            if (pay.coin_price === "2.00") {
+//              _hmt.push(['_trackEvent', '弹出2元下面优惠券', '点击', '', '']);
+//            } else if (pay.coin_price === "10.00") {
+//              _hmt.push(['_trackEvent', '弹出10元下面优惠券', '点击', '', '']);
+//            }
+//            this.$emit('changeBgShow', {
+//              bgShow: true,
+//              contentShow: 'hideCoupon',
+//              pay: pay,
+//              currentCouponPay: currentCouponPay
+//            });
+//          } else {
+//            this.handlePay(pay.coin_price_id, pay.coin_num, pay.status, pay.coin_price, pay.type);
+//          }
+//        }
+//      },
+//      handlePay(id, coin, status, price, type) {
+//        if (!this.isRequest) {
+//          this.isRequest = true;
+//          if (this.info.online === 0) {
+//            this.$store.commit('changeTipContent', getErrMsg(1001));
+//            this.isRequest = false;
+//            return
+//          }
+//          let self = this
+//          //status为0不可购买
+//          if (status === 0) {
+//            return false;
+//          }
+//          if (price == '0.00') {
+//            //免费请求
+//            this.$store.dispatch('getFreeCoin', {coin_price_id: id}).then((data) => {
+//              if (data.status_code == 200) {
+//                this.$store.dispatch('getCoinList').then(() => {
+//                  this.isRequest = false;
+//                  this.$store.dispatch('getUser');
+//                }).catch(() => {
+//                  this.isRequest = false;
+//                });
+//              } else {
+//                this.isRequest = false;
+//              }
+//            }).catch(() => {
+//              this.isRequest = false;
+//            });
+//          } else if (type == 1 && this.user.coin_infinite > 0) {
+//            this.$store.dispatch('InfiniteGame').then(() => {
+//              this.$emit('alertTip');
+//              this.isRequest = false;
+//            }).catch(() => {
+//              this.isRequest = false;
+//            });
+//          } else {
+//            payment(CONFIG, {coin_price_id: id}, self, function () {
+//              self.isRequest = false;
+//              try {
+//                if (self.tip_operation.recharged) {
+//                  changeTipOperation(self.tip_operation.recharged, 'alreadyTipRecharged', self.$store);
+//                }
+//              } catch (err) {
+//              }
+//              if (type !== 1) {
+//                self.$store.commit('setCoins', coin)
+//                self.$emit('closeBg');
+//              } else {
+//                self.$store.dispatch('InfiniteGame').then(() => {
+//                  self.$emit('changeTip');
+//                })
+//              }
+//              setTimeout(() => {
+//                self.$store.dispatch('getUser');
+//                self.$store.dispatch('getCoinList');
+////                self.$store.dispatch('getActivityPromocode') //获取用户充值状态
+////                self.$store.dispatch('getActivityBounty');
+//                self.$store.dispatch('getActivityBountyInfo');
+//              }, 1000)
+//            })
+//          }
+//        }
+//      }
+//    },
+//    watch: {
+//      isLogin() {
+//        this.$store.dispatch('getCoinList');
+//      }
+//    },
+//    filters: {
+//      handlePrice(value) {
+//        if (value == '0.00') {
+//          return '免费领币'
+//        } else {
+//          return value + '元'
+//        }
+//      }
+//    }
+//  }
 </script>
 
 <style>
@@ -179,14 +218,16 @@
     position: absolute;
     left: 0;
     top: 0;
-    padding: 10px 20px 0 20px;
+    padding: 0 20px 0 20px;
   }
-  .recharge-lists .cat{
-    width: 193px;
-    height: 85px;
+
+  .recharge-lists .cat {
+    /*width: 193px;*/
+    height: 131px;
     display: block;
     margin: 0 auto;
   }
+
   .recharge-lists .tmallp {
     font-size: 22px;
     font-weight: normal;
@@ -196,27 +237,28 @@
     color: #ffffff;
     width: 100%;
     text-align: center;
-    margin: 23px 0 27px 0;
+    margin: 9px 0 11px 0;
   }
+
   .recharge-lists > div {
-    margin: 0 auto 20px auto;
+    margin: 0 auto 0 auto;
     font-size: 36px;
     /*float: right;*/
     width: 345px;
     /*height: 1.28px;*/
     height: 37.87%;
-    border: 1px solid #043aa3;
+    border: 1px solid #dd0908;
     /*border-radius: 0.15px;*/
     color: #494949;
     position: relative;
     /*overflow: hidden;*/
     border-radius: 16px;
   }
+
   /*.recharge-lists > div:last-of-type,  .recharge-lists > div:nth-last-of-type(2)*/
   /*{*/
-    /*margin: 0;*/
+  /*margin: 0;*/
   /*}*/
-
 
   .recharge-lists .active {
     color: #666;
@@ -257,7 +299,7 @@
     line-height: 63px;
     /*font-size: 0.32px;*/
     font-size: 34px;
-    background: #043aa3;
+    background: #e20815;
     color: #fff;
     border-radius: 0 0 12px 12px;
     text-align: center;
@@ -354,12 +396,12 @@
   }
 
   /*.version2 {*/
-    /*padding: 0 18px;*/
+  /*padding: 0 18px;*/
   /*}*/
 
   /*.version2  > div {*/
-    /*width: 348px;*/
-    /*margin: 0 0 20px 0;*/
+  /*width: 348px;*/
+  /*margin: 0 0 20px 0;*/
   /*}*/
 
   .version2 .recharge-item-t {
@@ -390,10 +432,10 @@
   }
 
   /*.version2 .recharge-has, .version2 .recharge-hot {*/
-    /*width: 68px;*/
-    /*height: 76px;*/
-    /*font-size: 26px;*/
-    /*line-height: 32px;*/
+  /*width: 68px;*/
+  /*height: 76px;*/
+  /*font-size: 26px;*/
+  /*line-height: 32px;*/
   /*}*/
 
 </style>

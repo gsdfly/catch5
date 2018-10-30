@@ -67,7 +67,8 @@ const state = {
     game_bounty:-1,//用户当前任务的进度
     prize_bounty:-1//掉落的娃娃数
   },
-  shop_operation:[]
+  shop_operation:[],
+  tmall_operation:{}
 }
 
 const mutations = {
@@ -136,6 +137,9 @@ const mutations = {
   },
   setShopOperation(state,arr){
     state.shop_operation = arr
+  },
+  setTmallOperation(state,obj){
+    state.tmall_operation = obj
   }
 }
 
@@ -148,29 +152,29 @@ const actions = {
       })
     })
   },
-  getCoinList({commit}) {
-    return new Promise((success, error) => {
-      api.getCoinList({
-        machine_no: state.machine_no,
-        token:CONFIG.token
-      }).then((data) => {
-        commit('setCoinList', data.data);
-        success();
-      })})
-  },
-  getConsume({commit}, page) {
-    return new Promise((success, error) => {
-      api.getConsume({
-        page_index: page.page_index,
-        page_size: page.page_size,
-        token:CONFIG.token
-      }).then((data) => {
-        commit('setConsume', data)
-        const p = data
-        success(p)
-      })
-    })
-  },
+  // getCoinList({commit}) {
+  //   return new Promise((success, error) => {
+  //     api.getCoinList({
+  //       machine_no: state.machine_no,
+  //       token:CONFIG.token
+  //     }).then((data) => {
+  //       commit('setCoinList', data.data);
+  //       success();
+  //     })})
+  // },
+  // getConsume({commit}, page) {
+  //   return new Promise((success, error) => {
+  //     api.getConsume({
+  //       page_index: page.page_index,
+  //       page_size: page.page_size,
+  //       token:CONFIG.token
+  //     }).then((data) => {
+  //       commit('setConsume', data)
+  //       const p = data
+  //       success(p)
+  //     })
+  //   })
+  // },
   getPayJssdk(ctx,ids) {
     return new Promise((success, error) => {
       if(ids.coupon_id){
@@ -224,17 +228,17 @@ const actions = {
       }
     })
   },
-  getPayTpp(ctx, params) {
-    return new Promise((success, error) => {
-      api.getPayTpp({
-        coin_price_id: params.coin_price_id,
-        machine_no: ctx.state.machine_no,
-        token:CONFIG.token
-      }).then((data) => {
-        success(data)
-      })
-    })
-  },
+  // getPayTpp(ctx, params) {
+  //   return new Promise((success, error) => {
+  //     api.getPayTpp({
+  //       coin_price_id: params.coin_price_id,
+  //       machine_no: ctx.state.machine_no,
+  //       token:CONFIG.token
+  //     }).then((data) => {
+  //       success(data)
+  //     })
+  //   })
+  // },
   judgeMachine(ctx) {
     return new Promise((success, error) => {
       api.judgeMachine({
@@ -246,34 +250,34 @@ const actions = {
       })
     })
   },
-  getFreeCoin(ctx, ids) {
-    return new Promise((success, error) => {
-      if(ids.coupon_id){
-        api.getFreeCoin({
-            coin_price_id:ids.coin_price_id,
-            machine_no:ctx.state.machine_no,
-            coupon_id:ids.coupon_id,
-            token:CONFIG.token
-          }
-        ).then((data) => {
-          success(data)
-        }).catch((err)=>{
-          error(err);
-        })
-      }else {
-        api.getFreeCoin({
-            coin_price_id:ids.coin_price_id,
-            machine_no:ctx.state.machine_no,
-            token:CONFIG.token
-          }
-        ).then((data) => {
-          success(data)
-        }).catch((err)=>{
-          error(err);
-        })
-      }
-    })
-  },
+  // getFreeCoin(ctx, ids) {
+  //   return new Promise((success, error) => {
+  //     if(ids.coupon_id){
+  //       api.getFreeCoin({
+  //           coin_price_id:ids.coin_price_id,
+  //           machine_no:ctx.state.machine_no,
+  //           coupon_id:ids.coupon_id,
+  //           token:CONFIG.token
+  //         }
+  //       ).then((data) => {
+  //         success(data)
+  //       }).catch((err)=>{
+  //         error(err);
+  //       })
+  //     }else {
+  //       api.getFreeCoin({
+  //           coin_price_id:ids.coin_price_id,
+  //           machine_no:ctx.state.machine_no,
+  //           token:CONFIG.token
+  //         }
+  //       ).then((data) => {
+  //         success(data)
+  //       }).catch((err)=>{
+  //         error(err);
+  //       })
+  //     }
+  //   })
+  // },
   startingDevice(ctx, num) {
     return new Promise((success, error) => {
       api.startingDevice({
@@ -299,144 +303,153 @@ const actions = {
       })
     })
   },
-  InfiniteGame(ctx){
-    return new Promise((success,error)=>{
-      api.InfiniteGame({machine_no:ctx.state.machine_no,token:CONFIG.token}).then((data)=>{
-        if (data.status_code == 200) {
-          ctx.commit('setInfinite',0);
-          success();
-        }else {
-          ctx.commit('setInfinite',1);
-          error(err);
-        }
-      }).catch((err)=>{
-        ctx.commit('setInfinite',1);
-        error(err);
-      })
-    })
-  },
+  // InfiniteGame(ctx){
+  //   return new Promise((success,error)=>{
+  //     api.InfiniteGame({machine_no:ctx.state.machine_no,token:CONFIG.token}).then((data)=>{
+  //       if (data.status_code == 200) {
+  //         ctx.commit('setInfinite',0);
+  //         success();
+  //       }else {
+  //         ctx.commit('setInfinite',1);
+  //         error(err);
+  //       }
+  //     }).catch((err)=>{
+  //       ctx.commit('setInfinite',1);
+  //       error(err);
+  //     })
+  //   })
+  // },
   //获取优惠券列表
   getOperations:function (ctx) {
     return new Promise((success,err)=>{
-      api.getOperations({machine_no:ctx.state.machine_no,token:CONFIG.token}).then((data)=>{
-        //对运营位进行过滤
+      api.getOperations({machine_no:ctx.state.machine_no,token:CONFIG.token}).then((data)=> {
         var res = data.data;
-        var operationsList = [];
-        var hideCoupons = [];
-        var activity_bounty = [];
-        var shopOperations = [];
-
         for(var i=0;i<res.length;i++){
-          if(res[i].type ===1){
-            if(res[i].coupon){
-              if(res[i].coupon.type == 2 ){
-                operationsList.push(res[i]);
-              }else if(res[i].coupon.type == 1 && ((res[i].coin_price.coin_price - res[i].coupon.reduce) >0) ){
-                operationsList.push(res[i]);
-              }else if(res[i].coupon.type == 0 && ((res[i].coin_price.coin_price*res[i].coupon.reduce/100) >0)){
-                operationsList.push(res[i]);
-              }
-            }
-          }else if(res[i].type ===4 ){
-            if(res[i].coupon.status === 2){
-              res[i].timeType = 'used';
-            } else if(res[i].coupon.status ===0){
-              res[i].timeType = 'unreceived'
-            }else if(res[i].coupon.status === 1){
-              if(res[i].coupon.id === -1){
-                res[i].timeType = 'notPrize';
-              }else {
-                res[i].timeType = 'received';
-              }
-            }
-            operationsList.push(res[i]);
-          }else if(res[i].type ===5 ){
-            hideCoupons.push(res[i]);
-          }else if(res[i].type === 2){
-            operationsList.push(res[i]);
-          }else if(res[i].type === 6){
-            var endTime = res[i].end_time.replace(/-/g,',');
-            endTime = new Date(endTime).getTime();
-            var nowTime = new Date().getTime();
-            if(endTime >= nowTime){
-              ctx.commit('setTipOperation',res[i]);
-            }
-          }else if(res[i].type === 7){
-            ctx.commit('setGzhOperation',res[i]);
-          }
-          else if(res[i].type === 8){
-            // console.log(ctx.state.activity_bounty);
-            activity_bounty.push(res[i]);
-          }else if(res[i].type === 9){
-            //type为9时为游戏次数运营位
-            ctx.commit('setTaskGame',res[i]);
-          }else if(res[i].type === 10){
-            //type为10时为掉落任务运营位
-            ctx.commit('setTaskWawa',res[i]);
-          }else if(res[i].type === 11){
-            //type为11时为关注店铺运营位
-            shopOperations.push(res[i])
+          if(res[i].type === 14){
+            ctx.commit('setTmallOperation',res[i]);
           }
         }
-        ctx.commit('setShopOperation',shopOperations);
-        let len = activity_bounty.length;
-        for(var j=0;j<len;j++){
-          for(var k=0;k<len-1-j;k++){
-            if(activity_bounty[k].voucher_batch.value>activity_bounty[k+1].voucher_batch.value){
-              var temp = activity_bounty[k+1];        //元素交换
-              activity_bounty[k+1] = activity_bounty[k];
-              activity_bounty[k] = temp;
-            }
-          }
-        }
-        ctx.commit('setActivityBounty',activity_bounty);
-        ctx.commit('setHideCoupons',hideCoupons);
-        ctx.commit('setOperations',operationsList)
-        success(operationsList)
-      }).catch(()=>{
-
-      })
+        })
+      //   api.getOperations({machine_no:ctx.state.machine_no,token:CONFIG.token}).then((data)=>{
+      //   //对运营位进行过滤
+      //   var res = data.data;
+      //   var operationsList = [];
+      //   var hideCoupons = [];
+      //   var activity_bounty = [];
+      //   var shopOperations = [];
+      //
+      //   for(var i=0;i<res.length;i++){
+      //     if(res[i].type ===1){
+      //       if(res[i].coupon){
+      //         if(res[i].coupon.type == 2 ){
+      //           operationsList.push(res[i]);
+      //         }else if(res[i].coupon.type == 1 && ((res[i].coin_price.coin_price - res[i].coupon.reduce) >0) ){
+      //           operationsList.push(res[i]);
+      //         }else if(res[i].coupon.type == 0 && ((res[i].coin_price.coin_price*res[i].coupon.reduce/100) >0)){
+      //           operationsList.push(res[i]);
+      //         }
+      //       }
+      //     }else if(res[i].type ===4 ){
+      //       if(res[i].coupon.status === 2){
+      //         res[i].timeType = 'used';
+      //       } else if(res[i].coupon.status ===0){
+      //         res[i].timeType = 'unreceived'
+      //       }else if(res[i].coupon.status === 1){
+      //         if(res[i].coupon.id === -1){
+      //           res[i].timeType = 'notPrize';
+      //         }else {
+      //           res[i].timeType = 'received';
+      //         }
+      //       }
+      //       operationsList.push(res[i]);
+      //     }else if(res[i].type ===5 ){
+      //       hideCoupons.push(res[i]);
+      //     }else if(res[i].type === 2){
+      //       operationsList.push(res[i]);
+      //     }else if(res[i].type === 6){
+      //       var endTime = res[i].end_time.replace(/-/g,',');
+      //       endTime = new Date(endTime).getTime();
+      //       var nowTime = new Date().getTime();
+      //       if(endTime >= nowTime){
+      //         ctx.commit('setTipOperation',res[i]);
+      //       }
+      //     }else if(res[i].type === 7){
+      //       ctx.commit('setGzhOperation',res[i]);
+      //     }
+      //     else if(res[i].type === 8){
+      //       // console.log(ctx.state.activity_bounty);
+      //       activity_bounty.push(res[i]);
+      //     }else if(res[i].type === 9){
+      //       //type为9时为游戏次数运营位
+      //       ctx.commit('setTaskGame',res[i]);
+      //     }else if(res[i].type === 10){
+      //       //type为10时为掉落任务运营位
+      //       ctx.commit('setTaskWawa',res[i]);
+      //     }else if(res[i].type === 11){
+      //       //type为11时为关注店铺运营位
+      //       shopOperations.push(res[i])
+      //     }else if(res[i].type === 14){
+      //       ctx.commit('setTmallOperation',res[i]);
+      //     }
+      //   }
+      //   ctx.commit('setShopOperation',shopOperations);
+      //   let len = activity_bounty.length;
+      //   for(var j=0;j<len;j++){
+      //     for(var k=0;k<len-1-j;k++){
+      //       if(activity_bounty[k].voucher_batch.value>activity_bounty[k+1].voucher_batch.value){
+      //         var temp = activity_bounty[k+1];        //元素交换
+      //         activity_bounty[k+1] = activity_bounty[k];
+      //         activity_bounty[k] = temp;
+      //       }
+      //     }
+      //   }
+      //   ctx.commit('setActivityBounty',activity_bounty);
+      //   ctx.commit('setHideCoupons',hideCoupons);
+      //   ctx.commit('setOperations',operationsList)
+      //   success(operationsList)
+      // }).catch(()=>{
+      // })
     })
   },
-  //获取奖励金（新版带任务）
-  getActivityBountyInfo(ctx){
-    return new Promise((success,error)=>{
-      api.getActivityBountyInfo({token:CONFIG.token}).then((data)=>{
-        ctx.commit('setTaskNow',data.data);
-        success(data.data);
-      }).catch((err)=>{
-        error(err)
-      })
-    })
-  },
-  //领取优惠券
-  consumer:function (ctx,ids) {
-    return new Promise((success,error) => {
-      api.consumer({coupon_ids:[ids.coupon_id],token:CONFIG.token}).then((data)=>{
-        if (data.status_code == 200) {
-          success(data)
-        }else {
-          error(data)
-        }
-      }).catch((err)=>{
-        error(err)
-      })
-    })
-  },
-  //使用优惠券
-  useCoupons:function (ctx,id) {
-    return new Promise(() => {
-      api.useCoupons({id:id,token:CONFIG.token}).then((data) => {
-      })
-    })
-  },
-  //抢红包
-  redReceive:function (ctx,record_id) {
-    return new Promise(() => {
-      api.redReceive({record_id:record_id,token:CONFIG.token}).then((data) => {
-      })
-    })
-  },
+  // //获取奖励金（新版带任务）
+  // getActivityBountyInfo(ctx){
+  //   return new Promise((success,error)=>{
+  //     api.getActivityBountyInfo({token:CONFIG.token}).then((data)=>{
+  //       ctx.commit('setTaskNow',data.data);
+  //       success(data.data);
+  //     }).catch((err)=>{
+  //       error(err)
+  //     })
+  //   })
+  // },
+  // //领取优惠券
+  // consumer:function (ctx,ids) {
+  //   return new Promise((success,error) => {
+  //     api.consumer({coupon_ids:[ids.coupon_id],token:CONFIG.token}).then((data)=>{
+  //       if (data.status_code == 200) {
+  //         success(data)
+  //       }else {
+  //         error(data)
+  //       }
+  //     }).catch((err)=>{
+  //       error(err)
+  //     })
+  //   })
+  // },
+  // //使用优惠券
+  // useCoupons:function (ctx,id) {
+  //   return new Promise(() => {
+  //     api.useCoupons({id:id,token:CONFIG.token}).then((data) => {
+  //     })
+  //   })
+  // },
+  // //抢红包
+  // redReceive:function (ctx,record_id) {
+  //   return new Promise(() => {
+  //     api.redReceive({record_id:record_id,token:CONFIG.token}).then((data) => {
+  //     })
+  //   })
+  // },
 
   //已经被舍弃
   // getActivityPromocode:function (ctx) {
@@ -467,15 +480,15 @@ const actions = {
   // },
 
   //奖励金兑换
-  getActivityBountyExchange:function (ctx,operation_id) {
-    return new Promise((success,error)=>{
-      api.getActivityBountyExchange({token:CONFIG.token,operation_id:operation_id}).then((data)=>{
-        success(data);
-      }).catch((err)=>{
-        error(err);
-      })
-    })
-  }
+  // getActivityBountyExchange:function (ctx,operation_id) {
+  //   return new Promise((success,error)=>{
+  //     api.getActivityBountyExchange({token:CONFIG.token,operation_id:operation_id}).then((data)=>{
+  //       success(data);
+  //     }).catch((err)=>{
+  //       error(err);
+  //     })
+  //   })
+  // }
 }
 
 export default {

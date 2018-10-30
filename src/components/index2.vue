@@ -54,7 +54,7 @@
 
       <div class="activitys" @click="goTmall">
         <!--<img src="http://res.catchme.com.cn/activity/miqi/image.png" alt=""/>-->
-        <img src="./../assets/miqi/image.png" alt=""/>
+        <img src="./../assets/miqi/banner.png" alt=""/>
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
@@ -65,55 +65,60 @@
           <div class="centerout">
             <div class="center">
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
-              <div class="ring" v-if="activity_bounty.length>0">
-                <div class="d">
-                  <div class="dd" :style="ringStyle">
-                    <div>
-                      <img class="img" src="./../assets/task-2/processed_bg.png" alt="">
-                      <!--<img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">-->
-                      <div class="star" :class="{'animation':starClass==='animation'}">
-                        <img class="star1" src="./../assets/ring/star1.png" alt="">
-                        <img class="star2" src="./../assets/ring/star2.png" alt="">
-                        <img class="star3" src="./../assets/ring/star3.png" alt="">
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-                <span class="icon"></span>
-                <!--<span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>-->
-                <div class="task-gift" v-for="(item,index) in activity_bounty">
-                  <!--<img class="ling" v-if="item.voucher_batch.value <= task_now.recharge_bounty" src="./../assets/task/red_ling.png" alt="" @click="receiveGift(item)" />-->
-                  <div class="ring-tip" @click="handleRed(item.voucher_batch.value <= task_now.recharge_bounty,item)">
-                    <div class="ring-tip-bg">
-                      <div class="ring-quan"  :class="{'ring-tip-ling':item.voucher_batch.value <= task_now.recharge_bounty}">
-                        <img v-if="item.voucher_batch.image" class="ringicon ringicon2" :src="item.voucher_batch.image" alt=""/>
-                      </div>
-                      <div class="ring-content"
-                           :class="{'last':(index+1)/activity_bounty.length>=0.6,'nolast':(index+1)/activity_bounty.length<0.6}">
-                        <p :class="{'hidden':item.voucher_batch.value - task_now.recharge_bounty<=0}">(再抓{{Math.ceil(( item.voucher_batch.value - task_now.recharge_bounty) / info.coin_num)}}次)</p>
-                        <h3 v-if="item.voucher_batch.description">{{item.voucher_batch.description}}</h3>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!--<img @click="openTip('receive')" class="ringicon ringicon1" v-if="activity_bounty[activity_bounty.length-1].voucher_batch.value <= task_now.recharge_bounty" src="./../assets/ring/lingbi.png" alt=""/>-->
-
-                <!--<div class="ring-tip" v-else="" @click="openTip('couponList')">-->
-                <!--<img  class="ringicon ringicon2"  src="./../assets/task/red.png" alt=""/>-->
-                <!--<p>在抓{{( activity_bounty[activity_bounty.length-1].voucher_batch.value - task_now.recharge_bounty)/info.coin_num}}次</p>-->
+              <!--<div class="ring" v-if="activity_bounty.length>0">-->
+                <!--<div class="d">-->
+                  <!--<div class="dd" :style="ringStyle">-->
+                    <!--<div>-->
+                      <!--<img class="img" src="./../assets/task-2/processed_bg.png" alt="">-->
+                      <!--&lt;!&ndash;<img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">&ndash;&gt;-->
+                      <!--<div class="star" :class="{'animation':starClass==='animation'}">-->
+                        <!--<img class="star1" src="./../assets/ring/star1.png" alt="">-->
+                        <!--<img class="star2" src="./../assets/ring/star2.png" alt="">-->
+                        <!--<img class="star3" src="./../assets/ring/star3.png" alt="">-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
                 <!--</div>-->
-              </div>
-              <div class="startgame"  :class="{'hasclick':start_desc == '投币中','hasuse':coin[0].status==0 && user.coins<=0}" id="coin-operated"
+
+                <!--<span class="icon"></span>-->
+                <!--&lt;!&ndash;<span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>&ndash;&gt;-->
+                <!--<div class="task-gift" v-for="(item,index) in activity_bounty">-->
+                  <!--&lt;!&ndash;<img class="ling" v-if="item.voucher_batch.value <= task_now.recharge_bounty" src="./../assets/task/red_ling.png" alt="" @click="receiveGift(item)" />&ndash;&gt;-->
+                  <!--<div class="ring-tip" @click="handleRed(item.voucher_batch.value <= task_now.recharge_bounty,item)">-->
+                    <!--<div class="ring-tip-bg">-->
+                      <!--<div class="ring-quan"  :class="{'ring-tip-ling':item.voucher_batch.value <= task_now.recharge_bounty}">-->
+                        <!--<img v-if="item.voucher_batch.image" class="ringicon ringicon2" :src="item.voucher_batch.image" alt=""/>-->
+                      <!--</div>-->
+                      <!--<div class="ring-content"-->
+                           <!--:class="{'last':(index+1)/activity_bounty.length>=0.6,'nolast':(index+1)/activity_bounty.length<0.6}">-->
+                        <!--<p :class="{'hidden':item.voucher_batch.value - task_now.recharge_bounty<=0}">(再抓{{Math.ceil(( item.voucher_batch.value - task_now.recharge_bounty) / info.coin_num)}}次)</p>-->
+                        <!--<h3 v-if="item.voucher_batch.description">{{item.voucher_batch.description}}</h3>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+
+                <!--&lt;!&ndash;<img @click="openTip('receive')" class="ringicon ringicon1" v-if="activity_bounty[activity_bounty.length-1].voucher_batch.value <= task_now.recharge_bounty" src="./../assets/ring/lingbi.png" alt=""/>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<div class="ring-tip" v-else="" @click="openTip('couponList')">&ndash;&gt;-->
+                <!--&lt;!&ndash;<img  class="ringicon ringicon2"  src="./../assets/task/red.png" alt=""/>&ndash;&gt;-->
+                <!--&lt;!&ndash;<p>在抓{{( activity_bounty[activity_bounty.length-1].voucher_batch.value - task_now.recharge_bounty)/info.coin_num}}次</p>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+              <!--</div>-->
+
+              <div class="startgame"  :class="{'hasclick':start_desc == '投币中','hasuse':(tmall_operation.task_count >= tmall_operation.num) && user.coins<=0}" id="coin-operated"
                    @click="handleStartingDevice">{{start_desc ? start_desc : '投币启动'}}
-                <img class="tmallfree" src="./../assets/miqi/free.png" alt="">
+                <img class="tmallfree" v-if="(tmall_operation.task_count < tmall_operation.num) || user.coins>0" src="./../assets/miqi/free.png" alt="">
+                <img class="tmallfree2" v-else="" src="./../assets/miqi/free_over.png" alt="">
               </div>
-              <div class="game-num norecharge" v-if="user.coins<=0 && coin[0].status!=0">您还没有游戏币，请先充值<span></span>
-              </div>
-              <div class="game-num" :class="{'hasusenum':coin[0].status==0 && user.coins<=0}" v-else>
+              <!--<div class="game-num norecharge" v-if="user.coins<=0 && coin[0].status!=0">您还没有游戏币，请先充值<span></span>-->
+              <!--</div>-->
+              <div class="game-num">
+
+              <!--:class="{'hasusenum':(tmall_operation.task_count >= tmall_operation.num) && user.coins<=0}"-->
                 <i id="coin_reduce" class="iconfont icon-jianhao" @click="handlerGameNum('-')" :class="{
-                     'active': gameNum === 1
+                     'active': gameNum <= 1
                  }"></i>
                 <div>
                   <h3>{{gameNum * info.coin_num}}币</h3>
@@ -127,8 +132,8 @@
               <img @click.prevent="" v-if="is_lamp_after && start_desc=='投币启动'" class="tbz"
                    src="http://res.catchme.com.cn/imgs-2018-02-05/btcg.gif" alt="">
               <div class="tip">
-                <p v-if="user.coins<=0 && !is_lamp_after && coin[0].status==0">您的游戏次数已使用完</p>
-                <p v-show="user.coins<=0  && !is_lamp_after &&  coin[0].status!=0">充值后点击“投币启动”按钮开始游戏</p>
+                <p v-if="user.coins<=0 && !is_lamp_after && (tmall_operation.task_count >= tmall_operation.num)">您的游戏次数已使用完</p>
+                <p v-show="user.coins<=0  && !is_lamp_after && (tmall_operation.task_count < tmall_operation.num)">领币后点击“投币启动”按钮开始游戏</p>
                 <p v-show="is_lamp_after && start_desc=='投币启动'">投币成功，<span>“摇动游戏杆”</span>即可开始游戏</p>
               </div>
             </div>
@@ -136,280 +141,282 @@
         </div>
       </div>
       <div class="footer">
-        <joPay ref="joPay" @changeTip="changeTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
-               @closeBg="closeBg"></joPay>
-      </div>
-      <div class="bg" v-show="bgShow && !tipContent.button" @click="closeBg">
-        <div class="bg-center1" v-if="contentShow == 'infinityTip'" @click.stop="">
-          <img class="bg-center1-img" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/infinity-after.png"
-               alt="">
-          <button class="btnTip bg-center-btn3"
-                  @click="useCoupons(currentCoupon.coupon.id,currentCoupon.coin_price.coin_price_id,currentCoupon.coupon.type,currentCoupon.coin_price.coin_num,currentCoupon.coin_price.type)"></button>
-          <img src="./../assets/small/icon_close.png" alt="" class="close"
-               @click="closeBg">
-          <span v-if="currentCoupon.coin_price.type == 1"
-                class="cost-price-bg">{{currentCoupon.coin_price.coin_price}}</span>
-          <span style="pointer-events: none;" class="infinity-tip-bg"
-                v-if="currentCoupon.coin_price.type == 1 && currentCoupon.coupon.type==1">{{(currentCoupon.coin_price.coin_price - currentCoupon.coupon.reduce).toFixed(2) | handleNum}}元无限抓</span>
-          <span style="pointer-events: none;" class="infinity-tip-bg"
-                v-if="currentCoupon.coin_price.type == 1 && currentCoupon.coupon.type==0">{{(currentCoupon.coin_price.coin_price * currentCoupon.coupon.reduce / 100).toFixed(2) | handleNum}}元无限抓</span>
-        </div>
-
-        <div class="bg-center2" v-if="contentShow == 'infinity'" @click.stop="">
-          <div style="position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);width: 100%">
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/infinity.png" alt=""
-                 style="width: 100%;">
-            <button class="bg-center-btn2" @click="closeBg"></button>
-          </div>
-        </div>
-
-        <div class="bg-center3" v-if="contentShow == 'newUser'" @click.stop="">
-          <img class="bg-center3-img" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/newUser.png" alt="">
-          <button class="btnTip bg-center-btn4"
-                  @click="useCoupons(currentCoupon.coupon.id,currentCoupon.coin_price.coin_price_id,currentCoupon.coupon.type,currentCoupon.coin_price.coin_num,currentCoupon.coin_price.type)"></button>
-          <img src="./../assets/small/icon_close.png" alt="" class="close"
-               @click="closeBg">
-          <span class="cost-price-bg">{{currentCoupon.coin_price.coin_price}}元</span>
-          <span v-if="currentCoupon.coin_price.type == 0 && currentCoupon.coupon.type==1"
-                class="put-tip-bg">{{(currentCoupon.coin_price.coin_price - currentCoupon.coupon.reduce).toFixed(2) | handleNum}}元</span>
-          <span v-if="currentCoupon.coin_price.type == 0 && currentCoupon.coupon.type==0 "
-                class="put-tip-bg">{{(currentCoupon.coin_price.coin_price * currentCoupon.coupon.reduce / 100).toFixed(2) | handleNum}}元</span>
-          <span v-if="currentCoupon.coupon.type != 2 && currentCoupon.coin_price.type != 1"
-                class="newUser-tip-bg">{{currentCoupon.coupon.title}}</span>
-        </div>
-
-        <div class="bg-center4" v-if="contentShow == 'hideCoupon'" @click.stop="">
-          <div class="bg-center-center">
-            <img class="bg-center4-img" @click.prevent=""
-                 src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png"
-                 alt="">
-            <h3 class="coupon-num" :class="{'coupon-infinity':currentCouponPay.type===1}">
-              {{Number(currentCouponPay.coin_price).toFixed(2) | handleNum}}元<span
-              v-if="currentCouponPay.type===0">{{currentCouponPay.coin_num}}币</span><span v-else="">无限玩</span></h3>
-            <p class="bg-center4-p" v-show="(currentCouponPay.original_price - currentCouponPay.coin_price)>0">
-              (立省{{(currentCouponPay.original_price - currentCouponPay.coin_price).toFixed(2) | handleNum}}元)</p>
-            <button class="bg-center4-btn1" @click="useCouponPay" id="use_hide_coupon">立即使用</button>
-            <button class="bg-center4-btn2 btn2" @click="continueRecharge" id="continue_recharge">
-              继续充{{pay.coin_price | handleNum}}元
-            </button>
-            <img src="./../assets/small/icon_close.png" alt="" class="close"
-                 @click="closeBg('hide')" id="close_hide_coupon">
-          </div>
-        </div>
-
-        <div class="bg-center5" v-if="contentShow == 'unRedCoupon'" @click.stop="">
-          <div class="bg-center-center">
-            <img class="bg-center5-img" @click.prevent=""
-                 src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/image_red_no2.png" alt=""/>
-            <button @click="closeBg">我知道啦</button>
-            <img src="./../assets/small/icon_close.png" alt="" class="close"
-                 @click="closeBg()">
-          </div>
-        </div>
-
-        <div class="bg-center6" v-if="contentShow == 'redCoupon'" @click.stop="">
-          <div class="bg-center-center">
-            <img class="bg-center6-img" @click.prevent=""
-                 src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/image_red_zhong2.png" alt=""/>
-            <p class="coupon-num bg-center6-p"><span
-              v-if="currentCoupon.coupon.type===3">{{(currentCoupon.coin_price.coin_price - currentCoupon.coupon.reduce).toFixed(2) | handleNum}}</span><span
-              v-if="currentCoupon.coupon.type===4">{(item.coin_price.coin_price * item.coupon.reduce / 100).toFixed(2) | handleNum}}</span>元{{currentCoupon.coin_price.coin_num}}币
-            </p>
-            <button
-              @click="useCoupons(currentCoupon.coupon.id,currentCoupon.coin_price.coin_price_id,currentCoupon.coupon.type,currentCoupon.coin_price.coin_num,currentCoupon.coin_price.type,currentCoupon.coin_price.coin_price,currentCoupon.coupon.reduce)"
-              id="use_coupon">
-              立即使用
-            </button>
-            <img src="./../assets/small/icon_close.png" alt="" class="close"
-                 @click="closeBg()">
-          </div>
-        </div>
-
-        <div class="bg-center7" v-if="contentShow == 'operationTip'" @click.stop="">
-          <div class="bg-center7-center">
-            <pre>{{operationTipContent}}</pre>
-          </div>
-        </div>
-
-        <div class="bg-center8" v-if="contentShow == 'notExchange'" @click.stop="">
-          <div>
-            <div>
-              <h3 class="tipTitle"><span></span><b>我的优惠券</b></h3>
-              <img src="./../assets/catch3/image_nothing.png" alt="" class="imgBg" @click.prevent="">
-              <p>暂时没有优惠券哦</p>
-            </div>
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg">
-          </div>
-        </div>
-
-        <div class="bg-center8-2" v-if="contentShow == 'activityRule'" @click.stop="">
-          <div>
-            <img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="" class="imgBg" @click.prevent=""/>
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg2"/>
-          </div>
-        </div>
-
-        <div class="bg-center9" v-show="contentShow == 'exchange2'" style="width: 100%;height: 100%">
-          <div class="bg-center9-center">
-            <div>
-              <h3 class="tipTitle"><span></span><b>{{couponInfo.name}}</b></h3>
-              <div class="scroll">
-                <span class="spanh3" id="copy">{{couponInfo.code}}</span>
-                <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
-                <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy">复制</button>
-              </div>
-              <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="" @click.prevent=""
-                   class="imgBg"/>
-              <a class="go-coupon-list" href="javascript:void(0)" @click.stop="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
-                class="iconfont icon-shuangjiantouyou"></i></a>
-            </div>
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg2"/>
-          </div>
-          <div style="width: 100%;height: 100%;position: absolute;z-index:1000" @click="closeBg2"></div>
-        </div>
-
-        <div class="bg-center10" v-if="contentShow == 'coin'" @click.stop="">
-          <div>
-            <div>
-              <img class="imgBg" src="http://res.catchme.com.cn/imgs-2018-02-05/tip/image_much.png" alt="">
-              <p>一次投币太多容易造成浪费<br/>确定继续投币吗？</p>
-              <button class="btn1" @click="reloadCoin">重新选择</button>
-              <button class="btn2" @click="continueCoin">继续投币</button>
-            </div>
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
-          </div>
-        </div>
-
-        <div class="bg-center11" v-if="contentShow == 'receive'" @click.stop="">
-          <div>
-            <div class="bg-center11-top">
-              <img class="top-img" src="./../assets/task-2/congratulate_bg.png" alt=""/>
-              <img v-if="currentGift.voucher_batch.big_image" class="top-wawa" :src="currentGift.voucher_batch.big_image" alt="">
-            </div>
-            <div class="bg-center11-main">
-              <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="" class="imgBg" @click.prevent=""/>-->
-              <div class="content">
-                <h3 class="tipTitle"><span></span><b>恭喜获得奖励金</b></h3>
-                <h5><span class="home_icon_bi"></span>{{task_now.recharge_bounty}}</h5>
-                <p>我的奖励金</p>
-                <div v-if="!isReceive">
-                  <dl class="dlCoupon">
-                    <dt>
-                      <h4>{{currentGift.voucher_batch.name}}</h4>
-                      <p>(消耗{{currentGift.voucher_batch.value}}个奖励金)</p>
-                    </dt>
-                    <dd>
-                      <button @click="receiveCoupon">领取</button>
-                    </dd>
-                  </dl>
-                </div>
-                <div v-else="">
-                  <dl class="dlCoupon">
-                    <dt>
-                      <h4>{{currentGift.voucher_batch.name}}</h4>
-                      <p>{{couponInfo.code}}</p>
-                      <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
-                    </dt>
-                    <dd>
-                      <button @click="useCoupon(couponInfo.code,couponInfo.end_time,currentGift.voucher_batch.name)">使用</button>
-                    </dd>
-                  </dl>
-                </div>
-                <a class="go-coupon-list" href="javascript:void(0)" @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
-                  class="iconfont icon-shuangjiantouyou"></i></a>
-              </div>
-            </div>
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
-          </div>
-        </div>
-
-        <div class="bg-center12" v-if="contentShow == 'couponList'" @click.stop="">
-          <div>
-            <div>
-              <h3 class="tipTitle"><span></span><b>我的优惠券</b></h3>
-              <ul>
-                <template v-for="activity_bountyItem in activity_bounty">
-                  <li v-for="item in activity_bountyItem.vouchers">
-                    <div>
-                      <dl class="dlCoupon">
-                        <dt>
-                          <h4>{{activity_bountyItem.voucher_batch.name}}</h4>
-                          <p>{{item.code}}</p>
-                          <p>有效期至：{{item.end_time | handleEndTime}}</p>
-                        </dt>
-                        <dd>
-                          <button @click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name)">使用</button>
-                        </dd>
-                      </dl>
-                    </div>
-                  </li>
-                </template>
-              </ul>
-            </div>
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg">
-          </div>
-        </div>
-
-        <div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">
-          <div>
-            <img @click.prevent="" :src="freeTipImg" alt="" class="imgBg"/>
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
-          </div>
-        </div>
-
-        <div class="bg-center14" v-if="contentShow == 'receiveBi'" @click.stop="">
-          <div class="center-bg" :style="centerStyle">
-            <div>
-              <div class="top-high">
-                <div class="con-light">
-                  <img src="http://res.catchme.com.cn/activity/task/con_light.png" alt="" @click.prevent=""/>
-                </div>
-                <img src="http://res.catchme.com.cn/activity/task/congradulation.png" alt="" class="top-high-bg"
-                     @click.prevent=""/>
-                <p>2币</p>
-              </div>
-              <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                   @click="closeBg"/>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-center15" v-if="contentShow == 'taskGameTip'" @click.stop="">
-          <div class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">
-            <div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>
-            <span
-              class="game-num"><b>{{task_now.game_bounty / info.coin_num}}/</b>{{task_game.value / info.coin_num}}</span>
-          </div>
-          <p>投币送币</p>
-          <p>累计抓{{task_game.value / info.coin_num}}次，送免费游戏币</p>
-          <button @click="closeBg">去抓娃娃</button>
-        </div>
-
-        <div class="bg-center15" v-if="contentShow == 'taskWawaTip'" @click.stop="">
-          <img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>
-          <p>抓中送币</p>
-          <p>您还没有抓中哦</p>
-          <button @click="closeBg">去抓娃娃</button>
-        </div>
-
-        <div class="bg-center16" v-if="contentShow == 'shopList'" @click.stop="">
-          <div v-for="item in shop_operation.slice(0,1)" >
-            <img class="bgImg" :src="item.url" alt="" >
-            <button @click="gzShop(item)">关注店铺</button>
-          </div>
-          <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-               @click="closeBg"/>
-        </div>
+        <!--<joPay ref="joPay" @changeTip="changeTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"-->
+               <!--@closeBg="closeBg"></joPay>-->
+        <joPay></joPay>
       </div>
 
-      <tipOperation></tipOperation>
+      <!--<div class="bg" v-show="bgShow && !tipContent.button" @click="closeBg">-->
+        <!--<div class="bg-center1" v-if="contentShow == 'infinityTip'" @click.stop="">-->
+          <!--<img class="bg-center1-img" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/infinity-after.png"-->
+               <!--alt="">-->
+          <!--<button class="btnTip bg-center-btn3"-->
+                  <!--@click="useCoupons(currentCoupon.coupon.id,currentCoupon.coin_price.coin_price_id,currentCoupon.coupon.type,currentCoupon.coin_price.coin_num,currentCoupon.coin_price.type)"></button>-->
+          <!--<img src="./../assets/small/icon_close.png" alt="" class="close"-->
+               <!--@click="closeBg">-->
+          <!--<span v-if="currentCoupon.coin_price.type == 1"-->
+                <!--class="cost-price-bg">{{currentCoupon.coin_price.coin_price}}</span>-->
+          <!--<span style="pointer-events: none;" class="infinity-tip-bg"-->
+                <!--v-if="currentCoupon.coin_price.type == 1 && currentCoupon.coupon.type==1">{{(currentCoupon.coin_price.coin_price - currentCoupon.coupon.reduce).toFixed(2) | handleNum}}元无限抓</span>-->
+          <!--<span style="pointer-events: none;" class="infinity-tip-bg"-->
+                <!--v-if="currentCoupon.coin_price.type == 1 && currentCoupon.coupon.type==0">{{(currentCoupon.coin_price.coin_price * currentCoupon.coupon.reduce / 100).toFixed(2) | handleNum}}元无限抓</span>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center2" v-if="contentShow == 'infinity'" @click.stop="">-->
+          <!--<div style="position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);width: 100%">-->
+            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/infinity.png" alt=""-->
+                 <!--style="width: 100%;">-->
+            <!--<button class="bg-center-btn2" @click="closeBg"></button>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center3" v-if="contentShow == 'newUser'" @click.stop="">-->
+          <!--<img class="bg-center3-img" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/newUser.png" alt="">-->
+          <!--<button class="btnTip bg-center-btn4"-->
+                  <!--@click="useCoupons(currentCoupon.coupon.id,currentCoupon.coin_price.coin_price_id,currentCoupon.coupon.type,currentCoupon.coin_price.coin_num,currentCoupon.coin_price.type)"></button>-->
+          <!--<img src="./../assets/small/icon_close.png" alt="" class="close"-->
+               <!--@click="closeBg">-->
+          <!--<span class="cost-price-bg">{{currentCoupon.coin_price.coin_price}}元</span>-->
+          <!--<span v-if="currentCoupon.coin_price.type == 0 && currentCoupon.coupon.type==1"-->
+                <!--class="put-tip-bg">{{(currentCoupon.coin_price.coin_price - currentCoupon.coupon.reduce).toFixed(2) | handleNum}}元</span>-->
+          <!--<span v-if="currentCoupon.coin_price.type == 0 && currentCoupon.coupon.type==0 "-->
+                <!--class="put-tip-bg">{{(currentCoupon.coin_price.coin_price * currentCoupon.coupon.reduce / 100).toFixed(2) | handleNum}}元</span>-->
+          <!--<span v-if="currentCoupon.coupon.type != 2 && currentCoupon.coin_price.type != 1"-->
+                <!--class="newUser-tip-bg">{{currentCoupon.coupon.title}}</span>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center4" v-if="contentShow == 'hideCoupon'" @click.stop="">-->
+          <!--<div class="bg-center-center">-->
+            <!--<img class="bg-center4-img" @click.prevent=""-->
+                 <!--src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png"-->
+                 <!--alt="">-->
+            <!--<h3 class="coupon-num" :class="{'coupon-infinity':currentCouponPay.type===1}">-->
+              <!--{{Number(currentCouponPay.coin_price).toFixed(2) | handleNum}}元<span-->
+              <!--v-if="currentCouponPay.type===0">{{currentCouponPay.coin_num}}币</span><span v-else="">无限玩</span></h3>-->
+            <!--<p class="bg-center4-p" v-show="(currentCouponPay.original_price - currentCouponPay.coin_price)>0">-->
+              <!--(立省{{(currentCouponPay.original_price - currentCouponPay.coin_price).toFixed(2) | handleNum}}元)</p>-->
+            <!--<button class="bg-center4-btn1" @click="useCouponPay" id="use_hide_coupon">立即使用</button>-->
+            <!--<button class="bg-center4-btn2 btn2" @click="continueRecharge" id="continue_recharge">-->
+              <!--继续充{{pay.coin_price | handleNum}}元-->
+            <!--</button>-->
+            <!--<img src="./../assets/small/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg('hide')" id="close_hide_coupon">-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center5" v-if="contentShow == 'unRedCoupon'" @click.stop="">-->
+          <!--<div class="bg-center-center">-->
+            <!--<img class="bg-center5-img" @click.prevent=""-->
+                 <!--src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/image_red_no2.png" alt=""/>-->
+            <!--<button @click="closeBg">我知道啦</button>-->
+            <!--<img src="./../assets/small/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg()">-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center6" v-if="contentShow == 'redCoupon'" @click.stop="">-->
+          <!--<div class="bg-center-center">-->
+            <!--<img class="bg-center6-img" @click.prevent=""-->
+                 <!--src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/image_red_zhong2.png" alt=""/>-->
+            <!--<p class="coupon-num bg-center6-p"><span-->
+              <!--v-if="currentCoupon.coupon.type===3">{{(currentCoupon.coin_price.coin_price - currentCoupon.coupon.reduce).toFixed(2) | handleNum}}</span><span-->
+              <!--v-if="currentCoupon.coupon.type===4">{(item.coin_price.coin_price * item.coupon.reduce / 100).toFixed(2) | handleNum}}</span>元{{currentCoupon.coin_price.coin_num}}币-->
+            <!--</p>-->
+            <!--<button-->
+              <!--@click="useCoupons(currentCoupon.coupon.id,currentCoupon.coin_price.coin_price_id,currentCoupon.coupon.type,currentCoupon.coin_price.coin_num,currentCoupon.coin_price.type,currentCoupon.coin_price.coin_price,currentCoupon.coupon.reduce)"-->
+              <!--id="use_coupon">-->
+              <!--立即使用-->
+            <!--</button>-->
+            <!--<img src="./../assets/small/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg()">-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center7" v-if="contentShow == 'operationTip'" @click.stop="">-->
+          <!--<div class="bg-center7-center">-->
+            <!--<pre>{{operationTipContent}}</pre>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center8" v-if="contentShow == 'notExchange'" @click.stop="">-->
+          <!--<div>-->
+            <!--<div>-->
+              <!--<h3 class="tipTitle"><span></span><b>我的优惠券</b></h3>-->
+              <!--<img src="./../assets/catch3/image_nothing.png" alt="" class="imgBg" @click.prevent="">-->
+              <!--<p>暂时没有优惠券哦</p>-->
+            <!--</div>-->
+            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg">-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center8-2" v-if="contentShow == 'activityRule'" @click.stop="">-->
+          <!--<div>-->
+            <!--<img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="" class="imgBg" @click.prevent=""/>-->
+            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg2"/>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center9" v-show="contentShow == 'exchange2'" style="width: 100%;height: 100%">-->
+          <!--<div class="bg-center9-center">-->
+            <!--<div>-->
+              <!--<h3 class="tipTitle"><span></span><b>{{couponInfo.name}}</b></h3>-->
+              <!--<div class="scroll">-->
+                <!--<span class="spanh3" id="copy">{{couponInfo.code}}</span>-->
+                <!--<p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>-->
+                <!--<button :data-clipboard-target="'#copy'" @click="copy" class="btncopy">复制</button>-->
+              <!--</div>-->
+              <!--<img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="" @click.prevent=""-->
+                   <!--class="imgBg"/>-->
+              <!--<a class="go-coupon-list" href="javascript:void(0)" @click.stop="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i-->
+                <!--class="iconfont icon-shuangjiantouyou"></i></a>-->
+            <!--</div>-->
+            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg2"/>-->
+          <!--</div>-->
+          <!--<div style="width: 100%;height: 100%;position: absolute;z-index:1000" @click="closeBg2"></div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center10" v-if="contentShow == 'coin'" @click.stop="">-->
+          <!--<div>-->
+            <!--<div>-->
+              <!--<img class="imgBg" src="http://res.catchme.com.cn/imgs-2018-02-05/tip/image_much.png" alt="">-->
+              <!--<p>一次投币太多容易造成浪费<br/>确定继续投币吗？</p>-->
+              <!--<button class="btn1" @click="reloadCoin">重新选择</button>-->
+              <!--<button class="btn2" @click="continueCoin">继续投币</button>-->
+            <!--</div>-->
+            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg"/>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center11" v-if="contentShow == 'receive'" @click.stop="">-->
+          <!--<div>-->
+            <!--<div class="bg-center11-top">-->
+              <!--<img class="top-img" src="./../assets/task-2/congratulate_bg.png" alt=""/>-->
+              <!--<img v-if="currentGift.voucher_batch.big_image" class="top-wawa" :src="currentGift.voucher_batch.big_image" alt="">-->
+            <!--</div>-->
+            <!--<div class="bg-center11-main">-->
+              <!--&lt;!&ndash;<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="" class="imgBg" @click.prevent=""/>&ndash;&gt;-->
+              <!--<div class="content">-->
+                <!--<h3 class="tipTitle"><span></span><b>恭喜获得奖励金</b></h3>-->
+                <!--<h5><span class="home_icon_bi"></span>{{task_now.recharge_bounty}}</h5>-->
+                <!--<p>我的奖励金</p>-->
+                <!--<div v-if="!isReceive">-->
+                  <!--<dl class="dlCoupon">-->
+                    <!--<dt>-->
+                      <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
+                      <!--<p>(消耗{{currentGift.voucher_batch.value}}个奖励金)</p>-->
+                    <!--</dt>-->
+                    <!--<dd>-->
+                      <!--<button @click="receiveCoupon">领取</button>-->
+                    <!--</dd>-->
+                  <!--</dl>-->
+                <!--</div>-->
+                <!--<div v-else="">-->
+                  <!--<dl class="dlCoupon">-->
+                    <!--<dt>-->
+                      <!--<h4>{{currentGift.voucher_batch.name}}</h4>-->
+                      <!--<p>{{couponInfo.code}}</p>-->
+                      <!--<p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>-->
+                    <!--</dt>-->
+                    <!--<dd>-->
+                      <!--<button @click="useCoupon(couponInfo.code,couponInfo.end_time,currentGift.voucher_batch.name)">使用</button>-->
+                    <!--</dd>-->
+                  <!--</dl>-->
+                <!--</div>-->
+                <!--<a class="go-coupon-list" href="javascript:void(0)" @click="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i-->
+                  <!--class="iconfont icon-shuangjiantouyou"></i></a>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg"/>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center12" v-if="contentShow == 'couponList'" @click.stop="">-->
+          <!--<div>-->
+            <!--<div>-->
+              <!--<h3 class="tipTitle"><span></span><b>我的优惠券</b></h3>-->
+              <!--<ul>-->
+                <!--<template v-for="activity_bountyItem in activity_bounty">-->
+                  <!--<li v-for="item in activity_bountyItem.vouchers">-->
+                    <!--<div>-->
+                      <!--<dl class="dlCoupon">-->
+                        <!--<dt>-->
+                          <!--<h4>{{activity_bountyItem.voucher_batch.name}}</h4>-->
+                          <!--<p>{{item.code}}</p>-->
+                          <!--<p>有效期至：{{item.end_time | handleEndTime}}</p>-->
+                        <!--</dt>-->
+                        <!--<dd>-->
+                          <!--<button @click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name)">使用</button>-->
+                        <!--</dd>-->
+                      <!--</dl>-->
+                    <!--</div>-->
+                  <!--</li>-->
+                <!--</template>-->
+              <!--</ul>-->
+            <!--</div>-->
+            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg">-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">-->
+          <!--<div>-->
+            <!--<img @click.prevent="" :src="freeTipImg" alt="" class="imgBg"/>-->
+            <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg"/>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center14" v-if="contentShow == 'receiveBi'" @click.stop="">-->
+          <!--<div class="center-bg" :style="centerStyle">-->
+            <!--<div>-->
+              <!--<div class="top-high">-->
+                <!--<div class="con-light">-->
+                  <!--<img src="http://res.catchme.com.cn/activity/task/con_light.png" alt="" @click.prevent=""/>-->
+                <!--</div>-->
+                <!--<img src="http://res.catchme.com.cn/activity/task/congradulation.png" alt="" class="top-high-bg"-->
+                     <!--@click.prevent=""/>-->
+                <!--<p>2币</p>-->
+              <!--</div>-->
+              <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                   <!--@click="closeBg"/>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center15" v-if="contentShow == 'taskGameTip'" @click.stop="">-->
+          <!--<div class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">-->
+            <!--<div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>-->
+            <!--<span-->
+              <!--class="game-num"><b>{{task_now.game_bounty / info.coin_num}}/</b>{{task_game.value / info.coin_num}}</span>-->
+          <!--</div>-->
+          <!--<p>投币送币</p>-->
+          <!--<p>累计抓{{task_game.value / info.coin_num}}次，送免费游戏币</p>-->
+          <!--<button @click="closeBg">去抓娃娃</button>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center15" v-if="contentShow == 'taskWawaTip'" @click.stop="">-->
+          <!--<img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>-->
+          <!--<p>抓中送币</p>-->
+          <!--<p>您还没有抓中哦</p>-->
+          <!--<button @click="closeBg">去抓娃娃</button>-->
+        <!--</div>-->
+
+        <!--<div class="bg-center16" v-if="contentShow == 'shopList'" @click.stop="">-->
+          <!--<div v-for="item in shop_operation.slice(0,1)" >-->
+            <!--<img class="bgImg" :src="item.url" alt="" >-->
+            <!--<button @click="gzShop(item)">关注店铺</button>-->
+          <!--</div>-->
+          <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+               <!--@click="closeBg"/>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<tipOperation></tipOperation>-->
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
   </div>
@@ -419,14 +426,14 @@
   import CONFIG from '../config'
   import {mapState} from 'vuex'
   import joPay from './wxpay'
-  import operations from './operations.vue'
+//  import operations from './operations.vue'
   import tip from './tip.vue'
-  import tipOperation from './tipoperation.vue'
+//  import tipOperation from './tipoperation.vue'
   import {getErrMsg} from './../util/index'
   import Toast from 'mint-ui/lib/Toast'
   import Clipboard from 'clipboard';
-  import quanprogress from './quanprogress.vue'
-  import task from './task.vue'
+//  import quanprogress from './quanprogress.vue'
+//  import task from './task.vue'
 
 
   export default {
@@ -502,32 +509,33 @@
       task_now: state => state.user.task_now,
       shop_operation: state => state.user.shop_operation,
       coin: state => state.user.coin,
+      tmall_operation: state => state.user.tmall_operation,
     }),
     components: {
       joPay,
-      operations,
+//      operations,
       tip,
-      tipOperation,
-      quanprogress,
-      task
+//      tipOperation,
+//      quanprogress,
+//      task
     },
     mounted() {
-      if (CONFIG.isWx) {
-        document.addEventListener('visibilitychange', function () {
-          if (!document.hidden) {
-            this.$store.dispatch('getUser');
-            this.$store.dispatch('getOperations');
-            this.$store.dispatch('getActivityBountyInfo')
-            this.bgShow = false;
-          }
-        }.bind(this));
-      } else if (CONFIG.isAlipay) {
-        document.addEventListener('resume', function () {
-//              this.$store.dispatch('getUser');
-          this.$store.dispatch('getActivityBountyInfo')
-          this.bgShow = false;
-        }.bind(this));
-      }
+//      if (CONFIG.isWx) {
+//        document.addEventListener('visibilitychange', function () {
+//          if (!document.hidden) {
+//            this.$store.dispatch('getUser');
+//            this.$store.dispatch('getOperations');
+//            this.$store.dispatch('getActivityBountyInfo')
+//            this.bgShow = false;
+//          }
+//        }.bind(this));
+//      } else if (CONFIG.isAlipay) {
+//        document.addEventListener('resume', function () {
+////              this.$store.dispatch('getUser');
+//          this.$store.dispatch('getActivityBountyInfo')
+//          this.bgShow = false;
+//        }.bind(this));
+//      }
       this.$store.dispatch('judgeMachine').then(() => {
         //用户可以操作时间
         localStorage.setItem('userTime', (Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart)))
@@ -537,200 +545,11 @@
       })
 //      this.$store.dispatch('getUser')
     },
-    methods: {
+    methods:{
       goTmall(){
-        window.location.href = 'http://yukhj.com/s/GusrU?tm=ef976c'
-      },
-      gzShop(item){
-        var self = this;
-        Tida.subscribe.add({
-          accountId:item.account_id
-        },function(data) {
-          self.$store.dispatch('getActivityBountyExchange', item.id).then((res) => {
-            self.$store.dispatch('getFreeCoin', {
-              coin_price_id: item.coin_price.coin_price_id,
-              coupon_id: item.coupon.id
-            }).then((data) => {
-              self.bgShow = false;
-              self.$store.commit('setCoins', data.data.coin_num);
-              self.$store.dispatch('getUser');
-              self.$store.dispatch('getOperations');
-            })
-          })
-          }, function (e) {
-            self.bgShow = false;
-          })
-      },
-      handleRed(flag, item) {
-        if (flag) {
-          this.receiveGift(item)
-        } else {
-          this.couponList()
-        }
-      },
-      receiveGift(gift) {
-        this.currentGift = gift;
-        this.openTip('receive');
-      },
-      couponList() {
-        var len = this.activity_bounty.length;
-        for (var i = 0; i < len; i++) {
-          if (this.activity_bounty[i].vouchers.length > 0) {
-            _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为：'+this.activity_bounty[0].voucher_batch.name, '']);
-            this.openTip('couponList');
-            return;
-          }
-        }
-        _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为：0', '']);
-        this.openTip('notExchange');
-      },
-      receiveTaskGame() {
-        //这里需要防止重复点击
-        if (!this.isRequest) {
-          this.isRequest = true;
-          this.$store.dispatch('getActivityBountyExchange', this.task_game.id).then((res) => {
-            this.$store.dispatch('getFreeCoin', {
-              coin_price_id: this.task_game.coin_price.coin_price_id,
-              coupon_id: this.task_game.coupon.id
-            }).then(() => {
-              this.isRequest = false;
-              this.receiveBiSuccess();
-              this.$store.dispatch('getUser')
-              this.$store.dispatch('getActivityBountyInfo')
-              this.$store.dispatch('getOperations')
-            })
-          })
-        }
-        //运营位id
-      },
-      receiveBiSuccess() {
-        this.bgShow = true;
-        this.contentShow = 'receiveBi';
-        setTimeout(() => {
-          this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
-        }, 0)
-        setTimeout(() => {
-          this.bgShow = false;
-          this.contentShow = '';
-          this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
-        }, 1500)
-      },
-      changeTaskGameProgress() {
-        /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
-//        每次投币之后自己请求,调用此方法改变进度
-
-        //计算180为100%
-//        var n = this.task_now.game_bounty/this.task_game.value*180+180;
-//        console.log('1111111111111----------'+this.task_now.recharge_bounty);
-//        console.log('222222222222------------'+this.activity_bounty.voucher_batch.value);
-        var len = this.activity_bounty.length;
-        var n = this.task_now.recharge_bounty / this.activity_bounty[len - 1].voucher_batch.value * 180 + 180;
-        if (n > 360) {
-          n = 360;
-        }
-        this.starClass = 'animation';
-        setTimeout(() => {
-          this.starClass = '';
-        }, 1000);
-        this.ringStyle = `transform:  rotate(${n}deg);`
-
-      },
-      receiveCoupon() {
-//        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
-//          this.isReceive = true;
-////          this.$store.commit('setActivityBountyValue',res.bounty);
-//          this.$store.dispatch('getActivityBounty');
-//          this.couponInfo = res;
-//        })
-        this.$store.dispatch('getActivityBountyExchange', this.currentGift.id).then((res) => {
-          this.couponInfo = res.data;
-          this.isReceive = true;
-          //重新获取奖励金信息
-          this.$store.dispatch('getActivityBountyInfo');
-          this.$store.dispatch('getOperations');
-        })
-      },
-      useCoupon(code, end_time,name) {
-        _hmt.push(['_trackEvent','打开使用优惠券弹窗', '点击', '使用优惠券为：'+name,'']);
-        this.contentShow = 'exchange2';
-        this.couponInfo.name = name;
-        this.couponInfo.code = code;
-        this.couponInfo.end_time = end_time;
-        this.isReceive = false;
-      },
-      copy() {
-        var clipboard = new Clipboard('.btncopy');
-        clipboard.on('success', e => {
-          console.log(e)
-          _hmt.push(['_trackEvent','点击复制优惠券', '点击', '复制优惠券为：'+this.couponInfo.name,'']);
-          Toast({
-            message: '复制成功',
-            position: 'middle',
-            duration: 1000
-          })
-          console.log('复制成功')
-          // 释放内存
-          clipboard.destroy()
-        })
-        clipboard.on('error', e => {
-          // 不支持复制
-          Toast({
-            message: '该浏览器不支持自动复制',
-            position: 'middle',
-            duration: 1000
-          })
-          console.log('该浏览器不支持自动复制')
-          // 释放内存
-          clipboard.destroy()
-        })
-      },
-      closeBg2() {
-        this.bgShow = false
-      },
-      openTip(value, value2 = '') {
-        this.freeTipImg = value2;
-        this.bgShow = true;
-        this.contentShow = value;
-      },
-//      getVoucherLength(value) {
-//        if (value > 1) {
-//          var scrollIn = document.querySelector('.scroll-in');
-//          scrollIn.style = 'width:' + (68.4 * value + 6.4) + 'vw';
-//        }
-//      },
-      tipButton() {
-        if (this.tipContent.button === '扫码换机') {
-          this.handleScanQRCode();
-        } else {
-          this.$store.commit('changeTipContent', {isShow: false});
-        }
-      },
-      useCouponPay() {
-        _hmt.push(['_trackEvent', '使用' + this.currentCouponPay.coin_price + '元' + this.currentCouponPay.coin_num + '币隐藏优惠券', '点击', '', '']);
-        this.$refs.joPay.handlePay(this.currentCouponPay.coin_price_id, this.currentCouponPay.coin_num, this.currentCouponPay.status, this.currentCouponPay.coin_price, this.currentCouponPay.type);
-      },
-      continueRecharge() {
-        _hmt.push(['_trackEvent', '继续充值' + this.pay.coin_price + '元', '点击', '', '']);
-        this.$refs.joPay.handlePay(this.pay.coin_price_id, this.pay.coin_num, this.pay.status, this.pay.coin_price, this.pay.type);
-      },
-      changeBgShow(obj) {
-        this.bgShow = obj.bgShow;
-        this.contentShow = obj.contentShow;
-        this.currentCoupon = obj.currentCoupon;
-        this.pay = obj.pay;
-        this.currentCouponPay = obj.currentCouponPay;
-        this.operationTipContent = obj.operationTipContent;
-      },
-      changeTip() {
-        this.bgShow = true;
-        this.contentShow = 'infinity';
-        this.is_lamp_after = true
-        setTimeout(() => {
-          this.is_lamp_after = false
-        }, 60000)
+        window.location.href = 'https://tempo.tmall.com/shop/view_shop.htm?spm=687.8433302.20001.1.8UjglF&mytmenu=mdianpu&utkn=g%2Corsw24dpwxb3djvz3g333rxmxwrll2q1540881427642&user_number_id=1761902730&scm=1028.1.2.20001'
       },
       closeBg(value) {
-        console.log('11111')
         if (value === 'red') {
           _hmt.push(['_trackEvent', '关闭红包弹窗', '点击', '', '']);
         } else if (value === 'hide') {
@@ -741,33 +560,11 @@
         }
         this.bgShow = false;
       },
-      useCoupons(coupon_id, coin_price_id, coupon_type, coin, type, coin_price, reduce) {
-        _hmt.push(['_trackEvent', '弹窗按钮使用红包', '点击', '红包价格为' + (coin_price - reduce) + '元', '']);
-        this.$refs.operations.useCoupons(coupon_id, coin_price_id, coupon_type, coin, type, coin_price, reduce);
-      },
-      handlerGameNum(x) {
-        if (x === '-') {
-          if (this.gameNum === 1) return false;
-          this.gameNum--;
-          _hmt.push(['_trackEvent', '减币', '点击', '', '']);
-        } else {
-          if (((this.gameNum + 1) * this.info.coin_num) > this.user.coins) {
-            return false
-          }
-          this.gameNum++;
-          _hmt.push(['_trackEvent', '加币', '点击', '', '']);
-        }
-      },
-      reloadCoin() {
-        this.gameNum = 1;
-        this.bgShow = false;
-      },
-      continueCoin() {
-        this.startingDevice();
-        this.bgShow = false;
-      },
       //投币，开始游戏
       handleStartingDevice() {
+//        if(this.gameNum === 0){
+//          return;
+//        }
         this.closeBg();
         if (this.info.online === 0) {
           this.$store.commit('changeTipContent', getErrMsg(1001));
@@ -859,8 +656,349 @@
       },
       hideKefu() {
         this.isKefuStyle = ' transform: translate3d(100%,0,0);';
-      }
+      },
+      tipButton() {
+        if (this.tipContent.button === '扫码换机') {
+          this.handleScanQRCode();
+        } else {
+          this.$store.commit('changeTipContent', {isShow: false});
+        }
+      },
+      handlerGameNum(x) {
+        if (x === '-') {
+          if (this.gameNum === 1) return false;
+          this.gameNum--;
+          _hmt.push(['_trackEvent', '减币', '点击', '', '']);
+        } else {
+          if (((this.gameNum + 1) * this.info.coin_num) > this.user.coins) {
+            return false
+          }
+          this.gameNum++;
+          _hmt.push(['_trackEvent', '加币', '点击', '', '']);
+        }
+      },
     },
+//    methods: {
+//      goTmall(){
+//        window.location.href = 'https://tempo.tmall.com/shop/view_shop.htm?spm=687.8433302.20001.1.8UjglF&mytmenu=mdianpu&utkn=g%2Corsw24dpwxb3djvz3g333rxmxwrll2q1540881427642&user_number_id=1761902730&scm=1028.1.2.20001'
+//      },
+//      gzShop(item){
+//        var self = this;
+//        Tida.subscribe.add({
+//          accountId:item.account_id
+//        },function(data) {
+//          self.$store.dispatch('getActivityBountyExchange', item.id).then((res) => {
+//            self.$store.dispatch('getFreeCoin', {
+//              coin_price_id: item.coin_price.coin_price_id,
+//              coupon_id: item.coupon.id
+//            }).then((data) => {
+//              self.bgShow = false;
+//              self.$store.commit('setCoins', data.data.coin_num);
+//              self.$store.dispatch('getUser');
+//              self.$store.dispatch('getOperations');
+//            })
+//          })
+//          }, function (e) {
+//            self.bgShow = false;
+//          })
+//      },
+//      handleRed(flag, item) {
+//        if (flag) {
+//          this.receiveGift(item)
+//        } else {
+//          this.couponList()
+//        }
+//      },
+//      receiveGift(gift) {
+//        this.currentGift = gift;
+//        this.openTip('receive');
+//      },
+//      couponList() {
+//        var len = this.activity_bounty.length;
+//        for (var i = 0; i < len; i++) {
+//          if (this.activity_bounty[i].vouchers.length > 0) {
+//            _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为：'+this.activity_bounty[0].voucher_batch.name, '']);
+//            this.openTip('couponList');
+//            return;
+//          }
+//        }
+//        _hmt.push(['_trackEvent','打开优惠券列表弹窗', '点击', '优惠券为：0', '']);
+//        this.openTip('notExchange');
+//      },
+//      receiveTaskGame() {
+//        //这里需要防止重复点击
+//        if (!this.isRequest) {
+//          this.isRequest = true;
+//          this.$store.dispatch('getActivityBountyExchange', this.task_game.id).then((res) => {
+//            this.$store.dispatch('getFreeCoin', {
+//              coin_price_id: this.task_game.coin_price.coin_price_id,
+//              coupon_id: this.task_game.coupon.id
+//            }).then(() => {
+//              this.isRequest = false;
+//              this.receiveBiSuccess();
+//              this.$store.dispatch('getUser')
+//              this.$store.dispatch('getActivityBountyInfo')
+//              this.$store.dispatch('getOperations')
+//            })
+//          })
+//        }
+//        //运营位id
+//      },
+//      receiveBiSuccess() {
+//        this.bgShow = true;
+//        this.contentShow = 'receiveBi';
+//        setTimeout(() => {
+//          this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
+//        }, 0)
+//        setTimeout(() => {
+//          this.bgShow = false;
+//          this.contentShow = '';
+//          this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
+//        }, 1500)
+//      },
+//      changeTaskGameProgress() {
+//        /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
+////        每次投币之后自己请求,调用此方法改变进度
+//
+//        //计算180为100%
+////        var n = this.task_now.game_bounty/this.task_game.value*180+180;
+////        console.log('1111111111111----------'+this.task_now.recharge_bounty);
+////        console.log('222222222222------------'+this.activity_bounty.voucher_batch.value);
+//        var len = this.activity_bounty.length;
+//        var n = this.task_now.recharge_bounty / this.activity_bounty[len - 1].voucher_batch.value * 180 + 180;
+//        if (n > 360) {
+//          n = 360;
+//        }
+//        this.starClass = 'animation';
+//        setTimeout(() => {
+//          this.starClass = '';
+//        }, 1000);
+//        this.ringStyle = `transform:  rotate(${n}deg);`
+//
+//      },
+//      receiveCoupon() {
+////        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
+////          this.isReceive = true;
+//////          this.$store.commit('setActivityBountyValue',res.bounty);
+////          this.$store.dispatch('getActivityBounty');
+////          this.couponInfo = res;
+////        })
+//        this.$store.dispatch('getActivityBountyExchange', this.currentGift.id).then((res) => {
+//          this.couponInfo = res.data;
+//          this.isReceive = true;
+//          //重新获取奖励金信息
+//          this.$store.dispatch('getActivityBountyInfo');
+//          this.$store.dispatch('getOperations');
+//        })
+//      },
+//      useCoupon(code, end_time,name) {
+//        _hmt.push(['_trackEvent','打开使用优惠券弹窗', '点击', '使用优惠券为：'+name,'']);
+//        this.contentShow = 'exchange2';
+//        this.couponInfo.name = name;
+//        this.couponInfo.code = code;
+//        this.couponInfo.end_time = end_time;
+//        this.isReceive = false;
+//      },
+//      copy() {
+//        var clipboard = new Clipboard('.btncopy');
+//        clipboard.on('success', e => {
+//          console.log(e)
+//          _hmt.push(['_trackEvent','点击复制优惠券', '点击', '复制优惠券为：'+this.couponInfo.name,'']);
+//          Toast({
+//            message: '复制成功',
+//            position: 'middle',
+//            duration: 1000
+//          })
+//          console.log('复制成功')
+//          // 释放内存
+//          clipboard.destroy()
+//        })
+//        clipboard.on('error', e => {
+//          // 不支持复制
+//          Toast({
+//            message: '该浏览器不支持自动复制',
+//            position: 'middle',
+//            duration: 1000
+//          })
+//          console.log('该浏览器不支持自动复制')
+//          // 释放内存
+//          clipboard.destroy()
+//        })
+//      },
+//      closeBg2() {
+//        this.bgShow = false
+//      },
+//      openTip(value, value2 = '') {
+//        this.freeTipImg = value2;
+//        this.bgShow = true;
+//        this.contentShow = value;
+//      },
+//      tipButton() {
+//        if (this.tipContent.button === '扫码换机') {
+//          this.handleScanQRCode();
+//        } else {
+//          this.$store.commit('changeTipContent', {isShow: false});
+//        }
+//      },
+//      useCouponPay() {
+//        _hmt.push(['_trackEvent', '使用' + this.currentCouponPay.coin_price + '元' + this.currentCouponPay.coin_num + '币隐藏优惠券', '点击', '', '']);
+//        this.$refs.joPay.handlePay(this.currentCouponPay.coin_price_id, this.currentCouponPay.coin_num, this.currentCouponPay.status, this.currentCouponPay.coin_price, this.currentCouponPay.type);
+//      },
+//      continueRecharge() {
+//        _hmt.push(['_trackEvent', '继续充值' + this.pay.coin_price + '元', '点击', '', '']);
+//        this.$refs.joPay.handlePay(this.pay.coin_price_id, this.pay.coin_num, this.pay.status, this.pay.coin_price, this.pay.type);
+//      },
+//      changeBgShow(obj) {
+//        this.bgShow = obj.bgShow;
+//        this.contentShow = obj.contentShow;
+//        this.currentCoupon = obj.currentCoupon;
+//        this.pay = obj.pay;
+//        this.currentCouponPay = obj.currentCouponPay;
+//        this.operationTipContent = obj.operationTipContent;
+//      },
+//      changeTip() {
+//        this.bgShow = true;
+//        this.contentShow = 'infinity';
+//        this.is_lamp_after = true
+//        setTimeout(() => {
+//          this.is_lamp_after = false
+//        }, 60000)
+//      },
+//      useCoupons(coupon_id, coin_price_id, coupon_type, coin, type, coin_price, reduce) {
+//        _hmt.push(['_trackEvent', '弹窗按钮使用红包', '点击', '红包价格为' + (coin_price - reduce) + '元', '']);
+//        this.$refs.operations.useCoupons(coupon_id, coin_price_id, coupon_type, coin, type, coin_price, reduce);
+//      },
+//      handlerGameNum(x) {
+//        if (x === '-') {
+//          if (this.gameNum === 1) return false;
+//          this.gameNum--;
+//          _hmt.push(['_trackEvent', '减币', '点击', '', '']);
+//        } else {
+//          if (((this.gameNum + 1) * this.info.coin_num) > this.user.coins) {
+//            return false
+//          }
+//          this.gameNum++;
+//          _hmt.push(['_trackEvent', '加币', '点击', '', '']);
+//        }
+//      },
+//      reloadCoin() {
+//        this.gameNum = 1;
+//        this.bgShow = false;
+//      },
+//      continueCoin() {
+//        this.startingDevice();
+//        this.bgShow = false;
+//      },
+//
+//      closeBg(value) {
+//        if (value === 'red') {
+//          _hmt.push(['_trackEvent', '关闭红包弹窗', '点击', '', '']);
+//        } else if (value === 'hide') {
+//          _hmt.push(['_trackEvent', '关闭' + this.pay.coin_price + '元弹窗优惠券', '点击', '', '']);
+//        }
+//        if (this.contentShow === 'exchange' || this.contentShow === 'exchange2') {
+//          return
+//        }
+//        this.bgShow = false;
+//      },
+//      //投币，开始游戏
+//      handleStartingDevice() {
+////        if(this.gameNum === 0){
+////          return;
+////        }
+//        this.closeBg();
+//        if (this.info.online === 0) {
+//          this.$store.commit('changeTipContent', getErrMsg(1001));
+//          return
+//        }
+//        if (this.is_start) {
+//          return
+//        } else {
+//          if (this.gameNum * this.info.coin_num < 50) {
+//            this.startingDevice();
+//          } else if (this.gameNum * this.info.coin_num >= 99) {
+//            Toast({
+//              message: '投币数量太多，请重新选择',
+//              position: 'middle',
+//              duration: 1000
+//            })
+//            this.gameNum = 1;
+//            return;
+//          } else {
+//            this.bgShow = true;
+//            this.contentShow = 'coin';
+//            return;
+//          }
+//        }
+//      },
+//      startingDevice() {
+//        this.is_start = true
+//        this.is_lamp_after = false
+//        this.start_desc = '投币中'
+//        if (this.user.coins < this.info.coin_num) {
+//          this.start_desc = '';
+//          this.is_start = false
+////          this.$store.commit('changeTipContent', getErrMsg(1005));
+//          return false
+//        }
+//        //添加百度统计
+//        _hmt.push(['_trackEvent', '主按钮投币', '点击', '投币-游戏次数-' + this.gameNum, '']);
+//        this.$store.dispatch('startingDevice', this.gameNum * this.info.coin_num)
+//          .then(() => {
+//            //投币成功，重新调用获取task_now的接口
+//            this.$store.dispatch('getActivityBountyInfo');
+//            this.is_lamp_after = true
+//            this.is_start = false
+//            this.start_desc = '投币启动'
+//            this.gameNum = 1;
+//            setTimeout(() => {
+//              this.is_lamp_after = false
+//            }, 12000 * this.gameNum)
+//          })
+//          .catch(() => {
+//            this.is_start = false
+//            this.start_desc = '投币启动'
+//          })
+//      },
+//      handleScanQRCode() {
+//        _hmt.push(['_trackEvent', '扫码更换机器', '点击', '', '']);//添加百度统计
+//        if (CONFIG.isAlipay) {
+//          ap.scan(function (res) {
+//            if (res.code) {
+//              window.location.href = res.code
+//            }
+//          })
+//        } else if(CONFIG.isWx){
+//          wx.scanQRCode({
+//            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+//            scanType: ["qrCode"], // 可以指定扫二维码还是一维码，默认二者都有
+//            success: function (res) {
+//              var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+//              window.location.href = result
+//            },
+//            error: function () {
+//              alert('扫码失败')
+//            }
+//          })
+//        }else {
+//          Tida.scanCode(function(res){
+//            if (res.code) {
+//              if(res.type !== 'ERROR'){
+//                window.location.href = res.code
+//              }
+//            }
+//          });
+//        }
+//      },
+//      showKefu() {
+//        _hmt.push(['_trackEvent', '客服', '点击', '', '']);
+////        this.kefuImg = 'http://res.catchme.com.cn/imgs-2018-04-10/qrcode2.jpg';
+//        this.isKefuStyle = ' transform: translate3d(0,0,0);';
+//      },
+//      hideKefu() {
+//        this.isKefuStyle = ' transform: translate3d(100%,0,0);';
+//      }
+//    },
     watch: {
       user(newUser, oldUser) {
         if (oldUser.coins === 0) {
@@ -872,64 +1010,54 @@
           }, 2000)
         }
       },
-      task_now(newValue, oldValue) {
-        if (newValue.recharge_bounty !== oldValue.recharge_bounty) {
-          this.changeTaskGameProgress();
-        }
-//        if(this.activity_bounty.voucher_batch.value <= newValue.recharge_bounty ){
-//          this.openTip('receive');
+//      task_now(newValue, oldValue) {
+//        if (newValue.recharge_bounty !== oldValue.recharge_bounty) {
+//          this.changeTaskGameProgress();
 //        }
-      },
+////        if(this.activity_bounty.voucher_batch.value <= newValue.recharge_bounty ){
+////          this.openTip('receive');
+////        }
+//      },
       //来设置图形的位置
-      activity_bounty(newValue) {
-        setTimeout(() => {
-          var taskGiftList = document.querySelectorAll('.task-gift');
-          var len = newValue.length;
-          for (var i = 0; i < len; i++) {
-            var n = newValue[i].voucher_batch.value / newValue[len - 1].voucher_batch.value;
-            //根据角度获取圆环上的坐标点来进行定位
-            console.log(n);
-            var x1 = 241 - 215 * Math.cos(n * 3.14) - 60;
-            var y1 = 222 - 215 * Math.sin(n * 3.14) - 38;
-//            var x1 = 215 -  202 * Math.cos(n* 3.14);
-//            var y1 = 209 -  202 * Math.sin(n* 3.14);
-            console.log(x1);
-            console.log(y1);
-            var nowX1 = x1 / 7.5.toFixed(3) + 'vw';
-            var nowY1 = y1 / 7.5.toFixed(3) + 'vw';
-            console.log('nowX1----' + nowX1);
-            console.log('nowY1----' + nowY1);
-            taskGiftList[i].style = `left:${nowX1};top:${nowY1}`;
-          }
-        }, 0)
-      }
-
-    },
-    filters: {
-      handleEndTime(value) {
-        if (value) {
-          return value.split(' ')[0].replace(/-/g, '.');
-        } else {
-          return value;
-        }
-      },
-      handleActivityBounty(value) {
-        var sum = 0;
-        for (var item of value) {
-          sum += item.vouchers.length;
-        }
-        return sum
-      }
-//      handleArr(arr){
-//        var max = 0;
-//        for(var i=0;i<arr.length;i++){
-//          if(arr[i].voucher_batch.value>max){
-//            max = arr[i].voucher_batch.value;
+//      activity_bounty(newValue) {
+//        setTimeout(() => {
+//          var taskGiftList = document.querySelectorAll('.task-gift');
+//          var len = newValue.length;
+//          for (var i = 0; i < len; i++) {
+//            var n = newValue[i].voucher_batch.value / newValue[len - 1].voucher_batch.value;
+//            //根据角度获取圆环上的坐标点来进行定位
+//            console.log(n);
+//            var x1 = 241 - 215 * Math.cos(n * 3.14) - 60;
+//            var y1 = 222 - 215 * Math.sin(n * 3.14) - 38;
+////            var x1 = 215 -  202 * Math.cos(n* 3.14);
+////            var y1 = 209 -  202 * Math.sin(n* 3.14);
+//            console.log(x1);
+//            console.log(y1);
+//            var nowX1 = x1 / 7.5.toFixed(3) + 'vw';
+//            var nowY1 = y1 / 7.5.toFixed(3) + 'vw';
+//            console.log('nowX1----' + nowX1);
+//            console.log('nowY1----' + nowY1);
+//            taskGiftList[i].style = `left:${nowX1};top:${nowY1}`;
 //          }
-//        }
-//        return max;
+//        }, 0)
 //      }
-    }
+    },
+//    filters: {
+//      handleEndTime(value) {
+//        if (value) {
+//          return value.split(' ')[0].replace(/-/g, '.');
+//        } else {
+//          return value;
+//        }
+//      },
+//      handleActivityBounty(value) {
+//        var sum = 0;
+//        for (var item of value) {
+//          sum += item.vouchers.length;
+//        }
+//        return sum
+//      }
+//    }
   }
 </script>
 
@@ -1139,7 +1267,7 @@
         font-size: 22px;
         text-align: center;
         a {
-          color: #043aa3;
+          color: #1b3dc3;
         }
         span {
           display: inline-block;
@@ -1926,8 +2054,17 @@
     height: 100%;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");*/
     /*background: url("http://res.catchme.com.cn/activity/miqi/bg.png") no-repeat;*/
-    background: url("./../assets/miqi/bg.png") no-repeat;
-    background-size: 100% 100%;
+    /*background: url("./../assets/miqi/bg.png") no-repeat;*/
+    /*background-size: 100% 100%;*/
+    background-image: linear-gradient(-2deg,
+      #0e2585 0%,
+      #2a4abd 49%,
+      #0f2382 100%),
+    linear-gradient(
+        #000000,
+        #000000);
+    background-blend-mode: normal,
+    normal;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -2000,7 +2137,7 @@
   .header .header-main h4 {
     /*font-size: 0.24px;*/
     font-size: 26px;
-    color: #ffe7e0;
+    color: #fff;
     /*line-height: 44px;*/
     margin: 0 0 12px 0;
     line-height: 26px;
@@ -2019,7 +2156,7 @@
     padding: 0 22px;
     line-height: 62px;
     border-radius: 31px;
-    background: #dff5ff;
+    background: #d5e3fd;
     float: left;
     /*min-width: 2px;*/
     position: relative;
@@ -2059,13 +2196,13 @@
 
   .header .header-main .game span {
     font-size: 28px;
-    color: #043aa3;
+    color: #1b3dc3;
     display: inline-block;
   }
 
   .header .header-main .game span.coins-num {
     font-size: 36px;
-    color: #043aa3;
+    color: #1b3dc3;
     /*font-weight: 600;*/
     margin: 0 0 0 10px;
     line-height: 70px;
@@ -2079,7 +2216,7 @@
   .header .header-main .kefu {
     /*width: 0.62px;*/
     height: 62px;
-    background: #dff5ff;
+    background: #d5e3fd;
     /*border-radius: 50%;*/
     /*float: right;*/
     /*position: relative;*/
@@ -2104,7 +2241,7 @@
 
   .header .header-main .kefu > p > span {
     /*display: inline-block;*/
-    color: #043aa3;
+    color: #1b3dc3;
     font-size: 28px;
     height: 28px;
     line-height: 70px;
@@ -2161,7 +2298,8 @@
   .main .centerout .center {
     width: 100%;
     /*height: 5px;*/
-    background: #fff;
+    background: #fff url("./../assets/miqi/bg_center.png") no-repeat;
+    background-size: 100%;
     /*margin: 0.32px 0 0 0;*/
     /*padding: 0.28px 0.2px 0 0.2px;*/
     /*padding: 90px 20px 0 20px ;*/
@@ -2517,11 +2655,18 @@
   }
 
   .main .center .startgame .tmallfree{
-    width: 117px;
-    height: 89px;
+    width: 146px;
+    height: 136px;
     position: absolute;
     right: -138px;
-    top:115px;
+    top:49px;
+  }
+  .main .center .startgame .tmallfree2{
+    width: 182px;
+    height: 135px;
+    position: absolute;
+    right: -174px;
+    top:47px;
   }
     .main .center .hasclick {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_ing.png");*/
