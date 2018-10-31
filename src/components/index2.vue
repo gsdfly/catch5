@@ -780,13 +780,16 @@
 //          this.bgShow = false;
         }.bind(this));
       }
-      this.$store.dispatch('judgeMachine').then(() => {
+      this.$store.dispatch('judgeMachine').then((res) => {
         localStorage.setItem('machine_obj', JSON.stringify({'url':document.URL,'time':new Date().getTime()}));
         //用户可以操作时间
         localStorage.setItem('userTime', (Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart)))
         this.Indicator.close();
         this.showHtml = true;
         this.isGetImg = true;
+        if (res.online === 0) {
+          this.$store.commit('changeTipContent', getErrMsg(1001));
+        }
       })
 //      this.$store.dispatch('getUser')
     },
@@ -3487,7 +3490,7 @@
     margin: 0 14px 4px 0;
     float: right;
     /*position: absolute;*/
-    /*left: 5px;*/ 
+    /*left: 5px;*/
     /*top:0;*/
     /*font-size: 26px;*/
     /*color: #2e339b;*/
