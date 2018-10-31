@@ -108,34 +108,35 @@
               break;
             }
           }
-
-          //获取本地的guide
-          var guideTime = localStorage.getItem('guideTime');
-          var date = new Date();
-          var nowTime = date.getMonth()+''+date.getDate();
-          if(!hasGzh){
-            if(!(guideTime === nowTime)){
-              this.$store.commit('changeIsGuide',true);
-              localStorage.setItem('guideTime',nowTime)
-            }
-          }else {
-            var guideNum = localStorage.getItem('guideNum');
-            if(guideNum){
-              if(guideNum == 1){
-                if(guideTime !== nowTime){
-                  this.$store.commit('changeIsGuide',true);
-                  localStorage.setItem('guideTime',nowTime);
-                  localStorage.setItem('guideNum',2)
-                }
-              }else {
-                if(guideTime !== nowTime){
-                  this.$store.commit('changeIsGuide',true);
-                  localStorage.setItem('guideNum',1)
-                }
+          if(this.info.online === 1){
+            //获取本地的guide
+            var guideTime = localStorage.getItem('guideTime');
+            var date = new Date();
+            var nowTime = date.getMonth()+''+date.getDate();
+            if(!hasGzh){
+              if(!(guideTime === nowTime)){
+                this.$store.commit('changeIsGuide',true);
+                localStorage.setItem('guideTime',nowTime)
               }
             }else {
-              this.$store.commit('changeIsGuide',true);
-              localStorage.setItem('guideNum',1)
+              var guideNum = localStorage.getItem('guideNum');
+              if(guideNum){
+                if(guideNum == 1){
+                  if(guideTime !== nowTime){
+                    this.$store.commit('changeIsGuide',true);
+                    localStorage.setItem('guideTime',nowTime);
+                    localStorage.setItem('guideNum',2)
+                  }
+                }else {
+                  if(guideTime !== nowTime){
+                    this.$store.commit('changeIsGuide',true);
+                    localStorage.setItem('guideNum',1)
+                  }
+                }
+              }else {
+                this.$store.commit('changeIsGuide',true);
+                localStorage.setItem('guideNum',1)
+              }
             }
           }
 
