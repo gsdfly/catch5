@@ -532,12 +532,15 @@
 //          this.bgShow = false;
 //        }.bind(this));
 //      }
-      this.$store.dispatch('judgeMachine').then(() => {
+      this.$store.dispatch('judgeMachine').then((res) => {
         //用户可以操作时间
         localStorage.setItem('userTime', (Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart)))
         this.Indicator.close();
         this.showHtml = true;
         this.isGetImg = true;
+        if (res.online === 0) {
+          this.$store.commit('changeTipContent', getErrMsg(1001));
+        }
       })
 //      this.$store.dispatch('getUser')
     },
