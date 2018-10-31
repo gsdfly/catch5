@@ -114,9 +114,8 @@
               </div>
               <!--<div class="game-num norecharge" v-if="user.coins<=0 && coin[0].status!=0">您还没有游戏币，请先充值<span></span>-->
               <!--</div>-->
-              <div class="game-num">
-
-              <!--:class="{'hasusenum':(tmall_operation.task_count >= tmall_operation.num) && user.coins<=0}"-->
+              <div class="game-num"
+              :class="{'hasusenum':(tmall_operation.task_count >= tmall_operation.num) && user.coins<=0}">
                 <i id="coin_reduce" class="iconfont icon-jianhao" @click="handlerGameNum('-')" :class="{
                      'active': gameNum <= 1
                  }"></i>
@@ -440,7 +439,7 @@
     data() {
       return {
         start_desc: '投币启动',
-        gameNum: 1,
+        gameNum: 0,
         is_start: false,
         is_lamp_after: false,
         is_recharge: false,
@@ -562,9 +561,9 @@
       },
       //投币，开始游戏
       handleStartingDevice() {
-//        if(this.gameNum === 0){
-//          return;
-//        }
+        if(this.gameNum === 0){
+          return;
+        }
         this.closeBg();
         if (this.info.online === 0) {
           this.$store.commit('changeTipContent', getErrMsg(1001));
@@ -1001,6 +1000,9 @@
 //    },
     watch: {
       user(newUser, oldUser) {
+        if(newUser.coins > 0){
+          this.gameNum = 1
+        }
         if (oldUser.coins === 0) {
           return;
         }
