@@ -665,7 +665,7 @@
       },
       handlerGameNum(x) {
         if (x === '-') {
-          if (this.gameNum === 1) return false;
+          if (this.gameNum <= 1) return false;
           this.gameNum--;
           _hmt.push(['_trackEvent', '减币', '点击', '', '']);
         } else {
@@ -2253,7 +2253,7 @@
 
   .main {
     width: 100%;
-    height: 46.6%;
+    height: 46.3%;
     min-height: 538px;
     /*height: calc(100% - 4.98px);*/
     position: relative;
@@ -2795,7 +2795,7 @@
     width: 100%;
     /*height: 3.4px;*/
     /*height: 28%;*/
-    height: 27%;
+    height: 27.3%;
     min-height: 310px;
     position: relative;
     /*padding: 0.36px 0.22px 0 0.22px;*/
