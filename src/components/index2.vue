@@ -543,7 +543,7 @@
     },
     methods:{
       goTmall(){
-        window.location.href = 'https://tempo.tmall.com/shop/view_shop.htm?spm=687.8433302.20001.1.8UjglF&mytmenu=mdianpu&utkn=g%2Corsw24dpwxb3djvz3g333rxmxwrll2q1540881427642&user_number_id=1761902730&scm=1028.1.2.20001'
+        window.location.href = 'https://speedoyd.m.tmall.com/?ajson=1&parentCatId=0&weexShopTab=shopindexbar&weexShopSubTab=shopindex'
       },
       closeBg(value) {
         if (value === 'red') {
@@ -662,7 +662,7 @@
       },
       handlerGameNum(x) {
         if (x === '-') {
-          if (this.gameNum === 1) return false;
+          if (this.gameNum <= 1) return false;
           this.gameNum--;
           _hmt.push(['_trackEvent', '减币', '点击', '', '']);
         } else {
@@ -2241,7 +2241,7 @@
 
   .main {
     width: 100%;
-    height: 46.6%;
+    height: 46.3%;
     min-height: 538px;
     /*height: calc(100% - 4.98px);*/
     position: relative;
@@ -2782,7 +2782,7 @@
     width: 100%;
     /*height: 3.4px;*/
     /*height: 28%;*/
-    height: 27%;
+    height: 27.3%;
     min-height: 310px;
     position: relative;
     /*padding: 0.36px 0.22px 0 0.22px;*/
