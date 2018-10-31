@@ -109,14 +109,10 @@
 
               <div class="startgame"  :class="{'hasclick':start_desc == '投币中','hasuse':(tmall_operation.task_count >= tmall_operation.num) && user.coins<=0}" id="coin-operated"
                    @click="handleStartingDevice">{{start_desc ? start_desc : '投币启动'}}
-                <img class="tmallfree" v-if="(tmall_operation.task_count < tmall_operation.num) || user.coins>0" src="./../assets/miqi/free.png" alt="">
-                <img class="tmallfree2" v-else="" src="./../assets/miqi/free_over.png" alt="">
               </div>
               <!--<div class="game-num norecharge" v-if="user.coins<=0 && coin[0].status!=0">您还没有游戏币，请先充值<span></span>-->
               <!--</div>-->
-              <div class="game-num">
-
-              <!--:class="{'hasusenum':(tmall_operation.task_count >= tmall_operation.num) && user.coins<=0}"-->
+              <div class="game-num" :class="{'hasusenum':(tmall_operation.task_count >= tmall_operation.num) && user.coins<=0}">
                 <i id="coin_reduce" class="iconfont icon-jianhao" @click="handlerGameNum('-')" :class="{
                      'active': gameNum <= 1
                  }"></i>
@@ -440,7 +436,7 @@
     data() {
       return {
         start_desc: '投币启动',
-        gameNum: 1,
+        gameNum: 0,
         is_start: false,
         is_lamp_after: false,
         is_recharge: false,
@@ -562,9 +558,9 @@
       },
       //投币，开始游戏
       handleStartingDevice() {
-//        if(this.gameNum === 0){
-//          return;
-//        }
+        if(this.gameNum === 0){
+          return;
+        }
         this.closeBg();
         if (this.info.online === 0) {
           this.$store.commit('changeTipContent', getErrMsg(1001));
@@ -1001,6 +997,9 @@
 //    },
     watch: {
       user(newUser, oldUser) {
+        if(newUser.coins>0){
+          this.gameNum =1;
+        }
         if (oldUser.coins === 0) {
           return;
         }
@@ -1246,7 +1245,7 @@
         height: 144px;
         /*padding: 4px;*/
         margin: 0 auto;
-        background: #043aa3;
+        background: #1e4276;
         border-radius: 4px;
         padding: 0.1px;
         img {
@@ -1267,7 +1266,7 @@
         font-size: 22px;
         text-align: center;
         a {
-          color: #1b3dc3;
+          color: #1e4276;
         }
         span {
           display: inline-block;
@@ -2054,17 +2053,8 @@
     height: 100%;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");*/
     /*background: url("http://res.catchme.com.cn/activity/miqi/bg.png") no-repeat;*/
-    /*background: url("./../assets/miqi/bg.png") no-repeat;*/
-    /*background-size: 100% 100%;*/
-    background-image: linear-gradient(-2deg,
-      #0e2585 0%,
-      #2a4abd 49%,
-      #0f2382 100%),
-    linear-gradient(
-        #000000,
-        #000000);
-    background-blend-mode: normal,
-    normal;
+    background: url("./../assets/miqi/bg.png") no-repeat;
+    background-size: 100% 100%;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -2137,7 +2127,7 @@
   .header .header-main h4 {
     /*font-size: 0.24px;*/
     font-size: 26px;
-    color: #fff;
+    color: #ffe7e0;
     /*line-height: 44px;*/
     margin: 0 0 12px 0;
     line-height: 26px;
@@ -2196,13 +2186,13 @@
 
   .header .header-main .game span {
     font-size: 28px;
-    color: #1b3dc3;
+    color: #ff1d11;
     display: inline-block;
   }
 
   .header .header-main .game span.coins-num {
     font-size: 36px;
-    color: #1b3dc3;
+    color: #ff1d11;
     /*font-weight: 600;*/
     margin: 0 0 0 10px;
     line-height: 70px;
@@ -2241,7 +2231,7 @@
 
   .header .header-main .kefu > p > span {
     /*display: inline-block;*/
-    color: #1b3dc3;
+    color: #1e4276;
     font-size: 28px;
     height: 28px;
     line-height: 70px;
@@ -2298,8 +2288,7 @@
   .main .centerout .center {
     width: 100%;
     /*height: 5px;*/
-    background: #fff url("./../assets/miqi/bg_center.png") no-repeat;
-    background-size: 100%;
+    background: #fff;
     /*margin: 0.32px 0 0 0;*/
     /*padding: 0.28px 0.2px 0 0.2px;*/
     /*padding: 90px 20px 0 20px ;*/
@@ -2610,10 +2599,10 @@
     height: 90px;
     /*font-size: 0.32px;*/
     font-size: 34px;
-    color: #043aa3;
+    color: #1e4276;
     /*margin: 0 0 0.1px 0;*/
     /*height: 0.64px;*/
-    background: #92d0fc;
+    background: #defaff;
     line-height: 90px;
     position: absolute;
     border-radius: 0 16px 0 0;
@@ -2682,7 +2671,7 @@
   .main .center .game-num {
     width: 418px;
     height: 93px;
-    border: 1px solid #043aa3;
+    border: 1px solid #1e4276;
     border-radius: 18px;
     font-size: 24px;
     line-height: 91px;
@@ -2698,7 +2687,7 @@
   }
 
   .main .center .game-num.norecharge {
-    border: 1px solid #043aa3;
+    border: 1px solid #1e4276;
   }
 
   .main .center .game-num i.active {
@@ -2710,19 +2699,19 @@
     width: 20%;
     float: left;
     font-size: 50px;
-    color: #043aa3;
+    color: #1e4276;
     text-align: center;
     height: 71px;
     line-height: 71px;
     /*height: 67px;*/
     /*line-height: 67px;*/
-    border-right: 1px solid #043aa3;
+    border-right: 1px solid #1e4276;
     margin: 10px 0;
   }
 
   .main .center .game-num i:last-of-type {
     border-right: none;
-    border-left: 1px solid #043aa3;
+    border-left: 1px solid #1e4276;
     float: right;
   }
 
@@ -2741,7 +2730,7 @@
   .main .center .game-num > div h3 {
     /*font-size: 0.42px;*/
     font-size: 40px;
-    color: #043aa3;
+    color: #1e4276;
     font-weight: 600;
     /*line-height: 0.42px;*/
     line-height: 40px;
