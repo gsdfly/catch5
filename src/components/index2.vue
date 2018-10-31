@@ -543,7 +543,7 @@
     },
     methods:{
       goTmall(){
-        window.location.href = 'https://speedoyd.m.tmall.com/?ajson=1&parentCatId=0&weexShopTab=shopindexbar&weexShopSubTab=shopindex'
+        window.location.href = 'https://speedoyd.m.tmall.com/'
       },
       closeBg(value) {
         if (value === 'red') {
