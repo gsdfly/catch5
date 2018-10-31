@@ -2620,10 +2620,10 @@
   .main .center .startgame {
     /*width: 306px;*/
     /*height: 306px;*/
-    /*width: 358px;*/
-    /*height: 361px;*/
-    width: 314px;
-    height: 314px;
+    width: 358px;
+    height: 361px;
+    /*width: 314px;*/
+    /*height: 314px;*/
     text-align: center;
     line-height: 306px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
@@ -2677,7 +2677,7 @@
     line-height: 91px;
     // margin: -63px auto 0 auto;
    // margin: -118px auto 0 auto;
-    margin: -71px auto 0 auto;
+    margin: -118px auto 0 auto;
     background: #fff;
     color: #7e7e7e;
     text-align: center;
@@ -2841,8 +2841,8 @@
   .jo-version2 .main .center .game-num {
     width: 430px;
     height: 96px;
-    //margin: -118px auto 0 auto;
-    margin: -71px auto 0 auto;
+    margin: -118px auto 0 auto;
+    //margin: -71px auto 0 auto;
   }
 
   /*.jo-version2 .main .center .game-num > div h3 {*/
