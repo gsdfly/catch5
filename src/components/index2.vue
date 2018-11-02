@@ -385,10 +385,10 @@
 
         <div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">
           <div>
-            <img @click.prevent="" src="http://res.catchme.com.cn/activity/guide/image_free4.png" alt="" class="imgBg"/>
+            <img @click.prevent="" src="http://res.catchme.com.cn/activity/guide/image_free5.png" alt="" class="imgBg"/>
             <img class="btn" src="./../assets/guide/press_go_catch.png" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2"/>
             <!--<img class="qrcode" src="./../assets/guide/code.png"  v-show="isShowGzhImg" alt=""/>-->
-            <p>关注公众号回复“{{freeTip}}”即可领免费币</p>
+            <p>关注公众号回复“<span>{{freeTip}}</span>”即可领免费币</p>
             <img :style="gzhCodeStyle" @click.prevent="" :src="freeTipImg" alt="" class="qrcode"/>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
@@ -2103,17 +2103,21 @@
         position: absolute;
         width: 100%;
         text-align: center;
-        font-size: 24px;
-        line-height: 24px;
-        color: #888888;
+        font-size: 28px;
+        line-height: 28px;
+        color: #353535;
         left: 0;
-        top:745px;
+        top:723px;
+        span{
+          font-size: 32px;
+          color: #de201b;
+        }
       }
       .btn{
         width: 420px;
         height: 130px;
         @include centerX;
-        top:817px;
+        top:810px;
         z-index: 666;
       }
     }
