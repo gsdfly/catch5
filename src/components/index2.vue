@@ -2103,13 +2103,13 @@
         position: absolute;
         width: 100%;
         text-align: center;
-        font-size: 28px;
-        line-height: 28px;
+        font-size: 30px;
+        line-height: 30px;
         color: #353535;
         left: 0;
         top:723px;
         span{
-          font-size: 32px;
+          font-size: 34px;
           color: #de201b;
         }
       }
