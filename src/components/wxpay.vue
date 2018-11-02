@@ -1,7 +1,7 @@
 <template>
   <div class="recharge-lists clearfix" :class="{'version2':version2}">
     <img class="cat" src="./../assets/miqi/cat2.png" alt="">
-    <p class="tmallp">得宝天猫旗舰店送你免费抓娃娃</p>
+    <p class="tmallp">speedo天猫旗舰店送你免费抓娃娃</p>
     <div @click="goShop" :class="{'active':tmall_operation.task_count >= tmall_operation.num}">
       <div class="recharge-item-t" :class=""><span class="twoCoin"></span><i>6币</i></div>
       <div class="recharge-item-b">免费领币</div>
