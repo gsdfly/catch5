@@ -67,6 +67,10 @@
           <div class="centerout">
             <div class="center">
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
+              <div class="my_ticket">
+                <img src="./../assets/dalibao/my_ticket.png" alt=""/>
+                <p>我的兑换券</p>
+              </div>
               <div class="ring" v-if="activity_bounty.length>0">
                 <div class="d">
                   <div class="dd" :style="ringStyle">
@@ -585,6 +589,15 @@
                  @click="closeBg('redMachine')"/>
           </div>
         </div>
+
+        <div class="bg-center23" v-if="true" @click.stop="">
+          <div>
+            <img class="imgBg" src="./../assets/dalibao/corn.png" alt=""/>
+            <div class="btn">去充值</div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
       </div>
       <tipOperation></tipOperation>
     </div>
@@ -629,7 +642,7 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: false,
+        bgShow: true,
         contentShow: '',
         currentCoupon: {},
         pay: {},
@@ -2721,6 +2734,17 @@
     }
   }
 
+  .bg-center23{
+    div{
+      @include center;
+      .imgBg{
+        display: block;
+        width: 687px;
+        margin: 0 auto;
+      }
+    }
+  }
+
   .price {
     position: absolute;
     width: 298px;
@@ -3235,6 +3259,31 @@
     /*background: #fff;*/
     /*overflow: hidden;*/
     box-shadow: 2px 2px 10px rgba(206, 133, 74, 0.04), 0 0 18px rgba(206, 133, 74, 0.18), 0 0 24px rgba(206, 133, 74, 0.26);
+  }
+
+  .main .centerout .center .my_ticket{
+    width: 129px;
+    height: 147px;
+    position: absolute;
+    left: 46px;
+    top:45px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+    p{
+      width: 126px;
+      font-size: 24px;
+      line-height: 24px;
+      text-align: center;
+      font-weight: normal;
+      font-stretch: normal;
+      letter-spacing: 0px;
+      color: #8d3829;
+      position: absolute;
+      right: 0;
+      bottom:8px;
+    }
   }
 
   .main .centerout .center .ring {

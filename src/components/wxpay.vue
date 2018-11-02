@@ -1,6 +1,6 @@
 <template>
   <div class="recharge-lists clearfix" :class="{'version2':version2}">
-    <div v-for="v in coin" :data-id="v.coin_price_id"
+    <div v-for="v in coin.slice(0,3)" :data-id="v.coin_price_id"
          @click="handlePayBefore(v)" :class="{'active':v.status==0,'infinity':v.type==1}">
       <div class="recharge-item-t"><span :class="{'twoCoin':v.coin_num==2}"></span><i v-if="v.type==1">无限币</i><i v-else>{{v.coin_num}}币</i>
       </div>
@@ -9,6 +9,9 @@
       <div class="recharge-hot hot-limit" v-if="v.coin_buy_state==1 && v.status != 0">限购<br/>{{v.coin_buy_num}}次</div>
       <div class="recharge-hot hot-top" v-if="v.remarks != null && v.remarks != '' && v.status != 0">{{v.remarks.substr(0,4)}}</div>
       <div class="recharge-has" v-if="v.status == 0">已领取</div>
+    </div>
+    <div class="dalibao">
+      <img src="./../assets/dalibao/recharge_red.png" alt="">
     </div>
   </div>
 </template>
@@ -176,7 +179,7 @@
     font-size: 36px;
     float: right;
     width: 345px;
-    /*height: 1.28px;*/
+    /*height: 128px;*/
     height: 37.87%;
     border: 1px solid #fd643b;
     /*border-radius: 0.15px;*/
@@ -185,6 +188,15 @@
     /*overflow: hidden;*/
     border-radius: 16px;
   }
+  .recharge-lists > div.dalibao {
+    border: none;
+  }
+  .recharge-lists > div.dalibao img{
+    display: block;
+    width: 100%;
+    height: 161px;
+  }
+
   .recharge-lists > div:last-of-type,  .recharge-lists > div:nth-last-of-type(2)
   {
     margin: 0;
@@ -228,6 +240,8 @@
   .recharge-item-b {
     height: 63px;
     line-height: 63px;
+    /*height: 61px;*/
+    /*line-height: 61px;*/
     /*font-size: 0.32px;*/
     font-size: 34px;
     background: #fb643b;
@@ -244,10 +258,12 @@
   }
 
   .recharge-item-t {
+    /*height: 67px;*/
+    /*line-height: 67px;*/
     height: 68px;
+    line-height: 68px;
     font-size: 36px;
     color: #353535;
-    line-height: 68px;
     text-align: center;
     background: #fff;
     border-radius: 16px 16px 0 0;
