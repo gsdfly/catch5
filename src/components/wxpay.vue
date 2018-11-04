@@ -3,7 +3,7 @@
     <img class="cat" src="./../assets/miqi/cat2.png" alt="">
     <p class="tmallp">speedo天猫旗舰店送你免费抓娃娃</p>
     <div @click="goShop" :class="{'active':tmall_operation.task_count >= tmall_operation.num}">
-      <div class="recharge-item-t" :class=""><span class="twoCoin"></span><i>6币</i></div>
+      <div class="recharge-item-t" :class=""><span class="twoCoin"></span><i>4币</i></div>
       <div class="recharge-item-b">免费领币</div>
     </div>
     <!--<div v-for="v in coin.slice(0,1)" :data-id="v.coin_price_id"-->
