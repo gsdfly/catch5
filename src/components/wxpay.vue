@@ -1,6 +1,6 @@
 <template>
   <div class="recharge-lists clearfix" :class="{'version2':version2}">
-    <div v-for="v in coin.slice(0,3)" :data-id="v.coin_price_id"
+    <div v-for="v in coin.slice(0,(4-dalibao.length))" :data-id="v.coin_price_id"
          @click="handlePayBefore(v)" :class="{'active':v.status==0,'infinity':v.type==1}">
       <div class="recharge-item-t"><span :class="{'twoCoin':v.coin_num==2}"></span><i v-if="v.type==1">无限币</i><i v-else>{{v.coin_num}}币</i>
       </div>
@@ -10,8 +10,8 @@
       <div class="recharge-hot hot-top" v-if="v.remarks != null && v.remarks != '' && v.status != 0">{{v.remarks.substr(0,4)}}</div>
       <div class="recharge-has" v-if="v.status == 0">已领取</div>
     </div>
-    <div class="dalibao">
-      <img src="./../assets/dalibao/recharge_red.png" alt="">
+    <div class="dalibao" v-for="(item,index) in dalibao">
+      <img @click="dalibaoTip(index)" :src="img1" alt="">
     </div>
   </div>
 </template>
@@ -26,7 +26,9 @@
     data() {
       return {
         isActive: false,
-        isRequest: false
+        isRequest: false,
+        img1:'http://res.catchme.com.cn/activity/dalibao/recharge_red.png',
+        img2:'http://res.catchme.com.cn/activity/dalibao/recharge_red_long.png'
       }
     },
     computed: mapState({
@@ -36,15 +38,22 @@
       info: state => state.user.info,
       hide_coupons: state => state.user.hide_coupons,
       tip_operation: state => state.user.tip_operation,
-      isLogin:state => state.user.isLogin
+      isLogin:state => state.user.isLogin,
+      dalibao:state => state.user.dalibao
     }),
     mounted() {
+      if(this.version2){
+        this.img1 = this.img2
+      }
 //      this.getCoinList()
       if(this.isLogin){
         this.$store.dispatch('getCoinList');
       }
     },
     methods: {
+      dalibaoTip(index){
+        this.$emit('openTip','dalibaotip',index)
+      },
       handlePayBefore(pay) {
         if (pay.status === 0) {
           return false;
@@ -93,7 +102,7 @@
           }
         }
       },
-      handlePay(id, coin, status, price, type) {
+      handlePay(id, coin, status, price, type,dalibaoIndex) {
         if (!this.isRequest) {
           this.isRequest = true;
           if (this.info.online === 0) {
@@ -148,6 +157,12 @@
               setTimeout(()=>{
                 self.$store.dispatch('getUser');
                 self.$store.dispatch('getCoinList');
+                if(dalibaoIndex>=0){
+                  self.$store.dispatch('getOperations');//大礼包充值完成回来重新获取运营位
+                  //这里需要判断大礼包里面的东西来弹窗
+//                  if(self.dalibao[dalibaoIndex])
+                  self.$emit('openTip','baomihua'); //打开领取大礼包的弹窗
+                }
 //                self.$store.dispatch('getActivityPromocode') //获取用户充值状态
 //                self.$store.dispatch('getActivityBounty');
                 self.$store.dispatch('getActivityBountyInfo');
@@ -194,7 +209,7 @@
   .recharge-lists > div.dalibao img{
     display: block;
     width: 100%;
-    height: 161px;
+    height: 133px;
   }
 
   .recharge-lists > div:last-of-type,  .recharge-lists > div:nth-last-of-type(2)
@@ -376,6 +391,9 @@
   .version2 .recharge-item-t span.infinite {
     width: 56px;
     height: 58px;
+  }
+  .version2 > div.dalibao img{
+    height: 161px;
   }
 
   /*.version2 .recharge-has, .version2 .recharge-hot {*/

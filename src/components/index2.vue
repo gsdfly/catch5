@@ -67,9 +67,9 @@
           <div class="centerout">
             <div class="center">
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
-              <div class="my_ticket">
+              <div v-if="isShowBaomihuaList" class="my_ticket" @click="openTip('baomihuaList')">
                 <img src="./../assets/dalibao/my_ticket.png" alt=""/>
-                <p>我的兑换券</p>
+                <!--<p>我的兑换券</p>-->
               </div>
               <div class="ring" v-if="activity_bounty.length>0">
                 <div class="d">
@@ -142,7 +142,7 @@
         </div>
       </div>
       <div class="footer">
-        <joPay ref="joPay" @changeTip="changeTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
+        <joPay ref="joPay" @changeTip="changeTip" @openTip="openTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
                @closeBg="closeBg"></joPay>
       </div>
       <div class="bg" v-show="bgShow && !tipContent.button" @click="closeBg">
@@ -590,14 +590,52 @@
           </div>
         </div>
 
-        <div class="bg-center23" v-if="true" @click.stop="">
+        <div class="bg-center23" v-if="contentShow == 'dalibaotip'" @click.stop="">
           <div>
-            <img class="imgBg" src="./../assets/dalibao/corn.png" alt=""/>
-            <div class="btn">去充值</div>
+            <img v-if="dalibao[dalibaoIndex].coin_price.coin_price == '30.00'" class="imgBg" src="http://res.catchme.com.cn/activity/dalibao/corn.png" alt=""/>
+            <img class="imgBg" v-else="" src="http://res.catchme.com.cn/activity/dalibao/corn_fifteen.png" alt="">
+            <div class="btn" @click="useDalibaoPay">去充值</div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
           </div>
         </div>
+
+
+        <div class="bg-center25" v-if="contentShow == 'baomihuaList'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/dalibao/tickets_bg.png" alt=""/>
+            <ul>
+              <template v-for="item in dalibao">
+                <li v-for="item2 in item.vouchers" @click="useCoupon(item2.code,item2.end_time,item2.name,item2.category,'baomihua')">
+                  <div>
+                    <h3>{{item2.name}}</h3>
+                    <p>有效期至：{{item2.end_time | handleEndTime2}}</p>
+                  </div>
+                </li>
+              </template>
+            </ul>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center26" v-if="contentShow == 'baomihua'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/dalibao/success.png" alt="">
+            <h3>{{couponInfo.name}}</h3>
+            <h4>32oz爆米花+12oz可乐</h4>
+            <p>有效期至：{{couponInfo.end_time | handleEndTime2}}</p>
+            <div class="exchange-code" v-if="couponInfo.code">
+              <barcode :value="couponInfo.code" style="height: 100%;" :height="codeHeight" :width="codeWidth" :fontSize="14"
+                       :margin="5" :marginTop="7" :displayValue="false"></barcode>
+              <p>{{couponInfo.code}}</p>
+            </div>
+            <div class="tip" v-else="">已放入“我的兑换券”里</div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
       </div>
       <tipOperation></tipOperation>
     </div>
@@ -642,7 +680,7 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: true,
+        bgShow: false,
         contentShow: '',
         currentCoupon: {},
         pay: {},
@@ -710,7 +748,11 @@
         isAfterRed:false,
         tencentCodeImgUrl:'',
         tencentImgtime:0,
-        currentActivityBounty:{}
+        currentActivityBounty:{},
+        dalibaoIndex:0,
+        isShowBaomihuaList:false,
+        codeWidth:2,
+        codeHeight:45
       }
     },
     created() {
@@ -732,6 +774,7 @@
       isLogin:state => state.user.isLogin,
       gzh_operation: state => state.user.gzh_operation,
       gzh_operation_other: state => state.user.gzh_operation_other,
+      dalibao:state => state.user.dalibao
     }),
     components: {
       joPay,
@@ -1081,10 +1124,21 @@
           this.$store.dispatch('getOperations');
         })
       },
-      useCoupon(code, end_time, name, category) {
+      useCoupon(code, end_time, name, category,type='') {
         _hmt.push(['_trackEvent', '打开使用优惠券弹窗', '点击', '使用优惠券为：' + name, '']);
         if (category === 0) {
-          this.contentShow = 'exchange3';
+          if(type === 'baomihua'){
+            var clientWidth = window.innerWidth
+              || document.documentElement.clientWidth
+              || document.body.clientWidth;
+            if(clientWidth <=320){
+              this.codeHeight = 40;
+              this.codeWidth = 1.8;
+            }
+            this.contentShow = 'baomihua';
+          }else {
+            this.contentShow = 'exchange3';
+          }
         } else {
           this.contentShow = 'exchange2';
         }
@@ -1137,6 +1191,13 @@
           userId = userId.toString(36);
           this.tencentCodeImgUrl = 'http://api.datasuv.net/wesure/insure?m=MjRxN2J4c2F0&type=qrcode&user='+userId;
         }
+        if(value === 'dalibaotip'){
+          this.dalibaoIndex = value2;
+        }
+        if(value === 'baomihua'){
+          this.couponInfo.name = this.dalibao[this.dalibaoIndex].vouchers[0].name
+          this.couponInfo.end_time = this.dalibao[this.dalibaoIndex].vouchers[0].end_time
+        }
         this.freeTipImg = value2;
         this.freeTip = value3;
         this.bgShow = true;
@@ -1154,6 +1215,9 @@
         } else {
           this.$store.commit('changeTipContent', {isShow: false});
         }
+      },
+      useDalibaoPay(){
+        this.$refs.joPay.handlePay(this.dalibao[this.dalibaoIndex].coin_price.coin_price_id, this.dalibao[this.dalibaoIndex].coin_price.coin_num, this.dalibao[this.dalibaoIndex].coin_price.status, this.dalibao[this.dalibaoIndex].coin_price.coin_price, this.dalibao[this.dalibaoIndex].coin_price.type,this.dalibaoIndex);
       },
       useCouponPay() {
         _hmt.push(['_trackEvent', '使用' + this.currentCouponPay.coin_price + '元' + this.currentCouponPay.coin_num + '币隐藏优惠券', '点击', '', '']);
@@ -1314,6 +1378,14 @@
       }
     },
     watch: {
+      dalibao(newValue,oldValue){
+        for(var item of newValue){
+          if(item.vouchers.length > 0){
+            this.isShowBaomihuaList = true;
+            break;
+          }
+        }
+      },
       isLogin(){
         var re = localStorage.getItem('re');
         if(re){
@@ -2746,9 +2818,119 @@
         width: 687px;
         margin: 0 auto;
       }
+      .btn{
+        width: 370px;
+        height: 80px;
+        @include centerX;
+        top:752px;
+        font-size: 0;
+      }
     }
   }
 
+
+  .bg-center25{
+    >div{
+      width: 704px;
+      position: absolute;
+      left: 50%;
+      top:50%;
+      transform: translate(-50%,-50%);
+      .imgBg{
+        display: block;
+        width: 688px;
+        float: right;
+      }
+      ul{
+        max-height:720px;
+        overflow: auto;
+        @include centerX;
+        top:328px;
+        li{
+          margin: 0 0 20px 0;
+          width: 584px;
+          height: 180px;
+          background: url("http://res.catchme.com.cn/activity/dalibao/ticket_bg.png") no-repeat;
+          background-size: 100% 100%;
+          img{
+            width: 584px;
+            height: 180px;
+            display: none;
+          }
+          >div{
+            width: 348px;
+            height: 100%;
+            float: right;
+            color: #8d3829;
+            text-align: left;
+            /*text-indent: 20px;*/
+            padding: 0 0 0 20px;
+            h3{
+              font-size: 36px;
+              line-height: 36px;
+              margin: 55px 0 11px 0;
+              font-weight: 600;
+            }
+            p{
+              font-size: 22px;
+              line-height: 30px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .bg-center26{
+    >div{
+      width: 704px;
+      position: absolute;
+      left: 50%;
+      top:50%;
+      transform: translate(-50%,-50%);
+      color:#8d3829;
+      .imgBg{
+        display: block;
+        width: 688px;
+        float: right;
+      }
+      >h3{
+        font-size: 34px;
+        line-height: 34px;
+        @include centerX;
+        top:347px;
+      }
+      >h4{
+        font-size: 28px;
+        line-height: 28px;
+        @include centerX;
+        top:661px;
+      }
+      >p{
+        font-size: 22px;
+        line-height: 22px;
+        @include centerX;
+        top:702px;
+      }
+      .exchange-code{
+        @include centerX;
+        top:780px;
+        p{
+          letter-spacing: 10px;
+          font-size: 24px;
+          line-height: 24px;
+          margin: 5px 0 0 0 ;
+        }
+      }
+      .tip{
+        @include centerX;
+        top:835px;
+        font-size: 32px;
+        line-height: 32px;
+        font-weight: 600;
+      }
+    }
+  }
   .price {
     position: absolute;
     width: 298px;
@@ -3266,10 +3448,10 @@
   }
 
   .main .centerout .center .my_ticket{
-    width: 129px;
+    width: 126px;
     height: 147px;
     position: absolute;
-    left: 46px;
+    left: 49px;
     top:45px;
     img{
       width: 100%;
@@ -3277,8 +3459,9 @@
     }
     p{
       width: 126px;
-      font-size: 24px;
-      line-height: 24px;
+      /*width: 100%;*/
+      font-size: 20px;
+      line-height: 20px;
       text-align: center;
       font-weight: normal;
       font-stretch: normal;

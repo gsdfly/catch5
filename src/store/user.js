@@ -69,7 +69,8 @@ const state = {
     game_bounty:-1,//用户当前任务的进度
     prize_bounty:-1//掉落的娃娃数
   },
-  task_opes:[]
+  task_opes:[],
+  dalibao:[]
 }
 
 const mutations = {
@@ -144,6 +145,9 @@ const mutations = {
   },
   setTaskOpes(state,arr){
     state.task_opes = arr;
+  },
+  setDalibao(state,arr){
+    state.dalibao = arr;
   },
 }
 
@@ -334,6 +338,7 @@ const actions = {
         var activity_bounty = [];
         var completeOpe = [];
         var undoneOpe = [];
+        var dalibao = []
 
         for(var i=0;i<res.length;i++){
           if(res[i].type ===1){
@@ -420,8 +425,12 @@ const actions = {
                 ctx.commit('setGzhOperationOther',res[i]);
               }
             }
+          }else if(res[i].type === 15){
+            dalibao.push(res[i])
           }
         }
+
+        ctx.commit('setDalibao',dalibao)
 
         //每次改变一个运营位之后需要重新获取运营位的状态，在这里对operationsList做处理，只截取3个，
         var task_opes = undoneOpe.concat(completeOpe);
