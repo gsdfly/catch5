@@ -454,6 +454,9 @@ const actions = {
         }
 
         ctx.commit('setActivityBounty',activity_bounty);
+        if(dalibao.length>0){
+          ctx.commit('setActivityBounty',[]);
+        }
         ctx.commit('setHideCoupons',hideCoupons);
         ctx.commit('setOperations',operationsList)
         success(task_opes)

@@ -1,18 +1,42 @@
 <template>
   <div class="recharge-lists clearfix" :class="{'version2':version2}">
-    <div v-for="v in coin.slice(0,(4-dalibao.length))" :data-id="v.coin_price_id"
+    <div v-if="dalibao.length==0" v-for="v in coin.slice(0,4)" :data-id="v.coin_price_id"
+         @click="handlePayBefore(v)" :class="{'active':v.status==0,'infinity':v.type==1}">
+      <div class="recharge-item-t"><span :class="{'twoCoin':v.coin_num==2}"></span><i v-if="v.type==1">无限币</i><i v-else>{{v.coin_num}}币</i>
+      </div>
+      <div class="recharge-item-b">{{v.coin_price}}元<span
+        v-if="v.sale_state == 1 && v.original_price">({{v.original_price}}元)</span></div>
+      <div class="recharge-hot hot-limit" v-if="v.coin_buy_state==1 && v.status != 0">限购<br/>{{v.coin_buy_num}}</div>
+    </div>
+    <template v-if="dalibao.length > 0">
+    <div  v-for="v in coin.slice(0,dalibao[0].position-1)" :data-id="v.coin_price_id"
          @click="handlePayBefore(v)" :class="{'active':v.status==0,'infinity':v.type==1}">
       <div class="recharge-item-t"><span :class="{'twoCoin':v.coin_num==2}"></span><i v-if="v.type==1">无限币</i><i v-else>{{v.coin_num}}币</i>
       </div>
       <div class="recharge-item-b">{{v.coin_price}}元<span
         v-if="v.sale_state == 1 && v.original_price">({{v.original_price}}元)</span></div>
       <div class="recharge-hot hot-limit" v-if="v.coin_buy_state==1 && v.status != 0">限购<br/>{{v.coin_buy_num}}次</div>
-      <div class="recharge-hot hot-top" v-if="v.remarks != null && v.remarks != '' && v.status != 0">{{v.remarks.substr(0,4)}}</div>
+      <div class="recharge-hot hot-top" v-if="v.remarks != null && v.remarks != '' && v.status != 0">
+        {{v.remarks.substr(0, 4)}}
+      </div>
       <div class="recharge-has" v-if="v.status == 0">已领取</div>
     </div>
     <div class="dalibao" v-for="(item,index) in dalibao">
       <img @click="dalibaoTip(index)" :src="img1" alt="">
     </div>
+    <div v-for="v in coin.slice(dalibao[0].position-1,3)" :data-id="v.coin_price_id"
+         @click="handlePayBefore(v)" :class="{'active':v.status==0,'infinity':v.type==1}">
+      <div class="recharge-item-t"><span :class="{'twoCoin':v.coin_num==2}"></span><i v-if="v.type==1">无限币</i><i v-else>{{v.coin_num}}币</i>
+      </div>
+      <div class="recharge-item-b">{{v.coin_price}}元<span
+        v-if="v.sale_state == 1 && v.original_price">({{v.original_price}}元)</span></div>
+      <div class="recharge-hot hot-limit" v-if="v.coin_buy_state==1 && v.status != 0">限购<br/>{{v.coin_buy_num}}次</div>
+      <div class="recharge-hot hot-top" v-if="v.remarks != null && v.remarks != '' && v.status != 0">
+        {{v.remarks.substr(0, 4)}}
+      </div>
+      <div class="recharge-has" v-if="v.status == 0">已领取</div>
+    </div>
+    </template>
   </div>
 </template>
 
@@ -203,13 +227,13 @@
     /*overflow: hidden;*/
     border-radius: 16px;
   }
-  .recharge-lists > div.dalibao {
-    border: none;
-  }
+  /*.recharge-lists > div.dalibao {*/
+    /**/
+  /*}*/
   .recharge-lists > div.dalibao img{
     display: block;
     width: 100%;
-    height: 133px;
+    height: 131px;
   }
 
   .recharge-lists > div:last-of-type,  .recharge-lists > div:nth-last-of-type(2)
@@ -393,7 +417,7 @@
     height: 58px;
   }
   .version2 > div.dalibao img{
-    height: 161px;
+    height: 159px;
   }
 
   /*.version2 .recharge-has, .version2 .recharge-hot {*/
