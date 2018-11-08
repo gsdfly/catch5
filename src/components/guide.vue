@@ -8,7 +8,7 @@
     <img v-if="gzh_operation.coupon.status !=2" class="guideImg1" :src="img1" alt="">
     <div v-else="" class="guideDiv1"></div>
     <div class="bg2"></div>
-    <img class="guideImg2" src="./../assets/mogui/guideImg2.png" alt="">
+    <img class="guideImg2" v-if="activity_bounty.length>0" src="./../assets/mogui/guideImg2.png" alt="">
     <div class="bg3"></div>
     <img @click="closeGuide" class="guideImg3" src="./../assets/mogui/press_known.png" alt=""/>
   </div>
@@ -31,6 +31,7 @@
     },
     computed: mapState({
       gzh_operation: state => state.user.gzh_operation,
+      activity_bounty: state => state.user.activity_bounty,
     }),
     methods:{
       closeGuide(){

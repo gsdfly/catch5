@@ -458,7 +458,7 @@
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <guide v-if="isShowGuide"></guide>
+    <guide v-if="isShowGuide && (gzh_operation.coupon.status !=2 || activity_bounty.length>0)"></guide>
     <guide2 v-if="isShowGuide2" @closeGuide2="closeGuide2"></guide2>
   </div>
 </template>
@@ -558,6 +558,7 @@
       task_game: state => state.user.task_game,
       task_now: state => state.user.task_now,
       isShowGuide: state => state.user.isShowGuide,
+      gzh_operation: state => state.user.gzh_operation,
     }),
     components: {
       joPay,
@@ -1008,7 +1009,9 @@
       },
       task_now(newValue, oldValue) {
         if (newValue.recharge_bounty !== oldValue.recharge_bounty) {
-          this.changeTaskGameProgress();
+          if(this.activity_bounty.length>0){
+            this.changeTaskGameProgress();
+          }
         }
 //        if(this.activity_bounty.voucher_batch.value <= newValue.recharge_bounty ){
 //          this.openTip('receive');
