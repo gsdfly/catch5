@@ -21,9 +21,12 @@
       </div>
       <div class="recharge-has" v-if="v.status == 0">已领取</div>
     </div>
+
     <div class="dalibao" v-for="(item,index) in dalibao">
-      <img @click="dalibaoTip(index)" :src="img1" alt="">
+      <img v-if="item.coin_price.coin_price==15" @click="dalibaoTip(index)" :src="img1" alt="">
+      <img v-else="" @click="dalibaoTip(index)" :src="img3" alt="">
     </div>
+
     <div v-for="v in coin.slice(dalibao[0].position-1,3)" :data-id="v.coin_price_id"
          @click="handlePayBefore(v)" :class="{'active':v.status==0,'infinity':v.type==1}">
       <div class="recharge-item-t"><span :class="{'twoCoin':v.coin_num==2}"></span><i v-if="v.type==1">无限币</i><i v-else>{{v.coin_num}}币</i>
@@ -52,7 +55,9 @@
         isActive: false,
         isRequest: false,
         img1:'http://res.catchme.com.cn/activity/dalibao/recharge_red.png',
-        img2:'http://res.catchme.com.cn/activity/dalibao/recharge_red_long.png'
+        img2:'http://res.catchme.com.cn/activity/dalibao/recharge_red_long.png',
+        img3:'http://res.catchme.com.cn/activity/dalibao/recharge_red_t.png',
+        img4:'http://res.catchme.com.cn/activity/dalibao/recharge_red_long_t.png',
       }
     },
     computed: mapState({
@@ -68,6 +73,7 @@
     mounted() {
       if(this.version2){
         this.img1 = this.img2
+        this.img3 = this.img4
       }
 //      this.getCoinList()
       if(this.isLogin){
@@ -230,11 +236,15 @@
   /*.recharge-lists > div.dalibao {*/
     /**/
   /*}*/
+  .recharge-lists > div.dalibao{
+    border: none;
+  }
   .recharge-lists > div.dalibao img{
     display: block;
     width: 100%;
-    height: 131px;
+    height: 133px;
   }
+
 
   .recharge-lists > div:last-of-type,  .recharge-lists > div:nth-last-of-type(2)
   {
@@ -416,8 +426,9 @@
     width: 56px;
     height: 58px;
   }
+
   .version2 > div.dalibao img{
-    height: 159px;
+    height: 161px;
   }
 
   /*.version2 .recharge-has, .version2 .recharge-hot {*/
