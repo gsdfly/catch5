@@ -682,6 +682,7 @@
         showHtml: true,
         bgShow: false,
         contentShow: '',
+        contentShowAfter:'',
         currentCoupon: {},
         pay: {},
         currentCouponPay: {},
@@ -1244,15 +1245,22 @@
         }, 60000)
       },
       closeBg(value) {
+        if(this.contentShowAfter){
+          this.contentShow = this.contentShowAfter;
+          this.contentShowAfter = '';
+        }
         if (value === 'red') {
           _hmt.push(['_trackEvent', '关闭红包弹窗', '点击', '', '']);
         } else if (value === 'hide') {
           _hmt.push(['_trackEvent', '关闭' + this.pay.coin_price + '元弹窗优惠券', '点击', '', '']);
-        }else if(value === 'redMachine'){
+        }else if(value === 'redMachine' || ['failred','nobi','tencent'].includes(this.contentShow)){
           this.isAfterRed = true;
         }
         if (this.contentShow === 'exchange' || this.contentShow === 'exchange2') {
           return
+        }
+        if(this.contentShow === 'dalibaotip'){
+          this.isAfterRed = true;
         }
         this.bgShow = false;
       },
@@ -1383,6 +1391,15 @@
           if(item.vouchers.length > 0){
             this.isShowBaomihuaList = true;
             break;
+          }
+        }
+        if(newValue.length>0){
+          if(this.contentShow){
+            this.contentShowAfter = 'dalibaotip'
+          }else {
+            this.bgShow = true;
+            this.contentShow = 'dalibaotip'
+            this.isAfterRed = false;
           }
         }
       },
