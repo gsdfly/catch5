@@ -440,8 +440,9 @@ const actions = {
             }
           }
         }
-
-        ctx.commit('setDalibao',dalibao)
+        if(dalibao.length>0){
+          ctx.commit('setDalibao',dalibao)
+        }
 
         //每次改变一个运营位之后需要重新获取运营位的状态，在这里对operationsList做处理，只截取3个，
         var task_opes = undoneOpe.concat(completeOpe);
