@@ -17,7 +17,7 @@ instance.interceptors.response.use(function(response) {
   let res = response.data
   if (res.status_code !== 200) {
     // sendError({code:response.data.status_code,message:response.data.message,url:response.config.url});
-    if(res.status_code !== 1015){
+    if(res.status_code !== 1015 && res.status_code !== 1016){
       store.commit('changeTipContent',getErrMsg(res.status_code, res.message))
     }
     // if(res.status_code === 1014){
@@ -208,4 +208,6 @@ export default {
   getEnvelopeReceive:function (params) {
     return instance.post(CONFIG.url+'api/envelope/receive',jsonToStr(params))
   },
+  //
+
 }

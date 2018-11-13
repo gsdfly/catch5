@@ -40,6 +40,11 @@
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         <p>免费领币</p>
         </div>
+        <div v-if="item.type === 16" @click="openTip('redGame',item)">
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+          <p :class="{'is_down':item.task_count >= item.num}">红包斗地主</p>
+        </div>
       </li>
     </ul>
   </div>
@@ -85,7 +90,7 @@
             for (let item of res){
               if(item.type === 12 && item.code === gzh_code){
                 //这里请求
-                this.$store.dispatch('getActivityBountyExchange',item.id).then((res)=>{
+                this.$store.dispatch('getActivityBountyExchange',{operation_id:item.id}).then((res)=>{
                   this.$store.dispatch('getFreeCoin',{coin_price_id: item.coin_price.coin_price_id, coupon_id: item.coupon.id}).then((res)=>{
                     //领取成功调用动画
                     this.$emit('handleGzh')
@@ -225,7 +230,7 @@
             _hmt.push(['_trackEvent', '任务：抓中送币', '点击', '抓中送币：领币', '']);
           }
           this.isRequest = true;
-          this.$store.dispatch('getActivityBountyExchange',task.id).then((res)=>{
+          this.$store.dispatch('getActivityBountyExchange',{operation_id:task.id}).then((res)=>{
             this.$store.dispatch('getFreeCoin',{coin_price_id: task.coin_price.coin_price_id, coupon_id: task.coupon.id}).then(()=>{
               this.isRequest = false;
               this.$emit('receiveBiSuccess');

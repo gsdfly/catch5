@@ -70,7 +70,8 @@ const state = {
     prize_bounty:-1//掉落的娃娃数
   },
   task_opes:[],
-  dalibao:[]
+  dalibao:[],
+  redGame:{}
 }
 
 const mutations = {
@@ -149,6 +150,9 @@ const mutations = {
   setDalibao(state,arr){
     state.dalibao = arr;
   },
+  setRedGame(state,obj){
+    state.redGame = obj
+  }
 }
 
 const actions = {
@@ -427,6 +431,13 @@ const actions = {
             }
           }else if(res[i].type === 15){
             dalibao.push(res[i])
+          }else if(res[i].type === 16){
+            ctx.commit('setRedGame',res[i])
+            if(res[i].task_count >= res[i].num){
+              completeOpe.push(res[i])
+            }else {
+              undoneOpe.push(res[i])
+            }
           }
         }
 
@@ -534,9 +545,9 @@ const actions = {
   // },
 
   //奖励金兑换
-  getActivityBountyExchange:function (ctx,operation_id) {
+  getActivityBountyExchange:function (ctx,params) {
     return new Promise((success,error)=>{
-      api.getActivityBountyExchange({token:CONFIG.token,operation_id:operation_id}).then((data)=>{
+      api.getActivityBountyExchange(Object.assign({},{token:CONFIG.token},params)).then((data)=>{
         success(data);
       }).catch((err)=>{
         error(err);

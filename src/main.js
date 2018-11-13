@@ -13,7 +13,6 @@ import {getParamByName, SetCookie} from "./util/index";
 if (document.URL.indexOf('5zhua') !== -1){
   require('./util/vconsole')
 }
-
 FastClick.attach(document.body)
 
 !async function () {
@@ -119,8 +118,15 @@ FastClick.attach(document.body)
   if (clientWidth / clientHeight <= 0.6) {
     Vue.prototype.version2 = true;
   }
-
   Vue.prototype.Indicator = Indicator
+
+  var unionid = getParamByName('unionid')
+  if(unionid){
+    localStorage.setItem('unionid',unionid);
+    var index = window.location.href.indexOf('&');
+    var newUrl = window.location.href.slice(0, index);
+    window.history.pushState({}, '', newUrl);
+  }
 
   Vue.filter('handleNum', function (value) {
     var index = value.indexOf('.');

@@ -600,6 +600,16 @@
           </div>
         </div>
 
+        <div class="bg-center24" v-if="contentShow == 'redGame'" @click.stop="">
+          <div>
+            <h3>第一步</h3>
+            <button @click="downloadGame">下载游戏</button>
+            <h3>第二步</h3>
+            <button @click="verificationGame">验证任务</button>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
 
         <div class="bg-center25" v-if="contentShow == 'baomihuaList'" @click.stop="">
           <div>
@@ -652,7 +662,7 @@
 //  import operations from './operations.vue'
   import tip from './tip.vue'
   import tipOperation from './tipoperation.vue'
-  import {getErrMsg} from './../util/index'
+  import {getErrMsg,getParamByName} from './../util/index'
   import Toast from 'mint-ui/lib/Toast'
   import Clipboard from 'clipboard';
   import quanprogress from './quanprogress.vue'
@@ -752,7 +762,7 @@
         dalibaoIndex:0,
         isShowBaomihuaList:false,
         codeWidth:2,
-        codeHeight:45
+        codeHeight:45,
       }
     },
     created() {
@@ -774,7 +784,8 @@
       isLogin:state => state.user.isLogin,
       gzh_operation: state => state.user.gzh_operation,
       gzh_operation_other: state => state.user.gzh_operation_other,
-      dalibao:state => state.user.dalibao
+      dalibao:state => state.user.dalibao,
+      redGame:state => state.user.redGame
     }),
     components: {
       joPay,
@@ -788,6 +799,10 @@
       barcode: vueBarcode
     },
     mounted() {
+      var unionid = localStorage.getItem('unionid')
+      if(unionid && this.isLogin){
+        this.handleRedGame(unionid);
+      }
       var re = localStorage.getItem('re');
       if(!re){
         this.isAfterRed = true;
@@ -850,6 +865,46 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      handleRedGame(unionid){
+        var operation_id = this.redGroup.id || localStorage.getItem('redGameOpeId')
+        this.$store.dispatch('getActivityBountyExchange',{operation_id:operation_id,machine_no:CONFIG.machine_no,unionid:unionid}).then(()=>{
+          Toast({
+            message: '成功领币',
+            position: 'middle',
+            duration: 1000
+          })
+          this.$store.dispatch('getUser')
+          localStorage.removeItem('unionid')
+        }).catch((res)=>{
+          Toast({
+            message: res.message,
+            position: 'middle',
+            duration: 1000
+          })
+        })
+      },
+      downloadGame(){
+        if(this.redGame.task_count == 0){
+          localStorage.setItem('redGameOpeId',this.redGame.id)
+          this.$store.dispatch('getActivityBountyExchange',{operation_id:this.redGame.id,machine_no:CONFIG.machine_no}).then(()=>{
+            localStorage.setItem('redGameStep','step1')
+          })
+          this.$store.dispatch('getUser');
+          this.$store.dispatch('getOperations');
+          window.location.href = this.redGame.url;
+        }
+      },
+      verificationGame(){
+        if(this.redGame.task_count== 0 ){
+          Toast({
+            message: '请先完成第一步',
+            position: 'middle',
+            duration: 1000
+          })
+        }else if(this.redGame.task_count == 1){
+          window.location.href = 'http://new.legaogame.com/getwxidbyapi.php?state='+document.URL
+        }
+      },
       handleRedMachine(re){
           this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
             this.bgShow = true;
@@ -1114,7 +1169,7 @@
 //          this.$store.dispatch('getActivityBounty');
 //          this.couponInfo = res;
 //        })
-        this.$store.dispatch('getActivityBountyExchange', this.currentGift.id).then((res) => {
+        this.$store.dispatch('getActivityBountyExchange', {operation_id:this.currentGift.id}).then((res) => {
           this.couponInfo = res.data;
 //          this.isReceive = true;
           this.bgShow = true;
@@ -1387,6 +1442,10 @@
         }
       },
       isLogin(){
+        var unionid = localStorage.getItem('unionid')
+        if(unionid){
+          this.handleRedGame(unionid)
+        }
         var re = localStorage.getItem('re');
         if(re){
           this.handleRedMachine(re)
