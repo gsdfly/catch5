@@ -602,10 +602,18 @@
 
         <div class="bg-center24" v-if="contentShow == 'redGame'" @click.stop="">
           <div>
-            <h3>第一步</h3>
-            <button @click="downloadGame">下载游戏</button>
-            <h3>第二步</h3>
-            <button @click="verificationGame">验证任务</button>
+            <img v-if="redGame.task_count < 2" class="imgBg" src="http://res.catchme.com.cn/activity/task-2/doudizhu.png" alt=""/>
+            <img v-else="" class="imgBg" src="http://res.catchme.com.cn/activity/task-2/doudizhued.png" alt="">
+            <div class="content">
+              <h3>第一步：点击下载</h3>
+              <p>「红包斗地主」APP，即送<span>2</span>币</p>
+              <h4>（玩游戏送红包哦~）</h4>
+              <button @click="downloadGame" :class="{'is-down':redGame.task_count >= 1}">下载</button>
+              <img class="arrow" src="./../assets/task-2/arrow.png" alt=""/>
+              <h3>第二步：app内成功登录</h3>
+              <p>点击下方验证按钮获取<span>4</span>币 </p>
+              <button @click="verificationGame"  :class="{'is-down':redGame.task_count == 2}">验证</button>
+            </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
           </div>
@@ -800,6 +808,11 @@
       barcode: vueBarcode
     },
     mounted() {
+      var step1 = localStorage.getItem('redGameStep')
+      if(step1 && this.isLogin){
+        this.handleRedGame('');
+        localStorage.removeItem('redGameStep')
+      }
       var unionid = localStorage.getItem('unionid')
       if(unionid && this.isLogin){
         this.handleRedGame(unionid);
@@ -876,6 +889,7 @@
           })
           this.$store.dispatch('getUser')
           localStorage.removeItem('unionid')
+          this.$store.dispatch('getOperations');
         }).catch((res)=>{
           Toast({
             message: res.message,
@@ -887,11 +901,12 @@
       downloadGame(){
         if(this.redGame.task_count == 0){
           localStorage.setItem('redGameOpeId',this.redGame.id)
-          this.$store.dispatch('getActivityBountyExchange',{operation_id:this.redGame.id,machine_no:CONFIG.machine_no}).then(()=>{
-            localStorage.setItem('redGameStep','step1')
-          })
-          this.$store.dispatch('getUser');
-          this.$store.dispatch('getOperations');
+//          this.$store.dispatch('getActivityBountyExchange',{operation_id:this.redGame.id,machine_no:CONFIG.machine_no}).then(()=>{
+//            localStorage.setItem('redGameStep','step1')
+//          })
+//          this.$store.dispatch('getUser');
+//          this.$store.dispatch('getOperations');
+          localStorage.setItem('redGameStep','step1')
           window.location.href = this.redGame.url;
         }
       },
@@ -2904,6 +2919,66 @@
     }
   }
 
+  .bg-center24{
+    div{
+      @include center;
+      width: 100%;
+      color: #fff;
+      .imgBg{
+        display: block;
+        width: 729px;
+        /*margin: 0 auto;*/
+        float: right;
+      }
+      .content{
+        @include centerX;
+        top:453px;
+        h3{
+          font-size: 32px;
+          line-height: 32px;
+        }
+        p{
+          font-size: 32px;
+          line-height: 32px;
+          margin: 8px 0 16px 0;
+          span{
+            font-size: 48px;
+          }
+        }
+        h4{
+          font-size: 24px;
+          line-height: 24px;
+          margin: 0 0 19px 0;
+        }
+        .arrow{
+          width: 30px;
+          height: 41px;
+          display: block;
+          margin:22px auto 9px auto;
+        }
+        button{
+          width: 210px;
+          height: 60px;
+          background-image: linear-gradient(0deg,
+            rgba(193, 193, 193, 0.65) 0%,
+            rgba(255, 255, 255, 0.65) 99%),
+          linear-gradient(
+              #ffffff,
+              #ffffff);
+          background-blend-mode: normal,
+          normal;
+          border-radius: 30px;
+          border: none;
+          outline: none;
+          color: #fb2032;
+          font-size: 32px;
+          &.is-down{
+            color: #999999;
+          }
+        }
+      }
+    }
+  }
 
   .bg-center25{
     >div{
