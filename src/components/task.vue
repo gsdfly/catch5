@@ -91,9 +91,11 @@
         }
         _hmt.push(['_trackEvent', '任务：零钱神器', '点击', '打开零钱下载页面', '']);
         this.$store.dispatch('getActivityBountyExchange',{operation_id:this.artifact.id,machine_no:CONFIG.machine_no}).then((res)=>{
-          location.href = this.artifact.url;
           this.$store.dispatch('getUser');
           this.$store.dispatch('getOperations');
+          setTimeout(()=>{
+            location.href = this.artifact.url;
+          },300)
         })
       },
       mountedStart(){
