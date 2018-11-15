@@ -921,10 +921,10 @@
           this.$store.dispatch('getOperations');
 //          localStorage.setItem('redGameStep','step1')
           setTimeout(()=>{
-            window.location.href = this.redGame.url;
+            location.href = this.redGame.url;
           },300)
         }else if(this.redGame.task_count == 1){
-          window.location.href = this.redGame.url;
+          location.href = this.redGame.url;
         }
       },
       verificationGame(){
