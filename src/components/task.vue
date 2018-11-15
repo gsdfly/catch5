@@ -127,7 +127,7 @@
               var guideNum = localStorage.getItem('guideNum');
               if(guideNum){
                 if(guideNum == 1){
-                  if(guideTime !== nowTime){
+                  if(guideTime !== nowTime || this.activity_bounty.length>0){
                     this.$store.commit('changeIsGuide',true);
                     localStorage.setItem('guideTime',nowTime);
                     localStorage.setItem('guideNum',2)
@@ -141,6 +141,9 @@
               }else {
                 this.$store.commit('changeIsGuide',true);
                 localStorage.setItem('guideNum',1)
+                if(this.activity_bounty.length==0){
+                  localStorage.setItem('guideTime',nowTime);
+                }
               }
             }
           }

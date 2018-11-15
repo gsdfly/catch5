@@ -412,7 +412,7 @@ const actions = {
             }
             // ctx.commit('setTaskWawa',res[i]);
           // && CONFIG.isWx
-          }else if(res[i].type === 12 && CONFIG.isWx){
+          }else if(res[i].type === 12 ){
             //type为10时为掉落任务运营位
             if(res[i].task_count >= res[i].num){
               completeOpe.push(res[i])

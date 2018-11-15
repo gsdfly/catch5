@@ -808,11 +808,11 @@
       barcode: vueBarcode
     },
     mounted() {
-      var step1 = localStorage.getItem('redGameStep')
-      if(step1 && this.isLogin){
-        this.handleRedGame('');
-        localStorage.removeItem('redGameStep')
-      }
+//      var step1 = localStorage.getItem('redGameStep')
+//      if(step1 && this.isLogin){
+//        this.handleRedGame('');
+//        localStorage.removeItem('redGameStep')
+//      }
       var unionid = localStorage.getItem('unionid')
       if(unionid && this.isLogin){
         this.handleRedGame(unionid);
@@ -901,12 +901,15 @@
       downloadGame(){
         if(this.redGame.task_count == 0){
           localStorage.setItem('redGameOpeId',this.redGame.id)
-//          this.$store.dispatch('getActivityBountyExchange',{operation_id:this.redGame.id,machine_no:CONFIG.machine_no}).then(()=>{
+          this.$store.dispatch('getActivityBountyExchange',{operation_id:this.redGame.id,machine_no:CONFIG.machine_no})
+//            .then(()=>{
 //            localStorage.setItem('redGameStep','step1')
 //          })
-//          this.$store.dispatch('getUser');
-//          this.$store.dispatch('getOperations');
-          localStorage.setItem('redGameStep','step1')
+          this.$store.dispatch('getUser');
+          this.$store.dispatch('getOperations');
+//          localStorage.setItem('redGameStep','step1')
+          window.location.href = this.redGame.url;
+        }else if(this.redGame.task_count == 1){
           window.location.href = this.redGame.url;
         }
       },
@@ -1474,6 +1477,11 @@
         }
       },
       isLogin(){
+//        var step1 = localStorage.getItem('redGameStep')
+//        if(step1){
+//          this.handleRedGame('');
+//          localStorage.removeItem('redGameStep')
+//        }
         var unionid = localStorage.getItem('unionid')
         if(unionid){
           this.handleRedGame(unionid)
