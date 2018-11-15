@@ -412,7 +412,7 @@ const actions = {
             }
             // ctx.commit('setTaskWawa',res[i]);
           // && CONFIG.isWx
-          }else if(res[i].type === 12 ){
+          }else if(res[i].type === 12 && CONFIG.isWx){
             //type为10时为掉落任务运营位
             if(res[i].task_count >= res[i].num){
               completeOpe.push(res[i])
@@ -433,6 +433,12 @@ const actions = {
             dalibao.push(res[i])
           }else if(res[i].type === 16){
             ctx.commit('setRedGame',res[i])
+            if(res[i].task_count >= res[i].num){
+              completeOpe.push(res[i])
+            }else {
+              undoneOpe.push(res[i])
+            }
+          }else if(res[i].type === 17){
             if(res[i].task_count >= res[i].num){
               completeOpe.push(res[i])
             }else {

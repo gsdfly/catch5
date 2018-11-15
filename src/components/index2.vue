@@ -7,8 +7,8 @@
         <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="">-->
         <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="">
         <img src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/guide/shuoming.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/task-2/weibao.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt="">
+        <!--<img src="http://res.catchme.com.cn/activity/task-2/weibao.png" alt="">-->
       </div>
       <div class="header">
         <div>
@@ -59,7 +59,7 @@
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
-        <task @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
+        <task  ref="task" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
       </div>
 
       <div class="main">
@@ -257,7 +257,7 @@
           </div>
         </div>
 
-        <div class="bg-center9" v-show="contentShow == 'exchange2'" style="width: 100%;height: 100%">
+        <div class="bg-center9" v-if="contentShow == 'exchange2'" style="width: 100%;height: 100%">
           <div class="bg-center9-center">
             <div>
               <h3 class="tipTitle"><span></span><b>{{couponInfo.name}}</b></h3>
@@ -278,7 +278,7 @@
           <div style="width: 100%;height: 100%;position: absolute;z-index:1000" @click="closeBg2"></div>
         </div>
 
-        <div class="bg-center9-2" v-show="contentShow == 'exchange3'" style="width: 100%;height: 100%">
+        <div class="bg-center9-2" v-if="contentShow == 'exchange3'" style="width: 100%;height: 100%">
           <div class="bg-center9-center">
             <div>
               <h3 class="tipTitle"><span></span><b>观影小食兑换券</b></h3>
@@ -610,7 +610,7 @@
               <h4>（玩游戏送红包哦~）</h4>
               <button @click="downloadGame" :class="{'is-down':redGame.task_count >= 1}">下载</button>
               <img class="arrow" src="./../assets/task-2/arrow.png" alt=""/>
-              <h3>第二步：app内成功登录</h3>
+              <h3>第二步：APP内成功登录</h3>
               <p>点击下方验证按钮获取<span>4</span>币 </p>
               <button @click="verificationGame"  :class="{'is-down':redGame.task_count == 2}">验证</button>
             </div>
@@ -654,6 +654,15 @@
           </div>
         </div>
 
+        <div class="bg-center27" v-if="contentShow == 'artifact'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/task-2/loan.png" alt=""/>
+            <button @click="downloadArtifact">去下载</button>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
       </div>
       <tipOperation></tipOperation>
     </div>
@@ -673,7 +682,7 @@
   import {getErrMsg,getParamByName} from './../util/index'
   import Toast from 'mint-ui/lib/Toast'
   import Clipboard from 'clipboard';
-  import quanprogress from './quanprogress.vue'
+//  import quanprogress from './quanprogress.vue'
   import task from './task.vue'
   import guide from './guide.vue'
   import guide2 from './guide2.vue'
@@ -801,7 +810,7 @@
 //      operations,
       tip,
       tipOperation,
-      quanprogress,
+//      quanprogress,
       task,
       guide,
       guide2,
@@ -879,6 +888,9 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      downloadArtifact(){
+        this.$refs.task.useArtifact()
+      },
       handleRedGame(unionid){
         var operation_id = this.redGroup.id || localStorage.getItem('redGameOpeId')
         this.$store.dispatch('getActivityBountyExchange',{operation_id:operation_id,machine_no:CONFIG.machine_no,unionid:unionid}).then(()=>{
@@ -3087,6 +3099,27 @@
         font-size: 32px;
         line-height: 32px;
         font-weight: 600;
+      }
+    }
+  }
+
+  .bg-center27 {
+    div {
+      @include center;
+      .imgBg {
+        display: block;
+        width: 640px;
+        margin: 0 auto;
+      }
+      button{
+        @include centerX;
+        width: 400px;
+        height: 100px;
+        bottom: 160px;
+        border: none;
+        outline: none;
+        font-size: 0;
+        background: transparent;
       }
     }
   }

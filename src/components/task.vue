@@ -40,7 +40,12 @@
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         <p>免费领币</p>
         </div>
-        <div v-if="item.type === 16" @click="openTip('redGame',item)">
+        <div v-if="item.type === 16" @click="openTip('redGame')">
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
+          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+          <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
+        </div>
+        <div v-if="item.type === 17" @click="openTip('artifact',item)">
           <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
@@ -60,6 +65,7 @@
     data(){
       return {
         isRequest:false,
+        artifact:{}
       }
     },
     mounted(){
@@ -78,8 +84,17 @@
       task_opes: state => state.user.task_opes
     }),
     methods:{
-      goTencent(){
-        this.$router.push('/tencent');
+      useArtifact(){
+        if(this.artifact.task_count >= this.artifact.num){
+          location.href = this.artifact.url;
+          return;
+        }
+        _hmt.push(['_trackEvent', '任务：零钱神器', '点击', '打开零钱下载页面', '']);
+        this.$store.dispatch('getActivityBountyExchange',{operation_id:this.artifact.id,machine_no:CONFIG.machine_no}).then((res)=>{
+          location.href = this.artifact.url;
+          this.$store.dispatch('getUser');
+          this.$store.dispatch('getOperations');
+        })
       },
       mountedStart(){
         this.$store.dispatch('getOperations').then((res)=>{
@@ -204,6 +219,9 @@
         }else if(value === 'tencent'){
           _hmt.push(['_trackEvent', '任务：微保', '点击', '微保领币', '']);
 
+        }else if(value === 'artifact'){
+          _hmt.push(['_trackEvent', '任务：零钱神器', '点击', '打开零钱弹窗', '']);
+          this.artifact = info
         }
         this.$emit('openTip',value);
       },
