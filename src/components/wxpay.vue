@@ -23,7 +23,7 @@
     </div>
 
     <div class="dalibao" v-for="(item,index) in dalibao">
-      <img v-if="item.coin_price.coin_price==15" @click="dalibaoTip(index)" :src="img1" alt="">
+      <img v-if="item.coin_price.coin_price==10" @click="dalibaoTip(index)" :src="img1" alt="">
       <img v-else="" @click="dalibaoTip(index)" :src="img3" alt="">
     </div>
 
@@ -237,12 +237,12 @@
     /**/
   /*}*/
   .recharge-lists > div.dalibao{
-    border: none;
+    /*border: none;*/
   }
   .recharge-lists > div.dalibao img{
     display: block;
     width: 100%;
-    height: 133px;
+    height: 131px;
   }
 
 
@@ -428,7 +428,7 @@
   }
 
   .version2 > div.dalibao img{
-    height: 161px;
+    height: 159px;
   }
 
   /*.version2 .recharge-has, .version2 .recharge-hot {*/
