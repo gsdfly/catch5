@@ -226,7 +226,7 @@
     width: 345px;
     /*height: 128px;*/
     height: 37.87%;
-    border: 1px solid #fd643b;
+    border: 1px solid #f25670;
     /*border-radius: 0.15px;*/
     color: #494949;
     position: relative;
@@ -293,7 +293,7 @@
     /*line-height: 61px;*/
     /*font-size: 0.32px;*/
     font-size: 34px;
-    background: #fb643b;
+    background: #f25670;
     color: #fff;
     border-radius: 0 0 12px 12px;
     text-align: center;
@@ -355,7 +355,7 @@
     top: -10px;
     color: #fff;
     /*background: url("./../assets/jiewu/bg_limit.png") no-repeat;*/
-    background: url("./../assets/small/recharge_tab2.png") no-repeat;
+    background: url("./../assets/juchang/recharge_tab.png") no-repeat;
     background-size: 100% 100%;
     font-size: 24px;
     /*text-align: center;*/

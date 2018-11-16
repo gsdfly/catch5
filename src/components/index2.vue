@@ -47,7 +47,7 @@
                 </div>
                 <div class="kefu2-left" @click="hideKefu">
                   <!--<img src="http://res.catchme.com.cn/imgs-2018-04-10/icon_close1.png" alt="">-->
-                  <img src="./../assets/small/icon_close1.png" alt="">
+                  <img src="./../assets/juchang/icon_close1.png" alt="">
                 </div>
               </div>
             </div>
@@ -75,7 +75,7 @@
                 <div class="d">
                   <div class="dd" :style="ringStyle">
                     <div>
-                      <img class="img" src="./../assets/task-2/processed_bg.png" alt="">
+                      <img class="img" src="./../assets/juchang/processed_bg.png" alt="">
                       <!--<img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">-->
                       <div class="star" :class="{'animation':starClass==='animation'}">
                         <img class="star1" src="./../assets/ring/star1.png" alt="">
@@ -663,6 +663,62 @@
           </div>
         </div>
 
+        <div class="bg-center28" v-if="false" @click.stop="">
+          <div>
+            <img class="imgBg" src="./../assets/juchang/bg_my_ticket.png" alt=""/>
+            <ul>
+              <template v-for="activity_bountyItem in activity_bounty">
+                <li v-for="item in activity_bountyItem.vouchers">
+                  <div>
+                    <div>
+                      <h3>{{activity_bountyItem.voucher_batch.name}}</h3>
+                      <p>有效期至：{{item.end_time | handleEndTime}}</p>
+                    </div>
+                  </div>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bg-center28" v-if="false"  @click.stop="">
+          <div>
+            <img class="imgBg" src="./../assets/juchang/bg_my_ticket.png" alt=""/>
+            <div class="main">
+              <img class="icon" src="./../assets/juchang/icon_ticket.png" alt=""/>
+              <h3>暂时没有兑换券哦</h3>
+              <div>
+                <h3 class="tipTitle"><span></span><b>重大说明</b></h3>
+                <p>老板放大招，累计20次抓取，还没抓中娃娃，<br/>直接送一张戏剧票，先到先得！</p>
+                <h5>（若20次内抓中娃娃，将重新开始累计）</h5>
+                <p>凭券可兑换《驴得水》、《谋杀歌谣》、《爱漫游》、《好几个》、《魔法师的白手套》</p>
+              </div>
+            </div>
+            <div class="bottom">
+              <p>现在就去<span>抓娃娃</span>吧~</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-center28" v-if="true"  @click.stop="">
+          <div>
+            <img class="imgBg" src="./../assets/juchang/bg_my_ticket.png" alt=""/>
+            <div class="useMain">
+              <h3>华润置地艺术空间票务</h3>
+              <img src="./../assets/juchang/tickets.png" alt=""/>
+              <p>可兑换《驴得水》、《谋杀歌谣》、《爱漫游》<br/>《好几个》、《魔法师的白手套》</p>
+              <div>
+                <h3>兑换码</h3>
+                <p>2538-1217-8785-0704</p>
+              </div>
+            </div>
+            <div class="bottom bottom2">
+              <p>赶紧到<span>售票处</span>免费兑换奖品吧~</p>
+            </div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
       </div>
       <tipOperation></tipOperation>
     </div>
@@ -707,7 +763,7 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: false,
+        bgShow: true,
         contentShow: '',
         contentShowAfter:'',
         currentCoupon: {},
@@ -1736,11 +1792,13 @@
     right: 0;
     transform: translate3d(100%, 0, 0);
     transition: all 0.4s;
+    background: url("./../assets/juchang/service_bg.png") no-repeat;
+    background-size: 100% 100%;
     .kefu2-left {
       float: right;
       width: 58px;
       height: 62px;
-      background: #fff2ee;
+      /*background: #fff2ee;*/
       border-radius: 18px 0 0 18px;
       line-height: 62px;
       text-align: center;
@@ -1755,7 +1813,7 @@
       height: 352px;
       padding: 30px 0 0 0;
       float: right;
-      background: #fff2ee;
+      /*background: #fff2ee;*/
       border-radius: 0 0 0 18px;
       .kefu2-img {
         width: 158px;
@@ -3125,6 +3183,165 @@
       }
     }
   }
+  .bg-center28 {
+    >div {
+      @include center;
+      width: 668px;
+      .useMain{
+        width: 576px;
+        height: 579px;
+        background:url("./../assets/juchang/tickets_bg.png") no-repeat;
+        background-size: 100% 100%;
+        @include centerX;
+        top:156px;
+        h3{
+          font-size: 34px;
+          line-height: 34px;
+          color: #494949;
+          margin: 22px 0 50px 0;
+        }
+        img{
+          width: 395px;
+          margin: 0 0 28px 0;
+        }
+        p{
+          font-size: 24px;
+          line-height: 30px;
+          padding: 0 24px;
+        }
+        >div{
+          width: 100%;
+          height: 164px;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          color: #494949;
+          h3{
+            font-size: 32px;
+            line-height: 32px;
+            margin:29px 0;
+          }
+          P{
+            font-size: 44px;
+            line-height: 44px;
+          }
+        }
+      }
+      .main{
+        width: 576px;
+        height: 579px;
+        background:#fff;
+        @include centerX;
+        top:156px;
+        .icon{
+          width: 72px;
+          display: block;
+          margin: 117px auto 42px auto;
+        }
+        >h3{
+          font-size: 32px;
+          line-height: 32px;
+          color: #6b6b6b;
+        }
+        >div{
+          width: 100%;
+          min-height: 238px;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          p{
+            font-size: 24px;
+            line-height: 30px;
+            padding: 0 24px;
+          }
+          h5{
+            font-size: 20px;
+            line-height: 20px;
+            padding: 0 24px;
+            margin: 5px 0 18px 0;
+          }
+          .tipTitle{
+            font-size: 26px;
+            color: #494949;
+            margin: 0 0 21px 0;
+            b{
+              background: #fff;
+            }
+            span{
+              background: #a7a7a7;
+            }
+          }
+        }
+      }
+      .bottom{
+        height: 90px;
+        background: url("./../assets/juchang/laba.png") no-repeat left center;
+        background-size: 148px 90px;
+        position: absolute;
+        left: 127px;
+        bottom: 154px;
+        p{
+          font-size: 30px;
+          line-height: 70px;
+          color: #fff;
+          text-indent:140px;
+          span{
+            background: url("./../assets/juchang/lang.png") repeat-x left bottom;
+            background-size: 97px 11px;
+            padding: 0 0 20px 0;
+          }
+        }
+      }
+      .bottom2{
+        left: 66px;
+      }
+      .imgBg {
+        display: block;
+        width: 660px;
+        float: left;
+        z-index: 1;
+      }
+      ul{
+        width: 100%;
+        height:  720px;
+        position: absolute;
+        top:156px;
+        left: 0;
+        overflow: auto;
+        li{
+          width: 576px;
+          height: 180px;
+          margin: 0 auto 20px auto;
+          background: url("./../assets/juchang/ticket_bg.png") no-repeat;
+          background-size: 100% 100%;
+          color: #494949;
+          >div{
+            width: 360px;
+            min-height: 180px;
+            float: right;
+            text-align: left;
+            position: relative;
+            div{
+              @include centerX;
+              h3{
+                font-size: 34px;
+                line-height: 34px;
+                margin: 54px 0 16px 0;
+                white-space: nowrap;
+              }
+              p{
+                font-size: 22px;
+                line-height: 22px;
+                color: #353535;
+                white-space: nowrap;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   .price {
     position: absolute;
     width: 298px;
@@ -3365,7 +3582,7 @@
   .jo-index .jo-index-div {
     width: 100%;
     height: 100%;
-    background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");
+    background: url("./../assets/juchang/bg.png");
     background-size: 100% 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -3397,7 +3614,7 @@
   .header .head-portrait {
     width: 102px;
     height: 102px;
-    background: #feccbc;
+    background: #ffeef2;
     border-radius: 50%;
     position: relative;
     margin: -10px 0 0 0;
@@ -3408,7 +3625,7 @@
     left: -5px;
     bottom: -18px;
     text-align: center;
-    background: url("./../assets/imgs/bg_id.png") no-repeat;
+    background: url("./../assets/juchang/bg_id.png") no-repeat;
     background-size: 100% 100%;
     width: 112px;
     height: 35px;
@@ -3459,7 +3676,7 @@
     padding: 0 22px;
     line-height: 62px;
     border-radius: 31px;
-    background: #fff2ee;
+    background: #fef3f8;
     float: left;
     /*min-width: 2px;*/
     position: relative;
@@ -3527,7 +3744,7 @@
   .header .header-main .kefu {
     /*width: 0.62px;*/
     height: 62px;
-    background: #fff2ee;
+    background: #fef3f8;
     /*border-radius: 50%;*/
     /*float: right;*/
     /*position: relative;*/
@@ -3683,7 +3900,8 @@
     transform: translateX(calc(-50% - 8px));
     /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/process_bg2.png");*/
-    background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");
+    /*background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");*/
+    background: url("./../assets/juchang/process_bg.png");
     background-size: 100% 100%;
     pointer-events: none;
     /*padding: 0.1px;*/
@@ -3702,7 +3920,7 @@
     left: 12px;
     bottom: 20px;
     /*background: url("./../assets/ring/process_r.png");*/
-    background: url("./../assets/task-2/process_bg_circular.png");
+    background: url("./../assets/juchang/process_bg_circular.png");
     background-size: 100% 100%;
     color: #fff;
     text-align: center;
@@ -3863,7 +4081,7 @@
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-tip-ling {
     /*background: url("./../assets/task-2/progress_doll_receive_bg.png") no-repeat;*/
-    border: 4px solid #e8453d;
+    border: 4px solid #f12a5c;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-quan img {
@@ -3901,7 +4119,16 @@
     line-height: 32px;
     padding: 0 10px;
     color: #fff;
-    background: #f76058;
+    background-image: linear-gradient(-54deg,
+      #f1295c 0%,
+      #f25670 100%),
+    linear-gradient(
+        #fdebd3,
+        #fdebd3);
+    background-blend-mode: normal,
+    normal;
+    box-shadow: 0px 1px 9px 0px
+    rgba(227, 41, 107, 0.36);
     display: inline-block;
     border-radius: 12px;
     overflow: hidden;
@@ -3977,10 +4204,10 @@
     height: 90px;
     /*font-size: 0.32px;*/
     font-size: 34px;
-    color: #fd643b;
+    color: #fff;
     /*margin: 0 0 0.1px 0;*/
     /*height: 0.64px;*/
-    background: #feedd7;
+    background: #f25670;
     line-height: 90px;
     position: absolute;
     border-radius: 0 16px 0 0;
@@ -4003,12 +4230,13 @@
     text-align: center;
     line-height: 306px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
-    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
+    background: url("./../assets/juchang/press_begin.png");
     background-size: 100% 100%;
     border: none;
     outline: none;
     /*font-size: 0.5px;*/
-    font-size: 40px;
+    /*font-size: 40px;*/
+    font-size: 0;
     color: #fff;
     display: block;
     margin: 0 auto;
@@ -4019,14 +4247,14 @@
 
   .main .center .hasclick {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_ing.png");*/
-    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
+    background: url("./../assets/juchang/press_begin.png");
     background-size: 100% 100%;
   }
 
   .main .center .game-num {
     width: 418px;
     height: 93px;
-    border: 1px solid #ff784e;
+    border: 1px solid #f35c67;
     border-radius: 18px;
     font-size: 24px;
     line-height: 91px;
@@ -4053,19 +4281,19 @@
     width: 20%;
     float: left;
     font-size: 50px;
-    color: #ff784e;
+    color: #f35c67;
     text-align: center;
     height: 71px;
     line-height: 71px;
     /*height: 67px;*/
     /*line-height: 67px;*/
-    border-right: 1px solid #ff784e;
+    border-right: 1px solid #f35c67;
     margin: 10px 0;
   }
 
   .main .center .game-num i:last-of-type {
     border-right: none;
-    border-left: 1px solid #ff784e;
+    border-left: 1px solid #f35c67;
     float: right;
   }
 
@@ -4084,7 +4312,7 @@
   .main .center .game-num > div h3 {
     /*font-size: 0.42px;*/
     font-size: 40px;
-    color: #ff784e;
+    color: #f35c67;
     font-weight: 600;
     /*line-height: 0.42px;*/
     line-height: 40px;
