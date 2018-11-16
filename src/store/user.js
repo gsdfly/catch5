@@ -394,7 +394,9 @@ const actions = {
           }
           else if(res[i].type === 8){
             // console.log(ctx.state.activity_bounty);
-            activity_bounty.push(res[i]);
+            if(res[i].remain_count>0){
+              activity_bounty.push(res[i]);
+            }
           }else if(res[i].type === 9){
             if(res[i].task_count >= res[i].num){
               completeOpe.push(res[i])

@@ -51,6 +51,14 @@
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
       </li>
+      <li class="es">
+        <div>
+          <div @click="goCouponList">
+            <img src="./../assets/juchang/my_ticket.png" alt=""/>
+          </div>
+          <p>我的戏剧票</p>
+        </div>
+      </li>
     </ul>
   </div>
 </template>
@@ -84,6 +92,9 @@
       task_opes: state => state.user.task_opes
     }),
     methods:{
+      goCouponList(){
+        this.$emit('couponList','juchang')
+      },
       useArtifact(){
         if(this.artifact.task_count >= this.artifact.num){
           location.href = this.artifact.url;
@@ -318,6 +329,20 @@
         height: 100%;
         float: left;
         position: relative;
+        &.es{
+          >div{
+            >div{
+              height: 110px;
+              margin: 13px 0 0 0;
+              padding: 0.1px;
+              img{
+                width: 136px;
+                height: 98px;
+                margin: 10px auto 0 auto;
+              }
+            }
+          }
+        }
         >div{
           width: 100%;
           height: 100%;

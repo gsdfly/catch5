@@ -59,7 +59,7 @@
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
-        <task  ref="task" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
+        <task  ref="task" @couponList="couponList" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
       </div>
 
       <div class="main">
@@ -663,12 +663,12 @@
           </div>
         </div>
 
-        <div class="bg-center28" v-if="false" @click.stop="">
+        <div class="bg-center28" v-if="contentShow=='couponList2'" @click.stop="">
           <div>
             <img class="imgBg" src="./../assets/juchang/bg_my_ticket.png" alt=""/>
             <ul>
               <template v-for="activity_bountyItem in activity_bounty">
-                <li v-for="item in activity_bountyItem.vouchers">
+                <li v-for="item in activity_bountyItem.vouchers"  @click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name,activity_bountyItem.voucher_batch.category)">
                   <div>
                     <div>
                       <h3>{{activity_bountyItem.voucher_batch.name}}</h3>
@@ -678,10 +678,12 @@
                 </li>
               </template>
             </ul>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
           </div>
         </div>
 
-        <div class="bg-center28" v-if="false"  @click.stop="">
+        <div class="bg-center28" v-if="contentShow=='notExchange2'"  @click.stop="">
           <div>
             <img class="imgBg" src="./../assets/juchang/bg_my_ticket.png" alt=""/>
             <div class="main">
@@ -691,25 +693,27 @@
                 <h3 class="tipTitle"><span></span><b>重大说明</b></h3>
                 <p>老板放大招，累计20次抓取，还没抓中娃娃，<br/>直接送一张戏剧票，先到先得！</p>
                 <h5>（若20次内抓中娃娃，将重新开始累计）</h5>
-                <p>凭券可兑换《驴得水》、《谋杀歌谣》、《爱漫游》、《好几个》、《魔法师的白手套》</p>
+                <p>凭券可兑换《驴得水》、《谋杀歌谣》、《爱漫游》、《魔法师的白手套》</p>
               </div>
             </div>
             <div class="bottom">
               <p>现在就去<span>抓娃娃</span>吧~</p>
             </div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
           </div>
         </div>
 
-        <div class="bg-center28" v-if="true"  @click.stop="">
+        <div class="bg-center28" v-if="contentShow=='juchang'"  @click.stop="">
           <div>
             <img class="imgBg" src="./../assets/juchang/bg_my_ticket.png" alt=""/>
             <div class="useMain">
               <h3>华润置地艺术空间票务</h3>
               <img src="./../assets/juchang/tickets.png" alt=""/>
-              <p>可兑换《驴得水》、《谋杀歌谣》、《爱漫游》<br/>《好几个》、《魔法师的白手套》</p>
+              <p>可兑换《驴得水》、《谋杀歌谣》、《爱漫游》<br/>《魔法师的白手套》</p>
               <div>
                 <h3>兑换码</h3>
-                <p>2538-1217-8785-0704</p>
+                <p>{{couponInfo.code | handleCode}}</p>
               </div>
             </div>
             <div class="bottom bottom2">
@@ -763,7 +767,7 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: true,
+        bgShow: false,
         contentShow: '',
         contentShowAfter:'',
         currentCoupon: {},
@@ -1207,18 +1211,30 @@
 //          this.openTip('receive');
 //        }
       },
-      couponList() {
+      couponList(isFrom='') {
         var len = this.activity_bounty.length;
         for (var i = 0; i < len; i++) {
           if (this.activity_bounty[i].vouchers.length > 0) {
-            this.openTip('couponList');
+            this.openTip('couponList2');
             _hmt.push(['_trackEvent', '打开优惠券列表弹窗', '点击', '优惠券为：' + this.activity_bounty[i].voucher_batch.name, '']);
             return;
           }
         }
 //        _hmt.push(['_trackEvent', '打开优惠券列表弹窗', '点击', '优惠券为：0', '']);
         _hmt.push(['_trackEvent', '弹出解释弹出', '点击', '币没满足且无兑换券', '']);
-        this.openTip('jieshi');
+        if(isFrom == 'juchang'){
+          this.openTip('notExchange2')
+        }else {
+          if(this.currentActivityBounty.voucher_batch){
+            if(this.currentActivityBounty.voucher_batch.category==0){
+              this.openTip('notExchange2')
+            }else {
+              this.openTip('jieshi');
+            }
+          }else {
+            this.openTip('notExchange2')
+          }
+        }
       },
       receiveBiSuccess() {
         this.bgShow = true;
@@ -1262,7 +1278,7 @@
           this.couponInfo = res.data;
 //          this.isReceive = true;
           this.bgShow = true;
-          this.contentShow = 'couponList';
+          this.contentShow = 'couponList2';
           //重新获取任务值信息,并更新本地娃娃任务值
           this.$store.dispatch('getActivityBountyInfo')
           this.$store.dispatch('getOperations');
@@ -1281,7 +1297,8 @@
             }
             this.contentShow = 'baomihua';
           }else {
-            this.contentShow = 'exchange3';
+//            this.contentShow = 'exchange3';
+            this.contentShow = 'juchang'
           }
         } else {
           this.contentShow = 'exchange2';
@@ -1628,6 +1645,15 @@
         } else {
           return 0
         }
+      },
+      handleCode(value){
+        var reg = /(.{4})/g
+        var value2 = value.replace(reg,'$1-');
+        if(value.length%4===0){
+          return value2.slice(0,value2.length-1);
+        }else {
+          return value2;
+        }
       }
 //      handleArr(arr){
 //        var max = 0;
@@ -1784,12 +1810,15 @@
   }
 
   .kefu2 {
-    width: 292px;
+    /*width: 292px;*/
+    width: 324px;
+    height: 347px;
+    padding: 13px 13px 19px 19px;
     position: absolute;
     z-index: 999;
     /*top:calc(6% - 0.12px);*/
-    top: 0;
-    right: 0;
+    top: -13.2px;
+    right: -13.2px;
     transform: translate3d(100%, 0, 0);
     transition: all 0.4s;
     background: url("./../assets/juchang/service_bg.png") no-repeat;
@@ -1798,7 +1827,7 @@
       float: right;
       width: 58px;
       height: 62px;
-      /*background: #fff2ee;*/
+      /*background: #dff5ff;*/
       border-radius: 18px 0 0 18px;
       line-height: 62px;
       text-align: center;
@@ -1810,35 +1839,38 @@
     }
     .kefu2-right {
       width: 234px;
-      height: 352px;
+      height: 347px;
       padding: 30px 0 0 0;
       float: right;
-      /*background: #fff2ee;*/
+      /*background: #dff5ff;*/
       border-radius: 0 0 0 18px;
       .kefu2-img {
-        width: 158px;
-        height: 158px;
-        padding: 9px;
+        width: 144px;
+        height: 144px;
+        /*padding: 4px;*/
         margin: 0 auto;
-        background: #fff;
+        background: #f25670;
         border-radius: 4px;
+        padding: 0.1px;
         img {
-          width: 140px;
-          height: 140px;
+          width: 136px;
+          height: 136px;
+          display: block;
+          margin: 4px auto;
         }
       }
       h3 {
         font-size: 22px;
         line-height: 24px;
         color: #353535;
-        margin: 12px 0 38px 0;
+        margin: 22px 0 24px 0;
         text-align: center;
       }
       p {
         font-size: 22px;
         text-align: center;
         a {
-          color: #576b95;
+          color: #eb405c;
         }
         span {
           display: inline-block;
@@ -3706,7 +3738,7 @@
 
   .header .header-main .game i {
     font-size: 40px;
-    color: #fe5f5b;
+    color: #f25670;
     font-weight: 500;
     text-align: center;
   }
@@ -3724,13 +3756,13 @@
 
   .header .header-main .game span {
     font-size: 28px;
-    color: #fe5f5b;
+    color: #f25670;
     display: inline-block;
   }
 
   .header .header-main .game span.coins-num {
     font-size: 36px;
-    color: #fe5f5b;
+    color: #f25670;
     font-weight: 600;
     margin: 0 0 0 10px;
     line-height: 70px;
@@ -3770,7 +3802,7 @@
 
   .header .header-main .kefu > p > span {
     /*display: inline-block;*/
-    color: #fd643b;
+    color: #f25670;
     font-size: 28px;
     height: 28px;
     line-height: 70px;
