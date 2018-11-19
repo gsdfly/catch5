@@ -691,8 +691,8 @@
               <h3>暂时没有兑换券哦</h3>
               <div>
                 <h3 class="tipTitle"><span></span><b>重大说明</b></h3>
-                <p>老板放大招，累计20次抓取，还没抓中娃娃，<br/>直接送一张戏剧票，先到先得！</p>
-                <h5>（若20次内抓中娃娃，将重新开始累计）</h5>
+                <p>老板放大招，累计{{activity_bounty[activity_bounty.length-1].voucher_batch.value / info.coin_num}}次抓取，还没抓中娃娃，<br/>直接送一张戏剧票，先到先得！</p>
+                <h5>（若{{activity_bounty[activity_bounty.length-1].voucher_batch.value / info.coin_num}}次内抓中娃娃，将重新开始累计）</h5>
                 <p>凭券可兑换《驴得水》、《谋杀歌谣》、《爱漫游》、《魔法师的白手套》</p>
               </div>
             </div>
