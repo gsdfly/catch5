@@ -665,7 +665,7 @@
 
         <div class="bg-center28" v-if="contentShow=='couponList2'" @click.stop="">
           <div>
-            <img class="imgBg" src="./../assets/juchang/bg_my_ticket.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/juchang/bg_my_ticket.png" alt=""/>
             <ul>
               <template v-for="activity_bountyItem in activity_bounty">
                 <li v-for="item in activity_bountyItem.vouchers"  @click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name,activity_bountyItem.voucher_batch.category)">
@@ -685,7 +685,7 @@
 
         <div class="bg-center28" v-if="contentShow=='notExchange2'"  @click.stop="">
           <div>
-            <img class="imgBg" src="./../assets/juchang/bg_my_ticket.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/juchang/bg_my_ticket.png" alt=""/>
             <div class="main">
               <img class="icon" src="./../assets/juchang/icon_ticket.png" alt=""/>
               <h3>暂时没有兑换券哦</h3>
@@ -706,10 +706,10 @@
 
         <div class="bg-center28" v-if="contentShow=='juchang'"  @click.stop="">
           <div>
-            <img class="imgBg" src="./../assets/juchang/bg_my_ticket.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/juchang/bg_my_ticket.png" alt=""/>
             <div class="useMain">
               <h3>华润置地艺术空间票务</h3>
-              <img src="./../assets/juchang/tickets.png" alt=""/>
+              <img src="http://res.catchme.com.cn/activity/juchang/tickets.png" alt=""/>
               <p>可兑换《驴得水》、《谋杀歌谣》、《爱漫游》<br/>《魔法师的白手套》</p>
               <div>
                 <h3>兑换码</h3>
@@ -3933,7 +3933,7 @@
     /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/process_bg2.png");*/
     /*background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");*/
-    background: url("./../assets/juchang/process_bg.png");
+    background: url("http://res.catchme.com.cn/activity/juchang/process_bg.png");
     background-size: 100% 100%;
     pointer-events: none;
     /*padding: 0.1px;*/
@@ -4262,7 +4262,7 @@
     text-align: center;
     line-height: 306px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
-    background: url("./../assets/juchang/press_begin.png");
+    background: url("http://res.catchme.com.cn/activity/juchang/press_begin.png");
     background-size: 100% 100%;
     border: none;
     outline: none;
@@ -4279,7 +4279,7 @@
 
   .main .center .hasclick {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_ing.png");*/
-    background: url("./../assets/juchang/press_begin.png");
+    background: url("http://res.catchme.com.cn/activity/juchang/press_begin.png");
     background-size: 100% 100%;
   }
 
