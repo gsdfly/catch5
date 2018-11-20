@@ -592,8 +592,9 @@
 
         <div class="bg-center23" v-if="contentShow == 'dalibaotip'" @click.stop="">
           <div>
-            <img v-if="dalibao[dalibaoIndex].coin_price.coin_price == '30.00'" class="imgBg" src="http://res.catchme.com.cn/activity/dalibao/corn.png" alt=""/>
-            <img class="imgBg" v-else="" src="http://res.catchme.com.cn/activity/dalibao/corn_fifteen.png" alt="">
+
+            <img class="imgBg" v-if="dalibao[dalibaoIndex].coin_price.coin_price == '10.00'" src="http://res.catchme.com.cn/activity/dalibao/corn_fifteen.png" alt="">
+            <img  class="imgBg" v-else="" src="http://res.catchme.com.cn/activity/dalibao/corn.png" alt=""/>
             <div class="btn" @click="useDalibaoPay">去充值</div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg"/>
