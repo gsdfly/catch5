@@ -20,14 +20,19 @@
   <script async src="//g.alicdn.com/fdilab/lib3rd/viewport-units-buggyfill/0.6.2/??viewport-units-buggyfill.hacks.min.js,viewport-units-buggyfill.min.js"></script>
   <!--     <script src="http://oui6gboth.bkt.clouddn.com/vconsole.min.js?_t=201708111446"></script> -->
   <script>
+    var machine = getParamByName('machine')
     if(!localStorage.getItem('startTime2')){
       localStorage.setItem('startTime2',performance.timing.navigationStart);
     }else {
       localStorage.setItem('auto','true');
     }
-
+    if(['CATCH_100648','CATCH_100690'].includes(machine)){
+      document.title = '有戏机';
+    }else {
+      document.title = '我抓娃娃机';
+    }
     if(!localStorage.getItem('log_id')){
-      ajax('api/time', getParamByName('machine') || 'CATCH_100024', function (res) {
+      ajax('api/time', machine || 'CATCH_100024', function (res) {
         var data = JSON.parse(res);
         localStorage.setItem('log_id', data.data.log_id);
       });
