@@ -71,10 +71,14 @@ const state = {
   },
   task_opes:[],
   dalibao:[],
-  redGame:{}
+  redGame:{},
+  xmasGroup:[]
 }
 
 const mutations = {
+  changeXmasGroup(state,arr){
+    state.xmasGroup = arr
+  },
   changeIsGuide(state,value){
     state.isShowGuide = value;
   },
@@ -470,7 +474,7 @@ const actions = {
             }
           }
         }
-
+        activity_bounty = []
         ctx.commit('setActivityBounty',activity_bounty);
         if(dalibao.length>0){
           ctx.commit('setActivityBounty',[]);
@@ -588,7 +592,98 @@ const actions = {
         error(err)
       })
     })
-  }
+  },
+
+  //圣诞活动
+  //我的卡片
+  getCardMycardAction:function (ctx,params) {
+    return new Promise((success,error)=>{
+      api.getCardMycard(Object.assign({},{token:CONFIG.token},params)).then((data)=>{
+        //在这里需要改变圣诞的对象一次
+        var xmasGroup = ctx.state.xmasGroup;
+        // var xmasGroupHistory = ctx.state.xmasGroup;
+        var mycards = data.data
+        //需要遍历3次
+        if(mycards.length > 0){
+          for(var i=0;i<xmasGroup.length;i++){
+            var num = 0
+            for(var j=0;j<xmasGroup[i].cards.length;j++){
+              for(var k=0;k<mycards.length;k++){
+                delete xmasGroup[i].cards[j].total;
+                if(xmasGroup[i].cards[j].key == mycards[k].key){
+                  xmasGroup[i].cards[j].total = mycards[k].total;
+                  num++;
+                  break;
+                }
+              }
+            }
+            if(num==xmasGroup[i].cards.length){
+              xmasGroup[i].isExchange = true //是否能够兑换
+            }
+          }
+        }
+        ctx.commit('changeXmasGroup',xmasGroup)
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+  },
+  getCardGroupAction:function (ctx,params) {
+    return new Promise((success,error)=>{
+      api.getCardGroup(Object.assign({},{token:CONFIG.token,machine_no:ctx.state.machine_no},params)).then((data)=>{
+        ctx.commit('changeXmasGroup',data.data)
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+  },
+  getCardRateAction:function (ctx,params) {
+    return new Promise((success,error)=>{
+      api.getCardRate(Object.assign({},{token:CONFIG.token,machine_no:ctx.state.machine_no},params)).then((data)=>{
+        //在这里给所领取到的卡片添加动画标识
+        var newCards = data.data;
+        var xmasGroup = ctx.state.xmasGroup;
+        for(var i=0;i<newCards.length;i++){
+          if(newCards[i].type == 'coin') {continue;}
+          for(var j=0;j<xmasGroup.length;j++){
+            for(var k=0;k<xmasGroup[j].cards.length;k++){
+              delete xmasGroup[j].cards[k].animate;
+              if(newCards[i].value.key == xmasGroup[j].cards[k].key){
+                xmasGroup[j].cards[k].animate = true
+              }
+            }
+          }
+        }
+        console.log(xmasGroup)
+        ctx.commit('changeXmasGroup',xmasGroup);
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+  },
+  getCardExchangeAction:function (ctx,params) {
+    return new Promise((success,error)=>{
+      api.getCardExchange({token:CONFIG.token,card_group_id:params.card_group_id}).then((data)=>{
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+  },
+  getProfileVoucherAction:function (ctx,params) {
+    return new Promise((success,error)=>{
+      api.getProfileVoucher(Object.assign({},{token:CONFIG.token},params)).then((data)=>{
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+  },
+
+  //圣诞活动
 
 }
 

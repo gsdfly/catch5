@@ -208,6 +208,32 @@ export default {
   getEnvelopeReceive:function (params) {
     return instance.post(CONFIG.url+'api/envelope/receive',jsonToStr(params))
   },
-  //
-
+  //圣诞活动
+  //我的卡片
+  getCardMycard:function (params) {
+    return instance.get(CONFIG.url + 'api/card/mycard', {
+      params: params
+    });
+  },
+  //活动卡组
+  getCardGroup:function (params) {
+    return instance.get(CONFIG.url + 'api/card/group', {
+      params: params
+    });
+  },
+  //领取卡片
+  getCardRate:function (params) {
+    return instance.post(CONFIG.url+'api/card/rate',jsonToStr(params))
+  },
+  //兑换三方券
+  getCardExchange:function (params) {
+    return instance.post(CONFIG.url+'api/card/exchange',jsonToStr(params))
+  },
+  //获得三方券列表
+  getProfileVoucher:function (params) {
+    return instance.get(CONFIG.url + 'api/profile/voucher', {
+      params: params
+    });
+  },
+  //圣诞活动
 }

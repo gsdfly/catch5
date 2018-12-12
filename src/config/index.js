@@ -25,7 +25,7 @@ let CONFIG = {
   scene:1,
   site_version_id:GetCookie('site_version_id') || 0,
   get token(){
-    return   process.env.NODE_ENV === 'development' ? 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2Zyb250LjV6aHVhLmNuL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTQzMjg0MzMwLCJleHAiOjE1NDM1MDAzMzAsIm5iZiI6MTU0MzI4NDMzMCwianRpIjoiN0RRZ1BWWFE4ZGhQNEVkcyIsInN1YiI6Mn0.gUA0tsjScIxMPG04-WEjKt7Cmv1mj6dtUh-lXOyVOgU' : GetCookie('token_')
+    return   process.env.NODE_ENV === 'development' ? 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2Zyb250LjV6aHVhLmNuL2FwaS9hdXRoL3Rva2VuIiwiaWF0IjoxNTQ0NDA3NzQ3LCJleHAiOjE1NDQ2MjM3NDcsIm5iZiI6MTU0NDQwNzc0NywianRpIjoiNWFqUnloc0lSaWd3TTZWQiIsInN1YiI6Mn0.CJ3gr5r8aJ0pQpA1WpWHzGRsJRub5DJhTpiMDsIL268' : GetCookie('token_')
   },
   machine_no: getParamByName('machine') || 'CATCH_100024',
   u: function () {

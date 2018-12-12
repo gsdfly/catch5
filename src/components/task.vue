@@ -3,18 +3,18 @@
     <ul>
       <li v-for="item in task_opes.slice(0,3)">
         <div v-if="item.type === 7" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/xmas/page/test_a.png" alt=""/>
           <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.coupon.status === 2}">免费领币</p>
         </div>
         <div v-if="item.type === 12" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/xmas/page/test_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
         <div v-if="item.type === 9">
           <div @click="openTip('taskGameTip',item)" class="water" v-if="item.task_count < item.num && task_now.game_bounty<item.value">
-            <div class="bol" :style="'height:'+task_now.game_bounty/item.value*100+'%'"></div>
+            <!--<div class="bol" :style="'height:'+task_now.game_bounty/item.value*100+'%'"></div>-->
             <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{item.value/info.coin_num}}</span>
           </div>
           <div @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value" class="m-water">领币</div>
@@ -23,7 +23,7 @@
           <p :class="{'is_down':item.task_count >= item.num}">投币送币</p>
         </div>
         <div v-if="item.type === 10">
-          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/task-2/icon_free_c.png" alt=""/>
+          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/xmas/page/test_c.png" alt=""/>
           <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
@@ -41,12 +41,12 @@
         <p>免费领币</p>
         </div>
         <div v-if="item.type === 16" @click="openTip('redGame')">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/xmas/page/test_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
         <div v-if="item.type === 17" @click="openTip('artifact',item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/xmas/page/test_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
@@ -307,8 +307,10 @@
       top:-18px;
     }
     ul{
-      background: #fff;
+      /*background: #fff;*/
       width: 706px;
+      background: url("./../assets/xmas/page/test_bg.png") no-repeat;
+      background-size: 100% 100%;
       position: absolute;
       height:100%;
       border-radius: 16px;
@@ -370,8 +372,9 @@
           .m-water{
             width: 90px;
             height: 90px;
-            background: url("./../assets/task-2/water.png") no-repeat;
-            background-size: 100% 100%;
+            /*background: url("./../assets/task-2/water.png") no-repeat;*/
+            /*background-size: 100% 100%;*/
+            background: #ee3b2f;
             border-radius: 50%;
             font-size: 30px;
             color: #fff;
@@ -387,7 +390,7 @@
           .water{
             width: 90px;
             height: 90px;
-            background-color: #999999;
+            background-color: #ee3b2f;
             /*border: solid 6px #ffffff;*/
             border-radius: 50%;
             overflow: hidden;
@@ -395,7 +398,9 @@
             display: flex;
             align-items: flex-end;
             margin: 19px auto 18px auto;
-            box-shadow: 0 4px 12px rgba(180,149,84,0.4);
+            box-shadow: 0px 4px 12px 0px
+            rgba(234, 73, 71, 0.4);
+            /*box-shadow: 0 4px 12px rgba(180,149,84,0.4);*/
             /*box-shadow: inset 0px 3px 13px 0px*/
             /*rgba(242, 123, 0, 0.51);*/
             .bol{
@@ -410,7 +415,7 @@
               left: 50%;
               top:50%;
               font-size: 28px;
-              color: #fff;
+              color: #2bd361;
               transform: translate(-50%,-50%);
               b{
                 font-size: 40px;

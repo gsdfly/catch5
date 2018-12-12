@@ -226,7 +226,11 @@
     width: 345px;
     /*height: 128px;*/
     height: 37.87%;
-    border: 1px solid #fd643b;
+    padding: 6px;
+    /*border: 1px solid #fd643b;*/
+    border: 1px solid transparent;
+    background: url("./../assets/xmas/page/recharge_bg.png");
+    background-size: 100% 100%;
     /*border-radius: 0.15px;*/
     color: #494949;
     position: relative;
@@ -287,13 +291,15 @@
   }
 
   .recharge-item-b {
-    height: 63px;
-    line-height: 63px;
+    /*height: 63px;*/
+    /*line-height: 63px;*/
+    height: 57px;
+    line-height: 57px;
     /*height: 61px;*/
     /*line-height: 61px;*/
     /*font-size: 0.32px;*/
     font-size: 34px;
-    background: #fb643b;
+    /*background: #fb643b;*/
     color: #fff;
     border-radius: 0 0 12px 12px;
     text-align: center;
@@ -309,12 +315,14 @@
   .recharge-item-t {
     /*height: 67px;*/
     /*line-height: 67px;*/
-    height: 68px;
-    line-height: 68px;
+    /*height: 68px;*/
+    /*line-height: 68px;*/
+    height: 62px;
+    line-height: 62px;
     font-size: 36px;
     color: #353535;
     text-align: center;
-    background: #fff;
+    /*background: #fff;*/
     border-radius: 16px 16px 0 0;
   }
 
@@ -401,14 +409,18 @@
   /*}*/
 
   .version2 .recharge-item-t {
-    height: 84px;
+    /*height: 84px;*/
+    height: 78px;
+    line-height: 78px;
     font-size: 38px;
-    line-height: 84px;
+    /*line-height: 84px;*/
   }
 
   .version2 .recharge-item-b {
-    height: 75px;
-    line-height: 75px;
+    /*height: 75px;*/
+    height: 69px;
+    line-height: 69px;
+    /*line-height: 75px;*/
     font-size: 34px;
   }
 

@@ -5,10 +5,10 @@
         <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png" alt="">
         <!--<img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="">-->
         <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="">-->
-        <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt="">
-        <!--<img src="http://res.catchme.com.cn/activity/task-2/weibao.png" alt="">-->
+        <img src="http://res.catchme.com.cn/activity/xmas/product.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/xmas/windows_bg.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/xmas/credit.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/xmas/congratulate_bg.png" alt="">
       </div>
       <div class="header">
         <div>
@@ -34,7 +34,7 @@
             <div class="kefu" @click.stop="">
               <p id="support" @click="showKefu">
                 <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_kefu.png" alt=""><span>客服</span>-->
-                <img src="./../assets/small/icon_kefu.png" alt=""><span>客服</span>
+                <img src="./../assets/xmas/page/icon_kefu.png" alt=""><span>客服</span>
               </p>
               <div class="kefu2" :style="isKefuStyle">
                 <div class="kefu2-right">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="kefu2-left" @click="hideKefu">
                   <!--<img src="http://res.catchme.com.cn/imgs-2018-04-10/icon_close1.png" alt="">-->
-                  <img src="./../assets/small/icon_close1.png" alt="">
+                  <img src="./../assets/xmas/page/icon_close.png" alt="">
                 </div>
               </div>
             </div>
@@ -66,6 +66,7 @@
         <div class="main-center">
           <div class="centerout">
             <div class="center">
+              <img class="sock" @click="myCards" src="./../assets/xmas/page/sock.png" alt=""/>
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
               <div v-if="isShowBaomihuaList" class="my_ticket" @click="openTip('baomihuaList')">
                 <img src="./../assets/dalibao/my_ticket.png" alt=""/>
@@ -126,9 +127,9 @@
                   <h3>{{gameNum * info.coin_num}}币</h3>
                   <p>可玩{{gameNum}}次游戏</p>
                 </div>
-                <i id="coin_add" class="iconfont icon-jiahao" @click="handlerGameNum('+')" :class="{
+                <i id="coin_add" class="jiahao"  @click="handlerGameNum('+')" :class="{
                      'active': ((gameNum + 1) * info.coin_num) > user.coins
-                 }"></i>
+                 }"><img src="./../assets/xmas/page/add.png" alt=""><div @click.stop="openTip('xmastip')">一次投6币，得卡牌哦~</div></i>
               </div>
               <img @click.prevent="" v-if="start_desc=='投币中'" class="tbz" src="../assets/small/tbz.gif" alt="">
               <img @click.prevent="" v-if="is_lamp_after && start_desc=='投币启动'" class="tbz"
@@ -240,9 +241,10 @@
         <div class="bg-center8" v-if="contentShow == 'notExchange'" @click.stop="">
           <div>
             <div>
-              <h3 class="tipTitle"><span></span><b>我的优惠券</b></h3>
+              <h3 class="tipTitle"><span></span><b>我的兑换券</b></h3>
               <img src="./../assets/catch3/image_nothing.png" alt="" class="imgBg" @click.prevent="">
-              <p>暂时没有优惠券哦</p>
+              <p>暂时没有兑换券哦</p>
+              <p>集齐卡片，奖励自己一根Dior口红吧</p>
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg">
@@ -264,12 +266,17 @@
               <div class="scroll">
                 <span class="spanh3" id="copy">{{couponInfo.code}}</span>
                 <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
-                <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy" id="copyBtn">复制</button>
+                <div :data-clipboard-target="'#copy'" @click="copy" class="btncopy" id="copyBtn">复制</div>
               </div>
-              <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="" @click.prevent=""
+              <img src="http://res.catchme.com.cn/activity/xmas/credit.png" alt="" @click.prevent=""
                    class="imgBg"/>
+              <!--<img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="" @click.prevent=""-->
+                   <!--class="imgBg"/>-->
+              <!--<a class="go-coupon-list" href="javascript:void(0)"-->
+                 <!--@click.stop="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i-->
+                <!--class="iconfont icon-shuangjiantouyou"></i></a>-->
               <a class="go-coupon-list" href="javascript:void(0)"
-                 @click.stop="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
+                 @click.stop="goCouponList">我的兑换券：{{records.length}} <i
                 class="iconfont icon-shuangjiantouyou"></i></a>
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -303,7 +310,6 @@
           </div>
           <div style="width: 100%;height: 100%;position: absolute;z-index:1000" @click="closeBg2"></div>
         </div>
-
 
         <div class="bg-center10" v-if="contentShow == 'coin'" @click.stop="">
           <div>
@@ -359,27 +365,44 @@
         <div class="bg-center12" v-if="contentShow == 'couponList'" @click.stop="">
           <div>
             <div>
-              <h3 class="tipTitle"><span></span><b>我的优惠券</b></h3>
+              <h3 class="tipTitle"><span></span><b>我的兑换券</b></h3>
               <ul>
-                <template v-for="activity_bountyItem in activity_bounty">
-                  <li v-for="item in activity_bountyItem.vouchers">
+                  <li v-for="item in records">
                     <div>
                       <dl class="dlCoupon">
                         <dt>
-                          <h4>{{activity_bountyItem.voucher_batch.name}}</h4>
+                          <h4>{{item.voucher_batch_name}}</h4>
                           <p>{{item.code}}</p>
                           <p>有效期至：{{item.end_time | handleEndTime}}</p>
                         </dt>
                         <dd>
-                          <button id="useCoupon"
-                                  @click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name,activity_bountyItem.voucher_batch.category)">
+                          <div class="btn" id="useCoupon"
+                               @click="useCoupon(item.code,item.end_time,item.voucher_batch_name)">
                             使用
-                          </button>
+                          </div>
                         </dd>
                       </dl>
                     </div>
                   </li>
-                </template>
+                <!--<template v-for="activity_bountyItem in activity_bounty">-->
+                  <!--<li v-for="item in activity_bountyItem.vouchers">-->
+                    <!--<div>-->
+                      <!--<dl class="dlCoupon">-->
+                        <!--<dt>-->
+                          <!--<h4>{{activity_bountyItem.voucher_batch.name}}</h4>-->
+                          <!--<p>{{item.code}}</p>-->
+                          <!--<p>有效期至：{{item.end_time | handleEndTime}}</p>-->
+                        <!--</dt>-->
+                        <!--<dd>-->
+                          <!--<div class="btn" id="useCoupon"-->
+                                  <!--@click="useCoupon(item.code,item.end_time,activity_bountyItem.voucher_batch.name,activity_bountyItem.voucher_batch.category)">-->
+                            <!--使用-->
+                          <!--</div>-->
+                        <!--</dd>-->
+                      <!--</dl>-->
+                    <!--</div>-->
+                  <!--</li>-->
+                <!--</template>-->
               </ul>
             </div>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
@@ -389,8 +412,8 @@
 
         <div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">
           <div>
-            <img @click.prevent="" src="http://res.catchme.com.cn/activity/guide/image_free5.png" alt="" class="imgBg"/>
-            <img class="btn" src="./../assets/guide/press_go_catch.png" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2"/>
+            <img @click.prevent="" src="http://res.catchme.com.cn/activity/xmas/image_free.png" alt="" class="imgBg"/>
+            <div class="btn" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2">长按继续</div>
             <!--<img class="qrcode" src="./../assets/guide/code.png"  v-show="isShowGzhImg" alt=""/>-->
             <p>关注公众号回复“<span>{{freeTip}}</span>”即可领免费币</p>
             <img :style="gzhCodeStyle" @click.prevent="" :src="freeTipImg" alt="" class="qrcode"/>
@@ -417,21 +440,24 @@
         </div>
 
         <div class="bg-center15" v-if="contentShow == 'taskGameTip'" @click.stop="">
+          <img class="title" src="./../assets/xmas/toub.png" alt="">
+          <img class="imgBi" src="./../assets/xmas/test_window_bi.png" alt="">
           <div class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">
-            <div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>
+            <!--<div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>-->
             <span
               class="game-num"><b>{{task_now.game_bounty / info.coin_num}}/</b>{{task_game.value / info.coin_num}}</span>
-          </div>
-          <p>投币送币</p>
-          <p>累计抓{{task_game.value / info.coin_num}}次，送免费游戏币</p>
-          <button @click="closeBg">去抓娃娃</button>
+        </div>
+          <p>加油哦</p>
+          <p>在玩{{task_game.value / info.coin_num - task_now.game_bounty / info.coin_num}}次就可以得到免费游戏币了!</p>
+          <div class="btn" @click="closeBg">去抓娃娃</div>
         </div>
 
         <div class="bg-center15" v-if="contentShow == 'taskWawaTip'" @click.stop="">
-          <img src="http://res.catchme.com.cn/activity/task2/window_free_c.png" alt=""/>
-          <p>抓中送币</p>
-          <p>您还没有抓中哦</p>
-          <button @click="closeBg">去抓娃娃</button>
+          <img class="title" src="./../assets/xmas/zhuaz.png" alt="">
+          <img class="img1" src="http://res.catchme.com.cn/activity/xmas/window_free_c.png" alt=""/>
+          <img class="imgBi" src="./../assets/xmas/test_window_bi.png" alt="">
+          <p class="es">说不定下一把就中了呢~</p>
+          <div class="btn" @click="closeBg">去抓娃娃</div>
         </div>
 
         <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="">
@@ -663,6 +689,110 @@
           </div>
         </div>
 
+        <div class="bg-center28" v-if="contentShow == 'xmas2'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/windows_bg.png" alt=""/>
+            <h3>圣诞狂欢·狂送Dior口红</h3>
+            <img class="product" src="http://res.catchme.com.cn/activity/xmas/product.png" alt=""/>
+            <a href="javascript:void(0)" @click="goCouponList">我的兑换券</a>
+            <!--<div class="cardslist">-->
+              <!--<div class="cards">-->
+                <!--<ul>-->
+                  <!--<li><b>我</b><span>10</span></li><li><b>抓</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>机</b><span>1</span></li>-->
+                <!--</ul>-->
+                <!--<p>集齐“我抓娃娃机”得Dior口红一支</p>-->
+                <!--<div class="button">兑换</div>-->
+              <!--</div>-->
+              <!--<div class="cards">-->
+                <!--<ul>-->
+                  <!--<li><b>我</b><span>10</span></li><li><b>抓</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>机</b><span>1</span></li>-->
+                <!--</ul>-->
+                <!--<p>集齐“我抓娃娃机”得Dior口红一支</p>-->
+                <!--<div class="button">兑换</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <div class="cardslist">
+              <div class="cards" v-for="item in xmasGroup" v-if="xmasGroup.length>0">
+                <ul>
+                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}">{{card.key}}</b><span v-if="card.total">{{card.total}}</span></li>
+                </ul>
+                <p>{{item.title}}</p>
+                <div class="button" :class="{'isExchange':item.isExchange}" @click="cardExchangeCoupon(item.pivot.card_group_id,item.isExchange)">兑换</div>
+              </div>
+            </div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+
+        </div>
+
+        <div class="bg-center28" v-if="contentShow == 'xmas'" @click.stop="" :class="{'full':!isReceiveCards}">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/congratulate_bg.png" alt=""/>
+            <h3 class="es"  v-if="currentCard[currentCardIndex].type == 'coin'">恭喜您获得免费游戏币</h3>
+            <h3 class="es"  v-else>恭喜您获得卡牌{{cardnum}}张</h3>
+            <div class="word">
+              <span v-if="currentCard.length>1" class="left" @click="preCard"></span>
+              <p v-if="currentCard[currentCardIndex].type=='card'">{{currentCard[currentCardIndex].value.key}}</p>
+              <p v-else="">{{currentCard[currentCardIndex].value}}币</p><span class="right" v-if="currentCard.length>1" @click="nextCard"></span>
+            </div>
+            <div class="cardslist es">
+              <div class="cards" v-for="item in xmasGroup">
+                <ul>
+                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}">{{card.key}}</b><span class="animated" :class="{'flash':card.animate && isAnimate}" v-if="card.total">{{card.total}}</span><em v-for="current in currentCard" v-if="current.value.key == card.key"></em></li>
+                </ul>
+                <p>{{item.title}}</p>
+                <div class="button" :class="{'isExchange':item.isExchange}" @click="cardExchangeCoupon(item.pivot.card_group_id,item.isExchange)">兑换</div>
+              </div>
+              <!--<div class="cards">-->
+                <!--<ul>-->
+                  <!--<li><b>我</b><span>10</span></li><li><b>抓</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>机</b><span>1</span></li>-->
+                <!--</ul>-->
+                <!--<p>集齐“我抓娃娃机”得Dior口红一支</p>-->
+                <!--<div class="button">兑换</div>-->
+              <!--</div>-->
+            </div>
+            <div class="btn" v-if="currentCard[currentCardIndex].type == 'card' && !isReceiveCards" @click="receiveCards">收下</div>
+            <div class="btn" v-if="currentCard[currentCardIndex].type == 'coin'" @click="receiveCoins">领取</div>
+            <img v-if="isReceiveCards" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center29" v-if="contentShow == 'xmastip'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/notification.png" alt=""/>
+            <div class="content">
+              <p>集齐“我抓娃娃机”得<span>Dior口红</span>一支</p>
+              <p>集齐“圣诞狂欢”得暖水袋一个</p>
+              <p>充值后，一次性投6个币比得卡牌或免费游戏币</p>
+            </div>
+            <a href="javascript:void(0)" @click="openRule">活动规则</a>
+            <div class="btn" @click="closeBg">我知道啦</div>
+          </div>
+        </div>
+
+        <div class="bg-center29" v-if="contentShow == 'xmasrule'"  @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/windows_bg.png" alt=""/>
+            <h3>活动规则</h3>
+            <div class="rulecontent">
+              <p>1.一次性上6分，可获得随机卡牌一张。</p>
+              <p>一次性上12分可获得随机卡牌两张，</p>
+              <p>以此类推。</p>
+              <p>2.集齐“我抓娃娃机”五张卡牌即可到商城</p>
+              <p>兑换Dior口红一支</p>
+              <p>3.集齐“圣诞狂欢”四个字即可到商城兑换</p>
+              <p>电暖袋一个。</p>
+              <p>4.活动时间：2018年12月21日 00:00</p>
+              <p>--2018年12月25日23:59。</p>
+              <p>5.最终活动解释权归本公司所有。</p>
+            </div>
+            <div class="back" @click="goPre"><i></i>返回</div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
       </div>
       <tipOperation></tipOperation>
     </div>
@@ -781,6 +911,12 @@
         isShowBaomihuaList:false,
         codeWidth:2,
         codeHeight:45,
+        currentCard:[], //当前成功领取的卡片,1张或者多张
+        currentCardIndex:0,//当前显示卡片的索引
+        records:[],
+        cardnum:1, //投币后获得卡牌的张数
+        isReceiveCards:false,
+        isAnimate:false //是否执行卡片数字改变的动画
       }
     },
     created() {
@@ -803,7 +939,8 @@
       gzh_operation: state => state.user.gzh_operation,
       gzh_operation_other: state => state.user.gzh_operation_other,
       dalibao:state => state.user.dalibao,
-      redGame:state => state.user.redGame
+      redGame:state => state.user.redGame,
+      xmasGroup:state => state.user.xmasGroup,
     }),
     components: {
       joPay,
@@ -847,6 +984,7 @@
           //正常领取成功
           this.isShowCoinTip = true;
           setTimeout(()=>{
+            this.isShowCoinTip = false;
             this.$store.commit('setCoins', res.data.coin_num);
             this.$store.dispatch('getUser');
             this.$store.dispatch('getOperations');
@@ -885,9 +1023,72 @@
           this.$store.commit('changeTipContent', getErrMsg(1001));
         }
       })
+      //获取用户卡片信息
+      this.$store.dispatch('getCardGroupAction').then(()=>{
+        this.$store.dispatch('getCardMycardAction')
+      })
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      receiveCoins(){
+        this.bgShow = false;
+        this.isShowCoinTip = true;
+        setTimeout(()=>{
+          this.$store.dispatch('getUser');
+          this.isShowCoinTip = false;
+        },1500)
+      },
+      receiveCards(){
+        //需要更新卡片张数，需要动画
+        this.$store.dispatch('getCardMycardAction').then(()=>{
+          this.isReceiveCards = true;
+          this.isAnimate = true;
+          setTimeout(()=>{
+            this.isAnimate = false
+          },2000)
+        })
+      },
+      cardExchangeCoupon(card_group_id,isExchange){
+        if(isExchange){
+          this.$store.dispatch('getCardExchangeAction',{card_group_id:card_group_id}).then((res)=>{
+            this.contentShow = 'exchange2';
+            this.couponInfo.name = res.voucher_batch_name;
+            this.couponInfo.code = res.code;
+            this.couponInfo.end_time = res.end_time;
+            //刷新卡片的张数
+            this.$store.dispatch('getCardMycardAction')
+          })
+        }
+      },
+      preCard(){
+        if(this.currentCardIndex === 0){
+          return;
+        }
+        this.currentCardIndex = this.currentCardIndex -1
+      },
+      nextCard(){
+        if(this.currentCardIndex === this.currentCard.length-1){
+          return;
+        }
+        this.currentCardIndex = this.currentCardIndex + 1
+      },
+      openRule(){
+        this.shuomingPre = this.contentShow;
+        this.contentShow = 'xmasrule'
+      },
+      myCards(){
+        if(this.xmasGroup.length>0){
+          this.bgShow = true;
+          this.contentShow = 'xmas2';
+          return;
+        }
+        this.$store.dispatch('getCardGroupAction').then(()=>{
+          this.$store.dispatch('getCardMycardAction').then(()=>{
+            this.bgShow = true;
+            this.contentShow = 'xmas2';
+          });
+        })
+      },
       downloadArtifact(){
         this.$refs.task.useArtifact()
       },
@@ -1150,6 +1351,16 @@
 //        }else {
 //          this.openTip('receive');
 //        }
+      },
+      goCouponList(){
+        this.$store.dispatch('getProfileVoucherAction').then((res)=>{
+          if(res.records.length === 0){
+            this.contentShow = 'notExchange'
+            return;
+          }
+          this.records = res.records
+          this.contentShow = 'couponList'
+        })
       },
       couponList() {
         var len = this.activity_bounty.length;
@@ -1418,6 +1629,28 @@
         this.$store.dispatch('startingDevice', this.gameNum * this.info.coin_num)
           .then(() => {
             this.socket();
+            if(this.gameNum>=3){
+//              if(this.xmasGroup.length == 0){
+//                this.$store.dispatch('getCardGroupAction').then(()=>{
+//                  this.$store.dispatch('getCardMycardAction')
+//                })
+//              }
+              this.currentCardIndex = 0;
+              this.isReceiveCards = false;
+              //领取卡牌
+              this.$store.dispatch('getCardRateAction').then((res)=>{
+                var cardnum = res.length;
+                for(var i=0;i<res.length;i++){
+                  if(res[i].type=='coin'){
+                    cardnum--
+                  }
+                }
+                this.currentCard = res;
+                this.cardnum = cardnum;
+                this.bgShow = true;
+                this.contentShow = 'xmas';
+              })
+            }
             //投币成功，重新调用获取task_now的接口
             this.$store.dispatch('getActivityBountyInfo')
             this.is_lamp_after = true
@@ -1740,7 +1973,7 @@
       float: right;
       width: 58px;
       height: 62px;
-      background: #fff2ee;
+      background: #fff;
       border-radius: 18px 0 0 18px;
       line-height: 62px;
       text-align: center;
@@ -1752,35 +1985,36 @@
     }
     .kefu2-right {
       width: 234px;
-      height: 352px;
-      padding: 30px 0 0 0;
+      height: 315px;
+      padding: 17px 0 0 0;
       float: right;
-      background: #fff2ee;
+      background: #fff;
       border-radius: 0 0 0 18px;
       .kefu2-img {
-        width: 158px;
-        height: 158px;
-        padding: 9px;
+        width: 143px;
+        height: 143px;
+        padding: 4px;
         margin: 0 auto;
-        background: #fff;
+        background-color: #17b54d;
+        /*background: #fff;*/
         border-radius: 4px;
         img {
-          width: 140px;
-          height: 140px;
+          width: 135px;
+          height: 135px;
         }
       }
       h3 {
-        font-size: 22px;
-        line-height: 24px;
+        font-size: 24px;
+        line-height: 30px;
         color: #353535;
-        margin: 12px 0 38px 0;
+        margin: 19px 0 25px 0;
         text-align: center;
       }
       p {
         font-size: 22px;
         text-align: center;
         a {
-          color: #576b95;
+          color: #17b54d;
         }
         span {
           display: inline-block;
@@ -1811,24 +2045,44 @@
 
   .bg-center8 {
     > div {
-      width: 640px;
       @include center;
       > div {
-        width: 100%;
+        width: 659px;
+        height: 932px;
+        background: url('http://res.catchme.com.cn/activity/xmas/windows_bg.png');
+        background-size: 100% 100%;
+        padding: 0.1px;
+        /*width: 100%;
         height: 700px;
         background: $bgColor;
         border-radius: 20px;
         padding: 34px 0 0 0;
+        */
+        .tipTitle{
+          width: 575px;
+          margin: 73px auto 0 auto;
+          color: #fad83b;
+          span{
+            background: #fad83b;
+          }
+          b{
+            background: #e63024;
+            font-size: 30px;
+          }
+        }
         img {
           width: 328px;
           height: 361px;
-          margin: 54px 0 0 0;
+          margin: 118px auto 0 auto;
+          display: block;
         }
         p {
           font-size: 28px;
           line-height: 28px;
-          color: rgba(255, 255, 255, 0.5);
-          margin: 82px 0 0 0;
+          color: #fff;
+          &:first-of-type{
+            margin: 136px 0 20px 0;
+          }
         }
       }
     }
@@ -1906,7 +2160,7 @@
       transform: translate(-50%, -50%);
       /*margin: 0 0 0 15px;*/
       > div {
-        width: 640px;
+        width: 659px;
         /*height: 900px;*/
         /*background: #445ee4;*/
         position: relative;
@@ -1917,17 +2171,24 @@
           text-decoration: none;
           position: absolute;
           line-height: 22px;
-          right: 33px;
-          bottom: 20px;
+          right: 100px;
+          bottom: 36px;
           i {
             font-size: 18px;
           }
         }
         .tipTitle {
-          margin: 36px 0 0 0;
-          position: absolute;
-          left: 0;
-          top: 0;
+            width: 575px;
+            margin: 73px auto 46px auto;
+            color: #fad83b;
+            span{
+              background: #fad83b;
+            }
+            b{
+              background: #e63024;
+              font-size: 30px;
+            }
+          @include centerX
         }
         > img {
           width: 100%;
@@ -1941,7 +2202,7 @@
           color: #fff;
           padding: 0.1px;
           @include centerX;
-          top: 112px;
+          top: 144px;
           .spanh3 {
             display: inline-block;
             font-size: 44px;
@@ -1954,9 +2215,20 @@
             color: rgba(255, 255, 255, 0.7);
             margin: 0 0 28px 0;
           }
-          button {
-            @include tipButton;
+          .btncopy{
+            width: 140px;
+            height: 78px;
+            background: url("./../assets/xmas/press_s.png") no-repeat;
+            background-size: 100% 100%;
+            line-height: 70px;
+            font-size: 30px;
+            letter-spacing: 1.5px;
+            color: #e63024;
+            margin: 13px auto 0 auto;
           }
+         // button {
+           // @include tipButton;
+          //}
         }
         .phone {
           margin: 42px 0 0 0;
@@ -2261,24 +2533,55 @@
     > div {
       @include center;
       > div {
-        width: 640px;
-        height: 900px;
-        background: $bgColor;
-        border-radius: $bgRadius;
+        width: 659px;
+        height: 932px;
+        //background: $bgColor;
+        //border-radius: $bgRadius;
+        background: url("http://res.catchme.com.cn/activity/xmas/windows_bg.png") no-repeat;
+        background-size: 100% 100%;
         padding: 34px 0 0 0;
+        .tipTitle{
+          width: 575px;
+          margin: 40px auto 45px auto;
+          color: #fad83b;
+          span{
+            background: #fad83b;
+          }
+          b{
+            background: #e63024;
+            font-size: 30px;
+          }
+        }
         ul {
           width: 100%;
           /*padding: 0 28px;*/
-          height: 790px;
+          height: 760px;
           overflow: auto;
           li {
             background: red;
-            width: 584px;
+            /*width: 584px;*/
+            width: 560px;
             height: 180px;
-            background: url("http://res.catchme.com.cn/activity/task2/ticket_bg.png") no-repeat;
+            /*background: url("http://res.catchme.com.cn/activity/task2/ticket_bg.png") no-repeat;*/
+            background: url("./../assets/xmas/credit_bg.png") no-repeat;
             background-size: 100% 100%;
             margin: 0 auto 9px auto;
             position: relative;
+            dl.dlCoupon{
+              dd{
+                .btn{
+                  width: 140px;
+                  height: 78px;
+                  background: url("./../assets/xmas/press_s.png") no-repeat;
+                  background-size: 100% 100%;
+                  line-height: 70px;
+                  font-size: 30px;
+                  letter-spacing: 1.5px;
+                  color: #e63024;
+                  margin: 13px 0 0 0;
+                }
+              }
+            }
           }
         }
       }
@@ -2289,7 +2592,7 @@
     > div {
       @include center;
       .imgBg {
-        width: 640px;
+        width: 659px;
       }
       .qrcode{
         width: 114px;
@@ -2303,17 +2606,22 @@
         text-align: center;
         font-size: 30px;
         line-height: 30px;
-        color: #353535;
+        color:#fff;
         left: 0;
         top:723px;
         span{
           font-size: 34px;
-          color: #de201b;
+          color: #fad83b;
         }
       }
       .btn{
-        width: 420px;
-        height: 130px;
+        width: 372px;
+        height: 103px;
+        background: url("./../assets/xmas/press_big.png") no-repeat;
+        background-size: 100% 100%;
+        font-size: 32px;
+        line-height: 80px;
+        color: #e63024;
         @include centerX;
         top:810px;
         z-index: 666;
@@ -2376,27 +2684,51 @@
   }
 
   .bg-center15 {
-    width: 666px;
-    height: 750px;
-    background: url("http://res.catchme.com.cn/activity/task2/window_bg.png") no-repeat;
+    /*width: 666px;*/
+    /*height: 750px;*/
+    width: 659px;
+    height: 932px;
+    background: url("http://res.catchme.com.cn/activity/xmas/windows_bg.png") no-repeat;
+    /*background: url("http://res.catchme.com.cn/activity/task2/window_bg.png") no-repeat;*/
     background-size: 100% 100%;
     border-radius: 20px;
     @include center;
-    > img {
+    .title{
+      width: 302px;
+      margin: 76px 0 0 0;
+    }
+    .es{
+      font-size: 28px!important;
+      line-height: 28px!important;
+      color: #fff!important;
+      margin: 489px 0 0 0!important;
+    }
+    .img1 {
       display: block;
-      width: 308px;
-      margin: 0 auto;
+      width: 357px;
+      @include centerX;
+      top:22px;
+    }
+    .imgBi{
+      width: 566px;
+      @include centerX;
+      top:360px;
     }
     .water {
-      width: 280px;
-      height: 280px;
-      background-color: #999999;
+      /*width: 280px;*/
+      /*height: 280px;*/
+      width: 382px;
+      height: 357px;
+      /*background-color: #fff;*/
+      background: url("./../assets/xmas/test_tow_window.png") no-repeat;
+      background-size: 100% 100%;
       /*border: solid 10px #ffffff;*/
       border-radius: 50%;
       overflow: hidden;
       position: relative;
-      margin: 76px auto 59px auto;
-      box-shadow: 0 11px 50px rgba(134, 106, 49, 0.49);
+      margin: 74px auto 31px auto;
+      /*margin: 76px auto 59px auto;*/
+      /*box-shadow: 0 11px 50px rgba(134, 106, 49, 0.49);*/
       .bol {
         width: 100%;
         background: url("./../assets/task/b_bg2.png") repeat-x;
@@ -2410,41 +2742,74 @@
       .game-num {
         position: relative;
         font-size: 60px;
-        color: #fff;
-        line-height: 280px;
+        color: #bb0001;
+        line-height: 296px;
         b {
-          font-size: 100px;
+          font-size: 129px;
         }
       }
     }
     p {
       width: 100%;
-      font-size: 50px;
+      font-size: 28px;
       text-align: center;
-      color: #353535;
-      line-height: 50px;
-      &:last-of-type {
-        font-size: 36px;
-        line-height: 36px;
-        margin: 22px 0 111px 0;
-      }
-    }
-    button {
-      outline: none;
-      border: none;
-      width: 360px;
-      height: 70px;
-      background-image: linear-gradient(0deg,
-        rgba(253, 102, 59, 0.65) 0%,
-        rgba(254, 127, 66, 0.65) 100%),
-      linear-gradient(
-          #fd663b,
-          #fd663b);
-      box-shadow: 0px 3px 18px 0px rgba(134, 106, 49, 0.13),
-      0px 5px 32px 0px rgba(134, 106, 49, 0.33);
-      border-radius: 35px;
-      font-size: 32px;
       color: #fff;
+      line-height: 28px;
+      margin: 0 0 10px 0;
+      /*&:last-of-type {*/
+        /*font-size: 36px;*/
+        /*line-height: 36px;*/
+        /*margin: 22px 0 111px 0;*/
+      /*}*/
+    }
+    .btn{
+        width: 372px;
+        height: 103px;
+        background: url("./../assets/xmas/press_big.png") no-repeat;
+        background-size: 100% 100%;
+        margin: 79px auto 0 auto;
+        font-size: 32px;
+        line-height: 80px;
+        color: #e63024;
+    }
+    /*button {*/
+      /*outline: none;*/
+      /*border: none;*/
+      /*width: 360px;*/
+      /*height: 70px;*/
+      /*background-image: linear-gradient(0deg,*/
+        /*rgba(253, 102, 59, 0.65) 0%,*/
+        /*rgba(254, 127, 66, 0.65) 100%),*/
+      /*linear-gradient(*/
+          /*#fd663b,*/
+          /*#fd663b);*/
+      /*box-shadow: 0px 3px 18px 0px rgba(134, 106, 49, 0.13),*/
+      /*0px 5px 32px 0px rgba(134, 106, 49, 0.33);*/
+      /*border-radius: 35px;*/
+      /*font-size: 32px;*/
+      /*color: #fff;*/
+    /*}*/
+  }
+
+  .back {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 0;
+    /*top: 734px;*/
+    top:760px;
+    color: #fff;
+    font-size: 32px;
+    line-height: 32px;
+    text-shadow: 2px 2px 9px rgba(136, 80, 35, 0.56);
+    i {
+      width: 37px;
+      height: 26px;
+      display: inline-block;
+      background: url("./../assets/guide/icon_back.png") no-repeat;
+      background-size: 100% 100%;
+      vertical-align: middle;
+      margin: 0 3px 0 0;
     }
   }
 
@@ -2481,27 +2846,7 @@
           margin: 0 0 0 0;
         }
       }
-      .back {
-        position: absolute;
-        text-align: center;
-        width: 100%;
-        left: 0;
-        /*top: 734px;*/
-        top:760px;
-        color: #fff;
-        font-size: 32px;
-        line-height: 32px;
-        text-shadow: 2px 2px 9px rgba(136, 80, 35, 0.56);
-        i {
-          width: 37px;
-          height: 26px;
-          display: inline-block;
-          background: url("./../assets/guide/icon_back.png") no-repeat;
-          background-size: 100% 100%;
-          vertical-align: middle;
-          margin: 0 3px 0 0;
-        }
-      }
+
       p {
         position: absolute;
         @include centerX;
@@ -3125,6 +3470,253 @@
       }
     }
   }
+  .bg-center28 {
+    &.full{
+      width: 100%;
+      height: 100%;
+    }
+    >div {
+      @include center;
+      .imgBg {
+        display: block;
+        width: 659px;
+        margin: 0 auto;
+      }
+      >h3{
+        font-size: 30px;
+        line-height: 30px;
+        color: #fad83b;
+        @include centerX;
+        top:70px;
+        &.es{
+          top:263px;
+        }
+      }
+      .word{
+        width: 100%;
+        height: 264px;
+        @include centerX;
+        top:312px;
+        span{
+          width: 27px;
+          height: 50px;
+          position: absolute;
+          top:87px;
+          &.left{
+            background: url("./../assets/xmas/icon_arrow_left.png") no-repeat;
+            background-size: 100% 100%;
+            left: 62px;
+          }
+          &.right{
+            background: url("./../assets/xmas/icon_arrow_right.png") no-repeat;
+            background-size: 100% 100%;
+            right: 66px;
+          }
+        }
+        p{
+          width:275px;
+          height: 264px;
+          background: url("http://res.catchme.com.cn/activity/xmas/card_bg.png") no-repeat;
+          background-size: 100% 100%;
+          @include centerX;
+          font-size: 90px;
+          color: #fad83b;
+          line-height: 226px;
+          text-align: center;
+        }
+      }
+      .product{
+        width: 451px;
+        @include centerX;
+        top:144px;
+      }
+      a{
+        font-size: 26px;
+        line-height: 30px;
+        text-decoration: underline;
+        color: #fad83b;
+        @include centerX;
+        top:383px;
+      }
+      .cardslist{
+        width: 100%;
+        @include centerX;
+        /*display: flex;*/
+        /*justify-content: space-between;*/
+        bottom: 140px;
+        &.es{
+          bottom: 146px;
+        }
+        .cards{
+          width: 100%;
+          margin: 0 0 5px 0;
+          ul{
+            width: 100%;
+            li{
+              width: 92px;
+              height: 98px;
+              /*background: blue;*/
+              display: inline-block;
+              margin: 0 18px 0 0;
+              position: relative;
+              &:last-child{
+                margin: 0;
+              }
+              >b{
+                width: 92px;
+                height: 92px;
+                display: block;
+                font-size: 48px;
+                color:#c1c1c1;
+                line-height: 86px;
+                text-align: center;
+                border: solid 3px #c1c1c1;
+                border-radius: 50%;
+                &.hastotal{
+                  border: solid 3px #ffb66a;
+                  color: #ffb66a;
+                }
+              }
+              >span{
+                width: 28px;
+                height: 28px;
+                background-color: #ffb66a;
+                position: absolute;
+                right: 6px;
+                top:-6px;
+                font-size: 24px;
+                text-align: center;
+                line-height: 28px;
+                color: #fff;
+                border-radius: 50%;
+              }
+              >em{
+                @include centerX;
+                bottom: 0;
+                width: 24px;
+                height: 3px;
+                background-color: #17b54d;
+                border-radius: 1.5px;
+              }
+            }
+          }
+          p{
+            font-size: 26px;
+            line-height: 26px;
+            color: #fad83b;
+            margin: 8px 0 14px 0;
+          }
+          .button{
+            width: 120px;
+            height: 55px;
+            margin: 5px auto 30px auto;
+            background-color: #c1c1c1;
+            color: #666666;
+            font-size: 32px;
+            line-height: 55px;
+            border-radius: 27.5px;
+            &.isExchange{
+              width: 140px;
+              height: 78px;
+              margin: 0 auto 12px auto;
+              background: url("./../assets/xmas/press_s.png") no-repeat;
+              background-size: 100% 100%;
+              color: #e63024;
+              line-height: 70px;
+            }
+          }
+        }
+      }
+      .close{
+        margin: 40px 0 18px 0;
+      }
+      .btn{
+        width: 372px;
+        height: 103px;
+        background: url("./../assets/xmas/press_big.png") no-repeat;
+        background-size: 100% 100%;
+        margin: 37px auto 0 auto;
+        font-size: 32px;
+        line-height: 80px;
+        color: #e63024;
+      }
+    }
+  }
+  .bg-center29{
+    >div{
+      @include center;
+      .imgBg{
+        width: 659px;
+        display: block;
+      }
+      >h3{
+        font-size: 30px;
+        line-height: 30px;
+        color: #fad83b;
+        @include centerX;
+        top:110px;
+      }
+      .rulecontent{
+        width: 460px;
+        @include centerX;
+        top:241px;
+        p{
+          font-size: 26px;
+          line-height: 26px;
+          margin: 0 0 21px 0;
+          text-align: left;
+          color: #fff;
+         }
+      }
+      .content{
+        width: 100%;
+        @include centerX;
+        top:578px;
+        p{
+          font-size: 26px;
+          line-height: 26px;
+          color: #fad83b;
+          margin: 0 0 17px 0;
+          &:last-of-type{
+            margin: 47px 0 0 0;
+          }
+          span{
+            font-size: 36px;
+          }
+        }
+      }
+      a{
+        font-size: 26px;
+        color: #fad83b;
+        line-height: 30px;
+        text-decoration: underline;
+        @include centerX;
+        bottom:203px;
+      }
+      .btn{
+        width: 372px;
+        height: 103px;
+        background: url("./../assets/xmas/press_big.png") no-repeat;
+        background-size: 100% 100%;
+        margin: 54px auto 0 auto;
+        font-size: 32px;
+        line-height: 80px;
+        color: #e63024;
+      }
+      .back{
+        color: #fad83b;
+        top:843px;
+        line-height: 54px;
+        i{
+          width: 53px;
+          height: 54px;
+          background: url("./../assets/xmas/rule_icon_back.png") no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+    }
+  }
+
   .price {
     position: absolute;
     width: 298px;
@@ -3365,7 +3957,8 @@
   .jo-index .jo-index-div {
     width: 100%;
     height: 100%;
-    background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");
+    /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");*/
+    background: url("http://res.catchme.com.cn/activity/xmas/bg.png");
     background-size: 100% 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -3459,7 +4052,7 @@
     padding: 0 22px;
     line-height: 62px;
     border-radius: 31px;
-    background: #fff2ee;
+    background: #fff;
     float: left;
     /*min-width: 2px;*/
     position: relative;
@@ -3489,7 +4082,7 @@
 
   .header .header-main .game i {
     font-size: 40px;
-    color: #fe5f5b;
+    color: #ec392d;
     font-weight: 500;
     text-align: center;
   }
@@ -3500,20 +4093,21 @@
     line-height: 66px;
     display: inline-block;
     /*background: url("http://res.catchme.com.cn/imgs-2018-04-10/icon_portrait_bi.png") no-repeat;*/
-    background: url("./../assets/small/icon_portrait_bi.png") no-repeat;
+    /*background: url("./../assets/small/icon_portrait_bi.png") no-repeat;*/
+    background: url("./../assets/xmas/page/icon_portrait_bi.png");
     background-size: 100% 100%;
     font-size: 0;
   }
 
   .header .header-main .game span {
     font-size: 28px;
-    color: #fe5f5b;
+    color: #ec392d;
     display: inline-block;
   }
 
   .header .header-main .game span.coins-num {
     font-size: 36px;
-    color: #fe5f5b;
+    color: #ec392d;
     font-weight: 600;
     margin: 0 0 0 10px;
     line-height: 70px;
@@ -3527,7 +4121,7 @@
   .header .header-main .kefu {
     /*width: 0.62px;*/
     height: 62px;
-    background: #fff2ee;
+    background: #fff;
     /*border-radius: 50%;*/
     /*float: right;*/
     /*position: relative;*/
@@ -3553,7 +4147,7 @@
 
   .header .header-main .kefu > p > span {
     /*display: inline-block;*/
-    color: #fd643b;
+    color: #ec392d;
     font-size: 28px;
     height: 28px;
     line-height: 70px;
@@ -3627,10 +4221,12 @@
   .main .centerout .center {
     width: 100%;
     /*height: 5px;*/
-    background: #fff;
+    /*background: #fff;*/
     /*margin: 0.32px 0 0 0;*/
     /*padding: 0.28px 0.2px 0 0.2px;*/
     /*padding: 90px 20px 0 20px ;*/
+    background:#fff url("./../assets/xmas/page/begin_bg.png") no-repeat;
+    background-size: 100% 100%;
     padding: 96px 20px 0 20px;
     /*padding: 70px 20px 0 20px;*/
     /*border-radius: 10px;*/
@@ -3638,7 +4234,13 @@
     border-radius: 16px;
     /*background: #fff;*/
     /*overflow: hidden;*/
-    box-shadow: 2px 2px 10px rgba(206, 133, 74, 0.04), 0 0 18px rgba(206, 133, 74, 0.18), 0 0 24px rgba(206, 133, 74, 0.26);
+    /*box-shadow: 2px 2px 10px rgba(206, 133, 74, 0.04), 0 0 18px rgba(206, 133, 74, 0.18), 0 0 24px rgba(206, 133, 74, 0.26);*/
+  }
+  .main .centerout .center .sock{
+    width: 129px;
+    position: absolute;
+    left: 43px;
+    top:6px;
   }
 
   .main .centerout .center .my_ticket{
@@ -3973,19 +4575,23 @@
   }
 
   .main .center > h3 {
-    width: 226px;
-    height: 90px;
+    /*width: 226px;*/
+    /*height: 90px;*/
+    width: 194px;
+    height: 74px;
     /*font-size: 0.32px;*/
-    font-size: 34px;
-    color: #fd643b;
+    /*font-size: 34px;*/
+    font-size: 32px;
+    color: #ec392d;
     /*margin: 0 0 0.1px 0;*/
     /*height: 0.64px;*/
     background: #feedd7;
-    line-height: 90px;
+    /*line-height: 90px;*/
+    line-height: 74px;
     position: absolute;
     border-radius: 0 16px 0 0;
-    right: 0px;
-    top: 0px;
+    right: 6px;
+    top: 6px;
     /*top:-0.28px;*/
     text-align: center;
     /*padding: 0.2px 0.3px;*/
@@ -4003,12 +4609,14 @@
     text-align: center;
     line-height: 306px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
-    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
+    /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
+    background: url("http://res.catchme.com.cn/activity/xmas/press_begin.png");
     background-size: 100% 100%;
     border: none;
     outline: none;
     /*font-size: 0.5px;*/
-    font-size: 40px;
+    font-size: 0;
+    /*font-size: 40px;*/
     color: #fff;
     display: block;
     margin: 0 auto;
@@ -4019,14 +4627,15 @@
 
   .main .center .hasclick {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_ing.png");*/
-    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
+    /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
+    background: url("http://res.catchme.com.cn/activity/xmas/press_begin.png");
     background-size: 100% 100%;
   }
 
   .main .center .game-num {
     width: 418px;
     height: 93px;
-    border: 1px solid #ff784e;
+    border: 1px solid #e88726;
     border-radius: 18px;
     font-size: 24px;
     line-height: 91px;
@@ -4037,10 +4646,34 @@
     text-align: center;
     position: relative;
     z-index: 6;
-    overflow: hidden;
+    /*overflow: hidden;*/
+  }
+  .main .center .game-num .jiahao{
+    position: relative;
+  }
+  .main .center .game-num .jiahao img{
+    width: 68px;
+    height: 72px;
+    background: url("./../assets/xmas/page/add.png") no-repeat;
+    background-size: 100% 100%;
+    margin:3px 0 0 0;
+  }
+  .main .center .game-num .jiahao>div{
+    width: 176px;
+    height: 138px;
+    background: url("./../assets/xmas/page/talk_bg.png") no-repeat;
+    background-size: 100% 100%;
+    font-size: 24px;
+    color: #fff;
+    line-height: 32px;
+    position: absolute;
+    padding: 26px 13px 0 27px;
+    right: -126px;
+    top:-130px;
+    z-index: 6;
   }
 
-  .main .center .game-num.norecharge {
+    .main .center .game-num.norecharge {
     border: 1px solid #afafaf;
   }
 
@@ -4053,19 +4686,19 @@
     width: 20%;
     float: left;
     font-size: 50px;
-    color: #ff784e;
+    color: #e88726;
     text-align: center;
     height: 71px;
     line-height: 71px;
     /*height: 67px;*/
     /*line-height: 67px;*/
-    border-right: 1px solid #ff784e;
-    margin: 10px 0;
+    border-right: 1px solid #e88726;
+    margin: 10px 0 0 0;
   }
 
   .main .center .game-num i:last-of-type {
     border-right: none;
-    border-left: 1px solid #ff784e;
+    border-left: 1px solid #e88726;
     float: right;
   }
 
@@ -4084,7 +4717,7 @@
   .main .center .game-num > div h3 {
     /*font-size: 0.42px;*/
     font-size: 40px;
-    color: #ff784e;
+    color: #e88726;
     font-weight: 600;
     /*line-height: 0.42px;*/
     line-height: 40px;
