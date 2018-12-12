@@ -698,7 +698,7 @@
             <!--<div class="cardslist">-->
               <!--<div class="cards">-->
                 <!--<ul>-->
-                  <!--<li><b>我</b><span>10</span></li><li><b>抓</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>机</b><span>1</span></li>-->
+                  <!--<li><b></b><span>10</span></li><li><b>抓</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>机</b><span>1</span></li>-->
                 <!--</ul>-->
                 <!--<p>集齐“我抓娃娃机”得Dior口红一支</p>-->
                 <!--<div class="button">兑换</div>-->
@@ -711,10 +711,20 @@
                 <!--<div class="button">兑换</div>-->
               <!--</div>-->
             <!--</div>-->
+            <!--<div class="cardslist">-->
+              <!--<div class="cards" v-for="item in xmasGroup" v-if="xmasGroup.length>0">-->
+                <!--<ul>-->
+                  <!--<li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}">{{card.key}}</b><span v-if="card.total">{{card.total}}</span></li>-->
+                <!--</ul>-->
+                <!--<p>{{item.title}}</p>-->
+                <!--<div class="button" :class="{'isExchange':item.isExchange}" @click="cardExchangeCoupon(item.pivot.card_group_id,item.isExchange)">兑换</div>-->
+              <!--</div>-->
+            <!--</div>-->
             <div class="cardslist">
               <div class="cards" v-for="item in xmasGroup" v-if="xmasGroup.length>0">
                 <ul>
-                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}">{{card.key}}</b><span v-if="card.total">{{card.total}}</span></li>
+                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}"><img v-if="card.total" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'2.png'" alt=""><img v-else="" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'1.png'" alt="">
+                  </b><span v-if="card.total">{{card.total}}</span></li>
                 </ul>
                 <p>{{item.title}}</p>
                 <div class="button" :class="{'isExchange':item.isExchange}" @click="cardExchangeCoupon(item.pivot.card_group_id,item.isExchange)">兑换</div>
@@ -731,16 +741,25 @@
             <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/congratulate_bg.png" alt=""/>
             <h3 class="es"  v-if="currentCard[currentCardIndex].type == 'coin'">恭喜您获得免费游戏币</h3>
             <h3 class="es"  v-else>恭喜您获得卡牌{{cardnum}}张</h3>
+            <!--<div class="word">-->
+              <!--<span v-if="currentCard.length>1" class="left" @click="preCard"></span>-->
+              <!--<p v-if="currentCard[currentCardIndex].type=='card'">{{currentCard[currentCardIndex].value.key}}</p>-->
+              <!--<p v-else="">{{currentCard[currentCardIndex].value}}币</p><span class="right" v-if="currentCard.length>1" @click="nextCard"></span>-->
+            <!--</div>-->
             <div class="word">
               <span v-if="currentCard.length>1" class="left" @click="preCard"></span>
-              <p v-if="currentCard[currentCardIndex].type=='card'">{{currentCard[currentCardIndex].value.key}}</p>
-              <p v-else="">{{currentCard[currentCardIndex].value}}币</p><span class="right" v-if="currentCard.length>1" @click="nextCard"></span>
+              <div class="p" v-if="currentCard[currentCardIndex].type=='card'"><div><img :src="'http://res.catchme.com.cn/activity/xmas/word/'+currentCard[currentCardIndex].value.key+'3.png'" alt=""></div></div>
+              <div class="p" v-else=""><div><img src="http://res.catchme.com.cn/activity/xmas/word/tow.png" alt=""></div></div><span class="right" v-if="currentCard.length>1" @click="nextCard"></span>
             </div>
             <div class="cardslist es">
               <div class="cards" v-for="item in xmasGroup">
                 <ul>
-                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}">{{card.key}}</b><span class="animated" :class="{'flash':card.animate && isAnimate}" v-if="card.total">{{card.total}}</span><em v-for="current in currentCard" v-if="current.value.key == card.key"></em></li>
+                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}"><img v-if="card.total" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'2.png'" alt=""><img v-else="" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'1.png'" alt="">
+                  </b><span v-if="card.total"  class="animated" :class="{'flash':card.animate && isAnimate}">{{card.total}}</span><em v-for="current in currentCard" v-if="current.value.key == card.key"></em></li>
                 </ul>
+                <!--<ul>-->
+                  <!--<li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}">{{card.key}}</b><span class="animated" :class="{'flash':card.animate && isAnimate}" v-if="card.total">{{card.total}}</span><em v-for="current in currentCard" v-if="current.value.key == card.key"></em></li>-->
+                <!--</ul>-->
                 <p>{{item.title}}</p>
                 <div class="button" :class="{'isExchange':item.isExchange}" @click="cardExchangeCoupon(item.pivot.card_group_id,item.isExchange)">兑换</div>
               </div>
@@ -837,8 +856,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: false,
-        contentShow: '',
+        bgShow: true,
+        contentShow: 'xmastip',
         contentShowAfter:'',
         currentCoupon: {},
         pay: {},
@@ -964,7 +983,7 @@
         this.handleRedGame(unionid);
       }
       var re = localStorage.getItem('re');
-      if(!re){
+      if(!re && !this.contentShow){
         this.isAfterRed = true;
       }
       if(re && this.isLogin){
@@ -1557,7 +1576,7 @@
         if (this.contentShow === 'exchange' || this.contentShow === 'exchange2') {
           return
         }
-        if(this.contentShow === 'dalibaotip'){
+        if(this.contentShow === 'dalibaotip' || this.contentShow === 'xmastip'){
           this.isAfterRed = true;
         }
         this.bgShow = false;
@@ -3513,16 +3532,27 @@
             right: 66px;
           }
         }
-        p{
+        div.p{
           width:275px;
           height: 264px;
           background: url("http://res.catchme.com.cn/activity/xmas/card_bg.png") no-repeat;
           background-size: 100% 100%;
           @include centerX;
-          font-size: 90px;
-          color: #fad83b;
-          line-height: 226px;
-          text-align: center;
+          /*font-size: 90px;*/
+          /*color: #fad83b;*/
+          /*line-height: 226px;*/
+          /*text-align: center;*/
+          >div{
+            width: 206px;
+            height: 206px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0 0 32px;
+            >img{
+              width: 81px;
+            }
+          }
         }
       }
       .product{
@@ -3565,16 +3595,23 @@
               >b{
                 width: 92px;
                 height: 92px;
-                display: block;
+                /*display: block;*/
                 font-size: 48px;
                 color:#c1c1c1;
-                line-height: 86px;
-                text-align: center;
+                /*line-height: 86px;*/
+                /*text-align: center;*/
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 border: solid 3px #c1c1c1;
                 border-radius: 50%;
                 &.hastotal{
                   border: solid 3px #ffb66a;
                   color: #ffb66a;
+                }
+                >img{
+                  width: 42px;
+                  height: 42px;
                 }
               }
               >span{
