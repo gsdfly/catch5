@@ -63,7 +63,7 @@
       </div>
 
       <div class="main">
-        <div class="main-center">
+        <!--<div class="main-center">-->
           <div class="centerout">
             <div class="center">
               <img class="sock" @click="myCards" src="./../assets/xmas/page/sock.png" alt=""/>
@@ -140,7 +140,7 @@
               </div>
             </div>
           </div>
-        </div>
+        <!--</div>-->
       </div>
       <div class="footer">
         <joPay ref="joPay" @changeTip="changeTip" @openTip="openTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
@@ -413,7 +413,7 @@
         <div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">
           <div>
             <img @click.prevent="" src="http://res.catchme.com.cn/activity/xmas/image_free.png" alt="" class="imgBg"/>
-            <div class="btn" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2">长按继续</div>
+            <img class="btn" src="./../assets/xmas/page/press_continue.png"  v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2" />
             <!--<img class="qrcode" src="./../assets/guide/code.png"  v-show="isShowGzhImg" alt=""/>-->
             <p>关注公众号回复“<span>{{freeTip}}</span>”即可领免费币</p>
             <img :style="gzhCodeStyle" @click.prevent="" :src="freeTipImg" alt="" class="qrcode"/>
@@ -785,6 +785,10 @@
               <p>集齐“我抓娃娃机”得<span>Dior口红</span>一支</p>
               <p>集齐“圣诞狂欢”得暖水袋一个</p>
               <p>充值后，一次性投6个币比得卡牌或免费游戏币</p>
+            </div>
+            <div class="game">
+              <h3>6币</h3>
+              <p>可玩3次游戏</p>
             </div>
             <a href="javascript:void(0)" @click="openRule">活动规则</a>
             <div class="btn" @click="closeBg">我知道啦</div>
@@ -2577,7 +2581,7 @@
         ul {
           width: 100%;
           /*padding: 0 28px;*/
-          height: 760px;
+          height: 756px;
           overflow: auto;
           li {
             background: red;
@@ -2639,11 +2643,6 @@
       .btn{
         width: 372px;
         height: 103px;
-        background: url("./../assets/xmas/press_big.png") no-repeat;
-        background-size: 100% 100%;
-        font-size: 32px;
-        line-height: 80px;
-        color: #e63024;
         @include centerX;
         top:810px;
         z-index: 666;
@@ -3576,7 +3575,7 @@
         @include centerX;
         /*display: flex;*/
         /*justify-content: space-between;*/
-        bottom: 140px;
+        bottom: 160px;
         &.es{
           bottom: 146px;
         }
@@ -3680,8 +3679,9 @@
         background-size: 100% 100%;
         margin: 37px auto 0 auto;
         font-size: 32px;
-        line-height: 80px;
+        line-height: 86px;
         color: #e63024;
+        font-weight: bold;
       }
     }
   }
@@ -3728,6 +3728,25 @@
           }
         }
       }
+      .game{
+        width: 366px;
+        height: 80px;
+        @include centerX;
+        bottom: 100px;
+        top:757px;
+        h3{
+          font-size: 36px;
+          line-height: 36px;
+          color: #e88726;
+          font-weight: 600;
+          margin: 0 0 8px 0;
+        }
+        p{
+          font-size: 20px;
+          line-height: 20px;
+          color: #888;
+        }
+      }
       a{
         font-size: 26px;
         color: #fad83b;
@@ -3743,8 +3762,9 @@
         background-size: 100% 100%;
         margin: 54px auto 0 auto;
         font-size: 32px;
-        line-height: 80px;
+        line-height: 86px;
         color: #e63024;
+        font-weight: bold;
       }
       .back{
         color: #fad83b;
@@ -4200,7 +4220,8 @@
 
   .main {
     width: 100%;
-    height: 46.6%;
+    /*height: 46.6%;*/
+    height: 47.2%;
     min-height: 538px;
     /*height: calc(100% - 4.98px);*/
     position: relative;
@@ -4234,15 +4255,16 @@
     position: relative;
   }
 
-  .main .main-center {
+ /* .main .main-center {
     width: 100%;
     height: 100%;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    /*padding: 0 0.22px;*/
+    //padding: 0 0.22px;
   }
+  */
 
   .main .centerout {
     /*background: url("http://res.catchme.com.cn/imgs-2018-02-06/2/bg_begin.png") no-repeat;*/
@@ -4252,8 +4274,8 @@
     padding: 20px;
     /*margin: 0.05px 0 0 0;*/
     width: 100%;
-    height: 100%;
-    position: absolute;
+    @include center;
+    /*height: 100%;*/
     > div {
       position: relative;
       z-index: 9999;
@@ -4795,7 +4817,7 @@
     width: 100%;
     /*height: 3.4px;*/
     /*height: 28%;*/
-    height: 27%;
+    height: 26.4%;
     min-height: 310px;
     position: relative;
     /*padding: 0.36px 0.22px 0 0.22px;*/

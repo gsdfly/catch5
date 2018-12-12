@@ -24,7 +24,7 @@
         </div>
         <div v-if="item.type === 10">
           <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/xmas/page/test_c.png" alt=""/>
-          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
+          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/xmas/page/icon_free_receive_c.png" alt="">
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
         </div>
@@ -378,14 +378,13 @@
             border-radius: 50%;
             font-size: 30px;
             color: #2bd361;
+            font-weight: 600;
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 19px auto 18px auto;
-            box-shadow: 0.7px 0.7px 3px 0px
-            rgba(50, 73, 44, 0.45),
-            inset 0px 1px 0px 0px
-            rgba(225, 180, 25, 0.28);
+            box-shadow: 0px 4px 12px 0px
+            rgba(234, 73, 71, 0.4);
             /*box-shadow: 0 4px 12px rgba(180,149,84,0.4);*/
             &.is_down{
               opacity: 0.5;
@@ -402,12 +401,8 @@
             display: flex;
             align-items: flex-end;
             margin: 19px auto 18px auto;
-            box-shadow: 0.7px 0.7px 3px 0px
-            rgba(50, 73, 44, 0.45),
-            inset 0px 1px 0px 0px
-            rgba(225, 180, 25, 0.28);
-            /*box-shadow: 0px 4px 12px 0px*/
-            /*rgba(234, 73, 71, 0.4);*/
+            box-shadow: 0px 4px 12px 0px
+            rgba(234, 73, 71, 0.4);
             /*box-shadow: 0 4px 12px rgba(180,149,84,0.4);*/
             /*box-shadow: inset 0px 3px 13px 0px*/
             /*rgba(242, 123, 0, 0.51);*/

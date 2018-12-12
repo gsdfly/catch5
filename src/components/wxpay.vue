@@ -216,26 +216,29 @@
     position: absolute;
     left: 0;
     top: 0;
-    padding: 10px 20px 0 20px;
+    padding: 0 20px;
+    /*padding: 10px 20px 0 20px;*/
   }
 
   .recharge-lists > div {
-    margin: 0 0 20px 0;
+    /*margin: 0 0 20px 0;*/
+    margin: 0 0 22px 0;
     font-size: 36px;
     float: right;
-    width: 345px;
-    /*height: 128px;*/
-    height: 37.87%;
+    /*width: 345px;*/
+    width: 342px;
+    height: 128px;
+    /*height: 37.87%;*/
     padding: 6px;
     /*border: 1px solid #fd643b;*/
-    border: 1px solid transparent;
+    /*border: 1px solid transparent;*/
     background: url("./../assets/xmas/page/recharge_bg.png");
     background-size: 100% 100%;
     /*border-radius: 0.15px;*/
     color: #494949;
     position: relative;
     /*overflow: hidden;*/
-    border-radius: 16px;
+    /*border-radius: 16px;*/
   }
   /*.recharge-lists > div.dalibao {*/
     /**/
@@ -293,15 +296,15 @@
   .recharge-item-b {
     /*height: 63px;*/
     /*line-height: 63px;*/
-    height: 57px;
-    line-height: 57px;
+    height: 54px;
+    line-height: 54px;
     /*height: 61px;*/
     /*line-height: 61px;*/
     /*font-size: 0.32px;*/
     font-size: 34px;
     /*background: #fb643b;*/
     color: #fff;
-    border-radius: 0 0 12px 12px;
+    /*border-radius: 0 0 12px 12px;*/
     text-align: center;
   }
 
@@ -323,7 +326,7 @@
     color: #353535;
     text-align: center;
     /*background: #fff;*/
-    border-radius: 16px 16px 0 0;
+    /*border-radius: 16px 16px 0 0;*/
   }
 
   .recharge-item-t span {
@@ -407,7 +410,9 @@
     /*width: 348px;*/
     /*margin: 0 0 20px 0;*/
   /*}*/
-
+  .version2>div{
+    height: 164px;
+  }
   .version2 .recharge-item-t {
     /*height: 84px;*/
     height: 78px;
@@ -418,8 +423,8 @@
 
   .version2 .recharge-item-b {
     /*height: 75px;*/
-    height: 69px;
-    line-height: 69px;
+    height: 73px;
+    line-height: 73px;
     /*line-height: 75px;*/
     font-size: 34px;
   }
