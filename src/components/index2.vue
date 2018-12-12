@@ -63,7 +63,7 @@
       </div>
 
       <div class="main">
-        <div class="main-center">
+        <!--<div class="main-center">-->
           <div class="centerout">
             <div class="center">
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
@@ -139,7 +139,7 @@
               </div>
             </div>
           </div>
-        </div>
+        <!--</div>-->
       </div>
       <div class="footer">
         <joPay ref="joPay" @changeTip="changeTip" @openTip="openTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
@@ -3563,8 +3563,9 @@
 
   .main {
     width: 100%;
-    height: 46.6%;
-    min-height: 538px;
+    height: 47.2%;
+    /*min-height: 538px;*/
+    min-height: 558px;
     /*height: calc(100% - 4.98px);*/
     position: relative;
   }
@@ -3596,7 +3597,7 @@
     /*padding: 0 22px;*/
     position: relative;
   }
-
+/*
   .main .main-center {
     width: 100%;
     height: 100%;
@@ -3604,8 +3605,9 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    /*padding: 0 0.22px;*/
+    //padding: 0 0.22px;
   }
+  */
 
   .main .centerout {
     /*background: url("http://res.catchme.com.cn/imgs-2018-02-06/2/bg_begin.png") no-repeat;*/
@@ -3615,8 +3617,9 @@
     padding: 20px;
     /*margin: 0.05px 0 0 0;*/
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
     position: absolute;
+    @include center;
     > div {
       position: relative;
       z-index: 9999;
@@ -4119,8 +4122,9 @@
     width: 100%;
     /*height: 3.4px;*/
     /*height: 28%;*/
-    height: 27%;
-    min-height: 310px;
+    height: 26.4%;
+    /*min-height: 310px;*/
+    min-height: 300px;
     position: relative;
     /*padding: 0.36px 0.22px 0 0.22px;*/
     /*overflow: hidden;*/

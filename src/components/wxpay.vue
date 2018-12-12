@@ -216,16 +216,17 @@
     position: absolute;
     left: 0;
     top: 0;
-    padding: 10px 20px 0 20px;
+    padding: 0 20px;
+    /*padding: 10px 20px 0 20px;*/
   }
 
   .recharge-lists > div {
-    margin: 0 0 20px 0;
+    margin: 0 0 22px 0;
     font-size: 36px;
     float: right;
-    width: 345px;
-    /*height: 128px;*/
-    height: 37.87%;
+    width: 342px;
+    height: 128px;
+    /*height: 37.87%;*/
     border: 1px solid #fd643b;
     /*border-radius: 0.15px;*/
     color: #494949;
@@ -287,8 +288,8 @@
   }
 
   .recharge-item-b {
-    height: 63px;
-    line-height: 63px;
+    height: 60px;
+    line-height: 60px;
     /*height: 61px;*/
     /*line-height: 61px;*/
     /*font-size: 0.32px;*/
@@ -399,7 +400,9 @@
     /*width: 348px;*/
     /*margin: 0 0 20px 0;*/
   /*}*/
-
+  .version2>div{
+    height: 164px;
+  }
   .version2 .recharge-item-t {
     height: 84px;
     font-size: 38px;
@@ -407,8 +410,8 @@
   }
 
   .version2 .recharge-item-b {
-    height: 75px;
-    line-height: 75px;
+    height: 79px;
+    line-height: 79px;
     font-size: 34px;
   }
 
