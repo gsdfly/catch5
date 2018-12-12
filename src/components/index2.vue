@@ -1076,6 +1076,7 @@
             this.couponInfo.end_time = res.end_time;
             //刷新卡片的张数
             this.$store.dispatch('getCardMycardAction')
+            this.$store.dispatch('getProfileVoucherAction')//刷新自己的兑换券
           })
         }
       },

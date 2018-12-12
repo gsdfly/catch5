@@ -645,16 +645,16 @@ const actions = {
         //在这里给所领取到的卡片添加动画标识
         var newCards = data.data;
         var xmasGroup = ctx.state.xmasGroup;
-        for(var i=0;i<newCards.length;i++){
-          if(newCards[i].type == 'coin') {continue;}
+          // if(newCards[i].type == 'coin') {continue;}
           for(var j=0;j<xmasGroup.length;j++){
             for(var k=0;k<xmasGroup[j].cards.length;k++){
               delete xmasGroup[j].cards[k].animate;
-              if(newCards[i].value.key == xmasGroup[j].cards[k].key){
-                xmasGroup[j].cards[k].animate = true
+              for(var i=0;i<newCards.length;i++){
+                if(xmasGroup[j].cards[k].key == newCards[i].value.key ){
+                  xmasGroup[j].cards[k].animate = true
+                }
               }
             }
-          }
         }
         console.log(xmasGroup)
         ctx.commit('changeXmasGroup',xmasGroup);
