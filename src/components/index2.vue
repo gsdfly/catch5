@@ -1576,7 +1576,7 @@
         if (this.contentShow === 'exchange' || this.contentShow === 'exchange2') {
           return
         }
-        if(this.contentShow === 'dalibaotip' || this.contentShow === 'xmastip'){
+        if(this.contentShow === 'dalibaotip' || this.contentShow === 'xmastip' || this.contentShow === 'xmasrule'){
           this.isAfterRed = true;
         }
         this.bgShow = false;
@@ -3622,8 +3622,11 @@
                 right: 6px;
                 top:-6px;
                 font-size: 24px;
-                text-align: center;
-                line-height: 28px;
+                /*text-align: center;*/
+                /*line-height: 28px;*/
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 color: #fff;
                 border-radius: 50%;
               }
@@ -4706,7 +4709,7 @@
     position: absolute;
     padding: 26px 13px 0 27px;
     right: -126px;
-    top:-130px;
+    top:-135px;
     z-index: 6;
   }
 
