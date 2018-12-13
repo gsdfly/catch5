@@ -1076,6 +1076,13 @@
       },
       cardExchangeCoupon(card_group_id,isExchange){
         if(isExchange){
+          if(this.contentShow==='xmas'){
+            if(this.currentCard[this.currentCardIndex].type == 'card' && !this.isReceiveCards){
+              this.receiveCards()
+            }else if(this.currentCard[this.currentCardIndex].type == 'coin'){
+              this.$store.dispatch('getUser')
+            }
+          }
           this.$store.dispatch('getCardExchangeAction',{card_group_id:card_group_id}).then((res)=>{
             this.contentShow = 'exchange2';
             this.couponInfo.name = res.voucher_batch_name;
