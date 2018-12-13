@@ -1656,7 +1656,7 @@
         //添加百度统计
         _hmt.push(['_trackEvent', '主按钮投币', '点击', '投币-游戏次数-' + this.gameNum, '']);
         this.$store.dispatch('startingDevice', this.gameNum * this.info.coin_num)
-          .then(() => {
+          .then((res) => {
             this.socket();
             if(this.gameNum>=3){
 //              if(this.xmasGroup.length == 0){
@@ -1685,7 +1685,10 @@
             this.is_lamp_after = true
             this.is_start = false
             this.start_desc = '投币启动'
-            this.gameNum = 1;
+            console.log(res)
+            if(res<this.gameNum * this.info.coin_num){
+              this.gameNum = 1;
+            }
             setTimeout(() => {
               this.is_lamp_after = false
             }, 12000 * this.gameNum)

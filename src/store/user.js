@@ -310,7 +310,7 @@ const actions = {
             changeTipOperation(ctx.state.tip_operation.workout,'alreadyTipWorkout',ctx);
           }
           ctx.commit('setUser', s)
-          success()
+          success(s)
         } else {
           error()
         }
@@ -617,6 +617,7 @@ const actions = {
                 }
               }
             }
+            delete xmasGroup[i].isExchange;
             if(num==xmasGroup[i].cards.length){
               xmasGroup[i].isExchange = true //是否能够兑换
             }
