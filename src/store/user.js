@@ -604,7 +604,7 @@ const actions = {
         // var xmasGroupHistory = ctx.state.xmasGroup;
         var mycards = data.data
         //需要遍历3次
-        if(mycards.length > 0){
+        // if(mycards.length > 0){
           for(var i=0;i<xmasGroup.length;i++){
             var num = 0
             for(var j=0;j<xmasGroup[i].cards.length;j++){
@@ -622,7 +622,9 @@ const actions = {
               xmasGroup[i].isExchange = true //是否能够兑换
             }
           }
-        }
+        // }else {
+        //   ctx.actions.getCardGroupAction()
+        // }
         ctx.commit('changeXmasGroup',xmasGroup)
         success(data.data)
       }).catch((err)=>{
@@ -657,7 +659,6 @@ const actions = {
               }
             }
         }
-        console.log(xmasGroup)
         ctx.commit('changeXmasGroup',xmasGroup);
         success(data.data)
       }).catch((err)=>{

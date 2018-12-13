@@ -1685,7 +1685,6 @@
             this.is_lamp_after = true
             this.is_start = false
             this.start_desc = '投币启动'
-            console.log(res)
             if(res<this.gameNum * this.info.coin_num){
               this.gameNum = 1;
             }
