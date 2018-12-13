@@ -1060,6 +1060,9 @@
           this.$store.dispatch('getUser');
           this.isShowCoinTip = false;
         },1500)
+        if(this.currentCard.length>1){
+          this.$store.dispatch('getCardMycardAction')
+        }
       },
       receiveCards(){
         //需要更新卡片张数，需要动画
