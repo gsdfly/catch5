@@ -778,13 +778,41 @@
           </div>
         </div>
 
+        <div class="bg-center28 bg-center28-es" v-if="contentShow == 'xmases'" @click.stop="" :class="{'full':!isReceiveCards}">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/word/congratulate_bg_es.png" alt=""/>
+            <h3 class="es"  v-if="currentCard[currentCardIndex].type == 'coin'">恭喜您获得免费游戏币</h3>
+            <h3 class="es"  v-else>恭喜您获得卡牌{{cardnum}}张</h3>
+            <div class="word">
+              <span v-if="currentCard.length>1" class="left" @click="preCard"></span>
+              <div class="p" v-if="currentCard[currentCardIndex].type=='card'"><div><img :src="'http://res.catchme.com.cn/activity/xmas/word/'+currentCard[currentCardIndex].value.key+'3.png'" alt=""></div></div>
+              <div class="p" v-else=""><div><img src="http://res.catchme.com.cn/activity/xmas/word/tow.png" alt=""></div></div><span class="right" v-if="currentCard.length>1" @click="nextCard"></span>
+            </div>
+            <div class="cardslist es">
+              <div class="cards" v-for="item in xmasGroup">
+                <ul>
+                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}"><img v-if="card.total" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'2.png'" alt=""><img v-else="" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'1.png'" alt="">
+                  </b><span v-if="card.total"  class="animated" :class="{'flash':card.animate && isAnimate}">{{card.total}}</span><em v-for="current in currentCard" v-if="current.value.key == card.key"></em></li>
+                </ul>
+                <p>{{item.title}}</p>
+                <div class="button" :class="{'isExchange':item.isExchange}" @click="cardExchangeCoupon(item.pivot.card_group_id,item.isExchange)">兑换</div>
+              </div>
+            </div>
+            <div class="btn" v-if="currentCard[currentCardIndex].type == 'card' && !isReceiveCards" @click="receiveCards">收下</div>
+            <div class="btn" v-if="currentCard[currentCardIndex].type == 'coin'" @click="receiveCoins">领取</div>
+            <img v-if="isReceiveCards" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+
         <div class="bg-center29" v-if="contentShow == 'xmastip'" @click.stop="">
           <div>
             <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/notification.png" alt=""/>
             <div class="content">
-              <p>集齐“我抓娃娃机”得<span>Dior口红</span>一支</p>
-              <p>集齐“圣诞狂欢”得暖水袋一个</p>
-              <p>充值后，一次性投6个币比得卡牌或免费游戏币</p>
+              <p>集齐“集卡送口红”得<span>Dior口红</span>一支</p>
+              <p>集齐“圣诞狂欢”得电暖袋一个</p>
+              <p>充值后，一次性投6个币得卡牌或免费游戏币</p>
             </div>
             <div class="game">
               <h3>6币</h3>
@@ -803,7 +831,7 @@
               <p>1.一次性上6分，可获得随机卡牌一张。</p>
               <p>一次性上12分可获得随机卡牌两张，</p>
               <p>以此类推。</p>
-              <p>2.集齐“我抓娃娃机”五张卡牌即可到商城</p>
+              <p>2.集齐“集卡送口红”五张卡牌即可到商城</p>
               <p>兑换Dior口红一支</p>
               <p>3.集齐“圣诞狂欢”四个字即可到商城兑换</p>
               <p>电暖袋一个。</p>
@@ -1047,9 +1075,11 @@
         }
       })
       //获取用户卡片信息
-      this.$store.dispatch('getCardGroupAction').then(()=>{
-        this.$store.dispatch('getCardMycardAction')
-      })
+      if(this.isLogin){
+        this.$store.dispatch('getCardGroupAction').then(()=>{
+          this.$store.dispatch('getCardMycardAction')
+        })
+      }
 //      this.$store.dispatch('getUser')
     },
     methods: {
@@ -1684,7 +1714,11 @@
                 this.currentCard = res;
                 this.cardnum = cardnum;
                 this.bgShow = true;
-                this.contentShow = 'xmas';
+                if(this.isIos){
+                  this.contentShow = 'xmases';
+                }else {
+                  this.contentShow = 'xmas'
+                }
               })
             }
             //投币成功，重新调用获取task_now的接口
@@ -1767,6 +1801,10 @@
 //          this.handleRedGame('');
 //          localStorage.removeItem('redGameStep')
 //        }
+        //获取卡片信息
+        this.$store.dispatch('getCardGroupAction').then(()=>{
+          this.$store.dispatch('getCardMycardAction')
+        })
         var unionid = localStorage.getItem('unionid')
         if(unionid){
           this.handleRedGame(unionid)
@@ -3694,6 +3732,41 @@
         line-height: 86px;
         color: #e63024;
         font-weight: bold;
+      }
+    }
+  }
+  .bg-center28-es{
+    >div{
+      >h3{
+        top:233px;
+      }
+      .word{
+        top:297px;
+        div.p{
+          width: 250px;
+          height: 248px;
+          background: url("./../assets/xmas/con_card.png");
+          background-size: 100% 100%;
+          >div{
+            width: 190px;
+            height: 190px;
+            margin: 10px 0 0 28px;
+            >img{
+              width: 73px;
+            }
+          }
+        }
+      }
+      .cardslist{
+        &.es{
+          bottom: 132px;
+        }
+      }
+      .btn{
+        margin: 23px auto 0 auto;
+      }
+      .close{
+        margin: 26px 0 18px 0;
       }
     }
   }

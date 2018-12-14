@@ -55,7 +55,7 @@ const wxConfig = (r) => {
 const wxReady = () => {
     console.log('wx ready')
     wx.ready(() => {
-        wx.showOptionMenu()
+        wx.hideOptionMenu()
         // wx.showMenuItems({
         //     menuList: [
         //         'menuItem:refresh',//刷新

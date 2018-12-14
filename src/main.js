@@ -81,7 +81,6 @@ FastClick.attach(document.body)
         }
       }
     } else {
-      console.log('1111111111')
       api.machineLogin({machine_no: CONFIG.machine_no, token: CONFIG.token});
       store.commit('changeIsLogin');
       store.dispatch('getUser');
@@ -108,6 +107,8 @@ FastClick.attach(document.body)
 
   store.commit('setMachineNo');
 
+
+
   Vue.prototype.version2 = false;
   var clientWidth = window.innerWidth
     || document.documentElement.clientWidth
@@ -119,6 +120,13 @@ FastClick.attach(document.body)
     Vue.prototype.version2 = true;
   }
   Vue.prototype.Indicator = Indicator
+
+  Vue.prototype.isIos = false;
+  var u = navigator.userAgent
+  var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+  if(isIOS && window.history.length > 1){
+    Vue.prototype.isIos = true
+  }
 
   var unionid = getParamByName('unionid')
   if(unionid){
