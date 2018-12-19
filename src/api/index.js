@@ -208,6 +208,12 @@ export default {
   getEnvelopeReceive:function (params) {
     return instance.post(CONFIG.url+'api/envelope/receive',jsonToStr(params))
   },
-  //
+  //视频活动
+  sendVideoStatus:function (params) {
+    return instance.post(CONFIG.url+'api/video/status',jsonToStr(params))
+  },
+  getVideoExchange:function (params) {
+    return instance.post(CONFIG.url+'api/video/exchange',jsonToStr(params))
+  },
 
 }

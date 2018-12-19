@@ -50,13 +50,19 @@
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
+
+        <div v-if="item.type === 18" @click="openMovie(item)">
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
+          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+          <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
+        </div>
       </li>
       <li class="es">
         <div>
           <div @click="goCouponList">
             <img src="./../assets/juchang/my_ticket.png" alt=""/>
           </div>
-          <p>我的戏剧票</p>
+          <p>我的电影优惠券</p>
         </div>
       </li>
     </ul>
@@ -92,6 +98,9 @@
       task_opes: state => state.user.task_opes
     }),
     methods:{
+      openMovie(item){
+        this.$emit('openMovie',item)
+      },
       goCouponList(){
         this.$emit('couponList','juchang')
       },

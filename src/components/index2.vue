@@ -59,7 +59,7 @@
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
-        <task  ref="task" @couponList="couponList" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
+        <task  ref="task" @couponList="couponList" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh" @openMovie="openMovie"></task>
       </div>
 
       <div class="main">
@@ -119,14 +119,14 @@
               <div class="game-num norecharge" v-if="user.coins<=0">您还没有游戏币，请先充值<span></span>
               </div>
               <div class="game-num" v-else>
-                <i id="coin_reduce" class="iconfont icon-jianhao" @click="handlerGameNum('-')" :class="{
+                <i id="coin_reduce" class="iconfont icon-jian" @click="handlerGameNum('-')" :class="{
                      'active': gameNum === 1
                  }"></i>
                 <div>
                   <h3>{{gameNum * info.coin_num}}币</h3>
                   <p>可玩{{gameNum}}次游戏</p>
                 </div>
-                <i id="coin_add" class="iconfont icon-jiahao" @click="handlerGameNum('+')" :class="{
+                <i id="coin_add" class="iconfont icon-jia" @click="handlerGameNum('+')" :class="{
                      'active': ((gameNum + 1) * info.coin_num) > user.coins
                  }"></i>
               </div>
@@ -303,7 +303,6 @@
           </div>
           <div style="width: 100%;height: 100%;position: absolute;z-index:1000" @click="closeBg2"></div>
         </div>
-
 
         <div class="bg-center10" v-if="contentShow == 'coin'" @click.stop="">
           <div>
@@ -725,6 +724,22 @@
           </div>
         </div>
       </div>
+
+      <div class="movie-tip" v-if="movieItem.type" @click="closeMovie">
+        <div @click.stop="">
+          <h2>看预告片免费抓娃娃</h2>
+          <h3>《蜘蛛侠：平行宇宙》12月21日全网上映</h3>
+          <div class="movie-div">
+            <i @click="playVideo" class="iconfont icon-weibiaoti"></i>
+            <video id="videoId" :src="movieItem.url" playsinline="true" webkit-playsinline="true"   x5-playsinline="true"  raw-controls="true" preload="auto"  poster="https://surmon-china.github.io/vue-quill-editor/static/images/surmon-1.jpg"></video>
+          </div>
+          <p>5元购票优惠+5次免费娃娃机会</p>
+          <button>看预告片免费抓娃娃</button>
+          <button @click="receiveMovie">一键领取</button>
+          <b>不，我就要充值抓娃娃</b>
+        </div>
+      </div>
+
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
@@ -842,6 +857,8 @@
         isShowBaomihuaList:false,
         codeWidth:2,
         codeHeight:45,
+//        showMovie:false, // 是否显示电影视频
+        movieItem:{}
       }
     },
     created() {
@@ -864,7 +881,8 @@
       gzh_operation: state => state.user.gzh_operation,
       gzh_operation_other: state => state.user.gzh_operation_other,
       dalibao:state => state.user.dalibao,
-      redGame:state => state.user.redGame
+      redGame:state => state.user.redGame,
+      movies:state => state.user.movies,
     }),
     components: {
       joPay,
@@ -949,6 +967,30 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      receiveMovie(){
+        this.$store.dispatch('sendVideoStatusAction',{operation_id:this.movieItem.id,progress:2}).then(()=>{
+          this.$store.dispatch('getVideoExchangeAction',{operation_id:this.movieItem.id,voucher_batch_id:this.movieItem.voucher_batch_id[0].id})
+        })
+      },
+      closeMovie(){
+        this.movieItem = {}
+      },
+      openMovie(item){
+        console.log(item)
+        this.movieItem = item;
+      },
+      playVideo(){
+        console.log('11111')
+        var i = document.querySelector('.icon-weibiaoti')
+        i.style = 'display:none'
+        var v = document.querySelector('#videoId')
+        v.play();
+        v.addEventListener("ended",()=>{
+          console.log('视频播放结束')
+          //这里需要将领取按钮变为可点击
+        },false)
+        this.$store.dispatch('sendVideoStatusAction',{operation_id:this.movieItem.id,progress:1})
+      },
       downloadArtifact(){
         this.$refs.task.useArtifact()
       },
@@ -1547,6 +1589,13 @@
       }
     },
     watch: {
+      movies(newValue,oldValue){
+        if((oldValue.length === 0) && (newValue[0].task_count < newValue[0].num)){
+          console.log(newValue)
+          this.movieItem = newValue[0];
+//          this.showMovie = true;
+        }
+      },
       dalibao(newValue,oldValue){
         for(var item of newValue){
           if(item.vouchers.length > 0){
@@ -1742,6 +1791,35 @@
     }
     to {
       transform: rotateZ(360deg)
+    }
+  }
+
+  .movie-tip{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top:0;
+    z-index: 9999;
+    >div{
+      position: absolute;
+      top:100px;
+      left:60px;
+      width: calc(100% - 120px);
+      background: #ccc;
+      .movie-div{
+        width: 100%;
+        padding: 0 30px;
+        .icon-weibiaoti{
+          color: #fff;
+          font-size: 100px;
+          @include center;
+          z-index: 2;
+        }
+        video{
+          width: 100%;
+        }
+      }
     }
   }
 
