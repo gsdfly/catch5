@@ -63,7 +63,7 @@
       </div>
 
       <div class="main">
-        <div class="main-center">
+        <!--<div class="main-center">-->
           <div class="centerout">
             <div class="center">
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
@@ -138,7 +138,7 @@
                 <p v-show="is_lamp_after && start_desc=='投币启动'">投币成功，<span>“摇动游戏杆”</span>即可开始游戏</p>
               </div>
             </div>
-          </div>
+          <!--</div>-->
         </div>
       </div>
       <div class="footer">
@@ -3813,9 +3813,11 @@
 
   .main {
     width: 100%;
-    height: 46.6%;
-    min-height: 538px;
+    /*height: 46.6%;*/
+    /*min-height: 538px;*/
     /*height: calc(100% - 4.98px);*/
+    height: 47.2%;
+    min-height: 558px;
     position: relative;
   }
 
@@ -3847,15 +3849,15 @@
     position: relative;
   }
 
-  .main .main-center {
+  /*.main .main-center {
     width: 100%;
     height: 100%;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    /*padding: 0 0.22px;*/
-  }
+   // padding: 0 0.22px;
+  }*/
 
   .main .centerout {
     /*background: url("http://res.catchme.com.cn/imgs-2018-02-06/2/bg_begin.png") no-repeat;*/
@@ -3865,7 +3867,8 @@
     padding: 20px;
     /*margin: 0.05px 0 0 0;*/
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
+    @include center;
     position: absolute;
     > div {
       position: relative;
@@ -4380,8 +4383,10 @@
     width: 100%;
     /*height: 3.4px;*/
     /*height: 28%;*/
-    height: 27%;
-    min-height: 310px;
+    /*height: 27%;*/
+    height: 26.4%;
+    /*min-height: 310px;*/
+    min-height: 300px;
     position: relative;
     /*padding: 0.36px 0.22px 0 0.22px;*/
     /*overflow: hidden;*/

@@ -216,16 +216,19 @@
     position: absolute;
     left: 0;
     top: 0;
-    padding: 10px 20px 0 20px;
+    padding: 0 20px;
+    /*padding: 10px 20px 0 20px;*/
   }
 
   .recharge-lists > div {
-    margin: 0 0 20px 0;
+    /*margin: 0 0 20px 0;*/
+    margin:0 0 22px 0;
     font-size: 36px;
     float: right;
-    width: 345px;
-    /*height: 128px;*/
-    height: 37.87%;
+    /*width: 345px;*/
+    width: 342px;
+    height: 128px;
+    /*height: 37.87%;*/
     border: 1px solid #f25670;
     /*border-radius: 0.15px;*/
     color: #494949;
@@ -287,8 +290,10 @@
   }
 
   .recharge-item-b {
-    height: 63px;
-    line-height: 63px;
+    /*height: 63px;*/
+    /*line-height: 63px;*/
+    height: 59px;
+    line-height: 59px;
     /*height: 61px;*/
     /*line-height: 61px;*/
     /*font-size: 0.32px;*/
@@ -307,10 +312,10 @@
   }
 
   .recharge-item-t {
-    /*height: 67px;*/
-    /*line-height: 67px;*/
-    height: 68px;
-    line-height: 68px;
+    height: 67px;
+    line-height: 67px;
+    /*height: 68px;*/
+    /*line-height: 68px;*/
     font-size: 36px;
     color: #353535;
     text-align: center;
@@ -399,16 +404,20 @@
     /*width: 348px;*/
     /*margin: 0 0 20px 0;*/
   /*}*/
-
+  .version2>div{
+    height: 164px;
+  }
   .version2 .recharge-item-t {
-    height: 84px;
+    height: 83px;
     font-size: 38px;
-    line-height: 84px;
+    line-height: 83px;
   }
 
   .version2 .recharge-item-b {
-    height: 75px;
-    line-height: 75px;
+    /*height: 75px;*/
+    /*line-height: 75px;*/
+    height: 79px;
+    line-height: 79px;
     font-size: 34px;
   }
 
@@ -428,7 +437,7 @@
   }
 
   .version2 > div.dalibao img{
-    height: 159px;
+    height: 164px;
   }
 
   /*.version2 .recharge-has, .version2 .recharge-hot {*/
