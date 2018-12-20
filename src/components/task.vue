@@ -1,7 +1,7 @@
 <template>
   <div class="task" :class="{'task-version2':version2}">
     <ul>
-      <li v-for="item in task_opes.slice(0,3)">
+      <li v-for="item in task_opes.slice(0,2)">
         <div v-if="item.type === 7" @click="consumer(item)">
           <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
           <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
@@ -50,6 +50,20 @@
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
+        <div v-if="item.type === 18" @click="openMovie(item)">
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
+          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+          <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
+        </div>
+      </li>
+      <li>
+        <div @click="openTip('movieList')">
+          <div>
+            <!--<img src="./../assets/movie/ticket_press.png" alt=""/>-->
+            <img class="ticket animated" :class="{'bounce':isShowCoinAnimate}" src="./../assets/movie/icon_ticket.png" alt="">
+          </div>
+          <p>我的电影优惠券</p>
+        </div>
       </li>
     </ul>
   </div>
@@ -68,6 +82,7 @@
         artifact:{}
       }
     },
+    props:['isShowCoinAnimate'],
     mounted(){
       if(this.isLogin){
         this.mountedStart();
@@ -322,6 +337,26 @@
           width: 100%;
           height: 100%;
           padding: 0.1px;
+          >div{
+            position: relative;
+            width: 110px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 13px auto 0 auto;
+            background: url("./../assets/movie/ticket_press.png");
+            background-size: 100% 100%;
+            >img{
+              width: 100%;
+              &.ticket{
+                width: 46px;
+                height: 34px;
+                margin-top:-2px;
+              }
+            }
+
+          }
           .hot{
             width: 54px;
             height: 24px;
@@ -348,7 +383,7 @@
               opacity: 0.5;
             }
           }
-          img{
+          >img{
             width: 110px;
             height: 110px;
             display: block;

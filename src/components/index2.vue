@@ -26,6 +26,7 @@
                 <i class="icon-jinbi"></i><span class="coins-num">{{user.coins}}</span>
               </div>
               <img v-show="isShowCoinTip" class="animated coin-tip" :class="{'zoomOutLeft':isShowCoinTip}" src="./../assets/small/coin_tip.png" alt="">
+              <span v-show="isShowCoinAnimate" class="animated coin-animate" :class="{'zoomOut':isShowCoinAnimate}">+{{movieCoinNum}}</span>
             </div>
             <!--<div class="game game-quan" v-show="user.game_ticket>0">-->
             <!--<i class="iconfont icon-quan"></i>-->
@@ -55,14 +56,14 @@
         </div>
       </div>
 
-      <div class="activitys">
+      <div class="activitys" v-show="showContent">
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
-        <task  ref="task" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
+        <task :isShowCoinAnimate="isShowCoinAnimate" ref="task" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
       </div>
 
-      <div class="main">
+      <div class="main" v-show="showContent">
         <!--<div class="main-center">-->
           <div class="centerout">
             <div class="center">
@@ -141,7 +142,7 @@
           </div>
         <!--</div>-->
       </div>
-      <div class="footer">
+      <div class="footer" v-show="showContent">
         <joPay ref="joPay" @changeTip="changeTip" @openTip="openTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
                @closeBg="closeBg"></joPay>
       </div>
@@ -663,6 +664,98 @@
           </div>
         </div>
 
+        <div class="bg-center28" v-if="contentShow == 'movieList'" @click.stop="">
+          <div>
+            <h3><span></span>我的电影优惠券<span></span></h3>
+            <ul>
+              <template v-for="movie in movies">
+                <li v-for="item in movie.vouchers">
+                  <img src="./../assets/movie/logo_taopiaopiao.png" alt="">
+                  <div class="center">
+                    <h4>{{item.name}}</h4>
+                    <p>{{item.remarks}}</p>
+                    <p>有效期至：{{item.end_time | handleEndTime}}</p>
+                  </div>
+                  <div class="right">
+                    <span>5元</span>
+                    <div class="btn" @click="useCoupon(item.code,item.end_time,movie.voucher_batch.name,movie.voucher_batch.category,'movie')">兑换</div>
+                  </div>
+                </li>
+              </template>
+              <!--<li>-->
+                <!--<img src="./../assets/movie/logo_taopiaopiao.png" alt="">-->
+                <!--<div class="center">-->
+                  <!--<h4>淘票票观影代金券</h4>-->
+                  <!--<p>选大地影城使用：不可和活动叠加...</p>-->
+                  <!--<p>有效期至：2018-12-31</p>-->
+                <!--</div>-->
+                <!--<div class="right">-->
+                  <!--<span>5元</span>-->
+                  <!--<div class="btn">兑换</div>-->
+                <!--</div>-->
+              <!--</li>-->
+            </ul>
+          </div>
+          <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+               @click="closeBg"/>
+        </div>
+
+        <div class="bg-center29" v-if="contentShow == 'movieticket'">
+          <div>
+              <img class="imgBg" src="./../assets/movie/taopiaopiao.png" alt=""/>
+              <h3><span></span>电影优惠券兑换码<span></span></h3>
+              <div class="scroll">
+                <span class="spanh3" id="copy2">12349u40d4120</span>
+                <p>有效期至：2018.12.31</p>
+                <button :data-clipboard-target="'#copy2'" @click="copy" class="btncopy" id="copyBtn2">复制兑换码</button>
+              </div>
+              <a href="javascript:viod(0)">我的优惠券：2<i
+                class="iconfont icon-shuangjiantouyou"></i></a>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg2"/>
+          </div>
+          <div style="width: 100%; height: 100%; position: absolute; z-index: 1000;" @click="closeBg2"></div>
+        </div>
+
+        <div class="bg-center30" v-if="contentShow == 'movie'"  @click.stop="">
+          <div>
+            <h3><span></span>我的电影优惠券<span></span></h3>
+            <div class="movie-div">
+              <i  @click="playVideo" class="iconfont icon-bofang"></i>
+              <video id="videoId" src="http://www.runoob.com/try/demo_source/mov_bbb.mp4" playsinline="true" webkit-playsinline="true"  x5-playsinline="true"  raw-controls="true" preload="auto"  poster=""></video>
+              <!--https://surmon-china.github.io/vue-quill-editor/static/images/surmon-1.jpg-->
+            </div>
+            <h4>您还没有优惠券</h4>
+            <h4>看预告片可得</h4>
+            <p>5元购票优惠+5次免费娃娃机会</p>
+            <div class="btnfree" v-show="!videoIsPlay"><img class="arrow left" src="./../assets/movie/my_arrow_left.png" alt="">看预告片免费抓娃娃<img class="arrow right" src="./../assets/movie/my_arrow_right.png" alt=""></div>
+            <b v-show="!videoIsPlay" @click="showContent = true">不，我就要充值抓娃娃</b>
+            <div v-show="videoIsPlay" class="btnfree btnreceive" @click="receiveMovie" :class="{'btnend':!videoIsEnd}">一键领取</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="movie-tip" v-if="movieItem.type && !showContent">
+        <!--<div @click.stop="">-->
+        <img class="yugao" src="./../assets/movie/yugao.png" alt=""/>
+        <img class="freecatch" src="./../assets/movie/freecatch.png" alt="">
+        <img class="camera" src="./../assets/movie/camera.png" alt="">
+        <!--<h3>《蜘蛛侠：平行宇宙》12月21日全网上映</h3>-->
+        <h3>{{movieItem.title}}</h3>
+          <div class="movie-div">
+            <i  @click="playVideo" class="iconfont icon-bofang"></i>
+              <video id="videoId" :src="movieItem.url" playsinline="true" webkit-playsinline="true"   x5-playsinline="true"  raw-controls="true" preload="auto"  poster=""></video>
+            <!--https://surmon-china.github.io/vue-quill-editor/static/images/surmon-1.jpg-->
+          </div>
+          <!--<p>5元购票优惠+5次免费娃娃机会</p>-->
+          <p>{{movieItem.remark}}</p>
+          <div class="btnfree" v-show="!videoIsPlay" @click="playVideo"><img class="arrow left" src="./../assets/movie/arrow_left.png" alt="">看预告片免费抓娃娃<img class="arrow right" src="./../assets/movie/arrow_right.png" alt=""></div>
+          <div v-show="videoIsPlay" class="btnfree btnreceive" @click="receiveMovie" :class="{'btnend':!videoIsEnd}">一键领取</div>
+          <b v-show="!videoIsPlay" @click="showContent = true">不，我就要充值抓娃娃</b>
+        <img v-if="!version2" class="roll" src="./../assets/movie/roll.png" alt="">
+        <img v-else="" class="roll" src="./../assets/movie/roll_changping.png" alt="">
+
+        <!--</div>-->
       </div>
       <tipOperation></tipOperation>
     </div>
@@ -707,8 +800,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: false,
-        contentShow: '',
+        bgShow: true,
+        contentShow: 'movie',
         contentShowAfter:'',
         currentCoupon: {},
         pay: {},
@@ -781,6 +874,12 @@
         isShowBaomihuaList:false,
         codeWidth:2,
         codeHeight:45,
+        movieItem:{},
+        showContent:false,
+        videoIsPlay:false,
+        videoIsEnd:false,
+        isShowCoinAnimate:false,
+        movieCoinNum:2
       }
     },
     created() {
@@ -803,7 +902,8 @@
       gzh_operation: state => state.user.gzh_operation,
       gzh_operation_other: state => state.user.gzh_operation_other,
       dalibao:state => state.user.dalibao,
-      redGame:state => state.user.redGame
+      redGame:state => state.user.redGame,
+      movies:state => state.user.movies,
     }),
     components: {
       joPay,
@@ -881,13 +981,53 @@
         this.Indicator.close();
         this.showHtml = true;
         this.isGetImg = true;
-        if (res.online === 0) {
-          this.$store.commit('changeTipContent', getErrMsg(1001));
-        }
+//        if (res.online === 0) {
+//          this.$store.commit('changeTipContent', getErrMsg(1001));
+//        }
       })
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      receiveMovie(){
+        if(this.videoIsEnd){
+          this.$store.dispatch('sendVideoStatusAction',{operation_id:this.movieItem.id,progress:2}).then(()=>{
+            this.$store.dispatch('getVideoExchangeAction',{operation_id:this.movieItem.id}).then((res)=>{
+              this.closeMovie();
+              //领取成功之后还需要执行动画
+              this.showContent = true;
+              this.isShowCoinAnimate = true;
+              this.movieCoinNum = res.coin_num
+              setTimeout(()=>{
+                //执行动画
+                this.isShowCoinAnimate = false;
+              },2000)
+            });
+          })
+        }
+      },
+      closeMovie(){
+        this.movieItem = {}
+      },
+      openMovie(item){
+        console.log(item)
+        this.movieItem = item;
+      },
+      playVideo(){
+        this.videoIsPlay = true;
+//        this.videoIsEnd = false;
+        var i = document.querySelector('.icon-bofang')
+        var v = document.querySelector('#videoId')
+        i.style.display = 'none'
+        v.play();
+        v.addEventListener("ended",()=>{
+          console.log('视频播放结束')
+          //这里需要将领取按钮变为可点击
+          this.videoIsEnd = true;
+          var i = document.querySelector('.icon-bofang')
+          i.style.display = 'block'
+        },false)
+        this.$store.dispatch('sendVideoStatusAction',{operation_id:this.movieItem.id,progress:1})
+      },
       downloadArtifact(){
         this.$refs.task.useArtifact()
       },
@@ -1224,6 +1364,8 @@
               this.codeWidth = 1.8;
             }
             this.contentShow = 'baomihua';
+          }else if(type === 'movie'){
+            this.contentShow = 'movieticket';
           }else {
             this.contentShow = 'exchange3';
           }
@@ -1343,7 +1485,7 @@
         }else if(value === 'redMachine' || ['failred','nobi','tencent'].includes(this.contentShow)){
           this.isAfterRed = true;
         }
-        if (this.contentShow === 'exchange' || this.contentShow === 'exchange2') {
+        if (this.contentShow === 'exchange' || this.contentShow === 'exchange2' || this.contentShow === 'movieticket') {
           return
         }
         if(this.contentShow === 'dalibaotip'){
@@ -1473,6 +1615,13 @@
       }
     },
     watch: {
+      movies(newValue,oldValue){
+        if((oldValue.length === 0) && (newValue[0].task_count < newValue[0].num)){
+          this.movieItem = newValue[0];
+        }else {
+          this.showContent = true;
+        }
+      },
       dalibao(newValue,oldValue){
         for(var item of newValue){
           if(item.vouchers.length > 0){
@@ -1659,6 +1808,175 @@
     }
     to {
       transform: rotateZ(360deg)
+    }
+  }
+
+  .movie-tip{
+    width: 100%;
+    height: 88%;
+    min-height: 1046px;
+    position: fixed;
+    left: 0;
+    bottom:0;
+    z-index: 888;
+    background:#fcfbfa url(./../assets/movie/bg_suihua.png);
+    background-size: 100% 100%;
+    border-radius: 30px 30px 0 0;
+    .yugao{
+      width: 230px;
+      position: absolute;
+      left: 47px;
+      top:40px;
+    }
+    .freecatch{
+      width: 435px;
+      position: absolute;
+      left: 47px;
+      top:102px;
+    }
+    .camera{
+      width: 219px;
+      position: absolute;
+      right:45px;
+      top:68px;
+    }
+    .roll{
+      width: 112px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    }
+    >h3{
+      font-size: 28px;
+      color: #faf9f8;
+      background:#000;
+      height: 52px;
+      line-height: 52px;
+      /*padding:0 18px 0 4px;*/
+      padding: 0 18px;
+      position: absolute;
+      left: 47px;
+      top: 192px;
+      >span{
+        visibility: hidden;
+      }
+    }
+    .movie-div{
+      width: 100%;
+      min-height: 400px;
+      padding: 0 23px;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      top:284px;
+      left: 0;
+      .icon-bofang{
+        /*color: #fff;*/
+        font-size: 100px;
+        @include center;
+        z-index: 2;
+      }
+      video{
+        width:100%;
+      }
+      }
+    >p{
+      width: 677px;
+      height: 81px;
+      line-height: 54px;
+      background: url("./../assets/movie/star.png") no-repeat;
+      background-size: 100% 100%;
+      color: #353535;
+      font-size: 36px;
+      text-align: center;
+      @include centerX;
+      top:704px;
+      /*bottom:261px;*/
+    }
+    .btnfree{
+      width: 450px;
+      height: 94px;
+      background-image: linear-gradient(0deg,
+        rgba(250, 147, 26, 0.65) 0%,
+        rgba(254, 168, 66, 0.65) 100%),
+      linear-gradient(
+          #fd663b,
+          #fd663b);
+      background-blend-mode: normal,
+      normal;
+      border-radius: 47px;
+      font-size: 36px;
+      line-height: 94px;
+      letter-spacing: 1.8px;
+      color: #ffffff;
+      text-align: center;
+      box-shadow: 0 11px 20px rgba(90,49,34,0.25);
+      @include centerX;
+      top:821px;
+      &.btnreceive{
+        top:851px;
+      }
+      &.btnend{
+        background: #888888;
+      }
+      .arrow{
+        width: 80px;
+        height: 134px;
+        &.left{
+          position: absolute;
+          left: -80px;
+          bottom: 47px;
+        }
+        &.right{
+          position: absolute;
+          right: -80px;
+          bottom: 47px;
+        }
+      }
+    }
+    b{
+      font-size: 36px;
+      color: #353535;
+      line-height: 36px;
+      width: 100%;
+      text-align: center;
+      letter-spacing: 1.8px;
+      @include centerX;
+      top:955px;
+    }
+  }
+
+  .jo-version2{
+    .movie-tip{
+      .yugao{
+        left: 29px;
+        top:46px;
+      }
+      .freecatch{
+        left: 29px;
+        top:118px;
+      }
+      .camera{
+        right: 30px;
+        top:90px;
+      }
+      .roll{
+        width:174px;
+      }
+      >h3{
+        top:212px;
+        left: 29px;
+      }
+      .movie-div{
+        top:304px;
+      }
+      >p{top:753px;}
+      .btnfree{
+        top:870px;
+      }
+      b{
+        top: 1014px;
+      }
     }
   }
 
@@ -3125,6 +3443,311 @@
       }
     }
   }
+
+  .bg-center28{
+    @include center;
+    >div{
+      width: 640px;
+      height: 930px;
+      background: #f1f1f1 url("./../assets/movie/bg_suihua.png");
+      background-size: 100% 100%;
+      border-radius: 20px;
+      padding: 0.1px;
+      >h3{
+        height: 30px;
+        line-height: 30px;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 28px;
+        margin: 38px 0 30px 0;
+        span{
+          display: inline-block;
+          width: 168px;
+          height: 2px;
+          background: #666;
+          border-radius: 1px;
+        }
+      }
+      ul{
+        width: 100%;
+        height: 832px;
+        padding: 0 28px;
+        overflow: auto;
+        li{
+          width: 100%;
+          height:184px;
+          background: #fff;
+          border-radius: 12px;
+          margin: 0 0 12px 0;
+          >img{
+            width: 80px;
+            height: 80px;
+            float: left;
+            margin: 42px 16px 0 20px;
+          }
+          .center{
+            width: 314px;
+            height: 100%;
+            padding: 0.1px;
+            float: left;
+            text-align: left;
+            /*background: blue;*/
+            h4{
+              width: 100%;
+              font-size: 26px;
+              line-height: 26px;
+              color: #353535;
+              margin: 43px 0 25px 0;
+            }
+            p{
+              width: 100%;
+              font-size: 20px;
+              color: #666;
+              line-height: 20px;
+              margin: 0 0 12px 0;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
+          }
+          .right{
+            float: right;
+            margin: 0 -8px 0 0;
+            span{
+              display: block;
+              font-size: 40px;
+              line-height: 40px;
+              color: #ff3333;
+              margin: 43px 0 11px 0;
+            }
+            .btn{
+              width: 147px;
+              height: 90px;
+              line-height: 64px;
+              background: url("./../assets/movie/press_s.png");
+              background-size: 100% 100%;
+              font-size: 26px;
+              color:#fefefe;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .bg-center29{
+    >div{
+      z-index: 1001;
+      @include center;
+      >h3{
+        height: 30px;
+        line-height: 30px;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 28px;
+        width: 100%;
+        position: absolute;
+        top:38px;
+        left: 0;
+        span{
+          display: inline-block;
+          width: 152px;
+          height: 2px;
+          background: #666;
+          border-radius: 1px;
+        }
+      }
+      .imgBg{
+        width: 640px;
+        display: block;
+      }
+      .scroll {
+          width: 584px;
+          height: 240px;
+          margin: 0 auto;
+          color: #fff;
+          padding: 0.1px;
+          @include centerX;
+          top: 112px;
+          .spanh3 {
+            display: inline-block;
+            font-size: 44px;
+            line-height: 44px;
+            margin: 40px 0 20px 0;
+          }
+          p {
+            font-size: 24px;
+            line-height: 24px;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0 0 28px 0;
+          }
+          button {
+            width: 252px;
+            height: 56px;
+            font-size: 30px;
+            outline: none;
+            border: none;
+            color: #fff;
+            border-radius: 28px;
+            background-image: linear-gradient(-30deg,
+              #ff3333 1%,
+              #fd6262 100%),
+            linear-gradient(
+                #fe7940,
+                #fe7940);
+            background-blend-mode: normal,
+            normal;
+            box-shadow: 0px 10px 24px 0px
+            rgba(167, 58, 52, 0.27),
+            inset -7.8px -7.8px 13px 0px
+            rgba(236, 86, 78, 0.18);
+          }
+        }
+      a{
+        font-size: 24px;
+        line-height: 24px;
+        color: #ff3333;
+        letter-spacing: 1.2px;
+        position: absolute;
+        right: 40px;
+        bottom: 146px;
+        text-decoration: none;
+        text-shadow: 0px 3px 8px 0px
+        rgba(165, 42, 42, 0.58);
+        i{
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .bg-center30{
+    @include center;
+    >div{
+      width: 640px;
+      height: 930px;
+      background:#f1f1f1 url("./../assets/movie/bg_suihua.png");
+      background-size: 100% 100%;
+      border-radius: 20px;
+      >h3{
+          height: 30px;
+          line-height: 30px;
+          font-size: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 28px;
+          width: 100%;
+          position: absolute;
+          top:38px;
+          left: 0;
+          span{
+            display: inline-block;
+            width: 152px;
+            height: 2px;
+            background: #666;
+            border-radius: 1px;
+          }
+        }
+      .movie-div{
+        width: 100%;
+        min-height: 328px;
+        padding: 0 28px;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        top:106px;
+        left: 0;
+        .icon-bofang{
+          /*color: #fff;*/
+          font-size: 100px;
+          @include center;
+          z-index: 2;
+        }
+        video{
+          width:100%;
+        }
+      }
+      h4{
+        font-size: 26px;
+        line-height: 26px;
+        color: #353535;
+        @include centerX;
+        top:501px;
+        &:nth-of-type(2){
+          top:548px;
+        }
+      }
+      >p{
+        width: 573px;
+        height: 77px;
+        line-height: 66px;
+        background: url("./../assets/movie/star_myticket.png") no-repeat;
+        background-size: 100% 100%;
+        color: #353535;
+        font-size: 30px;
+        text-align: center;
+        @include centerX;
+        top:576px;
+      }
+      .btnfree{
+        width: 375px;
+        height: 79px;
+        background-image: linear-gradient(0deg,
+          rgba(250, 147, 26, 0.65) 0%,
+          rgba(254, 168, 66, 0.65) 100%),
+        linear-gradient(
+            #fd663b,
+            #fd663b);
+        background-blend-mode: normal,
+        normal;
+        border-radius: 39px;
+        font-size: 30px;
+        line-height: 79px;
+        letter-spacing: 1.5px;
+        color: #ffffff;
+        text-align: center;
+        box-shadow: 0 11px 20px rgba(90,49,34,0.25);
+        @include centerX;
+        top:682px;
+        &.btnreceive{
+          top:682px;
+        }
+        &.btnend{
+          background: #888888;
+        }
+        .arrow{
+          width: 66px;
+          height: 121px;
+          &.left{
+            position: absolute;
+            left: -66px;
+            bottom: 30px;
+          }
+          &.right{
+            position: absolute;
+            right: -66px;
+            bottom: 30px;
+          }
+        }
+      }
+      b{
+        font-size: 30px;
+        color: #353535;
+        line-height: 30px;
+        width: 100%;
+        text-align: center;
+        letter-spacing: 1.5px;
+        @include centerX;
+        top:803px;
+      }
+    }
+  }
+
   .price {
     position: absolute;
     width: 298px;
@@ -3382,6 +4005,7 @@
     /*background: red;*/
     position: relative;
     z-index: 666;
+    /*z-index:1000;*/
     /*overflow-x: hidden;*/
   }
 
@@ -3478,6 +4102,14 @@
     top:0;
     animation-duration:2.5s;
     /*transition: all 1s;*/
+  }
+  .header .header-main .game  .coin-animate{
+    position: absolute;
+    right:-10px;
+    top:-10px;
+    font-size: 40px;
+    color: #000;
+    animation-duration:2.5s;
   }
 
   /*position: absolute;*/

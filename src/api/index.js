@@ -209,5 +209,10 @@ export default {
     return instance.post(CONFIG.url+'api/envelope/receive',jsonToStr(params))
   },
   //
-
+  sendVideoStatus:function (params) {
+    return instance.post(CONFIG.url+'api/video/status',jsonToStr(params))
+  },
+  getVideoExchange:function (params) {
+    return instance.post(CONFIG.url+'api/video/exchange',jsonToStr(params))
+  },
 }

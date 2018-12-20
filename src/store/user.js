@@ -71,10 +71,14 @@ const state = {
   },
   task_opes:[],
   dalibao:[],
-  redGame:{}
+  redGame:{},
+  movies:[]
 }
 
 const mutations = {
+  setMovies(state,arr){
+    state.movies = arr
+  },
   changeIsGuide(state,value){
     state.isShowGuide = value;
   },
@@ -342,7 +346,9 @@ const actions = {
         var activity_bounty = [];
         var completeOpe = [];
         var undoneOpe = [];
-        var dalibao = []
+        var dalibao = [];
+        var moviesComplete = []
+        var moviesUndone = []
 
         for(var i=0;i<res.length;i++){
           if(res[i].type ===1){
@@ -444,8 +450,22 @@ const actions = {
             }else {
               undoneOpe.push(res[i])
             }
+          }else if(res[i].type === 18){
+            if(res[i].task_count >= res[i].num){
+              completeOpe.push(res[i])
+              moviesComplete.push(res[i])
+            }else {
+              undoneOpe.push(res[i])
+              moviesUndone.push(res[i])
+            }
           }
         }
+
+        var movies = moviesUndone.concat(moviesComplete)
+        if(movies.length>0){
+          ctx.commit('setMovies',movies)
+        }
+
         if(dalibao.length>0){
           ctx.commit('setDalibao',dalibao)
         }
@@ -588,8 +608,26 @@ const actions = {
         error(err)
       })
     })
-  }
-
+  },
+  //视频活动
+  sendVideoStatusAction:function (ctx,params) {
+    return new Promise((success,error)=>{
+      api.sendVideoStatus({token:CONFIG.token,operation_id:params.operation_id,progress:params.progress}).then((data)=>{
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+  },
+  getVideoExchangeAction:function (ctx,params) {
+    return new Promise((success,error)=>{
+      api.getVideoExchange({token:CONFIG.token,operation_id:params.operation_id}).then((data)=>{
+        success(data.data)
+      }).catch((err)=>{
+        error(err)
+      })
+    })
+  },
 }
 
 export default {
