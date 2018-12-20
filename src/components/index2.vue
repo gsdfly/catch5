@@ -828,15 +828,10 @@
             <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/windows_bg.png" alt=""/>
             <h3>活动规则</h3>
             <div class="rulecontent">
-              <p>1.一次性上6分，可获得随机卡牌一张。</p>
-              <p>一次性上12分可获得随机卡牌两张，</p>
-              <p>以此类推。</p>
-              <p>2.集齐“集卡送口红”五张卡牌即可到商城</p>
-              <p>兑换Dior口红一支</p>
-              <p>3.集齐“圣诞狂欢”四个字即可到商城兑换</p>
-              <p>电暖袋一个。</p>
-              <p>4.活动时间：2018年12月21日 00:00</p>
-              <p>--2018年12月25日23:59。</p>
+              <p>1.一次性投6币，可获得随机卡牌一张。一次性投12币可获得随机卡牌两张，以此类推。</p>
+              <p>2.集齐“集卡送口红”五张卡牌即可到商城兑换Dior口红一支</p>
+              <p>3.集齐“圣诞狂欢”四个字即可到商城兑换电暖袋一个。</p>
+              <p>4.活动时间：2018年12月21日 00:00--2018年12月25日23:59。</p>
               <p>5.最终活动解释权归本公司所有。</p>
             </div>
             <div class="back" @click="goPre"><i></i>返回</div>
@@ -3790,8 +3785,9 @@
         top:241px;
         p{
           font-size: 26px;
-          line-height: 26px;
-          margin: 0 0 21px 0;
+          /*line-height: 26px;*/
+          line-height: 50px;
+          /*margin: 0 0 21px 0;*/
           text-align: left;
           color: #fff;
          }
