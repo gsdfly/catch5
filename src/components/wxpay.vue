@@ -288,8 +288,8 @@
   }
 
   .recharge-item-b {
-    height: 60px;
-    line-height: 60px;
+    height: 59px;
+    line-height: 59px;
     /*height: 61px;*/
     /*line-height: 61px;*/
     /*font-size: 0.32px;*/
@@ -308,10 +308,10 @@
   }
 
   .recharge-item-t {
-    /*height: 67px;*/
-    /*line-height: 67px;*/
-    height: 68px;
-    line-height: 68px;
+    height: 67px;
+    line-height: 67px;
+    /*height: 68px;*/
+    /*line-height: 68px;*/
     font-size: 36px;
     color: #353535;
     text-align: center;
@@ -404,9 +404,9 @@
     height: 164px;
   }
   .version2 .recharge-item-t {
-    height: 84px;
+    height: 83px;
     font-size: 38px;
-    line-height: 84px;
+    line-height: 83px;
   }
 
   .version2 .recharge-item-b {
