@@ -1,7 +1,7 @@
 <template>
   <div class="task" :class="{'task-version2':version2}">
     <ul>
-      <li v-for="item in task_opes.slice(0,2)">
+      <li v-for="item in task_opes.slice(0,tasklength)">
         <div v-if="item.type === 7" @click="consumer(item)">
           <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
           <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
@@ -56,10 +56,9 @@
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
       </li>
-      <li>
+      <li v-if="movies.length>0">
         <div @click="openTip('movieList')">
-          <div>
-            <!--<img src="./../assets/movie/ticket_press.png" alt=""/>-->
+          <div class="ticket-div">
             <img class="ticket animated" :class="{'bounce':isShowCoinAnimate}" src="./../assets/movie/icon_ticket.png" alt="">
           </div>
           <p>我的电影优惠券</p>
@@ -79,7 +78,8 @@
     data(){
       return {
         isRequest:false,
-        artifact:{}
+        artifact:{},
+        tasklength:3
       }
     },
     props:['isShowCoinAnimate'],
@@ -96,9 +96,13 @@
       info: state => state.user.info,
       isLogin: state => state.user.isLogin,
       activity_bounty: state => state.user.activity_bounty,
-      task_opes: state => state.user.task_opes
+      task_opes: state => state.user.task_opes,
+      movies:state => state.user.movies,
     }),
     methods:{
+      openMovie(item){
+        this.$emit('openMovie',item)
+      },
       useArtifact(){
         if(this.artifact.task_count >= this.artifact.num){
           location.href = this.artifact.url;
@@ -290,6 +294,11 @@
     watch:{
       isLogin(){
         this.mountedStart();
+      },
+      movies(newValue,oldValue){
+        if(newValue.length>0){
+          this.tasklength = 2
+        }
       }
     }
   }
@@ -345,14 +354,17 @@
             align-items: center;
             justify-content: center;
             margin: 13px auto 0 auto;
-            background: url("./../assets/movie/ticket_press.png");
-            background-size: 100% 100%;
+            &.ticket-div{
+              background: url("./../assets/movie/ticket_press.png");
+              background-size: 100% 100%;
+            }
             >img{
               width: 100%;
               &.ticket{
                 width: 46px;
                 height: 34px;
                 margin-top:-2px;
+                animation-duration: 2.5s;
               }
             }
 

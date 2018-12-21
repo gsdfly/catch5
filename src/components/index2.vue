@@ -60,7 +60,7 @@
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
-        <task :isShowCoinAnimate="isShowCoinAnimate" ref="task" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
+        <task :isShowCoinAnimate="isShowCoinAnimate" ref="task" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh" @openMovie="openMovie"></task>
       </div>
 
       <div class="main" v-show="showContent">
@@ -305,7 +305,6 @@
           <div style="width: 100%;height: 100%;position: absolute;z-index:1000" @click="closeBg2"></div>
         </div>
 
-
         <div class="bg-center10" v-if="contentShow == 'coin'" @click.stop="">
           <div>
             <div>
@@ -400,9 +399,9 @@
           </div>
         </div>
 
-        <div class="bg-center14" v-if="contentShow == 'receiveBi'" @click.stop="">
+        <div class="bg-center14" v-if="contentShow == 'receiveBi'" >
           <div class="center-bg" :style="centerStyle">
-            <div>
+            <div @click.stop="">
               <div class="top-high">
                 <div class="con-light">
                   <img src="http://res.catchme.com.cn/activity/task/con_light.png" alt="" @click.prevent=""/>
@@ -673,12 +672,12 @@
                   <img src="./../assets/movie/logo_taopiaopiao.png" alt="">
                   <div class="center">
                     <h4>{{item.name}}</h4>
-                    <p>{{item.remarks}}</p>
+                    <p>{{JSON.parse(item.remarks).description}}</p>
                     <p>有效期至：{{item.end_time | handleEndTime}}</p>
                   </div>
                   <div class="right">
-                    <span>5元</span>
-                    <div class="btn" @click="useCoupon(item.code,item.end_time,movie.voucher_batch.name,movie.voucher_batch.category,'movie')">兑换</div>
+                    <span>{{JSON.parse(item.remarks).price}}元</span>
+                    <div class="btn" @click="useCoupon(item.code,item.end_time,movie.voucher_batch.name,item.category)">兑换</div>
                   </div>
                 </li>
               </template>
@@ -702,14 +701,15 @@
 
         <div class="bg-center29" v-if="contentShow == 'movieticket'">
           <div>
-              <img class="imgBg" src="./../assets/movie/taopiaopiao.png" alt=""/>
+              <img v-if="couponInfo.category == 2" class="imgBg" src="http://res.catchme.com.cn/activity/movie/taopiaopiao.png" alt=""/>
+              <img v-if="couponInfo.category == 3" class="imgBg" src="http://res.catchme.com.cn/activity/movie/maoyan.png" alt="">
               <h3><span></span>电影优惠券兑换码<span></span></h3>
               <div class="scroll">
-                <span class="spanh3" id="copy2">12349u40d4120</span>
-                <p>有效期至：2018.12.31</p>
+                <span class="spanh3" id="copy2">{{couponInfo.code}}</span>
+                <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                 <button :data-clipboard-target="'#copy2'" @click="copy" class="btncopy" id="copyBtn2">复制兑换码</button>
               </div>
-              <a href="javascript:viod(0)">我的优惠券：2<i
+              <a href="javascript:void(0)" @click.stop="openTip('movieList')">我的优惠券：{{movies | handleActivityBounty}}<i
                 class="iconfont icon-shuangjiantouyou"></i></a>
             <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
                  @click="closeBg2"/>
@@ -721,17 +721,19 @@
           <div>
             <h3><span></span>我的电影优惠券<span></span></h3>
             <div class="movie-div">
-              <i  @click="playVideo" class="iconfont icon-bofang"></i>
-              <video id="videoId" src="http://www.runoob.com/try/demo_source/mov_bbb.mp4" playsinline="true" webkit-playsinline="true"  x5-playsinline="true"  raw-controls="true" preload="auto"  poster=""></video>
+              <i v-if="!isIos" @click="playVideo('videoId2')" class="iconfont icon-bofang"></i>
+              <video @play="lisrenerPlayVideo" @ended="endVideo" @timeupdate="timeUpdateVideo('videoId2')" id="videoId2" :src="movies[0].url" :controls="isIos" playsinline="true" webkit-playsinline="true"  x5-playsinline="true"   preload="auto"  :poster="movies[0].image"></video>
               <!--https://surmon-china.github.io/vue-quill-editor/static/images/surmon-1.jpg-->
             </div>
             <h4>您还没有优惠券</h4>
             <h4>看预告片可得</h4>
-            <p>5元购票优惠+5次免费娃娃机会</p>
-            <div class="btnfree" v-show="!videoIsPlay"><img class="arrow left" src="./../assets/movie/my_arrow_left.png" alt="">看预告片免费抓娃娃<img class="arrow right" src="./../assets/movie/my_arrow_right.png" alt=""></div>
-            <b v-show="!videoIsPlay" @click="showContent = true">不，我就要充值抓娃娃</b>
+            <p>{{movies[0].remark}}</p>
+            <div class="btnfree" v-show="!videoIsPlay" @click="playVideo('videoId2')"><img class="arrow left" src="./../assets/movie/my_arrow_left.png" alt="">看预告片免费抓娃娃<img class="arrow right" src="./../assets/movie/my_arrow_right.png" alt=""></div>
+            <b v-show="!videoIsPlay"  @click="closeBg2">不，我就要充值抓娃娃</b>
             <div v-show="videoIsPlay" class="btnfree btnreceive" @click="receiveMovie" :class="{'btnend':!videoIsEnd}">一键领取</div>
           </div>
+          <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+               @click="closeBg2"/>
         </div>
       </div>
 
@@ -743,13 +745,13 @@
         <!--<h3>《蜘蛛侠：平行宇宙》12月21日全网上映</h3>-->
         <h3>{{movieItem.title}}</h3>
           <div class="movie-div">
-            <i  @click="playVideo" class="iconfont icon-bofang"></i>
-              <video id="videoId" :src="movieItem.url" playsinline="true" webkit-playsinline="true"   x5-playsinline="true"  raw-controls="true" preload="auto"  poster=""></video>
+            <i v-if="!isIos" @click="playVideo('videoId')" class="iconfont icon-bofang"></i>
+              <video @play="lisrenerPlayVideo" @pause="afterPause = true"  @ended="endVideo" @timeupdate="timeUpdateVideo('videoId')" id="videoId" :src="movieItem.url" playsinline="true" webkit-playsinline="true" :controls="isIos"  x5-playsinline="true"   preload="auto"  :poster="movieItem.image"></video>
             <!--https://surmon-china.github.io/vue-quill-editor/static/images/surmon-1.jpg-->
           </div>
           <!--<p>5元购票优惠+5次免费娃娃机会</p>-->
           <p>{{movieItem.remark}}</p>
-          <div class="btnfree" v-show="!videoIsPlay" @click="playVideo"><img class="arrow left" src="./../assets/movie/arrow_left.png" alt="">看预告片免费抓娃娃<img class="arrow right" src="./../assets/movie/arrow_right.png" alt=""></div>
+          <div class="btnfree" v-show="!videoIsPlay" @click="playVideo('videoId')"><img class="arrow left" src="./../assets/movie/arrow_left.png" alt="">看预告片免费抓娃娃<img class="arrow right" src="./../assets/movie/arrow_right.png" alt=""></div>
           <div v-show="videoIsPlay" class="btnfree btnreceive" @click="receiveMovie" :class="{'btnend':!videoIsEnd}">一键领取</div>
           <b v-show="!videoIsPlay" @click="showContent = true">不，我就要充值抓娃娃</b>
         <img v-if="!version2" class="roll" src="./../assets/movie/roll.png" alt="">
@@ -760,7 +762,7 @@
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
-    <guide v-if="isShowGuide && isAfterRed && info.online ===1 &&( activity_bounty.length>0 || (gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num))"></guide>
+    <guide v-if="isShowGuide && isAfterRed && showContent && info.online ===1 &&( activity_bounty.length>0 || (gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num))"></guide>
     <guide2 v-if="isShowGuide2" @closeGuide2="closeGuide2"></guide2>
   </div>
 </template>
@@ -800,8 +802,8 @@
         maskShow: false,
         isShow: '',
         showHtml: true,
-        bgShow: true,
-        contentShow: 'movie',
+        bgShow: false,
+        contentShow: '',
         contentShowAfter:'',
         currentCoupon: {},
         pay: {},
@@ -814,7 +816,8 @@
         couponInfo: {
           code: '',
           end_time: '',
-          name: ''
+          name: '',
+          category:0
         },
         freeTipImg: '',
         freeTip:'666',
@@ -874,12 +877,14 @@
         isShowBaomihuaList:false,
         codeWidth:2,
         codeHeight:45,
-        movieItem:{},
-        showContent:false,
-        videoIsPlay:false,
-        videoIsEnd:false,
-        isShowCoinAnimate:false,
-        movieCoinNum:2
+        movieItem:{},//当前可完成的视频运营位
+        showContent:false,//是否显示充钱的界面
+        videoIsPlay:false,//视屏是否播放
+        videoIsEnd:false,//视屏是否播放完
+        isShowCoinAnimate:false,//是否显示看视频领取物品的动画效果
+        movieCoinNum:2,//看视屏领取的币的个数
+        currentTime:0,//视屏当前播放的时间
+        afterPause:false
       }
     },
     created() {
@@ -981,9 +986,9 @@
         this.Indicator.close();
         this.showHtml = true;
         this.isGetImg = true;
-//        if (res.online === 0) {
-//          this.$store.commit('changeTipContent', getErrMsg(1001));
-//        }
+        if (res.online === 0) {
+          this.$store.commit('changeTipContent', getErrMsg(1001));
+        }
       })
 //      this.$store.dispatch('getUser')
     },
@@ -1001,6 +1006,8 @@
                 //执行动画
                 this.isShowCoinAnimate = false;
               },2000)
+              //重新获取运营位
+              this.$store.dispatch('getOperations')
             });
           })
         }
@@ -1009,24 +1016,50 @@
         this.movieItem = {}
       },
       openMovie(item){
-        console.log(item)
+        this.showContent = false;
         this.movieItem = item;
       },
-      playVideo(){
+      playVideo(id){
+        var v = document.querySelector('#'+id)
+        v.play();
+      },
+      timeUpdateVideo(id){
+        var v = document.querySelector('#'+id)
+        if(v.currentTime - this.currentTime > 1){
+          v.currentTime = this.currentTime
+        }else {
+          this.currentTime = v.currentTime
+        }
+        console.log(v.currentTime)
+      },
+      endVideo(){
+        //这里需要将领取按钮变为可点击
+        this.videoIsEnd = true;
+        var i = document.querySelector('.icon-bofang');
+        if(i){
+          i.style.display = 'block';
+        }
+        this.afterPause = false;
+      },
+      lisrenerPlayVideo(){
         this.videoIsPlay = true;
 //        this.videoIsEnd = false;
         var i = document.querySelector('.icon-bofang')
-        var v = document.querySelector('#videoId')
-        i.style.display = 'none'
-        v.play();
-        v.addEventListener("ended",()=>{
-          console.log('视频播放结束')
-          //这里需要将领取按钮变为可点击
-          this.videoIsEnd = true;
-          var i = document.querySelector('.icon-bofang')
-          i.style.display = 'block'
-        },false)
-        this.$store.dispatch('sendVideoStatusAction',{operation_id:this.movieItem.id,progress:1})
+        if(i){
+          i.style.display = 'none'
+        }
+//        var v = document.querySelector('#videoId')
+//        v.addEventListener("timeupdate",()=>{
+//
+//        })
+//        v.addEventListener("ended",()=>{
+//
+////          var i = document.querySelector('.icon-bofang')
+////          i.style.display = 'block'
+//        },false)
+        if(!this.afterPause){
+          this.$store.dispatch('sendVideoStatusAction',{operation_id:this.movieItem.id,progress:1})
+        }
       },
       downloadArtifact(){
         this.$refs.task.useArtifact()
@@ -1154,9 +1187,6 @@
           this.gzhCodeStyle = 'visibility: visible'
           this.isShowGzhButtton = false
         },100)
-//        setTimeout(()=>{
-//          this.isShowGzhButtton = false
-//        },400)
         this.timeout1 = setTimeout(()=>{
           this.gzhCodeStyle = 'visibility: hidden'
           this.isShowGzhButtton = true
@@ -1235,22 +1265,6 @@
       },
       handleRed(value, item) {
         _hmt.push(['_trackEvent', '点击娃娃', '点击', '点击娃娃', '']);
-//        if (flag) {
-//          this.$store.dispatch('getActivityBountyStatus',item.id).then((res2)=>{
-//            if(res2.can_exchange){
-//              this.receiveGift(item)
-//            }else {
-//              //这里弹出让用户玩完所有的游戏币提示
-//              this.bgShow = true;
-//              this.contentShow = 'jieshi';
-//              _hmt.push(['_trackEvent', '弹出解释弹出', '点击', '币没玩完弹出', '']);
-//
-//            }
-//          })
-////        this.receiveGift(item)
-//        } else {
-//          this.couponList()
-//        }
         //在每次领取之前，我需要先同步一次任务值，判断是否满足可以领取的
         var prize_bounty = localStorage.getItem('prize_bounty')
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
@@ -1284,12 +1298,6 @@
         this.currentGift = gift;
         console.log(gift);
         this.openTip('receive');
-
-//        if(gift.voucher_batch.category === 0){
-//          this.openTip('receive2');
-//        }else {
-//          this.openTip('receive');
-//        }
       },
       couponList() {
         var len = this.activity_bounty.length;
@@ -1307,13 +1315,13 @@
       receiveBiSuccess() {
         this.bgShow = true;
         this.contentShow = 'receiveBi';
-        setTimeout(() => {
-          this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
-        }, 0)
+//        setTimeout(() => {
+//          this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
+//        }, 0)
         setTimeout(() => {
           this.bgShow = false;
           this.contentShow = '';
-          this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
+//          this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
         }, 1500)
       },
       changeTaskGameProgress() {
@@ -1364,14 +1372,17 @@
               this.codeWidth = 1.8;
             }
             this.contentShow = 'baomihua';
-          }else if(type === 'movie'){
-            this.contentShow = 'movieticket';
           }else {
             this.contentShow = 'exchange3';
           }
-        } else {
+        } else if(category ===2 ){
+          this.contentShow = 'movieticket';
+        }else if(category === 3){
+          this.contentShow = 'movieticket';
+        }else {
           this.contentShow = 'exchange2';
         }
+        this.couponInfo.category = category
         this.couponInfo.name = name;
         this.couponInfo.code = code;
         this.couponInfo.end_time = end_time;
@@ -1404,7 +1415,11 @@
         })
       },
       closeBg2() {
-        this.bgShow = false
+        if(this.contentShow === 'movie'){
+          var v = document.querySelector('#videoId2')
+          v.pause()
+        }
+        this.bgShow = false;
       },
       openTip(value, value2 = '',value3 = '') {
         if (value === 'shuoming') {
@@ -1427,6 +1442,18 @@
         if(value === 'baomihua'){
           this.couponInfo.name = this.dalibao[this.dalibaoIndex].vouchers[0].name
           this.couponInfo.end_time = this.dalibao[this.dalibaoIndex].vouchers[0].end_time
+        }
+        if(value === 'movieList'){
+          var hasMovieTicket = false;
+          for(var i=0;i<this.movies.length;i++){
+            if(this.movies[i].vouchers.length > 0){
+              hasMovieTicket = true;
+              break;
+            }
+          }
+          if(!hasMovieTicket){
+            value = 'movie'
+          }
         }
         this.freeTipImg = value2;
         this.freeTip = value3;
@@ -1616,11 +1643,16 @@
     },
     watch: {
       movies(newValue,oldValue){
-        if((oldValue.length === 0) && (newValue[0].task_count < newValue[0].num)){
+        if(newValue[0].task_count < newValue[0].num){
           this.movieItem = newValue[0];
         }else {
           this.showContent = true;
         }
+//        if((oldValue.length === 0) && (newValue[0].task_count < newValue[0].num)){
+//          this.movieItem = newValue[0];
+//        }else {
+//          this.showContent = true;
+//        }
       },
       dalibao(newValue,oldValue){
         for(var item of newValue){
@@ -1818,8 +1850,7 @@
     position: fixed;
     left: 0;
     bottom:0;
-    z-index: 888;
-    background:#fcfbfa url(./../assets/movie/bg_suihua.png);
+    background:#fcfbfa url('http://res.catchme.com.cn/activity/movie/bg_suihua.png');
     background-size: 100% 100%;
     border-radius: 30px 30px 0 0;
     .yugao{
@@ -1871,7 +1902,7 @@
       top:284px;
       left: 0;
       .icon-bofang{
-        /*color: #fff;*/
+        color: #fff;
         font-size: 100px;
         @include center;
         z-index: 2;
@@ -2640,30 +2671,41 @@
   }
 
   .bg-center14 {
+    width: 100%;
+    height: 100%;
     .center-bg {
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.3);
-      /*background: red;*/
-      position: absolute;
-      z-index: 999;
-      clip-path: circle(65px at 580px 660px);
-      filter: none;
+      /*position: absolute;*/
+      /*left: 0;*/
+      /*top:0;*/
+      /*z-index: 999;*/
+      /*clip-path: circle(65px at 580px 660px);*/
+      /*clip-path:circle(100vh at 50vw 50vh);*/
+      /*filter: none;*/
       /*transition: opacity,clip-path 0.5s;*/
       transition: all 1s;
-      opacity: 0;
+      /*opacity: 0;*/
       /*display: none;*/
-      pointer-events: none;
+      /*pointer-events: none;*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
       > div {
         /*background: red;*/
-        @include center;
+//        @include center;
+        position: relative;
         .top-high {
+          /*background: pink;*/
           width: 660px;
           height: 856px;
           /*background: red;*/
+          /*margin: 0 auto;*/
           padding: 0.1px;
           .top-high-bg {
             width: 674px;
+            //margin: -475px 0 0 0;
             position: absolute;
             left: 0;
             top: 0;
@@ -2686,7 +2728,8 @@
             width: 100%;
             left: 0;
             top: 240px;
-            text-align: center;
+            /*text-align: center;*/
+            //margin: -380px 0 0 0;
           }
         }
       }
@@ -3449,7 +3492,7 @@
     >div{
       width: 640px;
       height: 930px;
-      background: #f1f1f1 url("./../assets/movie/bg_suihua.png");
+      background: #f1f1f1 url("http://res.catchme.com.cn/activity/movie/bg_suihua.png");
       background-size: 100% 100%;
       border-radius: 20px;
       padding: 0.1px;
@@ -3630,7 +3673,7 @@
     >div{
       width: 640px;
       height: 930px;
-      background:#f1f1f1 url("./../assets/movie/bg_suihua.png");
+      background:#f1f1f1 url("http://res.catchme.com.cn/activity/movie/bg_suihua.png");
       background-size: 100% 100%;
       border-radius: 20px;
       >h3{
@@ -3663,7 +3706,7 @@
         top:106px;
         left: 0;
         .icon-bofang{
-          /*color: #fff;*/
+          color: #fff;
           font-size: 100px;
           @include center;
           z-index: 2;
@@ -4107,7 +4150,7 @@
     position: absolute;
     right:-10px;
     top:-10px;
-    font-size: 40px;
+    font-size: 50px;
     color: #000;
     animation-duration:2.5s;
   }
@@ -4132,7 +4175,7 @@
     line-height: 66px;
     display: inline-block;
     /*background: url("http://res.catchme.com.cn/imgs-2018-04-10/icon_portrait_bi.png") no-repeat;*/
-    background: url("./../assets/small/icon_portrait_bi.png") no-repeat;
+    background: url("./../assets/movie/icon_portrait_bi.png") no-repeat;
     background-size: 100% 100%;
     font-size: 0;
   }
@@ -4477,7 +4520,7 @@
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg {
     width: 92px;
     height: 92px;
-    background: url("./../assets/task-2/progress_doll_bg.png") no-repeat;
+    background:url("./../assets/task-2/progress_doll_bg.png") no-repeat;
     /*background: red;*/
     background-size: 100% 100%;
     position: relative;
@@ -4512,21 +4555,25 @@
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .last {
   //  right: -40px;
-    right: -105px;
-    top:55px!important;
+    //right: -140px!important;
+    position: absolute;
+    text-align: center;
+    left: 0;
+    top:50px!important;
   }
 
-  .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .nolast {
+  //.main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .nolast {
     //left: -40px;
-    left: -105px;
-  }
+ //   left: -105px;
+  //}
 
-  .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-content {
+  .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-content:not(.last) {
     /*width:160px;*/
     /*height: 70px;*/
     /*background: blue;*/
     position: absolute;
     text-align: center;
+    right: 0;
     top: -24px;
   }
 
@@ -4539,6 +4586,7 @@
     background: #f76058;
     display: inline-block;
     border-radius: 12px;
+    white-space: nowrap;
     overflow: hidden;
     /*position: absolute;
     right: -40px;
@@ -4552,7 +4600,7 @@
     line-height: 18px;
     font-size: 18px;
     color: #888888;
-    margin: 0 14px 4px 0;
+    /*margin: 0 14px 4px 0;*/
     float: right;
     /*position: absolute;*/
     /*left: 5px;*/

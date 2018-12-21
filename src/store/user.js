@@ -455,6 +455,7 @@ const actions = {
               completeOpe.push(res[i])
               moviesComplete.push(res[i])
             }else {
+              ctx.commit('setGzhOperationOther',res[i]);
               undoneOpe.push(res[i])
               moviesUndone.push(res[i])
             }

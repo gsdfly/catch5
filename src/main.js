@@ -117,7 +117,17 @@ FastClick.attach(document.body)
     || document.body.clientHeight;
   if (clientWidth / clientHeight <= 0.6) {
     Vue.prototype.version2 = true;
+  }else {
+    Vue.prototype.version2 = false;
   }
+
+  Vue.prototype.isIos = false;
+  var u = navigator.userAgent
+  var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+  if(isIOS && window.history.length > 1){
+    Vue.prototype.isIos = true
+  }
+
   Vue.prototype.Indicator = Indicator
 
   var unionid = getParamByName('unionid')
