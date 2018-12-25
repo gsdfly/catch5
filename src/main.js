@@ -9,6 +9,10 @@ import 'mint-ui/lib/style.css'
 import Indicator from 'mint-ui/lib/indicator'
 import api from './api'
 import {getParamByName, SetCookie} from "./util/index";
+import './assets/fonts/font.css'
+// import VideoPlayer from 'vue-video-player'
+
+// Vue.use(VideoPlayer)
 
 if (document.URL.indexOf('5zhua') !== -1){
   require('./util/vconsole')
@@ -16,7 +20,6 @@ if (document.URL.indexOf('5zhua') !== -1){
 FastClick.attach(document.body)
 
 !async function () {
-
   try {
     if (CONFIG.site_version_id === 0) {
       var result = await api.getVersion({machine_no: CONFIG.machine_no});
@@ -81,7 +84,6 @@ FastClick.attach(document.body)
         }
       }
     } else {
-      console.log('1111111111')
       api.machineLogin({machine_no: CONFIG.machine_no, token: CONFIG.token});
       store.commit('changeIsLogin');
       store.dispatch('getUser');
@@ -122,9 +124,9 @@ FastClick.attach(document.body)
   }
 
   Vue.prototype.isIos = false;
-  var u = navigator.userAgent
+  var u = navigator.userAgent;
   var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-  if(isIOS && window.history.length > 1){
+  if(isIOS){
     Vue.prototype.isIos = true
   }
 

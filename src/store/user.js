@@ -466,6 +466,9 @@ const actions = {
         if(movies.length>0){
           ctx.commit('setMovies',movies)
         }
+        else {
+          ctx.commit('setMovies',[{task_count:0,num:0}])  //没有电影运营位时给个模拟数据让页面正常显示
+        }
 
         if(dalibao.length>0){
           ctx.commit('setDalibao',dalibao)
@@ -473,7 +476,7 @@ const actions = {
 
         //每次改变一个运营位之后需要重新获取运营位的状态，在这里对operationsList做处理，只截取3个，
         var task_opes = undoneOpe.concat(completeOpe);
-        ctx.commit('setTaskOpes',task_opes)
+        ctx.commit('setTaskOpes',task_opes);
 
         // if(undoneOpe.length<3){
         //   ctx.commit('setTaskOpes',undoneOpe.concat(completeOpe))
@@ -613,7 +616,7 @@ const actions = {
   //视频活动
   sendVideoStatusAction:function (ctx,params) {
     return new Promise((success,error)=>{
-      api.sendVideoStatus({token:CONFIG.token,operation_id:params.operation_id,progress:params.progress}).then((data)=>{
+      api.sendVideoStatus({token:CONFIG.token,machine_no:ctx.state.machine_no,operation_id:params.operation_id,progress:params.progress}).then((data)=>{
         success(data.data)
       }).catch((err)=>{
         error(err)

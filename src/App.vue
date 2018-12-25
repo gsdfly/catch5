@@ -14,7 +14,7 @@ export default {
 <style>
 @import url(//at.alicdn.com/t/font_316150_nmzks0hbfba10pb9.css);
 @import url(//at.alicdn.com/t/font_385880_4atfrqgddec.css);
-
+@import "./assets/fonts/font.css";
 
 html{
   font-size: 40px;
@@ -62,4 +62,5 @@ ul,li,dl{
     padding: 0;
     outline: none;
   }
+
 </style>
