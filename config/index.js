@@ -4,9 +4,9 @@ var path = require('path')
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../dist/xmas.html'),
+    index: path.resolve(__dirname, '../dist/yuandan.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'xmas',
+    assetsSubDirectory: 'yuandan',
     assetsPublicPath: './',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as

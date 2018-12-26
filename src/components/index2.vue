@@ -3,12 +3,7 @@
     <div class="jo-index-div" v-show="showHtml" @click="hideKefu">
       <div v-if="isGetImg" v-show="false">
         <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png" alt="">
-        <!--<img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="">-->
-        <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="">-->
-        <img src="http://res.catchme.com.cn/activity/xmas/product.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/xmas/windows_bg.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/xmas/credit.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/xmas/congratulate_bg.png" alt="">
+        <img src="http://res.catchme.com.cn/activity/yuandan/shuoming.png" alt="">
       </div>
       <div class="header">
         <div>
@@ -47,7 +42,7 @@
                 </div>
                 <div class="kefu2-left" @click="hideKefu">
                   <!--<img src="http://res.catchme.com.cn/imgs-2018-04-10/icon_close1.png" alt="">-->
-                  <img src="./../assets/xmas/page/icon_close.png" alt="">
+                  <img src="./../assets/yuandan/icon_close1.png" alt="">
                 </div>
               </div>
             </div>
@@ -66,7 +61,7 @@
         <!--<div class="main-center">-->
           <div class="centerout">
             <div class="center">
-              <img class="sock" @click="myCards" src="./../assets/xmas/page/sock.png" alt=""/>
+              <img class="sock" @click="myCards" src="./../assets/yuandan/lantern.png" alt=""/>
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
               <div v-if="isShowBaomihuaList" class="my_ticket" @click="openTip('baomihuaList')">
                 <img src="./../assets/dalibao/my_ticket.png" alt=""/>
@@ -129,7 +124,7 @@
                 </div>
                 <i id="coin_add" class="jiahao"  @click="handlerGameNum('+')" :class="{
                      'active': ((gameNum + 1) * info.coin_num) > user.coins
-                 }"><img src="./../assets/xmas/page/add.png" alt=""><div @click.stop="openTip('xmastip')">一次投6币，得卡牌哦~</div></i>
+                 }"><img src="./../assets/yuandan/add.png" alt=""><div @click.stop="openTip('xmastip')">一次投<span>6币</span>，得卡牌哦~</div></i>
               </div>
               <img @click.prevent="" v-if="start_desc=='投币中'" class="tbz" src="../assets/small/tbz.gif" alt="">
               <img @click.prevent="" v-if="is_lamp_after && start_desc=='投币启动'" class="tbz"
@@ -241,7 +236,7 @@
         <div class="bg-center8" v-if="contentShow == 'notExchange'" @click.stop="">
           <div>
             <div>
-              <h3 class="tipTitle"><span></span><b>我的兑换券</b></h3>
+              <h3>我的兑换券</h3>
               <img src="./../assets/catch3/image_nothing.png" alt="" class="imgBg" @click.prevent="">
               <p>暂时没有兑换券哦</p>
               <p>集齐卡片，奖励自己一根Dior口红吧</p>
@@ -262,13 +257,14 @@
         <div class="bg-center9" v-if="contentShow == 'exchange2'" style="width: 100%;height: 100%">
           <div class="bg-center9-center">
             <div>
-              <h3 class="tipTitle"><span></span><b>{{couponInfo.name}}</b></h3>
+              <h3>{{couponInfo.name}}</h3>
+              <!--<h3 class="tipTitle"><span></span><b>{{couponInfo.name}}</b></h3>-->
               <div class="scroll">
                 <span class="spanh3" id="copy">{{couponInfo.code}}</span>
                 <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                 <div :data-clipboard-target="'#copy'" @click="copy" class="btncopy" id="copyBtn">复制</div>
               </div>
-              <img src="http://res.catchme.com.cn/activity/xmas/credit.png" alt="" @click.prevent=""
+              <img src="http://res.catchme.com.cn/activity/yuandan/shuoming.png" alt="" @click.prevent=""
                    class="imgBg"/>
               <!--<img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="" @click.prevent=""-->
                    <!--class="imgBg"/>-->
@@ -365,7 +361,8 @@
         <div class="bg-center12" v-if="contentShow == 'couponList'" @click.stop="">
           <div>
             <div>
-              <h3 class="tipTitle"><span></span><b>我的兑换券</b></h3>
+              <h3>我的兑换券</h3>
+              <!--<h3 class="tipTitle"><span></span><b>我的兑换券</b></h3>-->
               <ul>
                   <li v-for="item in records">
                     <div>
@@ -412,8 +409,8 @@
 
         <div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">
           <div>
-            <img @click.prevent="" src="http://res.catchme.com.cn/activity/xmas/image_free.png" alt="" class="imgBg"/>
-            <img class="btn" src="./../assets/xmas/page/press_continue.png"  v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2" />
+            <img @click.prevent="" src="http://res.catchme.com.cn/activity/yuandan/image_free.png" alt="" class="imgBg"/>
+            <img class="btn" src="./../assets/yuandan/press_w.png"  v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2" />
             <!--<img class="qrcode" src="./../assets/guide/code.png"  v-show="isShowGzhImg" alt=""/>-->
             <p>关注公众号回复“<span>{{freeTip}}</span>”即可领免费币</p>
             <img :style="gzhCodeStyle" @click.prevent="" :src="freeTipImg" alt="" class="qrcode"/>
@@ -440,24 +437,33 @@
         </div>
 
         <div class="bg-center15" v-if="contentShow == 'taskGameTip'" @click.stop="">
-          <img class="title" src="./../assets/xmas/toub.png" alt="">
-          <img class="imgBi" src="./../assets/xmas/test_window_bi.png" alt="">
-          <div class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">
-            <!--<div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>-->
-            <span
-              class="game-num"><b>{{task_now.game_bounty / info.coin_num}}/</b>{{task_game.value / info.coin_num}}</span>
-        </div>
-          <p>加油哦</p>
-          <p>在玩{{task_game.value / info.coin_num - task_now.game_bounty / info.coin_num}}次就可以得到免费游戏币了!</p>
-          <div class="btn" @click="closeBg">去抓娃娃</div>
+          <div>
+            <img class="title" src="./../assets/yuandan/toub.png" alt="">
+            <img class="imgBi" src="./../assets/yuandan/test_window_bi.png" alt="">
+            <div class="water" v-if="task_game.task_count < task_game.num && task_now.game_bounty<task_game.value">
+              <!--<div class="bol" :style="'height:'+task_now.game_bounty/task_game.value*100+'%'"></div>-->
+              <span
+                class="game-num"><b>{{task_now.game_bounty / info.coin_num}}/</b>{{task_game.value / info.coin_num}}</span>
+            </div>
+            <p>加油哦</p>
+            <p>在玩{{task_game.value / info.coin_num - task_now.game_bounty / info.coin_num}}次就可以得到免费游戏币了!</p>
+            <div class="btn" @click="closeBg">去抓娃娃</div>
+          </div>
+          <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+               @click="closeBg"/>
         </div>
 
         <div class="bg-center15" v-if="contentShow == 'taskWawaTip'" @click.stop="">
-          <img class="title" src="./../assets/xmas/zhuaz.png" alt="">
-          <img class="img1" src="http://res.catchme.com.cn/activity/xmas/window_free_c.png" alt=""/>
-          <img class="imgBi" src="./../assets/xmas/test_window_bi.png" alt="">
-          <p class="es">说不定下一把就中了呢~</p>
-          <div class="btn" @click="closeBg">去抓娃娃</div>
+          <div>
+            <img class="title" src="./../assets/yuandan/zhuaz.png" alt="">
+            <img class="img1" src="http://res.catchme.com.cn/activity/yuandan/window_free_c.png" alt=""/>
+            <img class="imgBi" src="./../assets/yuandan/test_window_bi.png" alt="">
+            <p class="es">梦想总是要有的，</p>
+            <p>说不定下一把就中了呢~</p>
+            <div class="btn" @click="closeBg">去抓娃娃</div>
+          </div>
+          <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+               @click="closeBg"/>
         </div>
 
         <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="">
@@ -691,39 +697,14 @@
 
         <div class="bg-center28" v-if="contentShow == 'xmas2'" @click.stop="">
           <div>
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/windows_bg.png" alt=""/>
-            <h3>圣诞狂欢·狂送Dior口红</h3>
+            <img class="imgBg" src="./../assets/yuandan/windows_bg.png" alt=""/>
+            <h3>元旦狂欢·狂送Dior口红</h3>
             <img class="product" src="http://res.catchme.com.cn/activity/xmas/product.png" alt=""/>
             <a href="javascript:void(0)" @click="goCouponList">我的兑换券</a>
-            <!--<div class="cardslist">-->
-              <!--<div class="cards">-->
-                <!--<ul>-->
-                  <!--<li><b></b><span>10</span></li><li><b>抓</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>机</b><span>1</span></li>-->
-                <!--</ul>-->
-                <!--<p>集齐“我抓娃娃机”得Dior口红一支</p>-->
-                <!--<div class="button">兑换</div>-->
-              <!--</div>-->
-              <!--<div class="cards">-->
-                <!--<ul>-->
-                  <!--<li><b>我</b><span>10</span></li><li><b>抓</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>娃</b><span>1</span></li><li><b>机</b><span>1</span></li>-->
-                <!--</ul>-->
-                <!--<p>集齐“我抓娃娃机”得Dior口红一支</p>-->
-                <!--<div class="button">兑换</div>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="cardslist">-->
-              <!--<div class="cards" v-for="item in xmasGroup" v-if="xmasGroup.length>0">-->
-                <!--<ul>-->
-                  <!--<li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}">{{card.key}}</b><span v-if="card.total">{{card.total}}</span></li>-->
-                <!--</ul>-->
-                <!--<p>{{item.title}}</p>-->
-                <!--<div class="button" :class="{'isExchange':item.isExchange}" @click="cardExchangeCoupon(item.pivot.card_group_id,item.isExchange)">兑换</div>-->
-              <!--</div>-->
-            <!--</div>-->
             <div class="cardslist">
               <div class="cards" v-for="item in xmasGroup" v-if="xmasGroup.length>0">
                 <ul>
-                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}"><img v-if="card.total" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'2.png'" alt=""><img v-else="" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'1.png'" alt="">
+                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}"><img v-if="card.total" :src="'http://res.catchme.com.cn/activity/yuandan/word/'+card.key+'2.png'" alt=""><img v-else="" :src="'http://res.catchme.com.cn/activity/yuandan/word/'+card.key+'1.png'" alt="">
                   </b><span v-if="card.total">{{card.total}}</span></li>
                 </ul>
                 <p>{{item.title}}</p>
@@ -738,7 +719,7 @@
 
         <div class="bg-center28" v-if="contentShow == 'xmas'" @click.stop="" :class="{'full':!isReceiveCards}">
           <div>
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/congratulate_bg.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/yuandan/congratulate_bg.png" alt=""/>
             <h3 class="es"  v-if="currentCard[currentCardIndex].type == 'coin'">恭喜您获得免费游戏币</h3>
             <h3 class="es"  v-else>恭喜您获得卡牌{{cardnum}}张</h3>
             <!--<div class="word">-->
@@ -748,13 +729,13 @@
             <!--</div>-->
             <div class="word">
               <span v-if="currentCard.length>1" class="left" @click="preCard"></span>
-              <div class="p" v-if="currentCard[currentCardIndex].type=='card'"><div><img :src="'http://res.catchme.com.cn/activity/xmas/word/'+currentCard[currentCardIndex].value.key+'3.png'" alt=""></div></div>
-              <div class="p" v-else=""><div><img src="http://res.catchme.com.cn/activity/xmas/word/tow.png" alt=""></div></div><span class="right" v-if="currentCard.length>1" @click="nextCard"></span>
+              <div class="p" v-if="currentCard[currentCardIndex].type=='card'"><div><img :src="'http://res.catchme.com.cn/activity/yuandan/word/'+currentCard[currentCardIndex].value.key+'3.png'" alt=""></div></div>
+              <div class="p" v-else=""><div><img src="http://res.catchme.com.cn/activity/yuandan/word/two.png" alt=""></div></div><span class="right" v-if="currentCard.length>1" @click="nextCard"></span>
             </div>
             <div class="cardslist es">
               <div class="cards" v-for="item in xmasGroup">
                 <ul>
-                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}"><img v-if="card.total" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'2.png'" alt=""><img v-else="" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'1.png'" alt="">
+                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}"><img v-if="card.total" :src="'http://res.catchme.com.cn/activity/yuandan/word/'+card.key+'2.png'" alt=""><img v-else="" :src="'http://res.catchme.com.cn/activity/yuandan/word/'+card.key+'1.png'" alt="">
                   </b><span v-if="card.total"  class="animated" :class="{'flash':card.animate && isAnimate}">{{card.total}}</span><em v-for="current in currentCard" v-if="current.value.key == card.key"></em></li>
                 </ul>
                 <!--<ul>-->
@@ -773,25 +754,28 @@
             </div>
             <div class="btn" v-if="currentCard[currentCardIndex].type == 'card' && !isReceiveCards" @click="receiveCards">收下</div>
             <div class="btn" v-if="currentCard[currentCardIndex].type == 'coin'" @click="receiveCoins">领取</div>
-            <img v-if="isReceiveCards" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
+            <div v-if="isReceiveCards" class="closediv" @click="closeBg">
+              <img v-if="isReceiveCards" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"/>
+            </div>
+            <!--<img v-if="isReceiveCards" src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"-->
+                 <!--@click="closeBg"/>-->
           </div>
         </div>
 
         <div class="bg-center28 bg-center28-es" v-if="contentShow == 'xmases'" @click.stop="" :class="{'full':!isReceiveCards}">
           <div>
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/word/congratulate_bg_es.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/yuandan/congratulate_bg_ios1334.png" alt=""/>
             <h3 class="es"  v-if="currentCard[currentCardIndex].type == 'coin'">恭喜您获得免费游戏币</h3>
             <h3 class="es"  v-else>恭喜您获得卡牌{{cardnum}}张</h3>
             <div class="word">
               <span v-if="currentCard.length>1" class="left" @click="preCard"></span>
-              <div class="p" v-if="currentCard[currentCardIndex].type=='card'"><div><img :src="'http://res.catchme.com.cn/activity/xmas/word/'+currentCard[currentCardIndex].value.key+'3.png'" alt=""></div></div>
-              <div class="p" v-else=""><div><img src="http://res.catchme.com.cn/activity/xmas/word/tow.png" alt=""></div></div><span class="right" v-if="currentCard.length>1" @click="nextCard"></span>
+              <div class="p" v-if="currentCard[currentCardIndex].type=='card'"><div><img :src="'http://res.catchme.com.cn/activity/yuandan/word/'+currentCard[currentCardIndex].value.key+'3.png'" alt=""></div></div>
+              <div class="p" v-else=""><div><img src="http://res.catchme.com.cn/activity/yuandan/word/two.png" alt=""></div></div><span class="right" v-if="currentCard.length>1" @click="nextCard"></span>
             </div>
             <div class="cardslist es">
               <div class="cards" v-for="item in xmasGroup">
                 <ul>
-                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}"><img v-if="card.total" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'2.png'" alt=""><img v-else="" :src="'http://res.catchme.com.cn/activity/xmas/word/'+card.key+'1.png'" alt="">
+                  <li v-for="card in item.cards"><b :class="{'hastotal':card.total > 0}"><img v-if="card.total" :src="'http://res.catchme.com.cn/activity/yuandan/word/'+card.key+'2.png'" alt=""><img v-else="" :src="'http://res.catchme.com.cn/activity/yuandan/word/'+card.key+'1.png'" alt="">
                   </b><span v-if="card.total"  class="animated" :class="{'flash':card.animate && isAnimate}">{{card.total}}</span><em v-for="current in currentCard" v-if="current.value.key == card.key"></em></li>
                 </ul>
                 <p>{{item.title}}</p>
@@ -805,13 +789,12 @@
           </div>
         </div>
 
-
         <div class="bg-center29" v-if="contentShow == 'xmastip'" @click.stop="">
           <div>
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/notification.png" alt=""/>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/yuandan/notification.png" alt=""/>
             <div class="content">
               <p>集齐“集卡送口红”得<span>Dior口红</span>一支</p>
-              <p>集齐“圣诞狂欢”得电暖袋一个</p>
+              <p>集齐“元旦狂欢”得电暖袋一个</p>
               <p>充值后，一次性投6个币得卡牌或免费游戏币</p>
             </div>
             <div class="game">
@@ -825,13 +808,13 @@
 
         <div class="bg-center29" v-if="contentShow == 'xmasrule'"  @click.stop="">
           <div>
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/xmas/windows_bg.png" alt=""/>
+            <img class="imgBg" src="./../assets/yuandan/windows_bg.png" alt=""/>
             <h3>活动规则</h3>
             <div class="rulecontent">
               <p>1.一次性投6币，可获得随机卡牌一张。一次性投12币可获得随机卡牌两张，以此类推。</p>
               <p>2.集齐“集卡送口红”五张卡牌即可到商城兑换Dior口红一支</p>
-              <p>3.集齐“圣诞狂欢”四个字即可到商城兑换电暖袋一个。</p>
-              <p>4.活动时间：2018年12月21日 00:00--2018年12月25日23:59。</p>
+              <p>3.集齐“元旦狂欢”四个字即可到商城兑换电暖袋一个。</p>
+              <p>4.活动时间：2018年12月30日 00:00--2019年1月1日23:59。</p>
               <p>5.最终活动解释权归本公司所有。</p>
             </div>
             <div class="back" @click="goPre"><i></i>返回</div>
@@ -2066,7 +2049,7 @@
         height: 143px;
         padding: 4px;
         margin: 0 auto;
-        background-color: #17b54d;
+        background-color: #ec392d;
         /*background: #fff;*/
         border-radius: 4px;
         img {
@@ -2085,7 +2068,7 @@
         font-size: 22px;
         text-align: center;
         a {
-          color: #17b54d;
+          color: #ec392d;
         }
         span {
           display: inline-block;
@@ -2118,9 +2101,10 @@
     > div {
       @include center;
       > div {
-        width: 659px;
-        height: 932px;
-        background: url('http://res.catchme.com.cn/activity/xmas/windows_bg.png');
+        width: 640px;
+        height: 921px;
+        /*background: url('http://res.catchme.com.cn/activity/xmas/windows_bg.png');*/
+        background: url("./../assets/yuandan/windows_bg.png");
         background-size: 100% 100%;
         padding: 0.1px;
         /*width: 100%;
@@ -2129,6 +2113,12 @@
         border-radius: 20px;
         padding: 34px 0 0 0;
         */
+        >h3{
+          font-size: 30px;
+          line-height: 30px;
+          color: #f2d18e;
+          margin: 51px 0 0 0;
+        }
         .tipTitle{
           width: 575px;
           margin: 73px auto 0 auto;
@@ -2231,7 +2221,7 @@
       transform: translate(-50%, -50%);
       /*margin: 0 0 0 15px;*/
       > div {
-        width: 659px;
+        width: 640px;
         /*height: 900px;*/
         /*background: #445ee4;*/
         position: relative;
@@ -2247,6 +2237,16 @@
           i {
             font-size: 18px;
           }
+        }
+        >h3{
+          font-size: 30px;
+          font-weight: normal;
+          font-stretch: normal;
+          line-height: 30px;
+          letter-spacing: 0px;
+          color: #f2d18e;
+          @include centerX;
+          top:51px;
         }
         .tipTitle {
             width: 575px;
@@ -2270,10 +2270,10 @@
           /*background: url("./../assets/catch3/big_red_bg.png") no-repeat;*/
           /*background-size: 100% 100%;*/
           margin: 0 auto;
-          color: #fff;
+          color: #d2191a;
           padding: 0.1px;
           @include centerX;
-          top: 144px;
+          top: 118px;
           .spanh3 {
             display: inline-block;
             font-size: 44px;
@@ -2283,13 +2283,13 @@
           p {
             font-size: 24px;
             line-height: 24px;
-            color: rgba(255, 255, 255, 0.7);
+            color: #d2191a;
             margin: 0 0 28px 0;
           }
           .btncopy{
             width: 140px;
             height: 78px;
-            background: url("./../assets/xmas/press_s.png") no-repeat;
+            background: url("./../assets/yuandan/press_s.png") no-repeat;
             background-size: 100% 100%;
             line-height: 70px;
             font-size: 30px;
@@ -2604,13 +2604,25 @@
     > div {
       @include center;
       > div {
-        width: 659px;
-        height: 932px;
+        width: 640px;
+        height: 921px;
         //background: $bgColor;
         //border-radius: $bgRadius;
-        background: url("http://res.catchme.com.cn/activity/xmas/windows_bg.png") no-repeat;
+        /*background: url("http://res.catchme.com.cn/activity/xmas/windows_bg.png") no-repeat;*/
+        background: url("./../assets/yuandan/windows_bg.png");
         background-size: 100% 100%;
-        padding: 34px 0 0 0;
+        padding: 51px 0 0 0;
+        >h3{
+          font-size: 30px;
+          font-weight: normal;
+          font-stretch: normal;
+          line-height: 30px;
+          letter-spacing: 0px;
+          color: #f2d18e;
+//          @include centerX;
+          /*top:51px;*/
+          margin: 0 0 37px 0;
+        }
         .tipTitle{
           width: 575px;
           margin: 40px auto 45px auto;
@@ -2634,16 +2646,19 @@
             width: 560px;
             height: 180px;
             /*background: url("http://res.catchme.com.cn/activity/task2/ticket_bg.png") no-repeat;*/
-            background: url("./../assets/xmas/credit_bg.png") no-repeat;
+            background: url("./../assets/yuandan/credit_bg.png") no-repeat;
             background-size: 100% 100%;
             margin: 0 auto 9px auto;
             position: relative;
             dl.dlCoupon{
+              dt{
+                color: #d2191a;
+              }
               dd{
                 .btn{
                   width: 140px;
                   height: 78px;
-                  background: url("./../assets/xmas/press_s.png") no-repeat;
+                  background: url("./../assets/yuandan/press_s.png") no-repeat;
                   background-size: 100% 100%;
                   line-height: 70px;
                   font-size: 30px;
@@ -2663,7 +2678,7 @@
     > div {
       @include center;
       .imgBg {
-        width: 659px;
+        width: 640px;
       }
       .qrcode{
         width: 114px;
@@ -2687,9 +2702,9 @@
       }
       .btn{
         width: 372px;
-        height: 103px;
+        height: 98px;
         @include centerX;
-        top:810px;
+        top:783px;
         z-index: 666;
       }
     }
@@ -2752,109 +2767,96 @@
   .bg-center15 {
     /*width: 666px;*/
     /*height: 750px;*/
-    width: 659px;
-    height: 932px;
-    background: url("http://res.catchme.com.cn/activity/xmas/windows_bg.png") no-repeat;
-    /*background: url("http://res.catchme.com.cn/activity/task2/window_bg.png") no-repeat;*/
-    background-size: 100% 100%;
-    border-radius: 20px;
     @include center;
-    .title{
-      width: 302px;
-      margin: 76px 0 0 0;
-    }
-    .es{
-      font-size: 28px!important;
-      line-height: 28px!important;
-      color: #fff!important;
-      margin: 489px 0 0 0!important;
-    }
-    .img1 {
-      display: block;
-      width: 357px;
-      @include centerX;
-      top:22px;
-    }
-    .imgBi{
-      width: 566px;
-      @include centerX;
-      top:360px;
-    }
-    .water {
-      /*width: 280px;*/
-      /*height: 280px;*/
-      width: 382px;
-      height: 357px;
-      /*background-color: #fff;*/
-      background: url("./../assets/xmas/test_tow_window.png") no-repeat;
+    > div {
+      width: 640px;
+      height: 921px;
+      /*background: url("http://res.catchme.com.cn/activity/xmas/windows_bg.png") no-repeat;*/
+      /*background: url("http://res.catchme.com.cn/activity/task2/window_bg.png") no-repeat;*/
+      background: url("./../assets/yuandan/windows_bg.png");
       background-size: 100% 100%;
-      /*border: solid 10px #ffffff;*/
-      border-radius: 50%;
-      overflow: hidden;
-      position: relative;
-      margin: 74px auto 31px auto;
-      /*margin: 76px auto 59px auto;*/
-      /*box-shadow: 0 11px 50px rgba(134, 106, 49, 0.49);*/
-      .bol {
-        width: 100%;
-        background: url("./../assets/task/b_bg2.png") repeat-x;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        animation: wave-animation 1s infinite linear;
-        transition: all 1s linear;
-        background-size: 235px 255px;
+      border-radius: 10px;
+      .title {
+        width: 302px;
+        margin: 55px 0 0 0;
       }
-      .game-num {
+      .es {
+        font-size: 28px !important;
+        line-height: 28px !important;
+        margin: 465px 0 10px 0 !important;
+        color: #f2d18e !important;
+      }
+      .img1 {
+        display: block;
+        width: 313px;
+        @include centerX;
+        top: 0;
+      }
+      .imgBi {
+        width: 554px;
+        @include centerX;
+        top: 245px;
+      }
+      .water {
+        /*width: 280px;*/
+        /*height: 280px;*/
+        width: 357px;
+        height: 357px;
+        /*background-color: #fff;*/
+        background: url("http://res.catchme.com.cn/activity/yuandan/test_tow_window.png") no-repeat;
+        /*background: url("./../assets/xmas/test_tow_window.png") no-repeat;*/
+        background-size: 100% 100%;
+        /*border: solid 10px #ffffff;*/
+        border-radius: 50%;
+        overflow: hidden;
         position: relative;
-        font-size: 60px;
-        color: #bb0001;
-        line-height: 296px;
-        b {
-          font-size: 129px;
+        margin: 85px auto 36px auto;
+        /*margin: 76px auto 59px auto;*/
+        /*box-shadow: 0 11px 50px rgba(134, 106, 49, 0.49);*/
+        .bol {
+          width: 100%;
+          background: url("./../assets/task/b_bg2.png") repeat-x;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          animation: wave-animation 1s infinite linear;
+          transition: all 1s linear;
+          background-size: 235px 255px;
+        }
+        .game-num {
+          position: relative;
+          font-size: 60px;
+          color: #feca81;
+          line-height: 297px;
+          b {
+            font-size: 129px;
+          }
         }
       }
-    }
-    p {
-      width: 100%;
-      font-size: 28px;
-      text-align: center;
-      color: #fff;
-      line-height: 28px;
-      margin: 0 0 10px 0;
-      /*&:last-of-type {*/
+      p {
+        width: 100%;
+        font-size: 28px;
+        text-align: center;
+        color: #f2d18e;
+        line-height: 28px;
+        margin: 0 0 10px 0;
+        /*&:last-of-type {*/
         /*font-size: 36px;*/
         /*line-height: 36px;*/
         /*margin: 22px 0 111px 0;*/
-      /*}*/
-    }
-    .btn{
+        /*}*/
+      }
+      .btn {
         width: 372px;
-        height: 103px;
-        background: url("./../assets/xmas/press_big.png") no-repeat;
+        height: 98px;
+        background: url("./../assets/yuandan/press.png");
         background-size: 100% 100%;
-        margin: 79px auto 0 auto;
+        margin: 121px auto 0 auto;
         font-size: 32px;
-        line-height: 80px;
+        line-height: 74px;
         color: #e63024;
+      }
     }
-    /*button {*/
-      /*outline: none;*/
-      /*border: none;*/
-      /*width: 360px;*/
-      /*height: 70px;*/
-      /*background-image: linear-gradient(0deg,*/
-        /*rgba(253, 102, 59, 0.65) 0%,*/
-        /*rgba(254, 127, 66, 0.65) 100%),*/
-      /*linear-gradient(*/
-          /*#fd663b,*/
-          /*#fd663b);*/
-      /*box-shadow: 0px 3px 18px 0px rgba(134, 106, 49, 0.13),*/
-      /*0px 5px 32px 0px rgba(134, 106, 49, 0.33);*/
-      /*border-radius: 35px;*/
-      /*font-size: 32px;*/
-      /*color: #fff;*/
-    /*}*/
   }
 
   .back {
@@ -3545,24 +3547,24 @@
       @include center;
       .imgBg {
         display: block;
-        width: 659px;
+        width: 640px;
         margin: 0 auto;
       }
       >h3{
         font-size: 30px;
         line-height: 30px;
-        color: #fad83b;
+        color: #f2d18e;
         @include centerX;
-        top:70px;
+        top:51px;
         &.es{
-          top:263px;
+          top:222px;
         }
       }
       .word{
         width: 100%;
         height: 264px;
         @include centerX;
-        top:312px;
+        top:270px;
         span{
           width: 27px;
           height: 50px;
@@ -3580,9 +3582,10 @@
           }
         }
         div.p{
-          width:275px;
+          width:279px;
           height: 264px;
-          background: url("http://res.catchme.com.cn/activity/xmas/card_bg.png") no-repeat;
+          /*background: url("http://res.catchme.com.cn/activity/xmas/card_bg.png") no-repeat;*/
+          background: url("http://res.catchme.com.cn/activity/yuandan/Lipstick_bag.png");
           background-size: 100% 100%;
           @include centerX;
           /*font-size: 90px;*/
@@ -3605,7 +3608,7 @@
       .product{
         width: 451px;
         @include centerX;
-        top:144px;
+        top:127px;
       }
       a{
         font-size: 26px;
@@ -3613,14 +3616,14 @@
         text-decoration: underline;
         color: #fad83b;
         @include centerX;
-        top:383px;
+        top:366px;
       }
       .cardslist{
         width: 100%;
         @include centerX;
         /*display: flex;*/
         /*justify-content: space-between;*/
-        bottom: 160px;
+        bottom: 150px;
         &.es{
           bottom: 146px;
         }
@@ -3650,10 +3653,10 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                border: solid 3px #c1c1c1;
+                border: solid 3px #f1cca1;
                 border-radius: 50%;
                 &.hastotal{
-                  border: solid 3px #ffb66a;
+                  border: solid 3px #f1cca1;
                   color: #ffb66a;
                 }
                 >img{
@@ -3664,7 +3667,7 @@
               >span{
                 width: 28px;
                 height: 28px;
-                background-color: #ffb66a;
+                background-color: #f1cca1;
                 position: absolute;
                 right: 6px;
                 top:-6px;
@@ -3674,7 +3677,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                color: #fff;
+                color: #e73d35;
                 border-radius: 50%;
               }
               >em{
@@ -3690,7 +3693,7 @@
           p{
             font-size: 26px;
             line-height: 26px;
-            color: #fad83b;
+            color: #f1cca1;
             margin: 8px 0 14px 0;
           }
           .button{
@@ -3699,14 +3702,14 @@
             margin: 5px auto 30px auto;
             background-color: #c1c1c1;
             color: #666666;
-            font-size: 32px;
+            font-size: 30px;
             line-height: 55px;
             border-radius: 27.5px;
             &.isExchange{
               width: 140px;
               height: 78px;
               margin: 0 auto 12px auto;
-              background: url("./../assets/xmas/press_s.png") no-repeat;
+              background: url("./../assets/yuandan/press_s.png") no-repeat;
               background-size: 100% 100%;
               color: #e63024;
               line-height: 70px;
@@ -3714,17 +3717,25 @@
           }
         }
       }
-      .close{
-        margin: 40px 0 18px 0;
+      /*.close{*/
+        /*margin: 40px 0 13px 0;*/
+      /*}*/
+      .closediv{
+        width: 372px;
+        height: 98px;
+        margin: 37px auto 0 auto;
+        .close{
+          margin: 3px 0;
+        }
       }
       .btn{
         width: 372px;
-        height: 103px;
-        background: url("./../assets/xmas/press_big.png") no-repeat;
+        height: 98px;
+        background: url("./../assets/yuandan/press.png") no-repeat;
         background-size: 100% 100%;
         margin: 37px auto 0 auto;
         font-size: 32px;
-        line-height: 86px;
+        line-height: 74px;
         color: #e63024;
         font-weight: bold;
       }
@@ -3733,14 +3744,14 @@
   .bg-center28-es{
     >div{
       >h3{
-        top:233px;
+        top:197px;
       }
       .word{
-        top:297px;
+        top:261px;
         div.p{
-          width: 250px;
-          height: 248px;
-          background: url("./../assets/xmas/con_card.png");
+          width: 255px;
+          height: 244px;
+          background: url("http://res.catchme.com.cn/activity/yuandan/Lipstick_bag_ios1334.png");
           background-size: 100% 100%;
           >div{
             width: 190px;
@@ -3754,14 +3765,14 @@
       }
       .cardslist{
         &.es{
-          bottom: 132px;
+          bottom: 118px;
         }
       }
       .btn{
-        margin: 23px auto 0 auto;
+        margin: 28px auto 0 auto;
       }
       .close{
-        margin: 26px 0 18px 0;
+        margin: 28px 0 13px 0;
       }
     }
   }
@@ -3769,20 +3780,20 @@
     >div{
       @include center;
       .imgBg{
-        width: 659px;
+        width: 640px;
         display: block;
       }
       >h3{
         font-size: 30px;
         line-height: 30px;
-        color: #fad83b;
+        color: #f2d18e;
         @include centerX;
-        top:110px;
+        top:72px;
       }
       .rulecontent{
         width: 460px;
         @include centerX;
-        top:241px;
+        top:203px;
         p{
           font-size: 26px;
           /*line-height: 26px;*/
@@ -3795,11 +3806,11 @@
       .content{
         width: 100%;
         @include centerX;
-        top:578px;
+        top:550px;
         p{
           font-size: 26px;
           line-height: 26px;
-          color: #fad83b;
+          color: #f2d18e;
           margin: 0 0 17px 0;
           &:last-of-type{
             margin: 47px 0 0 0;
@@ -3814,13 +3825,13 @@
         height: 80px;
         @include centerX;
         bottom: 100px;
-        top:757px;
+        top:725px;
         h3{
           font-size: 36px;
           line-height: 36px;
-          color: #e88726;
+          color: #ed412b;
           font-weight: 600;
-          margin: 0 0 8px 0;
+          margin: 6px 0 8px 0;
         }
         p{
           font-size: 20px;
@@ -3830,7 +3841,7 @@
       }
       a{
         font-size: 26px;
-        color: #fad83b;
+        color: #f2d18e;
         line-height: 30px;
         text-decoration: underline;
         @include centerX;
@@ -3838,23 +3849,23 @@
       }
       .btn{
         width: 372px;
-        height: 103px;
-        background: url("./../assets/xmas/press_big.png") no-repeat;
+        height: 98px;
+        background: url("./../assets/yuandan/press.png") no-repeat;
         background-size: 100% 100%;
         margin: 54px auto 0 auto;
         font-size: 32px;
-        line-height: 86px;
+        line-height: 74px;
         color: #e63024;
         font-weight: bold;
       }
       .back{
-        color: #fad83b;
-        top:843px;
+        color: #f2d18e;
+        top:829px;
         line-height: 54px;
         i{
           width: 53px;
           height: 54px;
-          background: url("./../assets/xmas/rule_icon_back.png") no-repeat;
+          background: url("./../assets/yuandan/rule_icon_back.png") no-repeat;
           background-size: 100% 100%;
         }
       }
@@ -4102,7 +4113,8 @@
     width: 100%;
     height: 100%;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");*/
-    background: url("http://res.catchme.com.cn/activity/xmas/bg.png");
+    /*background: url("http://res.catchme.com.cn/activity/xmas/bg.png");*/
+    background: url("http://res.catchme.com.cn/activity/yuandan/bg.png") no-repeat;
     background-size: 100% 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -4350,29 +4362,37 @@
   .main .centerout {
     /*background: url("http://res.catchme.com.cn/imgs-2018-02-06/2/bg_begin.png") no-repeat;*/
     /*background: url("./../assets/small/bg_begin.png") no-repeat;*/
-    background-size: 100% 100%;
+    /*background-size: 100% 100%;*/
     /*padding: 0.22px;*/
     padding: 20px;
     /*margin: 0.05px 0 0 0;*/
     width: 100%;
     @include center;
     /*height: 100%;*/
-    > div {
-      position: relative;
-      z-index: 9999;
-      background: #fff;
-    }
+    /*> div {*/
+      /*position: relative;*/
+      /*z-index: 9999;*/
+      /*background: #fff;*/
+    /*}*/
   }
 
   .main .centerout .center {
     width: 100%;
     /*height: 5px;*/
-    /*background: #fff;*/
+    background: #fff;
+    box-shadow: 0px 2px 3.8px 0.2px
+    rgba(255, 163, 89, 0.04),
+    0px 0px 16.6px 1.4px
+    rgba(255, 163, 89, 0.22),
+    0px 0px 21.1px 2.9px
+    rgba(255, 137, 50, 0.08),
+    0px 0px 21.1px 2.9px
+    rgba(255, 142, 50, 0.26);
     /*margin: 0.32px 0 0 0;*/
     /*padding: 0.28px 0.2px 0 0.2px;*/
     /*padding: 90px 20px 0 20px ;*/
-    background:#fff url("./../assets/xmas/page/begin_bg.png") no-repeat;
-    background-size: 100% 100%;
+    /*background:#fff url("./../assets/xmas/page/begin_bg.png") no-repeat;*/
+    /*background-size: 100% 100%;*/
     padding: 96px 20px 0 20px;
     /*padding: 70px 20px 0 20px;*/
     /*border-radius: 10px;*/
@@ -4383,10 +4403,10 @@
     /*box-shadow: 2px 2px 10px rgba(206, 133, 74, 0.04), 0 0 18px rgba(206, 133, 74, 0.18), 0 0 24px rgba(206, 133, 74, 0.26);*/
   }
   .main .centerout .center .sock{
-    width: 129px;
+    width: 116px;
     position: absolute;
-    left: 43px;
-    top:6px;
+    left: 55px;
+    top:0;
   }
 
   .main .centerout .center .my_ticket{
@@ -4736,8 +4756,8 @@
     line-height: 74px;
     position: absolute;
     border-radius: 0 16px 0 0;
-    right: 6px;
-    top: 6px;
+    right: 0;
+    top: 0;
     /*top:-0.28px;*/
     text-align: center;
     /*padding: 0.2px 0.3px;*/
@@ -4756,7 +4776,8 @@
     line-height: 306px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
-    background: url("http://res.catchme.com.cn/activity/xmas/press_begin.png");
+    /*background: url("http://res.catchme.com.cn/activity/xmas/press_begin.png");*/
+    background: url("http://res.catchme.com.cn/activity/yuandan/press_begin.png");
     background-size: 100% 100%;
     border: none;
     outline: none;
@@ -4774,14 +4795,15 @@
   .main .center .hasclick {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_ing.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
-    background: url("http://res.catchme.com.cn/activity/xmas/press_begin.png");
+    /*background: url("http://res.catchme.com.cn/activity/xmas/press_begin.png");*/
+    background: url("http://res.catchme.com.cn/activity/yuandan/press_begin.png");
     background-size: 100% 100%;
   }
 
   .main .center .game-num {
     width: 418px;
     height: 93px;
-    border: 1px solid #e88726;
+    border: 1px solid #ed412b;
     border-radius: 18px;
     font-size: 24px;
     line-height: 91px;
@@ -4805,18 +4827,23 @@
     margin:3px 0 0 0;
   }
   .main .center .game-num .jiahao>div{
-    width: 176px;
-    height: 138px;
-    background: url("./../assets/xmas/page/talk_bg.png") no-repeat;
+    width: 160px;
+    height: 126px;
+    /*width: 176px;*/
+    /*height: 138px;*/
+    background: url("./../assets/yuandan/talk_bg.png") no-repeat;
     background-size: 100% 100%;
     font-size: 24px;
     color: #fff;
-    line-height: 32px;
+    line-height: 30px;
     position: absolute;
-    padding: 26px 13px 0 27px;
-    right: -126px;
-    top:-135px;
+    padding: 20px 0 0 25px;
+    right: -120px;
+    top:-126px;
     z-index: 6;
+    >span{
+      color: #fac271;
+    }
   }
 
     .main .center .game-num.norecharge {
@@ -4832,19 +4859,19 @@
     width: 20%;
     float: left;
     font-size: 50px;
-    color: #e88726;
+    color: #ed412b;
     text-align: center;
     height: 71px;
     line-height: 71px;
     /*height: 67px;*/
     /*line-height: 67px;*/
-    border-right: 1px solid #e88726;
+    border-right: 1px solid #ed412b;
     margin: 10px 0 0 0;
   }
 
   .main .center .game-num i:last-of-type {
     border-right: none;
-    border-left: 1px solid #e88726;
+    border-left: 1px solid #ed412b;
     float: right;
   }
 
@@ -4863,7 +4890,7 @@
   .main .center .game-num > div h3 {
     /*font-size: 0.42px;*/
     font-size: 40px;
-    color: #e88726;
+    color: #ed412b;
     font-weight: 600;
     /*line-height: 0.42px;*/
     line-height: 40px;
@@ -4899,7 +4926,7 @@
     /*height: 3.4px;*/
     /*height: 28%;*/
     height: 26.4%;
-    min-height: 310px;
+    min-height: 300px;
     position: relative;
     /*padding: 0.36px 0.22px 0 0.22px;*/
     /*overflow: hidden;*/

@@ -3,12 +3,12 @@
     <ul>
       <li v-for="item in task_opes.slice(0,3)">
         <div v-if="item.type === 7" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/xmas/page/test_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/yuandan/test_a.png" alt=""/>
           <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.coupon.status === 2}">免费领币</p>
         </div>
         <div v-if="item.type === 12" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/xmas/page/test_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/yuandan/test_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
@@ -23,8 +23,8 @@
           <p :class="{'is_down':item.task_count >= item.num}">投币送币</p>
         </div>
         <div v-if="item.type === 10">
-          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/xmas/page/test_c.png" alt=""/>
-          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/xmas/page/icon_free_receive_c.png" alt="">
+          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/yuandan/icon_free_c.png" alt=""/>
+          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/yuandan/icon_free_receive_c.png" alt="">
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
         </div>
@@ -36,17 +36,17 @@
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         </div>
         <div v-if="item.type === 13" @click="openTip('tencent')">
-          <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/yuandan/test_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         <p>免费领币</p>
         </div>
         <div v-if="item.type === 16" @click="openTip('redGame')">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/xmas/page/test_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/yuandan/test_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
         <div v-if="item.type === 17" @click="openTip('artifact',item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/xmas/page/test_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/yuandan/test_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
@@ -307,10 +307,10 @@
       top:-18px;
     }
     ul{
-      /*background: #fff;*/
+      background: #fff;
       width: 706px;
-      background: url("./../assets/xmas/page/test_bg.png") no-repeat;
-      background-size: 100% 100%;
+      /*background: url("./../assets/xmas/page/test_bg.png") no-repeat;*/
+      /*background-size: 100% 100%;*/
       position: absolute;
       height:100%;
       border-radius: 16px;
@@ -377,7 +377,7 @@
             background: #ee3b2f;
             border-radius: 50%;
             font-size: 30px;
-            color: #2bd361;
+            color: #feca81;
             font-weight: 600;
             display: flex;
             justify-content: center;
@@ -418,7 +418,7 @@
               left: 50%;
               top:50%;
               font-size: 28px;
-              color: #2bd361;
+              color: #feca81;
               transform: translate(-50%,-50%);
               b{
                 font-size: 40px;

@@ -229,16 +229,16 @@
     width: 342px;
     height: 128px;
     /*height: 37.87%;*/
-    padding: 6px;
-    /*border: 1px solid #fd643b;*/
+    /*padding: 6px;*/
+    border: 1px solid #e7353d;
     /*border: 1px solid transparent;*/
-    background: url("./../assets/xmas/page/recharge_bg.png");
-    background-size: 100% 100%;
+    /*background: url("./../assets/xmas/page/recharge_bg.png");*/
+    /*background-size: 100% 100%;*/
     /*border-radius: 0.15px;*/
     color: #494949;
     position: relative;
     /*overflow: hidden;*/
-    /*border-radius: 16px;*/
+    border-radius: 16px;
   }
   /*.recharge-lists > div.dalibao {*/
     /**/
@@ -296,15 +296,22 @@
   .recharge-item-b {
     /*height: 63px;*/
     /*line-height: 63px;*/
-    height: 54px;
-    line-height: 54px;
+    height: 59px;
+    line-height: 59px;
     /*height: 61px;*/
     /*line-height: 61px;*/
     /*font-size: 0.32px;*/
     font-size: 34px;
-    /*background: #fb643b;*/
+    background-image: linear-gradient(0deg,
+    #df2622 0%,
+    #e83329 100%),
+    linear-gradient(
+      #e7353d,
+      #e7353d);
+    background-blend-mode: normal,
+    normal;
     color: #fff;
-    /*border-radius: 0 0 12px 12px;*/
+    border-radius: 0 0 16px 16px;
     text-align: center;
   }
 
@@ -316,17 +323,17 @@
   }
 
   .recharge-item-t {
-    /*height: 67px;*/
-    /*line-height: 67px;*/
+    height: 67px;
+    line-height: 67px;
     /*height: 68px;*/
     /*line-height: 68px;*/
-    height: 62px;
-    line-height: 62px;
+    /*height: 62px;*/
+    /*line-height: 62px;*/
     font-size: 36px;
     color: #353535;
     text-align: center;
-    /*background: #fff;*/
-    /*border-radius: 16px 16px 0 0;*/
+    background: #fff;
+    border-radius: 16px 16px 0 0;
   }
 
   .recharge-item-t span {
@@ -414,17 +421,17 @@
     height: 164px;
   }
   .version2 .recharge-item-t {
-    /*height: 84px;*/
-    height: 78px;
-    line-height: 78px;
+    height: 83px;
+    /*height: 78px;*/
+    /*line-height: 78px;*/
     font-size: 38px;
-    /*line-height: 84px;*/
+    line-height: 83px;
   }
 
   .version2 .recharge-item-b {
     /*height: 75px;*/
-    height: 73px;
-    line-height: 73px;
+    height: 79px;
+    line-height: 79px;
     /*line-height: 75px;*/
     font-size: 34px;
   }
