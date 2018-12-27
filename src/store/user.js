@@ -35,18 +35,6 @@ const state = {
   },
   show_tip_operation:{isShow:false,tipObj:{image:''}},
   tip_operation:{},
-  // 已经丢弃
-  // activity_promocode:{
-  //   progress:0,
-  //   records:[],
-  //   needle:0
-  // },
-  // activity_bounty:{
-  //   voucher_batch:{
-  //     value:0
-  //   },
-  //   vouchers:[]
-  // },
   activity_bounty:[],
   gzh_operation:{},
   gzh_operation_other:{},
@@ -119,10 +107,6 @@ const mutations = {
   changeShowTipOperation(state,obj){
     state.show_tip_operation = obj;
   },
-  //已经舍弃
-  // setActivityPromocode(state,obj){
-  //   state.activity_promocode = obj
-  // },
   setActivityBounty(state,obj){
     state.activity_bounty = obj
   },
@@ -454,12 +438,6 @@ const actions = {
         var task_opes = undoneOpe.concat(completeOpe);
         ctx.commit('setTaskOpes',task_opes)
 
-        // if(undoneOpe.length<3){
-        //   ctx.commit('setTaskOpes',undoneOpe.concat(completeOpe))
-        // }else {
-        //   ctx.commit('setTaskOpes',undoneOpe)
-        // }
-
         let len = activity_bounty.length;
         for(var j=0;j<len;j++){
           for(var k=0;k<len-1-j;k++){
@@ -522,34 +500,6 @@ const actions = {
       })
     })
   },
-
-  //已经被舍弃
-  // getActivityPromocode:function (ctx) {
-  //   return new Promise((success,error)=>{
-  //     api.getActivityPromocode({machine_no:ctx.state.machine_no,token:CONFIG.token,site_version_id:CONFIG.site_version_id}).then((data)=>{
-  //       ctx.commit('setActivityPromocode',data.data);
-  //       success(data.data)
-  //     })
-  //   })
-  // },
-  //已经被舍弃
-  // getActivityBounty:function (ctx) {
-  //   return new Promise((success,error)=>{
-  //     api.getActivityBounty({machine_no:ctx.state.machine_no,token:CONFIG.token,site_version_id:CONFIG.site_version_id}).then((data)=>{
-  //       ctx.commit('setActivityBounty',data.data);
-  //       success(data.data)
-  //     })
-  //   })
-  // },
-
-  //已经被舍弃
-  // getActivityReceive:function (ctx,batch_id) {
-  //   return new Promise((success,error)=>{
-  //     api.getActivityReceive({machine_no:ctx.state.machine_no,token:CONFIG.token,site_version_id:CONFIG.site_version_id,batch_id:batch_id}).then((data)=>{
-  //       success(data.data)
-  //     })
-  //   })
-  // },
 
   //奖励金兑换
   getActivityBountyExchange:function (ctx,params) {

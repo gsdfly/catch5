@@ -35,7 +35,6 @@ FastClick.attach(document.body)
       var encrypt = localStorage.getItem('encrypt') || getParamByName('encrypt');
       if (encrypt) {
         api.getToken2({encrypt: encrypt}).then((res) => {
-          console.log('getToken2-----------------------------' + res);
           SetCookie('token_', res.data.token);
           store.commit('changeIsLogin');
           delete res.data.token;
@@ -81,7 +80,6 @@ FastClick.attach(document.body)
         }
       }
     } else {
-      console.log('1111111111')
       api.machineLogin({machine_no: CONFIG.machine_no, token: CONFIG.token});
       store.commit('changeIsLogin');
       store.dispatch('getUser');
@@ -142,8 +140,6 @@ FastClick.attach(document.body)
     }
   })
 
-  //统计扫码用户
-  // api.machineLogin({machine_no:CONFIG.machine_no,token:CONFIG.token});
 
   Vue.prototype.Indicator = Indicator
 

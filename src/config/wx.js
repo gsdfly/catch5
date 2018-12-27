@@ -1,5 +1,5 @@
 // import { instance } from './common'
-import router from '../router'
+// import router from '../router'
 import $axios from 'axios'
 import CONFIG from './../config/index'
 

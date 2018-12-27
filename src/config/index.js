@@ -37,5 +37,4 @@ let CONFIG = {
   isTpp: expName === 'Tpp' ? true : false
 }
 
-
 export default CONFIG

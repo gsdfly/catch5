@@ -21,17 +21,6 @@ export const SetCookie = (name, value) => {
   document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString()
 }
 
-// //测试淘票票生成唯一id
-// export const generateUUID = () => {
-//   var d = new Date().getTime();
-//   var uuid = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//     var r = (d + Math.random() * 16) % 16 | 0;
-//     d = Math.floor(d / 16);
-//     return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-//   });
-//   return uuid;
-// }
-
 //判断错误
 export const getErrMsg = (errCode, message) => {
   let m = {};
@@ -163,28 +152,6 @@ export const jsonToStr = (obj) => {
   return str;
 }
 
-export const locationHref = (version) => {
-  var url = '';
-  SetCookie('site_version_id',version);
-  if (version) {
-    switch (version) {
-      case 1:
-        url = 'place.html?'
-        break;
-      case 2:
-        url = 'fallback.html?'
-        break;
-      case 3:
-        url = 'redpacket.html?'
-        break;
-      case 4:
-        url = 'promocode.html?'
-        break;
-    }
-  }
-  return url;
-}
-
 
 export const changeTipOperation = (tipOperationObj, loalStorageName, store) => {
   if (tipOperationObj.trigger === 'once') {
@@ -266,7 +233,6 @@ export const payment = (CONFIG, params, self, callback) => {
     })
   }else {
     self.isRequest = false;
-
     window.location.href = `${CONFIG.localtionUrl2}index.php/api/taobao/order?machine_no=${CONFIG.machine_no}&coin_price_id=${params.coin_price_id}&token=${CONFIG.token}&callback=${document.URL}`
   }
 }
