@@ -1,13 +1,12 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
-
 module.exports = {
   build: {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/yuandan.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'yuandan',
-    assetsPublicPath: './',
+    assetsPublicPath:process.argv.includes('upload') ? 'http://res.catchme.com.cn/rc/':'./',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.

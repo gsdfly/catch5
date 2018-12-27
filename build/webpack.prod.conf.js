@@ -8,10 +8,25 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+QiniuPlugin = require('qiniu-plugin');
 
 var env = config.build.env
 
-var webpackConfig = merge(baseWebpackConfig, {
+var qiniuPlugin = new QiniuPlugin({
+
+  // 七牛云的两对密匙 Access Key & Secret Key
+  accessKey: 'OlB92b9roQNmGTdknqqiV4uY5wQDrm1C8Xkhr5-6',
+
+  secretKey: 'BahCbJ393a3vYLt5ta0VOr9FGYDgKVlpVvfAkcdT',
+
+  // 七牛云存储空间名称
+  bucket: 'catch-res',
+
+  // 上传到七牛后保存的文件名
+  path: 'rc/[asset]'
+
+});
+var options =   {
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -20,7 +35,7 @@ var webpackConfig = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
-    publicPath: './',
+    // publicPath: './',
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
@@ -94,7 +109,14 @@ var webpackConfig = merge(baseWebpackConfig, {
       }
     ])
   ]
-})
+}
+
+if(process.argv.includes('upload')){
+  options.plugins.push(qiniuPlugin)
+}
+
+var webpackConfig = merge(baseWebpackConfig, options
+)
 
 if (config.build.productionGzip) {
   var CompressionWebpackPlugin = require('compression-webpack-plugin')
