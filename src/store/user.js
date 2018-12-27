@@ -467,7 +467,7 @@ const actions = {
           ctx.commit('setMovies',movies)
         }
         else {
-          ctx.commit('setMovies',[{task_count:0,num:0}])  //没有电影运营位时给个模拟数据让页面正常显示
+          ctx.commit('setMovies',[])  //没有电影运营位时给个模拟数据让页面正常显示
         }
 
         if(dalibao.length>0){

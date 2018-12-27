@@ -7,7 +7,7 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/movie.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'movie',
-    assetsPublicPath: './',
+    assetsPublicPath: process.argv.includes('upload') ? 'http://res.catchme.com.cn/rc/':'./',
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.

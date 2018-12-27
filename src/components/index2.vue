@@ -1629,7 +1629,7 @@
     },
     watch: {
       movies(newValue,oldValue){
-        if(newValue[0].task_count < newValue[0].num){
+        if(newValue.length>0 && newValue[0].task_count < newValue[0].num){
           this.movieItem = newValue[0];
 //          this.showContent = false;
         }else {
