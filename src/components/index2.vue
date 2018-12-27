@@ -1095,22 +1095,6 @@
       },
       handleRed(value, item) {
         _hmt.push(['_trackEvent', '点击娃娃', '点击', '点击娃娃', '']);
-//        if (flag) {
-//          this.$store.dispatch('getActivityBountyStatus',item.id).then((res2)=>{
-//            if(res2.can_exchange){
-//              this.receiveGift(item)
-//            }else {
-//              //这里弹出让用户玩完所有的游戏币提示
-//              this.bgShow = true;
-//              this.contentShow = 'jieshi';
-//              _hmt.push(['_trackEvent', '弹出解释弹出', '点击', '币没玩完弹出', '']);
-//
-//            }
-//          })
-////        this.receiveGift(item)
-//        } else {
-//          this.couponList()
-//        }
         //在每次领取之前，我需要先同步一次任务值，判断是否满足可以领取的
         var prize_bounty = localStorage.getItem('prize_bounty')
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
@@ -1129,8 +1113,6 @@
               } else {
                 //这里弹出让用户玩完所有的游戏币提示
                 this.isShowGuide2 = true
-//                this.bgShow = true;
-//                this.contentShow = 'jieshi';
                 _hmt.push(['_trackEvent', '弹出解释弹出', '点击', '币没玩完弹出', '']);
               }
             })
@@ -1144,12 +1126,6 @@
         this.currentGift = gift;
         console.log(gift);
         this.openTip('receive');
-
-//        if(gift.voucher_batch.category === 0){
-//          this.openTip('receive2');
-//        }else {
-//          this.openTip('receive');
-//        }
       },
       couponList() {
         var len = this.activity_bounty.length;
@@ -1160,7 +1136,6 @@
             return;
           }
         }
-//        _hmt.push(['_trackEvent', '打开优惠券列表弹窗', '点击', '优惠券为：0', '']);
         _hmt.push(['_trackEvent', '弹出解释弹出', '点击', '币没满足且无兑换券', '']);
         this.openTip('jieshi');
       },
@@ -1177,13 +1152,6 @@
         }, 1500)
       },
       changeTaskGameProgress() {
-        /*polygon(0 0,26.133vw 0,26.133vw 26.667vw,0 26.667vw)*/
-//        每次投币之后自己请求,调用此方法改变进度
-
-        //计算180为100%
-//        var n = this.task_now.game_bounty/this.task_game.value*180+180;
-//        console.log('1111111111111----------'+this.task_now.recharge_bounty);
-//        console.log('222222222222------------'+this.activity_bounty.voucher_batch.value);
         var len = this.activity_bounty.length;
         var n = this.task_now.recharge_bounty / this.activity_bounty[len - 1].voucher_batch.value * 180 + 180;
         if (n > 360) {
@@ -1196,12 +1164,6 @@
         this.ringStyle = `transform:  rotate(${n}deg);`
       },
       receiveCoupon() {
-//        this.$store.dispatch('getActivityReceive',this.activity_bounty.voucher.batch_id).then((res)=>{
-//          this.isReceive = true;
-////          this.$store.commit('setActivityBountyValue',res.bounty);
-//          this.$store.dispatch('getActivityBounty');
-//          this.couponInfo = res;
-//        })
         this.$store.dispatch('getActivityBountyExchange', {operation_id:this.currentGift.id}).then((res) => {
           this.couponInfo = res.data;
 //          this.isReceive = true;
@@ -1291,12 +1253,6 @@
         this.bgShow = true;
         this.contentShow = value;
       },
-//      getVoucherLength(value) {
-//        if (value > 1) {
-//          var scrollIn = document.querySelector('.scroll-in');
-//          scrollIn.style = 'width:' + (68.4 * value + 6.4) + 'vw';
-//        }
-//      },
       tipButton() {
         if (this.tipContent.button === '扫码换机') {
           this.handleScanQRCode();
@@ -1491,11 +1447,6 @@
         }
       },
       isLogin(){
-//        var step1 = localStorage.getItem('redGameStep')
-//        if(step1){
-//          this.handleRedGame('');
-//          localStorage.removeItem('redGameStep')
-//        }
         var unionid = localStorage.getItem('unionid')
         if(unionid){
           this.handleRedGame(unionid)
@@ -1522,9 +1473,6 @@
         if (newValue.recharge_bounty !== oldValue.recharge_bounty) {
           this.changeTaskGameProgress();
         }
-//        if(this.activity_bounty.voucher_batch.value <= newValue.recharge_bounty ){
-//          this.openTip('receive');
-//        }
       },
       //来设置图形的位置
       activity_bounty(newValue) {
@@ -1545,7 +1493,6 @@
           this.isCalculated = true;
         }, 0)
       }
-
     },
     filters: {
       handleEndTime(value) {
@@ -1573,15 +1520,6 @@
           return 0
         }
       }
-//      handleArr(arr){
-//        var max = 0;
-//        for(var i=0;i<arr.length;i++){
-//          if(arr[i].voucher_batch.value>max){
-//            max = arr[i].voucher_batch.value;
-//          }
-//        }
-//        return max;
-//      }
     }
   }
 </script>
