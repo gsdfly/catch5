@@ -1010,6 +1010,8 @@
               this.$store.dispatch('getUser');
               //重新获取运营位
               this.$store.dispatch('getOperations')
+            }).catch(()=>{
+              this.showContent = true;
             });
           })
         }
