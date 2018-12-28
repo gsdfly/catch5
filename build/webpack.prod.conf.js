@@ -24,7 +24,7 @@ var qiniuPlugin = new QiniuPlugin({
 
   // 上传到七牛后保存的文件名
   // path: 'rc/[name]/[version]/[asset]'
-  path: 'rc/[asset]'
+  path: 'rc/[version]/[asset]'
 
 
 });
