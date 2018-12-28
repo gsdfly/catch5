@@ -197,5 +197,7 @@ export default {
     return instance.post(CONFIG.url+'api/envelope/receive',jsonToStr(params))
   },
   //
-
+  getTicketExchange:function (params) {
+    return instance.post(CONFIG.url+'api/ticket/exchange',jsonToStr(params))
+  },
 }

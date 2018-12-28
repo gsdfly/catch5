@@ -8,7 +8,8 @@
         <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="">
         <img src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt="">
         <img src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt="">
-        <!--<img src="http://res.catchme.com.cn/activity/task-2/weibao.png" alt="">-->
+        <img src="./../assets/mymovie/fanpai.png" alt="">
+        <img src="./../assets/mymovie/shuoming.png" alt="">
       </div>
       <div class="header">
         <div>
@@ -663,6 +664,95 @@
           </div>
         </div>
 
+        <div class="bg-center28" v-if="contentShow == 'sendmovietip'" @click.stop="">
+          <img class="imgBg" src="./../assets/mymovie/gaozhi.png" alt="">
+          <p @click="openTip('sendmovierule')">活动规则</p>
+          <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+               @click="closeBg"/>
+        </div>
+
+        <div class="bg-center29" v-if="contentShow == 'sendmovierule'" @click.stop="">
+          <div>
+            <h3>活动规则</h3>
+            <p>1、抓中娃娃可获得卡牌一张，翻开有机会获得《断片之险途夺宝》电影票兑换券或免费币；</p>
+            <p>2、获得电影票兑换券之后，可根据提示流程进行兑换；</p>
+            <p>3、该兑换券有限期为：2018年12月28日至2019年1月7日；</p>
+            <p>4、本活动的最终解释权归深圳市我抓科技有限公司所有。</p>
+            <div class="back" @click="goPre"><i></i>返回</div>
+          </div>
+          <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+               @click="closeBg"/>
+        </div>
+
+        <div class="bg-center30"  v-if="contentShow == 'sendmovie'" @click.stop="">
+          <div :style="flopStyle">
+            <div class="pai pai1">
+              <img src="./../assets/mymovie/fanpai.png" alt="">
+              <p>100%得电影票或免费游戏币</p>
+              <div class="btn" @click="flop">点击翻牌</div>
+            </div>
+            <div class="pai pai2" v-show="flopShow === 'movie'">
+              <img src="./../assets/mymovie/duihuan_ticket.png" alt="">
+              <p>恭喜获得电影票一张</p>
+              <div class="btn" @click="useMovieCoupon(flopResult.voucher.code)">点击兑换</div>
+            </div>
+            <div class="pai pai3" v-show="flopShow === 'coin'">
+              <img src="./../assets/mymovie/window_free_bi.png" alt="">
+              <p>恭喜获得免费游戏币</p>
+              <h3><span>{{flopResult.coin_num}}</span>币</h3>
+              <div class="btn" @click="closeBg">去抓娃娃</div>
+            </div>
+          </div>
+          <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+               @click="closeBg"/>
+        </div>
+
+        <div class="bg-center31"  v-if="contentShow == 'moviecouponlist'" @click.stop="">
+          <div>
+            <h3>我的兑换券</h3>
+            <ul>
+              <li v-for="item in movie_coupon.vouchers">
+                <dl class="dlCoupon">
+                  <dt>
+                    <h4>{{item.name}}</h4>
+                    <p>{{JSON.parse(item.remarks).title}}</p>
+                    <p>有效期至：{{item.end_time | handleEndTime2}}</p>
+                  </dt>
+                  <dd>
+                    <button @click="useMovieCoupon(item.code)">使用</button>
+                  </dd>
+                </dl>
+              </li>
+            </ul>
+          </div>
+          <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+               @click="closeBg">
+        </div>
+
+        <div class="bg-center32"  v-if="contentShow == 'moviecoupon'">
+          <div>
+            <div>
+              <img class="imgBg" src="./../assets/mymovie/shuoming.png" alt="">
+              <div>
+                <div>
+                  <h4>兑换券码：</h4>
+                  <p id="copy1">{{movie.code}}</p>
+                  <button :data-clipboard-target="'#copy1'" @click="copy" class="btncopy">复制</button>
+                </div>
+                <div>
+                  <h4>密<span>换券</span>码：</h4>
+                  <p id="copy2">{{movie.pwd}}</p>
+                  <button :data-clipboard-target="'#copy2'" @click="copy" class="btncopy">复制</button>
+                </div>
+              </div>
+              <a href="javascript:void(0)" v-if="movie_coupon.vouchers.length>0" @click.stop="contentShow = 'moviecouponlist'">我的兑换券：{{movie_coupon.vouchers.length}}<i class="iconfont icon-shuangjiantouyou"></i></a>
+            </div>
+            <div></div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg2">
+          </div>
+          <div style="width: 100%;height: 100%;position: absolute;z-index:1" @click="closeBg2"></div>
+        </div>
       </div>
       <tipOperation></tipOperation>
     </div>
@@ -781,6 +871,13 @@
         isShowBaomihuaList:false,
         codeWidth:2,
         codeHeight:45,
+        flopResult:{},
+        flopShow:'',
+        flopStyle:'',
+        movie:{
+          code:'',
+          pwd:''
+        }
       }
     },
     created() {
@@ -803,7 +900,8 @@
       gzh_operation: state => state.user.gzh_operation,
       gzh_operation_other: state => state.user.gzh_operation_other,
       dalibao:state => state.user.dalibao,
-      redGame:state => state.user.redGame
+      redGame:state => state.user.redGame,
+      movie_coupon:state => state.user.movie_coupon,
     }),
     components: {
       joPay,
@@ -881,13 +979,36 @@
         this.Indicator.close();
         this.showHtml = true;
         this.isGetImg = true;
-        if (res.online === 0) {
-          this.$store.commit('changeTipContent', getErrMsg(1001));
-        }
+//        if (res.online === 0) {
+//          this.$store.commit('changeTipContent', getErrMsg(1001));
+//        }
       })
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      flop(){
+        if(!this.isRequest){
+          this.flopStyle = '';
+          this.isRequest = true;
+          this.$store.dispatch('getTicketExchangeAction',{operation_id:this.movie_coupon.id}).then((res)=>{
+            this.$store.dispatch('getOperations');
+            setTimeout(()=>{
+              this.isRequest = false;
+            },1500)
+            if(res.voucher){
+              this.flopShow = 'movie'
+            }else {
+              setTimeout(()=>{
+                this.flopShow = 'coin'
+              },500)
+            }
+            this.flopResult = res;
+            this.flopStyle = 'transform:rotateY(180deg)'
+          }).catch(()=>{
+            this.isRequest = false;
+          })
+        }
+      },
       downloadArtifact(){
         this.$refs.task.useArtifact()
       },
@@ -1071,16 +1192,21 @@
       handleActivityBountyInfo(scene) {
         var prize_bounty = localStorage.getItem('prize_bounty')
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
-          if (res.prize_bounty > prize_bounty && this.activity_bounty.length > 0) {
-            this.bgShow = true;
-            this.contentShow = 'wawaTip';
-            switch (scene) {
-              case 1:
-                _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', 'websocket返回弹出', '']);
-                break;
-              case 2:
-                _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', '页面重新可见时弹出', '']);
-                break;
+          if (res.prize_bounty > prize_bounty) {
+            if(this.activity_bounty.length > 0){
+              this.bgShow = true;
+              this.contentShow = 'wawaTip';
+              switch (scene) {
+                case 1:
+                  _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', 'websocket返回弹出', '']);
+                  break;
+                case 2:
+                  _hmt.push(['_trackEvent', '抓中娃娃弹窗', '打开', '页面重新可见时弹出', '']);
+                  break;
+              }
+            }else if(this.movie_coupon.remain_count>0){
+              this.bgShow = true;
+              this.contentShow = 'sendmovie';
             }
           }
           localStorage.setItem('prize_bounty', res.prize_bounty);
@@ -1174,7 +1300,16 @@
           this.$store.dispatch('getOperations');
         })
       },
-      useCoupon(code, end_time, name, category,type='') {
+      useMovieCoupon(code){
+        var arr = code.split(',');
+        this.movie.code = arr[0] || '';
+        this.movie.pwd = arr[1] || '';
+        if(this.contentShow==='sendmovie'){
+         this.shuomingPre = 'sendmovie';
+        }
+        this.contentShow = 'moviecoupon';
+      },
+      useCoupon(code, end_time, name='', category,type='') {
         _hmt.push(['_trackEvent', '打开使用优惠券弹窗', '点击', '使用优惠券为：' + name, '']);
         if (category === 0) {
           if(type === 'baomihua'){
@@ -1224,10 +1359,17 @@
         })
       },
       closeBg2() {
-        this.bgShow = false
+        if(this.shuomingPre === 'sendmovie'){
+          this.isShowCoinTip = true;
+          setTimeout(()=>{
+            this.$store.dispatch('getUser');
+          },1500)
+        }
+        this.shuomingPre = ''
+        this.bgShow = false;
       },
       openTip(value, value2 = '',value3 = '') {
-        if (value === 'shuoming') {
+        if (value === 'shuoming' || value === 'sendmovierule') {
           this.shuomingPre = this.contentShow;
           _hmt.push(['_trackEvent', '打开活动说明', '点击', '打开活动说明', '']);
         }
@@ -1288,9 +1430,27 @@
         }, 60000)
       },
       closeBg(value) {
+        if(this.contentShow === 'moviecouponlist'){
+          this.closeBg2();
+          return;
+        }
         if(this.contentShowAfter){
           this.contentShow = this.contentShowAfter;
           this.contentShowAfter = '';
+        }
+        if(this.contentShow === 'wawaTip'  && this.movie_coupon.remain_count>0){
+          this.contentShow = 'sendmovie';
+          return;
+        }
+        if(this.contentShow === 'shuoming' && this.shuomingPre === 'wawaTip' && this.movie_coupon.remain_count>0){
+          this.contentShow = 'sendmovie';
+          return;
+        }
+        if(this.contentShow === 'sendmovie' && this.flopShow){
+          this.isShowCoinTip = true;
+          setTimeout(()=>{
+            this.$store.dispatch('getUser');
+          },1500)
         }
         if (value === 'red') {
           _hmt.push(['_trackEvent', '关闭红包弹窗', '点击', '', '']);
@@ -1299,10 +1459,10 @@
         }else if(value === 'redMachine' || ['failred','nobi','tencent'].includes(this.contentShow)){
           this.isAfterRed = true;
         }
-        if (this.contentShow === 'exchange' || this.contentShow === 'exchange2') {
+        if (this.contentShow === 'exchange' || this.contentShow === 'exchange2' || this.contentShow === 'moviecoupon') {
           return
         }
-        if(this.contentShow === 'dalibaotip'){
+        if(this.contentShow === 'dalibaotip' || this.contentShow === 'sendmovietip' || this.contentShow === 'sendmovierule'){
           this.isAfterRed = true;
         }
         this.bgShow = false;
@@ -1429,6 +1589,13 @@
       }
     },
     watch: {
+      movie_coupon(newValue,oldValue){
+        if(newValue.remain_count>0 && (JSON.stringify(oldValue) === '{}')){
+          this.bgShow = true;
+          this.contentShow = 'sendmovietip';
+          this.isAfterRed = false;
+        }
+      },
       dalibao(newValue,oldValue){
         for(var item of newValue){
           if(item.vouchers.length > 0){
@@ -3063,6 +3230,251 @@
       }
     }
   }
+
+  .bg-center28{
+    @include center;
+    .imgBg{
+      width: 640px;
+    }
+    >p{
+      font-size: 24px;
+      color:#ffcb47;
+      line-height: 24px;
+      text-decoration: underline;
+      @include centerX;
+      top:867px;
+    }
+  }
+
+  .bg-center29{
+    @include center;
+    >div{
+      width: 640px;
+      height: 920px;
+      background: url("./../assets/mymovie/window_ticket_bg.png");
+      background-size: 100% 100%;
+      padding: 0.1px;
+      position: relative;
+      h3{
+        font-size: 30px;
+        letter-spacing: 1.5px;
+        color: #ffcb47;
+        line-height: 30px;
+        margin: 77px 0 55px 0;
+      }
+      p{
+        color: #fff;
+        font-size: 26px;
+        line-height: 50px;
+        padding: 0 50px;
+        text-align: left;
+      }
+      .back{
+        @include centerX;
+        bottom: 118px;
+        i{
+          width: 53px;
+          height: 42px;
+          background: url("./../assets/mymovie/icon_back.png");
+          background-size: 100% 100%;
+          display: inline-block;
+          vertical-align: top;
+        }
+        line-height: 40px;
+        font-size: 30px;
+        color: #f5c344;
+      }
+    }
+  }
+
+  .bg-center30{
+    @include center;
+    >div{
+      width: 666px;
+      height: 920px;
+      text-align: center;
+      transform-style: preserve-3d;
+      transition: all 2s;
+      .pai{
+        position: relative;
+        img{
+          width: 640px;
+          display: block;
+          margin: 0 auto;
+        }
+        p{
+          @include centerX;
+          top:168px;
+          color: #ffcb47;
+          font-size: 30px;
+          line-height: 30px;
+          width: 100%;
+        }
+        .btn{
+          width: 384px;
+          height: 84px;
+          background: url("./../assets/mymovie/press_trun.png");
+          background-size: 100% 100%;
+          @include centerX;
+          bottom: 58px;
+          font-size: 34px;
+          line-height: 84px;
+          color: #fff;
+        }
+      }
+      .pai2{
+        transform: translate3d(0,-920px,-1px) rotateY(180deg);
+        p{
+          top:64px;
+        }
+        .btn{
+          bottom: 99px;
+        }
+      }
+      .pai3{
+        transform: translate3d(0,-920px,-1px) rotateY(180deg);
+        >img{
+          width: 666px;
+        }
+        p{
+          top:64px;
+        }
+        h3{
+          @include centerX;
+          top:137px;
+          font-size: 30px;
+          line-height: 30px;
+          color: #ffcb47;
+          letter-spacing: 1.5px;
+          span{
+            font-size: 80px;
+          }
+        }
+        .btn{
+          bottom: 87px;
+        }
+      }
+    }
+  }
+
+  .bg-center31{
+    @include center;
+    >div{
+      width:640px;
+      height: 920px;
+      background: url("./../assets/mymovie/window_ticket_bg.png");
+      background-size: 100% 100%;
+      padding: 0.1px;
+      >h3{
+        font-size: 30px;
+        line-height: 30px;
+        letter-spacing: 1.5px;
+        color: #ffcb47;
+        margin: 49px 0 26px 0;
+      }
+      ul{
+        width: 560px;
+        height: 780px;
+        margin: 0 auto;
+        overflow: auto;
+        li{
+          width: 100%;
+          height: 180px;
+          position: relative;
+          background: url("./../assets/mymovie/my_ticket_bg.png");
+          background-size: 100% 100%;
+          margin: 0 0 10px;
+          .dlCoupon{
+            dt{
+              color: #271509;
+            }
+            dd{
+              button{
+                background-image: linear-gradient(0deg,
+                  #442d14 0%,
+                  #62422c 99%),
+                linear-gradient(
+                    #fe7940,
+                    #fe7940);
+                background-blend-mode: normal,
+                normal;
+                border-radius: 28px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .bg-center32{
+    width: 100%;
+    height: 100%;
+    >div{
+      @include center;
+      z-index: 2;
+      >div{
+        .imgBg{
+          width: 640px;
+          display: block;
+        }
+        >div{
+          width: 560px;
+          height: 236px;
+          @include centerX;
+          top:104px;
+          padding: 46px 13px 0 17px;
+          >div{
+            width: 100%;
+            font-size: 32px;
+            line-height:56px;
+            color: #271509;
+            overflow: hidden;
+            margin: 0 0 30px 0;
+            h4{
+              float: left;
+              span{
+                visibility: hidden;
+              }
+            }
+            p{
+              float: left;
+            }
+            button{
+              outline: none;
+              border: none;
+              width: 110px;
+              height: 56px;
+              float: right;
+              color: #fff;
+              background-image: linear-gradient(0deg,
+                #442d14 0%,
+                #62422c 99%),
+              linear-gradient(
+                  #fe7940,
+                  #fe7940);
+              background-blend-mode: normal,
+              normal;
+              border-radius: 28px;
+            }
+          }
+        }
+        a{
+          color: #fff;
+          text-decoration: none;
+          font-size: 24px;
+          position: absolute;
+          right:43px;
+          bottom: 168px;
+          i{
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  }
+
+
   .price {
     position: absolute;
     width: 298px;

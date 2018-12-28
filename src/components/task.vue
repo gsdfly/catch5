@@ -1,56 +1,62 @@
 <template>
   <div class="task" :class="{'task-version2':version2}">
     <ul>
-      <li v-for="item in task_opes.slice(0,3)">
-        <div v-if="item.type === 7" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
-          <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-          <p :class="{'is_down':item.coupon.status === 2}">免费领币</p>
-        </div>
-        <div v-if="item.type === 12" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
-          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-          <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
-        </div>
-        <div v-if="item.type === 9">
-          <div @click="openTip('taskGameTip',item)" class="water" v-if="item.task_count < item.num && task_now.game_bounty<item.value">
-            <div class="bol" :style="'height:'+task_now.game_bounty/item.value*100+'%'"></div>
-            <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{item.value/info.coin_num}}</span>
-          </div>
-          <div @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value" class="m-water">领币</div>
-          <div v-if="item.task_count >= item.num" class="m-water is_down">领币</div>
-          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-          <p :class="{'is_down':item.task_count >= item.num}">投币送币</p>
-        </div>
-        <div v-if="item.type === 10">
-          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/task-2/icon_free_c.png" alt=""/>
-          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
-          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-          <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
-        </div>
-        <div v-if="item.type === 2" @click="openTip('bankCard',item)">
-          <span class="hot" :class="{'is_down':item.task_count >= item.num}">hot</span>
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_card.png" alt=""/>
-          <img v-if="item.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-          <p :class="{'is_down':item.task_count >= item.num}">办卡送公仔</p>
-          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-        </div>
-        <div v-if="item.type === 13" @click="openTip('tencent')">
-          <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
-          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-        <p>免费领币</p>
-        </div>
-        <div v-if="item.type === 16" @click="openTip('redGame')">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
-          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-          <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
-        </div>
-        <div v-if="item.type === 17" @click="openTip('artifact',item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
-          <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
-          <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
-        </div>
-      </li>
+      <li v-for="item in task_opes.slice(0,sliceLength)">
+    <div v-if="item.type === 7" @click="consumer(item)">
+      <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+      <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+      <p :class="{'is_down':item.coupon.status === 2}">免费领币</p>
+    </div>
+    <div v-if="item.type === 12" @click="consumer(item)">
+      <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+      <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+      <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
+    </div>
+    <div v-if="item.type === 9">
+      <div @click="openTip('taskGameTip',item)" class="water" v-if="item.task_count < item.num && task_now.game_bounty<item.value">
+        <div class="bol" :style="'height:'+task_now.game_bounty/item.value*100+'%'"></div>
+        <span class="game-num"><b>{{task_now.game_bounty/info.coin_num}}/</b>{{item.value/info.coin_num}}</span>
+      </div>
+      <div @click="receiveTask(item)" v-if="item.task_count < item.num && task_now.game_bounty>=item.value" class="m-water">领币</div>
+      <div v-if="item.task_count >= item.num" class="m-water is_down">领币</div>
+      <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+      <p :class="{'is_down':item.task_count >= item.num}">投币送币</p>
+    </div>
+    <div v-if="item.type === 10">
+      <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/task-2/icon_free_c.png" alt=""/>
+      <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
+      <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+      <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
+    </div>
+    <div v-if="item.type === 2" @click="openTip('bankCard',item)">
+      <span class="hot" :class="{'is_down':item.task_count >= item.num}">hot</span>
+      <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_card.png" alt=""/>
+      <img v-if="item.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+      <p :class="{'is_down':item.task_count >= item.num}">办卡送公仔</p>
+      <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+    </div>
+    <div v-if="item.type === 13" @click="openTip('tencent')">
+      <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+      <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+      <p>免费领币</p>
+    </div>
+    <div v-if="item.type === 16" @click="openTip('redGame')">
+      <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
+      <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+      <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
+    </div>
+    <div v-if="item.type === 17" @click="openTip('artifact',item)">
+      <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
+      <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
+      <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
+    </div>
+    </li>
+    <li v-if="movie_coupon.id">
+      <div @click="openTip('moviecouponlist')">
+        <img class="task-free" src="./../assets/mymovie/icon_free_movie.png" alt=""/>
+        <p>我的电影票</p>
+      </div>
+    </li>
     </ul>
   </div>
 </template>
@@ -65,7 +71,8 @@
     data(){
       return {
         isRequest:false,
-        artifact:{}
+        artifact:{},
+        sliceLength:3
       }
     },
     mounted(){
@@ -81,7 +88,8 @@
       info: state => state.user.info,
       isLogin: state => state.user.isLogin,
       activity_bounty: state => state.user.activity_bounty,
-      task_opes: state => state.user.task_opes
+      task_opes: state => state.user.task_opes,
+      movie_coupon:state => state.user.movie_coupon,
     }),
     methods:{
       useArtifact(){
@@ -224,6 +232,10 @@
         }else if(value === 'artifact'){
           _hmt.push(['_trackEvent', '任务：零钱神器', '点击', '打开零钱弹窗', '']);
           this.artifact = info
+        }else if(value === 'moviecouponlist'){
+          if(this.movie_coupon.vouchers.length===0){
+            value = 'sendmovietip';
+          }
         }
         this.$emit('openTip',value);
       },
@@ -275,6 +287,11 @@
     watch:{
       isLogin(){
         this.mountedStart();
+      },
+      movie_coupon(newValue){
+       if(newValue.id){
+         this.sliceLength = 2;
+       }
       }
     }
   }

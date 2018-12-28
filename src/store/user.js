@@ -59,10 +59,14 @@ const state = {
   },
   task_opes:[],
   dalibao:[],
-  redGame:{}
+  redGame:{},
+  movie_coupon:{}
 }
 
 const mutations = {
+  setMovieCoupon(state,obj){
+    state.movie_coupon = obj
+  },
   changeIsGuide(state,value){
     state.isShowGuide = value;
   },
@@ -428,6 +432,8 @@ const actions = {
             }else {
               undoneOpe.push(res[i])
             }
+          }else if(res[i].type === 19){
+            ctx.commit('setMovieCoupon',res[i])
           }
         }
         if(dalibao.length>0){
@@ -538,7 +544,16 @@ const actions = {
         error(err)
       })
     })
-  }
+  },
+  getTicketExchangeAction:function (ctx,params) {
+  return new Promise((success,error)=>{
+    api.getTicketExchange({token:CONFIG.token,operation_id:params.operation_id,machine_no:ctx.state.machine_no}).then((data)=>{
+      success(data.data)
+    }).catch((err)=>{
+      error(err)
+    })
+  })
+},
 
 }
 
