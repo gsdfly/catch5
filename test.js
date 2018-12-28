@@ -1,1 +1,1 @@
-if(1){console.log('111')}
+var path =  require('path')
