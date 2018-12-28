@@ -23,7 +23,7 @@ var qiniuPlugin = new QiniuPlugin({
   bucket: 'catch-res',
 
   // 上传到七牛后保存的文件名
-  path: 'rc/[asset]'
+  path: 'rc/[version]/[asset]'
 
 });
 var options =   {
