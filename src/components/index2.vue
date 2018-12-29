@@ -979,9 +979,9 @@
         this.Indicator.close();
         this.showHtml = true;
         this.isGetImg = true;
-//        if (res.online === 0) {
-//          this.$store.commit('changeTipContent', getErrMsg(1001));
-//        }
+        if (res.online === 0) {
+          this.$store.commit('changeTipContent', getErrMsg(1001));
+        }
       })
 //      this.$store.dispatch('getUser')
     },
