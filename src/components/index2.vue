@@ -988,7 +988,6 @@
     methods: {
       flop(){
         if(!this.isRequest){
-          this.flopStyle = '';
           this.isRequest = true;
           this.$store.dispatch('getTicketExchangeAction',{operation_id:this.movie_coupon.id}).then((res)=>{
             this.$store.dispatch('getOperations');
@@ -1192,6 +1191,7 @@
       handleActivityBountyInfo(scene) {
         var prize_bounty = localStorage.getItem('prize_bounty');
         this.flopShow ='';
+        this.flopStyle = '';
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
           if (res.prize_bounty > prize_bounty) {
             if(this.activity_bounty.length > 0){
