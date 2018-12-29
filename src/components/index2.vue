@@ -1190,7 +1190,8 @@
         }
       },
       handleActivityBountyInfo(scene) {
-        var prize_bounty = localStorage.getItem('prize_bounty')
+        var prize_bounty = localStorage.getItem('prize_bounty');
+        this.flopShow ='';
         this.$store.dispatch('getActivityBountyInfo').then((res) => {
           if (res.prize_bounty > prize_bounty) {
             if(this.activity_bounty.length > 0){
