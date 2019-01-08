@@ -1,7 +1,7 @@
 <template>
   <div class="recharge-lists clearfix" :class="{'version2':version2}">
-    <img class="cat" src="./../assets/miqi/cat2.png" alt="">
-    <p class="tmallp">得宝天猫旗舰店送你免费抓娃娃</p>
+    <img class="cat" src="./../assets/mzc/logo.png" alt="">
+    <p class="tmallp">美赞臣官方旗舰店送你免费抓娃娃</p>
     <div @click="goShop" :class="{'active':tmall_operation.task_count >= tmall_operation.num}">
       <div class="recharge-item-t" :class=""><span class="twoCoin"></span><i>3币</i></div>
       <div class="recharge-item-b">免费领币</div>
@@ -223,7 +223,7 @@
 
   .recharge-lists .cat {
     /*width: 193px;*/
-    height: 131px;
+    height: 113px;
     display: block;
     margin: 0 auto;
   }
@@ -237,7 +237,7 @@
     color: #ffffff;
     width: 100%;
     text-align: center;
-    margin: 9px 0 11px 0;
+    margin: 20px 0 11px 0;
   }
 
   .recharge-lists > div {

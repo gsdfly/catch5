@@ -30,7 +30,7 @@
             <div class="kefu" @click.stop="">
               <p id="support" @click="showKefu">
                 <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_kefu.png" alt=""><span>客服</span>-->
-                <img src="./../assets/miqi/icon_kefu.png" alt=""><span>客服</span>
+                <img src="./../assets/mzc/icon_kefu.png" alt=""><span>客服</span>
               </p>
               <div class="kefu2" :style="isKefuStyle">
                 <div class="kefu2-right">
@@ -44,7 +44,7 @@
                 </div>
                 <div class="kefu2-left" @click="hideKefu">
                   <!--<img src="http://res.catchme.com.cn/imgs-2018-04-10/icon_close1.png" alt="">-->
-                  <img src="./../assets/miqi/icon_close1.png" alt="">
+                  <img src="./../assets/mzc/icon_close1.png" alt="">
                 </div>
               </div>
             </div>
@@ -54,7 +54,7 @@
 
       <div class="activitys" @click="goTmall">
         <!--<img src="http://res.catchme.com.cn/activity/miqi/image.png" alt=""/>-->
-        <img src="./../assets/miqi/banner.png" alt=""/>
+        <img src="./../assets/mzc/banner.png" alt=""/>
         <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
         <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
         <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
@@ -109,8 +109,8 @@
 
               <div class="startgame"  :class="{'hasclick':start_desc == '投币中','hasuse':(tmall_operation.task_count >= tmall_operation.num) && user.coins<=0}" id="coin-operated"
                    @click="handleStartingDevice">{{start_desc ? start_desc : '投币启动'}}
-                <img class="tmallfree" v-if="(tmall_operation.task_count < tmall_operation.num) || user.coins>0" src="./../assets/miqi/free.png" alt="">
-                <img class="tmallfree2" v-else="" src="./../assets/miqi/free_over.png" alt="">
+                <img class="tmallfree" v-if="(tmall_operation.task_count < tmall_operation.num) || user.coins>0" src="./../assets/mzc/free.png" alt="">
+                <!--<img class="tmallfree2" v-else="" src="./../assets/miqi/free_over.png" alt="">-->
               </div>
               <!--<div class="game-num norecharge" v-if="user.coins<=0 && coin[0].status!=0">您还没有游戏币，请先充值<span></span>-->
               <!--</div>-->
@@ -549,7 +549,7 @@
     },
     methods:{
       goTmall(){
-        window.location.href = 'https://tempo.tmall.com/shop/view_shop.htm?spm=687.8433302.20001.1.8UjglF&mytmenu=mdianpu&utkn=g%2Corsw24dpwxb3djvz3g333rxmxwrll2q1540881427642&user_number_id=1761902730&scm=1028.1.2.20001'
+        window.location.href = 'https://brandhub.m.tmall.com/3943431332?wh_weex=true&brandhub_sm=offline.BrandhubPage_Home.20314.nianhuojie.916&mm_gxbid=1_2670962_3d5bcf68ad50aca8d688ebc3031c8a07'
       },
       closeBg(value) {
         if (value === 'red') {
@@ -1223,7 +1223,7 @@
     right: -13.2px;
     transform: translate3d(100%, 0, 0);
     transition: all 0.4s;
-    background: url("./../assets/miqi/service_bg.png") no-repeat;
+    background: url("./../assets/mzc/service_bg.png") no-repeat;
     background-size: 100% 100%;
     .kefu2-left {
       float: right;
@@ -1242,7 +1242,7 @@
     .kefu2-right {
       width: 234px;
       height: 347px;
-      padding: 30px 0 0 0;
+      padding: 17px 0 0 0;
       float: right;
       /*background: #dff5ff;*/
       border-radius: 0 0 0 18px;
@@ -1251,7 +1251,7 @@
         height: 144px;
         /*padding: 4px;*/
         margin: 0 auto;
-        background: #043aa3;
+        background: #eb5e5a;
         border-radius: 4px;
         padding: 0.1px;
         img {
@@ -1262,17 +1262,17 @@
         }
       }
       h3 {
-        font-size: 22px;
-        line-height: 24px;
+        font-size: 24px;
+        line-height: 30px;
         color: #353535;
-        margin: 22px 0 24px 0;
+        margin: 19px 0 21px 0;
         text-align: center;
       }
       p {
         font-size: 22px;
         text-align: center;
         a {
-          color: #1b3dc3;
+          color: #eb5e5a;
         }
         span {
           display: inline-block;
@@ -2061,15 +2061,7 @@
     /*background: url("http://res.catchme.com.cn/activity/miqi/bg.png") no-repeat;*/
     /*background: url("./../assets/miqi/bg.png") no-repeat;*/
     /*background-size: 100% 100%;*/
-    background-image: linear-gradient(-2deg,
-      #0e2585 0%,
-      #2a4abd 49%,
-      #0f2382 100%),
-    linear-gradient(
-        #000000,
-        #000000);
-    background-blend-mode: normal,
-    normal;
+    background: url("./../assets/mzc/bg.png");
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -2161,7 +2153,7 @@
     padding: 0 22px;
     line-height: 62px;
     border-radius: 31px;
-    background: #d5e3fd;
+    background: #ffc579;
     float: left;
     /*min-width: 2px;*/
     position: relative;
@@ -2194,20 +2186,20 @@
     display: inline-block;
     /*background: url("http://res.catchme.com.cn/imgs-2018-04-10/icon_portrait_bi.png") no-repeat;*/
     /*background: url("./../assets/small/icon_portrait_bi.png") no-repeat;*/
-    background: url("./../assets/miqi/icon_portrait_bi.png");
+    background: url("./../assets/mzc/icon_portrait_bi.png");
     background-size: 100% 100%;
     font-size: 0;
   }
 
   .header .header-main .game span {
     font-size: 28px;
-    color: #1b3dc3;
+    color: #eb5e5a;
     display: inline-block;
   }
 
   .header .header-main .game span.coins-num {
     font-size: 36px;
-    color: #1b3dc3;
+    color: #eb5e5a;
     /*font-weight: 600;*/
     margin: 0 0 0 10px;
     line-height: 70px;
@@ -2221,7 +2213,7 @@
   .header .header-main .kefu {
     /*width: 0.62px;*/
     height: 62px;
-    background: #d5e3fd;
+    background: #ffc579;
     /*border-radius: 50%;*/
     /*float: right;*/
     /*position: relative;*/
@@ -2246,7 +2238,7 @@
 
   .header .header-main .kefu > p > span {
     /*display: inline-block;*/
-    color: #1b3dc3;
+    color: #eb5e5a;
     font-size: 28px;
     height: 28px;
     line-height: 70px;
@@ -2303,7 +2295,7 @@
   .main .centerout .center {
     width: 100%;
     /*height: 5px;*/
-    background: #fff url("./../assets/miqi/bg_center.png") no-repeat;
+    background: #fff url("./../assets/mzc/bg_center.png") no-repeat;
     background-size: 100%;
     /*margin: 0.32px 0 0 0;*/
     /*padding: 0.28px 0.2px 0 0.2px;*/
@@ -2611,15 +2603,15 @@
   }
 
   .main .center > h3 {
-    width: 226px;
-    height: 90px;
+    width: 194px;
+    height: 74px;
     /*font-size: 0.32px;*/
-    font-size: 34px;
-    color: #043aa3;
+    font-size: 32px;
+    color: #fc8a15;
     /*margin: 0 0 0.1px 0;*/
     /*height: 0.64px;*/
-    background: #92d0fc;
-    line-height: 90px;
+    background: #ffc579;
+    line-height: 74px;
     position: absolute;
     border-radius: 0 16px 0 0;
     right: 0px;
@@ -2645,7 +2637,7 @@
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
     /*background: url("http://res.catchme.com.cn/activity/miqi/press_begin.png");*/
-    background: url("./../assets/miqi/press_begin.png");
+    background: url("./../assets/mzc/press_begin.png");
     background-size: 100% 100%;
     border: none;
     outline: none;
@@ -2687,7 +2679,7 @@
   .main .center .game-num {
     width: 418px;
     height: 93px;
-    border: 1px solid #043aa3;
+    border: 1px solid #a40804;
     border-radius: 18px;
     font-size: 24px;
     line-height: 91px;
@@ -2703,7 +2695,7 @@
   }
 
   .main .center .game-num.norecharge {
-    border: 1px solid #043aa3;
+    border: 1px solid #a40804;
   }
 
   .main .center .game-num i.active {
@@ -2715,19 +2707,19 @@
     width: 20%;
     float: left;
     font-size: 50px;
-    color: #043aa3;
+    color: #a40804;
     text-align: center;
     height: 71px;
     line-height: 71px;
     /*height: 67px;*/
     /*line-height: 67px;*/
-    border-right: 1px solid #043aa3;
+    border-right: 1px solid #a40804;
     margin: 10px 0;
   }
 
   .main .center .game-num i:last-of-type {
     border-right: none;
-    border-left: 1px solid #043aa3;
+    border-left: 1px solid #a40804;
     float: right;
   }
 
@@ -2746,7 +2738,7 @@
   .main .center .game-num > div h3 {
     /*font-size: 0.42px;*/
     font-size: 40px;
-    color: #043aa3;
+    color: #a40804;
     font-weight: 600;
     /*line-height: 0.42px;*/
     line-height: 40px;
