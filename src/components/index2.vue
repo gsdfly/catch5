@@ -431,7 +431,8 @@
   import {getErrMsg} from './../util/index'
   import Toast from 'mint-ui/lib/Toast'
   import Clipboard from 'clipboard';
-//  import quanprogress from './quanprogress.vue'
+  import socketio from 'socket.io-client';
+  //  import quanprogress from './quanprogress.vue'
 //  import task from './task.vue'
 
 
@@ -548,6 +549,26 @@
 //      this.$store.dispatch('getUser')
     },
     methods:{
+      socket() {
+        var self = this;
+        if (!self.isConnectScoket) {
+          self.io = socketio(CONFIG.socketUrl, {
+            query: 'machine=' + CONFIG.machine_no,
+            transports: ['websocket', 'polling'],
+            reconnection: true,
+            reconnectionAttempts: 5
+          })
+          self.io.on('connect', function () {
+            self.isConnectScoket = true
+            self.io.on('prize', function () {
+              self.$store.dispatch('getUser')
+            })
+          })
+          self.io.on('disconnect', function () {
+            self.isConnectScoket = false
+          })
+        }
+      },
       goTmall(){
         window.location.href = 'https://brandhub.m.tmall.com/3943431332?wh_weex=true&brandhub_sm=offline.BrandhubPage_Home.20314.nianhuojie.916&mm_gxbid=1_2670962_3d5bcf68ad50aca8d688ebc3031c8a07'
       },
@@ -607,6 +628,7 @@
         this.$store.dispatch('startingDevice', this.gameNum * this.info.coin_num)
           .then(() => {
             //投币成功，重新调用获取task_now的接口
+            this.socket();
             this.$store.dispatch('getActivityBountyInfo');
             this.is_lamp_after = true
             this.is_start = false
