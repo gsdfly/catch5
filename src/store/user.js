@@ -325,7 +325,7 @@ const actions = {
       api.getOperations({machine_no:ctx.state.machine_no,token:CONFIG.token}).then((data)=> {
         var res = data.data;
         for(var i=0;i<res.length;i++){
-          if(res[i].type === 14){
+          if(res[i].type === 14 || res[i].type === 20){
             ctx.commit('setTmallOperation',res[i]);
           }
         }
