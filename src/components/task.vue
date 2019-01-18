@@ -3,12 +3,12 @@
     <ul>
       <li v-for="item in task_opes.slice(0,3)">
         <div v-if="item.type === 7" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/peiqi/icon_free_receive_a.png" alt=""/>
           <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.coupon.status === 2}">免费领币</p>
         </div>
         <div v-if="item.type === 12" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/peiqi/icon_free_receive_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
@@ -23,8 +23,8 @@
           <p :class="{'is_down':item.task_count >= item.num}">投币送币</p>
         </div>
         <div v-if="item.type === 10">
-          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/task-2/icon_free_c.png" alt=""/>
-          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
+          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/peiqi/icon_free_receive_c.png" alt=""/>
+          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/peiqi/icon_free_receive_c_ling.png" alt="">
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
         </div>
@@ -36,17 +36,17 @@
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         </div>
         <div v-if="item.type === 13" @click="openTip('tencent')">
-          <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/peiqi/icon_free_receive_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         <p>免费领币</p>
         </div>
         <div v-if="item.type === 16" @click="openTip('redGame')">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/peiqi/icon_free_receive_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
         <div v-if="item.type === 17" @click="openTip('artifact',item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a2.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/peiqi/icon_free_receive_a.png" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
@@ -307,12 +307,14 @@
       top:-18px;
     }
     ul{
-      background: #fff;
+      background: #efae1d;
+      border: solid 8px #f8ce1d;
       width: 706px;
       position: absolute;
       height:100%;
       border-radius: 16px;
       left: 22px;
+      /*border: solid 8px #f8ce1d;*/
       li{
         width: calc(100% / 3);
         height: 100%;
@@ -370,8 +372,10 @@
           .m-water{
             width: 90px;
             height: 90px;
-            background: url("./../assets/task-2/water.png") no-repeat;
-            background-size: 100% 100%;
+            /*background: url("./../assets/task-2/water.png") no-repeat;*/
+            /*background: url("./../assets/peiqi/icon_free_receive_b.png");*/
+            /*background-size: 100% 100%;*/
+            background: #3375b8;
             border-radius: 50%;
             font-size: 30px;
             color: #fff;
@@ -400,7 +404,7 @@
             /*rgba(242, 123, 0, 0.51);*/
             .bol{
               width: 100%;
-              background: url("./../assets/task/b_bg.png");
+              background: url("./../assets/peiqi/icon_free_receive_b.png");
               animation: wave-animation 1s infinite linear;
               transition: all 1s linear;
               background-size: 102px 116px;
@@ -422,10 +426,10 @@
             height: 24px;
             font-size: 24px;
             line-height: 24px;
-            color: #494949;
+            color: #ca0e0f;
             margin: 4px 0 0 0;
             &.is_down{
-              color: #b3b3b3;
+              /*color: #b3b3b3;*/
             }
           }
         }
@@ -436,8 +440,8 @@
   .task-version2{
     /*padding: 0 18px;*/
     height: 184px;
-    ul{
-      padding: 8px 0 0 0;
-    }
+    /*ul{*/
+      /*padding: 8px 0 0 0;*/
+    /*}*/
   }
 </style>

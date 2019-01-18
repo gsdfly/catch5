@@ -5,9 +5,9 @@
         <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/big/recharge.png" alt="">
         <!--<img src="http://res.catchme.com.cn/activity/catch3/rule.png" alt="">-->
         <!--<img src="http://res.catchme.com.cn/activity/catch3/con_bg.png" alt="">-->
-        <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt="">
-        <img src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt="">
+        <img src="./../assets/peiqi/shuoming2.png" alt="">
+        <img src="./../assets/peiqi/shuoming.png" alt="">
+        <img src="./../assets/peiqi/jieshi.png" alt="">
         <!--<img src="http://res.catchme.com.cn/activity/task-2/weibao.png" alt="">-->
       </div>
       <div class="header">
@@ -34,7 +34,7 @@
             <div class="kefu" @click.stop="">
               <p id="support" @click="showKefu">
                 <!--<img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_kefu.png" alt=""><span>客服</span>-->
-                <img src="./../assets/small/icon_kefu.png" alt=""><span>客服</span>
+                <img src="./../assets/peiqi/icon_kefu.png" alt=""><span>客服</span>
               </p>
               <div class="kefu2" :style="isKefuStyle">
                 <div class="kefu2-right">
@@ -75,7 +75,7 @@
                 <div class="d">
                   <div class="dd" :style="ringStyle">
                     <div>
-                      <img class="img" src="./../assets/task-2/processed_bg.png" alt="">
+                      <img class="img" src="./../assets/peiqi/processed_bg.png" alt="">
                       <!--<img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">-->
                       <div class="star" :class="{'animation':starClass==='animation'}">
                         <img class="star1" src="./../assets/ring/star1.png" alt="">
@@ -266,7 +266,7 @@
                 <p>有效期至：{{couponInfo.end_time | handleEndTime}}</p>
                 <button :data-clipboard-target="'#copy'" @click="copy" class="btncopy" id="copyBtn">复制</button>
               </div>
-              <img src="http://res.catchme.com.cn/activity/task2/shuoming.png" alt="" @click.prevent=""
+              <img src="./../assets/peiqi/shuoming2.png" alt="" @click.prevent=""
                    class="imgBg"/>
               <a class="go-coupon-list" href="javascript:void(0)"
                  @click.stop="couponList">我的优惠券：{{activity_bounty | handleActivityBounty}} <i
@@ -389,8 +389,8 @@
 
         <div class="bg-center13" v-if="contentShow == 'free'" @click.stop="">
           <div>
-            <img @click.prevent="" src="http://res.catchme.com.cn/activity/guide/image_free5.png" alt="" class="imgBg"/>
-            <img class="btn" src="./../assets/guide/press_go_catch.png" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2"/>
+            <img @click.prevent="" src="./../assets/peiqi/image_free.png" alt="" class="imgBg"/>
+            <img class="btn" src="./../assets/peiqi/press_go_catch.png" v-show="isShowGzhButtton" @click.prevent="" @touchstart="press1" @touchend="press2"/>
             <!--<img class="qrcode" src="./../assets/guide/code.png"  v-show="isShowGzhImg" alt=""/>-->
             <p>关注公众号回复“<span>{{freeTip}}</span>”即可领免费币</p>
             <img :style="gzhCodeStyle" @click.prevent="" :src="freeTipImg" alt="" class="qrcode"/>
@@ -437,7 +437,8 @@
         <div class="bg-center16" v-if="contentShow == 'jieshi'" @click.stop="">
           <div class="center16-main" :class="{'main-baomihua':currentActivityBounty.voucher_batch.category===0}">
             <img v-if="currentActivityBounty.voucher_batch.category===0" class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi2.png" alt="">
-            <img v-else class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>
+            <!--<img v-else class="imgBg" src="http://res.catchme.com.cn/activity/guide/jieshi.png" alt=""/>-->
+            <img v-else class="imgBg" src="./../assets/peiqi/jieshi.png" alt=""/>
             <h3 v-if="currentActivityBounty.voucher_batch.category===0">
               累计抓取{{currentActivityBounty.voucher_batch.value / info.coin_num}}次没抓中?
             </h3>
@@ -458,7 +459,8 @@
 
         <div class="bg-center16" v-if="contentShow == 'shuoming'" @click.stop="">
           <div class="center16-main">
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt=""/>
+            <img class="imgBg" src="./../assets/peiqi/shuoming.png" alt=""/>
+            <!--<img class="imgBg" src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt=""/>-->
             <h2>活动说明</h2>
             <ul class="content">
               <li v-for="(item,index) in activity_bounty">
@@ -483,7 +485,8 @@
 
         <div class="bg-center16" v-if="contentShow == 'wawaTip'" @click.stop="">
           <div class="center16-main">
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/guide/catch.png" alt=""/>
+            <!--<img class="imgBg" src="http://res.catchme.com.cn/activity/guide/catch.png" alt=""/>-->
+            <img class="imgBg" src="./../assets/peiqi/catch.png" alt="">
             <h3>抓中公仔将重新开始累积任务值<br/>开始新一轮的挑战吧<i></i></h3>
             <p @click="openTip('shuoming')">查看活动说明</p>
             <!--<a class="go-coupon-list" href="javascript:void(0)"-->
@@ -1557,14 +1560,15 @@
     font-size: 30px;
     border: none;
     color: #fff;
-    background-image: linear-gradient(0deg,
-      rgba(253, 102, 59, 0.65) 0%,
-      rgba(254, 127, 66, 0.65) 100%),
-    linear-gradient(
-        #fe7940,
-        #fe7940);
-    background-blend-mode: normal,
-    normal;
+    /*background-image: linear-gradient(0deg,*/
+      /*rgba(253, 102, 59, 0.65) 0%,*/
+      /*rgba(254, 127, 66, 0.65) 100%),*/
+    /*linear-gradient(*/
+        /*#fe7940,*/
+        /*#fe7940);*/
+    /*background-blend-mode: normal,*/
+    /*normal;*/
+    background-color: #e6212a;
     box-shadow: 0px 3px 18px rgba(134, 106, 49, 0.13),
     0px 5px 32px rgba(134, 106, 49, 0.33);
     border-radius: 27px;
@@ -1603,14 +1607,14 @@
   .tipTitle {
     width: 100%;
     font-size: 36px;
-    color: #fff;
+    color: #f8ce1d;
     line-height: 36px;
     height: 36px;
     position: relative;
     margin: 0 0 42px 0;
     b {
       padding: 0 10px;
-      background: #fd673b;
+      background: #e6212a;
       position: absolute;
       left: 50%;
       top: 0;
@@ -1622,7 +1626,7 @@
       left: 33px;
       top: 17px;
       height: 2px;
-      background: #fff;
+      background: #f8ce1d;
     }
   }
 
@@ -1634,13 +1638,14 @@
     justify-content: space-between;
     @include centerY;
     dt {
-      color: #fff;
+      color: #ca0e0f;
       float: left;
       margin: 0 0 0 24px;
       text-align: left;
       h4 {
         font-size: 36px;
         line-height: 36px;
+        text-shadow: 2px 2px 0px #fff;
       }
       p {
         margin: 14px 0 0 0;
@@ -1666,10 +1671,16 @@
   }
 
   .kefu2 {
-    width: 292px;
+    width: 324px;
+    height: 347px;
+    background: url("./../assets/peiqi/service_bg.png");
+    background-size: 100% 100%;
+    /*width: 292px;*/
     position: absolute;
     z-index: 999;
     /*top:calc(6% - 0.12px);*/
+    margin: -14px -13px 0 0;
+    padding: 13px 13px 0 19px;
     top: 0;
     right: 0;
     transform: translate3d(100%, 0, 0);
@@ -1678,7 +1689,7 @@
       float: right;
       width: 58px;
       height: 62px;
-      background: #fff2ee;
+      /*background: #fdfaec;*/
       border-radius: 18px 0 0 18px;
       line-height: 62px;
       text-align: center;
@@ -1690,35 +1701,35 @@
     }
     .kefu2-right {
       width: 234px;
-      height: 352px;
+      /*height: 352px;*/
       padding: 30px 0 0 0;
       float: right;
-      background: #fff2ee;
+      /*background: #fdfaec;*/
       border-radius: 0 0 0 18px;
       .kefu2-img {
-        width: 158px;
-        height: 158px;
-        padding: 9px;
+        width: 143px;
+        height: 143px;
+        padding: 3px;
         margin: 0 auto;
-        background: #fff;
+        background: #ca0e0f;
         border-radius: 4px;
         img {
-          width: 140px;
-          height: 140px;
+          width: 137px;
+          height: 137px;
         }
       }
       h3 {
         font-size: 22px;
         line-height: 24px;
         color: #353535;
-        margin: 12px 0 38px 0;
+        margin: 12px 0 28px 0;
         text-align: center;
       }
       p {
         font-size: 22px;
         text-align: center;
         a {
-          color: #576b95;
+          color: #ca0e0f;
         }
         span {
           display: inline-block;
@@ -1754,7 +1765,7 @@
       > div {
         width: 100%;
         height: 700px;
-        background: $bgColor;
+        background: #e6212a;
         border-radius: 20px;
         padding: 34px 0 0 0;
         img {
@@ -1765,8 +1776,17 @@
         p {
           font-size: 28px;
           line-height: 28px;
-          color: rgba(255, 255, 255, 0.5);
+          color: #ffffff;
           margin: 82px 0 0 0;
+        }
+        .tipTitle{
+          b{
+            color: #fdce3f;
+            background: #e6212a;
+          }
+          span{
+            background: #fdce3f;
+          }
         }
       }
     }
@@ -1876,7 +1896,7 @@
           /*background: url("./../assets/catch3/big_red_bg.png") no-repeat;*/
           /*background-size: 100% 100%;*/
           margin: 0 auto;
-          color: #fff;
+          color: #ca0e0f;
           padding: 0.1px;
           @include centerX;
           top: 112px;
@@ -1885,11 +1905,12 @@
             font-size: 44px;
             line-height: 44px;
             margin: 40px 0 20px 0;
+            text-shadow: 2px 2px 0px #fff;
           }
           p {
             font-size: 24px;
             line-height: 24px;
-            color: rgba(255, 255, 255, 0.7);
+            color:#ca0e0f;
             margin: 0 0 28px 0;
           }
           button {
@@ -2124,7 +2145,7 @@
       .bg-center11-main {
         width: 640px;
         height: 490px;
-        background-color: #fd673b;
+        background-color: #e6212a;
         /*background: url("./../assets/task-2/con_bg.png") no-repeat;*/
         /*background-size: 100% 100%;*/
         border-radius: 20px;
@@ -2143,7 +2164,8 @@
             position: relative;
             width: 100%;
             height: 180px;
-            background: url("http://res.catchme.com.cn/activity/task2/ticket_bg.png") no-repeat;
+            background: url("./../assets/peiqi/ticket_bg.png");
+            /*background: url("http://res.catchme.com.cn/activity/task2/ticket_bg.png") no-repeat;*/
             background-size: 100% 100%;
           }
           h5 {
@@ -2161,12 +2183,12 @@
           }
           > P {
             font-size: 24px;
-            color: #fff;
+            color: #f8ce1d;
             line-height: 24px;
             margin: 16px 0 40px 0;
           }
           .go-coupon-list {
-            color: #fff;
+            color: #f8ce1d;
             font-size: 22px;
             text-decoration: none;
             position: absolute;
@@ -2201,7 +2223,7 @@
       > div {
         width: 640px;
         height: 900px;
-        background: $bgColor;
+        background: #e6212a;
         border-radius: $bgRadius;
         padding: 34px 0 0 0;
         ul {
@@ -2213,7 +2235,8 @@
             background: red;
             width: 584px;
             height: 180px;
-            background: url("http://res.catchme.com.cn/activity/task2/ticket_bg.png") no-repeat;
+            /*background: url("http://res.catchme.com.cn/activity/task2/ticket_bg.png") no-repeat;*/
+            background: url("./../assets/peiqi/ticket_bg.png");
             background-size: 100% 100%;
             margin: 0 auto 9px auto;
             position: relative;
@@ -2241,12 +2264,12 @@
         text-align: center;
         font-size: 30px;
         line-height: 30px;
-        color: #353535;
+        color: #ffffff;
         left: 0;
-        top:723px;
+        top:730px;
         span{
           font-size: 34px;
-          color: #de201b;
+          color: #fbe945;
         }
       }
       .btn{
@@ -2316,7 +2339,8 @@
   .bg-center15 {
     width: 666px;
     height: 750px;
-    background: url("http://res.catchme.com.cn/activity/task2/window_bg.png") no-repeat;
+    /*background: url("http://res.catchme.com.cn/activity/task2/window_bg.png") no-repeat;*/
+    background: url("./../assets/peiqi/window_bg.png");
     background-size: 100% 100%;
     border-radius: 20px;
     @include center;
@@ -2329,6 +2353,7 @@
       width: 280px;
       height: 280px;
       background-color: #999999;
+      border: solid 10px #fdcc2a;
       /*border: solid 10px #ffffff;*/
       border-radius: 50%;
       overflow: hidden;
@@ -2337,7 +2362,7 @@
       box-shadow: 0 11px 50px rgba(134, 106, 49, 0.49);
       .bol {
         width: 100%;
-        background: url("./../assets/task/b_bg2.png") repeat-x;
+        background: url("./../assets/peiqi/window_free_b_bg.png") repeat-x;
         position: absolute;
         bottom: 0;
         left: 0;
@@ -2348,7 +2373,7 @@
       .game-num {
         position: relative;
         font-size: 60px;
-        color: #fff;
+        color: #fdcc2a;
         line-height: 280px;
         b {
           font-size: 100px;
@@ -2359,8 +2384,9 @@
       width: 100%;
       font-size: 50px;
       text-align: center;
-      color: #353535;
+      color: #ca0e0f;
       line-height: 50px;
+      text-shadow: 2px 2px 0px #fff;
       &:last-of-type {
         font-size: 36px;
         line-height: 36px;
@@ -2372,14 +2398,7 @@
       border: none;
       width: 360px;
       height: 70px;
-      background-image: linear-gradient(0deg,
-        rgba(253, 102, 59, 0.65) 0%,
-        rgba(254, 127, 66, 0.65) 100%),
-      linear-gradient(
-          #fd663b,
-          #fd663b);
-      box-shadow: 0px 3px 18px 0px rgba(134, 106, 49, 0.13),
-      0px 5px 32px 0px rgba(134, 106, 49, 0.33);
+      background-color: #e6212a;
       border-radius: 35px;
       font-size: 32px;
       color: #fff;
@@ -2453,16 +2472,21 @@
         z-index: 666;
       }
       .btn {
-        width: 414px;
-        height: 124px;
-        background: url("./../assets/guide/press_iknow.png");
-        background-size: 100% 100%;
+        width: 360px;
+        height: 70px;
+        background-color: #f6bf23;
+        /*width: 414px;*/
+        /*height: 124px;*/
+        /*background: url("./../assets/guide/press_iknow.png");*/
+        /*background-size: 100% 100%;*/
         position: absolute;
         @include centerX;
         top: 647px;
         font-size: 32px;
-        color: #fd673b;
+        color: #e20516;
         line-height: 80px;
+        margin: 2px 0 52px 0;
+        border-radius: 35px;
       }
       h3 {
         font-size: 34px;
@@ -3303,8 +3327,9 @@
   .jo-index .jo-index-div {
     width: 100%;
     height: 100%;
-    background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");
-    background-size: 100% 100%;
+    background: #e6212a;
+    /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");*/
+    /*background-size: 100% 100%;*/
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -3397,7 +3422,7 @@
     padding: 0 22px;
     line-height: 62px;
     border-radius: 31px;
-    background: #fff2ee;
+    background: #fdfaec;
     float: left;
     /*min-width: 2px;*/
     position: relative;
@@ -3427,7 +3452,7 @@
 
   .header .header-main .game i {
     font-size: 40px;
-    color: #fe5f5b;
+    color: #ca0f0f;
     font-weight: 500;
     text-align: center;
   }
@@ -3438,20 +3463,20 @@
     line-height: 66px;
     display: inline-block;
     /*background: url("http://res.catchme.com.cn/imgs-2018-04-10/icon_portrait_bi.png") no-repeat;*/
-    background: url("./../assets/small/icon_portrait_bi.png") no-repeat;
+    background: url("./../assets/peiqi/icon_portrait_bi.png") no-repeat;
     background-size: 100% 100%;
     font-size: 0;
   }
 
   .header .header-main .game span {
     font-size: 28px;
-    color: #fe5f5b;
+    color: #ca0f0f;
     display: inline-block;
   }
 
   .header .header-main .game span.coins-num {
     font-size: 36px;
-    color: #fe5f5b;
+    color: #ca0f0f;
     font-weight: 600;
     margin: 0 0 0 10px;
     line-height: 70px;
@@ -3465,7 +3490,7 @@
   .header .header-main .kefu {
     /*width: 0.62px;*/
     height: 62px;
-    background: #fff2ee;
+    background: #fdfaec;
     /*border-radius: 50%;*/
     /*float: right;*/
     /*position: relative;*/
@@ -3491,7 +3516,7 @@
 
   .header .header-main .kefu > p > span {
     /*display: inline-block;*/
-    color: #fd643b;
+    color: #ca0f0f;
     font-size: 28px;
     height: 28px;
     line-height: 70px;
@@ -3561,14 +3586,16 @@
     > div {
       position: relative;
       z-index: 9999;
-      background: #fff;
+      /*background: #fff;*/
     }
   }
 
   .main .centerout .center {
     width: 100%;
     /*height: 5px;*/
-    background: #fff;
+    background: red;
+    background: url("./../assets/peiqi/begin_bg.png") no-repeat;
+    background-size: 100% 100%;
     /*margin: 0.32px 0 0 0;*/
     /*padding: 0.28px 0.2px 0 0.2px;*/
     /*padding: 90px 20px 0 20px ;*/
@@ -3624,7 +3651,8 @@
     transform: translateX(calc(-50% - 8px));
     /*background: url("http://res.catchme.com.cn/activity/ring/progress-out.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/process_bg2.png");*/
-    background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");
+    /*background: url("http://res.catchme.com.cn/activity/task2/process_bg.png");*/
+    background: url("./../assets/peiqi/processe_bg.png");
     background-size: 100% 100%;
     pointer-events: none;
     /*padding: 0.1px;*/
@@ -3643,7 +3671,7 @@
     left: 12px;
     bottom: 20px;
     /*background: url("./../assets/ring/process_r.png");*/
-    background: url("./../assets/task-2/process_bg_circular.png");
+    background: url("./../assets/peiqi/process_bg_circular.png");
     background-size: 100% 100%;
     color: #fff;
     text-align: center;
@@ -3804,7 +3832,7 @@
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-tip-ling {
     /*background: url("./../assets/task-2/progress_doll_receive_bg.png") no-repeat;*/
-    border: 4px solid #e8453d;
+    border: 4px solid #cb0f10;
   }
 
   .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .ring-quan img {
@@ -3841,8 +3869,8 @@
     font-size: 18px;
     line-height: 32px;
     padding: 0 10px;
-    color: #fff;
-    background: #f76058;
+    color: #ffcf64;
+    background: #ca0e0f;
     display: inline-block;
     border-radius: 12px;
     overflow: hidden;
@@ -3857,7 +3885,7 @@
     height: 18px;
     line-height: 18px;
     font-size: 18px;
-    color: #888888;
+    color: #353535;
     margin: 0 14px 4px 0;
     float: right;
     /*position: absolute;*/
@@ -3914,15 +3942,15 @@
   }
 
   .main .center > h3 {
-    width: 226px;
-    height: 90px;
+    width: 194px;
+    height: 74px;
     /*font-size: 0.32px;*/
     font-size: 34px;
-    color: #fd643b;
+    color: #cb1010;
     /*margin: 0 0 0.1px 0;*/
     /*height: 0.64px;*/
-    background: #feedd7;
-    line-height: 90px;
+    background: #fdfaec;
+    line-height: 74px;
     position: absolute;
     border-radius: 0 16px 0 0;
     right: 0px;
@@ -3944,12 +3972,14 @@
     text-align: center;
     line-height: 306px;
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
-    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
+    /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
+    background: url("http://res.catchme.com.cn/activity/peiqi/press_begin.png") no-repeat;
     background-size: 100% 100%;
     border: none;
     outline: none;
     /*font-size: 0.5px;*/
-    font-size: 40px;
+    /*font-size: 40px;*/
+    font-size: 0;
     color: #fff;
     display: block;
     margin: 0 auto;
@@ -3960,14 +3990,15 @@
 
   .main .center .hasclick {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_ing.png");*/
-    background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");
+    /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
+    background: url("http://res.catchme.com.cn/activity/peiqi/press_begin.png") no-repeat;
     background-size: 100% 100%;
   }
 
   .main .center .game-num {
     width: 418px;
     height: 93px;
-    border: 1px solid #ff784e;
+    border: 1px solid #ca0e0f;
     border-radius: 18px;
     font-size: 24px;
     line-height: 91px;
@@ -3994,19 +4025,19 @@
     width: 20%;
     float: left;
     font-size: 50px;
-    color: #ff784e;
+    color: #ca0e0f;
     text-align: center;
     height: 71px;
     line-height: 71px;
     /*height: 67px;*/
     /*line-height: 67px;*/
-    border-right: 1px solid #ff784e;
+    border-right: 1px solid #ca0e0f;
     margin: 10px 0;
   }
 
   .main .center .game-num i:last-of-type {
     border-right: none;
-    border-left: 1px solid #ff784e;
+    border-left: 1px solid #ca0e0f;
     float: right;
   }
 
@@ -4025,7 +4056,7 @@
   .main .center .game-num > div h3 {
     /*font-size: 0.42px;*/
     font-size: 40px;
-    color: #ff784e;
+    color: #ca0e0f;
     font-weight: 600;
     /*line-height: 0.42px;*/
     line-height: 40px;
@@ -4046,14 +4077,14 @@
 
   .main .center .tip > p {
     font-size: 24px;
-    color: #7e7e7e;
+    color: #ca0e0f;
     line-height: 64px;
     text-align: center;
   }
 
   .main .center .tip > p > span {
     font-weight: 600;
-    color: black;
+    /*color: black;*/
   }
 
   .footer {

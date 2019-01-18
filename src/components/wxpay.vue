@@ -227,7 +227,7 @@
     width: 342px;
     height: 128px;
     /*height: 37.87%;*/
-    border: 1px solid #fd643b;
+    /*border: 4px solid #f8ce1d;*/
     /*border-radius: 0.15px;*/
     color: #494949;
     position: relative;
@@ -294,10 +294,13 @@
     /*line-height: 61px;*/
     /*font-size: 0.32px;*/
     font-size: 34px;
-    background: #fb643b;
-    color: #fff;
+    background: #efae1d;
+    color: #ca0e0f;
+    text-shadow: 2px 2px 0 #fff;
     border-radius: 0 0 12px 12px;
     text-align: center;
+    border: 4px solid #f8ce1d;
+    border-top:none;
   }
 
   .recharge-item-b span {
@@ -315,8 +318,10 @@
     font-size: 36px;
     color: #353535;
     text-align: center;
-    background: #fff;
+    background: #fdfaec;
     border-radius: 16px 16px 0 0;
+    border: 4px solid #f8ce1d;
+    border-bottom:none;
   }
 
   .recharge-item-t span {
@@ -404,14 +409,14 @@
     height: 164px;
   }
   .version2 .recharge-item-t {
-    height: 83px;
+    height: 84px;
     font-size: 38px;
-    line-height: 83px;
+    line-height: 84px;
   }
 
   .version2 .recharge-item-b {
-    height: 79px;
-    line-height: 79px;
+    height: 80px;
+    line-height: 80px;
     font-size: 34px;
   }
 
