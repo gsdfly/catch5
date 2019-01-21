@@ -17,17 +17,17 @@ function IsWeixinOrAlipay() {
 var expName = IsWeixinOrAlipay();
 
 let CONFIG = {
-  url: document.URL.indexOf('catchme') !== -1 ?  'https://front.catchme.com.cn/' : 'https://front.5zhua.cn/',
-  localtionUrl: document.URL.indexOf('catchme') !== -1 ? 'http://www.catchme.com.cn/':'http://www.5zhua.cn/',
-  localtionUrl2:document.URL.indexOf('catchme') !== -1 ? 'https://catchme.ewssh.m.jaeapp.com/' : 'https://zhua.ewssh.m.jaeapp.com/',
-  socketUrl: document.URL.indexOf('catchme') !== -1 ? 'ws://ws.catchme.com.cn/':'ws://ws.5zhua.cn/',
+  url: 'https://front.catchme.com.cn/' ,
+  localtionUrl: 'http://www.catchme.com.cn/',
+  localtionUrl2:'https://catchme.ewssh.m.jaeapp.com/' ,
+  socketUrl:  'ws://ws.catchme.com.cn/',
   version: '1.0.0',
   scene:1,
   site_version_id:GetCookie('site_version_id') || 0,
   get token(){
-    return   process.env.NODE_ENV === 'development' ? 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2Zyb250LjV6aHVhLmNuL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTQ1MzgyNTU0LCJleHAiOjE1NDU1OTg1NTQsIm5iZiI6MTU0NTM4MjU1NCwianRpIjoiVXFYa2JIcXljeW1KdmhDUiIsInN1YiI6Mn0.X_7lDEPaRBcoDyVP-B3qjgwVlt2QMqqpXfQHZK7gyuY' : GetCookie('token_')
+    return   GetCookie('token_')
   },
-  machine_no: getParamByName('machine') || 'CATCH_100024',
+  machine_no: getParamByName('machine') || 'CATCH_100003',
   u: function () {
     return `?machine=${this.machine_no}&token=${this.token}`
   },

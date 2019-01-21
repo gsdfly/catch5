@@ -176,18 +176,18 @@
             localStorage.setItem('prize_bounty',res.prize_bounty);
           })
 
-          var coupon_time = Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart);
-          localStorage.removeItem('startTime2')
-          if(localStorage.getItem('userTime') && localStorage.getItem('domTime')){
-            this.sendTimeOthers(coupon_time);
-          }else {
-            var inter = setInterval(()=>{
-              if(localStorage.getItem('userTime') && localStorage.getItem('domTime')){
-                this.sendTimeOthers(coupon_time);
-                clearInterval(inter);
-              }
-            },500)
-          }
+//          var coupon_time = Date.now() - (localStorage.getItem('startTime2') ? localStorage.getItem('startTime2') : performance.timing.navigationStart);
+//          localStorage.removeItem('startTime2')
+//          if(localStorage.getItem('userTime') && localStorage.getItem('domTime')){
+//            this.sendTimeOthers(coupon_time);
+//          }else {
+//            var inter = setInterval(()=>{
+//              if(localStorage.getItem('userTime') && localStorage.getItem('domTime')){
+//                this.sendTimeOthers(coupon_time);
+//                clearInterval(inter);
+//              }
+//            },500)
+//          }
         })
       },
       sendTimeOthers(coupon_time){
@@ -231,18 +231,19 @@
         if(gzh_operation.coupon.status === 2 || gzh_operation.task_count >= gzh_operation.num){
           return;
         }
-        if(CONFIG.isWx || gzh_operation.type === 12){
-          this.$emit('openTip','free',gzh_operation.mp_url,gzh_operation.remarks);
-          _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：微信', '']);
-          return;
-        }
-        _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：支付宝', '']);
-        this.$store.dispatch('getFreeCoin', {coin_price_id: gzh_operation.coin_price.coin_price_id, coupon_id: gzh_operation.coupon.id}).then((data) => {
-          console.log(data);
-          this.$store.commit('setCoins', data.data.coin_num);
-          this.$store.dispatch('getUser');
-          this.$store.dispatch('getOperations');
-        })
+        this.$emit('openTip','free',gzh_operation.mp_url,gzh_operation.remarks);
+//        if(CONFIG.isWx || gzh_operation.type === 12){
+//          this.$emit('openTip','free',gzh_operation.mp_url,gzh_operation.remarks);
+//          _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：微信', '']);
+//          return;
+//        }
+//        _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：支付宝', '']);
+//        this.$store.dispatch('getFreeCoin', {coin_price_id: gzh_operation.coin_price.coin_price_id, coupon_id: gzh_operation.coupon.id}).then((data) => {
+//          console.log(data);
+//          this.$store.commit('setCoins', data.data.coin_num);
+//          this.$store.dispatch('getUser');
+//          this.$store.dispatch('getOperations');
+//        })
       },
       receiveTask(task){
         //领取任务的游戏币
