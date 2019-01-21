@@ -1095,6 +1095,7 @@
         }else {
           window.location.href = CONFIG.localtionUrl2 + 'taobao/profile'
         }
+        _hmt.push(['_trackEvent', '点击用户头像', '点击', '跳转到个人中心', '']);
       },
       handleRed(value, item) {
         _hmt.push(['_trackEvent', '点击娃娃', '点击', '点击娃娃', '']);

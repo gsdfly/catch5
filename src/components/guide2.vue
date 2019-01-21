@@ -18,7 +18,8 @@
     }),
     methods:{
       closeGuide2(){
-        this.$emit('closeGuide2')
+        _hmt.push(['_trackEvent', '关闭机器币数提示', '点击', '跳转到个人中心', '']);
+        this.$emit('closeGuide2');
       }
     }
   }
