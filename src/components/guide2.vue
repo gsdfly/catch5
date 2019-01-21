@@ -18,7 +18,7 @@
     }),
     methods:{
       closeGuide2(){
-        _hmt.push(['_trackEvent', '关闭机器币数提示', '点击', '跳转到个人中心', '']);
+        _hmt.push(['_trackEvent', '关闭蒙层提示2', '关闭', '点击娃娃弹出机器上有币未使用完', '']);
         this.$emit('closeGuide2');
       }
     }

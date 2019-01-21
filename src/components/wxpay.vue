@@ -118,8 +118,8 @@
           if (currentCouponPay) {
             if (pay.coin_price === "2.00") {
               _hmt.push(['_trackEvent', '弹出2元下面优惠券', '点击', '', '']);
-            } else if (pay.coin_price === "10.00") {
-              _hmt.push(['_trackEvent', '弹出10元下面优惠券', '点击', '', '']);
+            } else if (pay.coin_price === "9.80") {
+              _hmt.push(['_trackEvent', '弹出9.8元下面优惠券', '点击', '', '']);
             }
             this.$emit('changeBgShow', {
               bgShow: true,
@@ -169,7 +169,9 @@
               this.isRequest = false;
             });
           } else {
+            _hmt.push(['_trackEvent', '点击充值', '点击', '充值金额为'+price+'元', '']);
             payment(CONFIG, {coin_price_id: id}, self, function () {
+              _hmt.push(['_trackEvent', '成功充值', '点击', '充值金额为'+price+'元', '']);
               self.isRequest = false;
               try{
               if (self.tip_operation.recharged) {
