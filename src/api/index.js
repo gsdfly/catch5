@@ -35,13 +35,13 @@ instance.interceptors.response.use(function(response) {
   // if(error.response.data.status_code === 401){
   //   await callbackUrl();
   // }
-  if (error.response.data.status_code === 401) {
-    SetCookie('token_', '')
-    localStorage.removeItem('encrypt')
-    localStorage.removeItem('auth_type')
-    location.reload();
-    return;
-  }
+  // if (error.response.data.status_code === 401) {
+  //   SetCookie('token_', '')
+  //   localStorage.removeItem('encrypt')
+  //   localStorage.removeItem('auth_type')
+  //   location.reload();
+  //   return;
+  // }
   if (error.response.data.status_code === 429) {
     store.commit('changeTipContent',{
       imgSrc: "http://res.catchme.com.cn/imgs-2018-02-05/tip/tip8.png",

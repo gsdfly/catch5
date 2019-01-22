@@ -32,19 +32,20 @@ FastClick.attach(document.body)
     // if (!CONFIG.token) {
     //   var encrypt = localStorage.getItem('encrypt') || getParamByName('encrypt');
     //   if (encrypt) {
-    //     api.getToken2({encrypt: encrypt}).then((res) => {
-    //       SetCookie('token_', res.data.token);
-    //       store.commit('changeIsLogin');
-    //       delete res.data.token;
-    //       store.commit('setUser', res.data);
-    //       api.machineLogin({machine_no: CONFIG.machine_no, token: CONFIG.token});
-    //     })
+        var encrypt = 'eyJpdiI6Ik4yTGtsR3VJNXlMYklINjFoSFBmMlE9PSIsInZhbHVlIjoiYkllZkUwRFlUcm5paERNYVNxcTc4dz09IiwibWFjIjoiYTNkNDNmOGQxYmJiMTExNTA4NTRhZTM5ZGU4MTViMDhmOThkMDIyMmQ0OTQ4N2NmOGNiMGIxZDBlMDA1MWVjZSJ9';
+        api.getToken2({encrypt: encrypt}).then((res) => {
+          SetCookie('token_', res.data.token);
+          store.commit('changeIsLogin');
+          delete res.data.token;
+          store.commit('setUser', res.data);
+          api.machineLogin({machine_no: CONFIG.machine_no, token: CONFIG.token});
+        })
     //   } else {
         // var auth_type = getParamByName('auth_type') || localStorage.getItem('auth_type');
-        var auth_type = '0';
+        // var auth_type = '0';
         // if (auth_type) {
           // var auth_id = getParamByName('auth_id') || localStorage.getItem('auth_id');
-          var auth_id = 'kSwc0Pc2f59d9HNydAV6yxwMrb3o';
+          // var auth_id = 'kSwc0Pc2f59d9HNydAV6yxwMrb3o';
           // var index = window.location.href.indexOf('&');
           // if (getParamByName('auth_type')) {
           //   localStorage.setItem('auth_type', auth_type);
@@ -52,22 +53,22 @@ FastClick.attach(document.body)
           //   var newUrl = window.location.href.slice(0, index);
           //   window.history.pushState({}, '', newUrl);
           // }
-          api.getToken({auth_type: auth_type, auth_id: auth_id.split('').reverse().join('')}).then((res) => {
-            //这里可以得到用户信息将用户信息存储到vuex里面，将用户id存储到本地存储中
-            // localStorage.setItem('encrypt', res.data.encrypt);
-            SetCookie('token_', res.data.token);
-            store.commit('changeIsLogin');
-            delete res.data.token;
-            delete res.data.encrypt;
-            store.commit('setUser', res.data);
-            if (index === -1) {
-              if (!localStorage.getItem('auto')) {
-                api.machineLogin({machine_no: CONFIG.machine_no, token: CONFIG.token});
-              } else {
-                localStorage.removeItem('auto')
-              }
-            }
-          });
+          // api.getToken({auth_type: auth_type, auth_id: auth_id.split('').reverse().join('')}).then((res) => {
+          //   //这里可以得到用户信息将用户信息存储到vuex里面，将用户id存储到本地存储中
+          //   // localStorage.setItem('encrypt', res.data.encrypt);
+          //   SetCookie('token_', res.data.token);
+          //   store.commit('changeIsLogin');
+          //   delete res.data.token;
+          //   delete res.data.encrypt;
+          //   store.commit('setUser', res.data);
+          //   if (index === -1) {
+          //     if (!localStorage.getItem('auto')) {
+          //       api.machineLogin({machine_no: CONFIG.machine_no, token: CONFIG.token});
+          //     } else {
+          //       localStorage.removeItem('auto')
+          //     }
+          //   }
+          // });
       //   } else {
       //     if (CONFIG.isAlipay) {
       //       window.location.href = CONFIG.url + 'v2/alipay/oauth?callback=' + document.URL;
