@@ -3291,7 +3291,7 @@
   .jo-index {
     position: relative;
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
     /*height: calc(100% - 1.25px);*/
     /*padding: 0 0.22px;*/
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg.png");*/
@@ -3302,10 +3302,10 @@
 
   .jo-index .jo-index-div {
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
     background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/bg2.png");
     background-size: 100% 100%;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     overflow-x: hidden;
   }
 
@@ -4109,12 +4109,14 @@
     /*height: 60%;*/
     /*height: 44.5%;*/
     height: 45%;
+    min-height: 610px;
   }
 
   .jo-version2 .activitys {
     /*height: 15.5%;*/
     height: 14.5%; //高度减少3%
     /*height: 16%;*/
+    min-height: 200px;
   }
 
   .jo-version2 .main .center .game-num {
@@ -4174,6 +4176,7 @@
 
   .jo-version2 .footer {
     height: 28.5%;
+    min-height: 380px;
   }
 
   .jo-version2 .header .header-main h4 {
