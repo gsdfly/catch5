@@ -1087,6 +1087,7 @@
         })
       },
       goProfile() {
+        _hmt.push(['_trackEvent', '点击用户头像', '点击', '跳转到个人中心', '']);
         if(document.URL.indexOf('www') !== -1){
           window.location.href = CONFIG.localtionUrl + '/profile'
         }else {

@@ -39,6 +39,7 @@
     }),
     methods:{
       closeGuide(){
+        _hmt.push(['_trackEvent', '关闭指导蒙层', '关闭', '关闭指导蒙层', '']);
         this.$store.commit('changeIsGuide',false)
       }
     }

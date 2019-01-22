@@ -17,6 +17,7 @@
     }),
     methods:{
       closeGuide2(){
+        _hmt.push(['_trackEvent', '关闭蒙层提示2', '关闭', '点击娃娃弹出机器上有币未使用完', '']);
         this.$emit('closeGuide2')
       }
     }
