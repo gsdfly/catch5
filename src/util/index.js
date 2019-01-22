@@ -113,7 +113,7 @@ export const getErrMsg = (errCode, message) => {
         } else {
           m = {
             imgSrc: "http://res.catchme.com.cn/imgs-2018-02-05/tip/tip1.png",
-            content: ['娃娃机出了点状况', '请更换机器'],
+            content: ['娃娃机不在线', '请更换机器'],
             button: '扫码换机',
             isShow: true
           }
