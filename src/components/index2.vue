@@ -25,7 +25,8 @@
               <div>
                 <i class="icon-jinbi"></i><span class="coins-num">{{user.coins}}</span>
               </div>
-              <img v-show="isShowCoinTip" class="animated coin-tip" :class="{'zoomOutLeft':isShowCoinTip}" src="./../assets/small/coin_tip.png" alt="">
+              <!--<img v-show="isShowCoinTip" class="animated coin-tip" :class="{'zoomOutLeft':isShowCoinTip}" src="./../assets/small/coin_tip.png" alt="">-->
+              <span v-show="isShowCoinTip" class="animated coin-animate" :class="{'zoomOut':isShowCoinTip}">+{{addCoinNum}}</span>
             </div>
             <!--<div class="game game-quan" v-show="user.game_ticket>0">-->
             <!--<i class="iconfont icon-quan"></i>-->
@@ -113,9 +114,10 @@
                 <!--<p>在抓{{( activity_bounty[activity_bounty.length-1].voucher_batch.value - task_now.recharge_bounty)/info.coin_num}}次</p>-->
                 <!--</div>-->
               </div>
-              <div class="startgame" :class="{'hasclick':start_desc == '投币中'}" id="coin-operated"
+              <div class="startgame"  :class="{'hasclick':start_desc == '投币中','mypluse':!isClickStartGame}" id="coin-operated"
                    @click="handleStartingDevice">{{start_desc ? start_desc : '投币启动'}}
               </div>
+              <!--<img class="peiqi" src="./../assets/peiqi/peiqi.png" alt="">-->
               <div class="game-num norecharge" v-if="user.coins<=0">您还没有游戏币，请先充值<span></span>
               </div>
               <div class="game-num" v-else>
@@ -142,7 +144,7 @@
         <!--</div>-->
       </div>
       <div class="footer">
-        <joPay ref="joPay" @changeTip="changeTip" @openTip="openTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
+        <joPay ref="joPay" @changeTip="changeTip" @startGame="isClickStartGame=false" @openTip="openTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
                @closeBg="closeBg"></joPay>
       </div>
       <div class="bg" v-show="bgShow && !tipContent.button" @click="closeBg">
@@ -665,8 +667,8 @@
                  @click="closeBg"/>
           </div>
         </div>
-
       </div>
+      <button @click="isShowCoinTip=true">地啊你</button>
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
@@ -697,6 +699,7 @@
   export default {
     data() {
       return {
+        isClickStartGame:true,
         isConnectScoket: false,
         io: {},
         start_desc: '投币启动',
@@ -763,6 +766,7 @@
         isShowGuide2: false,
         freeAnimate:'',
         isShowCoinTip:false,
+        addCoinNum:0,
         isShowGzhButtton:true,
         isShowGzhImg:false,
         gzhCodeStyle:'visibility: hidden',
@@ -849,6 +853,9 @@
         }).then((res) => {
           //正常领取成功
           this.isShowCoinTip = true;
+          this.isClickStartGame = false;
+          this.mypluse = false;
+          this.addCoinNum = res.data.coin_num;
           setTimeout(()=>{
             this.$store.commit('setCoins', res.data.coin_num);
             this.$store.dispatch('getUser');
@@ -1341,6 +1348,7 @@
       //投币，开始游戏
       handleStartingDevice() {
         this.closeBg();
+        this.isClickStartGame = true;
         if (this.info.online === 0) {
           this.$store.commit('changeTipContent', getErrMsg(1001));
           return
@@ -1531,6 +1539,19 @@
 </script>
 
 <style lang="scss" scoped>
+  @keyframes my-pulse {
+    from {
+      transform: scale3d(1, 1, 1);
+    }
+
+    50% {
+      transform: scale3d(1.08, 1.08, 1.08);
+    }
+
+    to {
+      transform: scale3d(1, 1, 1);
+    }
+  }
   @keyframes wave-animation {
     0% {
       background-position: 0 top;
@@ -3977,6 +3998,7 @@
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_begin.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
     background: url("http://res.catchme.com.cn/activity/peiqi/press_begin.png") no-repeat;
+    /*background: url("./../assets/peiqi/press_begin.png") no-repeat;*/
     background-size: 100% 100%;
     border: none;
     outline: none;
@@ -3988,13 +4010,25 @@
     margin: 0 auto;
     position: relative;
     z-index: 6;
-
   }
-
+  .mypluse{
+    animation: my-pulse 1s linear infinite;
+  }
+  /*
+  .main .center .peiqi{
+    width: 128px;
+    position: absolute;
+    left: 50%;
+    top:270px;
+    transform: translateX(-50%);
+    z-index: 7;
+  }
+  */
   .main .center .hasclick {
     /*background: url("http://res.catchme.com.cn/imgs-2017-12-29-20-42/press_ing.png");*/
     /*background: url("http://res.catchme.com.cn/activity/ring/press_begin.png");*/
     background: url("http://res.catchme.com.cn/activity/peiqi/press_begin.png") no-repeat;
+    /*background: url("./../assets/peiqi/press_begin.png") no-repeat;*/
     background-size: 100% 100%;
   }
 
@@ -4011,8 +4045,8 @@
     color: #7e7e7e;
     text-align: center;
     position: relative;
-    z-index: 6;
-    overflow: hidden;
+    z-index: 8;
+    /*overflow: hidden;*/
   }
 
   .main .center .game-num.norecharge {

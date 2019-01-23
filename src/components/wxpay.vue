@@ -171,6 +171,7 @@
           } else {
             _hmt.push(['_trackEvent', '点击充值', '点击', '充值金额为'+price+'元', '']);
             payment(CONFIG, {coin_price_id: id}, self, function () {
+              self.$emit('startGame');
               _hmt.push(['_trackEvent', '成功充值', '点击', '充值金额为'+price+'元', '']);
               self.isRequest = false;
               try{
@@ -179,7 +180,7 @@
               }
               }catch(err) {}
               if (type !== 1) {
-                self.$store.commit('setCoins', coin)
+                self.$store.commit('setCoins', coin);
                 self.$emit('closeBg');
               } else {
                 self.$store.dispatch('InfiniteGame').then(() => {
@@ -213,6 +214,8 @@
 </script>
 
 <style>
+
+
   .recharge-lists {
     width: 100%;
     position: absolute;
