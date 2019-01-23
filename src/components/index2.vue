@@ -1253,7 +1253,9 @@
           this.couponInfo.end_time = this.dalibao[this.dalibaoIndex].vouchers[0].end_time
         }
         this.freeTipImg = value2;
-        this.freeTip = value3;
+        if(value3){
+          this.freeTip = value3;
+        }
         this.bgShow = true;
         this.contentShow = value;
       },
