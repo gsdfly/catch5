@@ -5,30 +5,33 @@
     <!--<img class="guideImg2" src="./../assets/guide/wawa.png" alt=""/>-->
     <div class="bg1"></div>
     <!--<img class="guideImg1" src="./../assets/guide/guideImg1.png" alt="">-->
-    <img v-if="(gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num) && guideNum != 2" class="guideImg1" :src="img1" alt="">
+    <img v-if="(gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num) && guideNum != 2" class="guideImg1" :src="theme.guideImg1" alt="">
     <div v-else="" class="guideDiv1"></div>
     <div class="bg2"></div>
-    <img v-if="activity_bounty.length>0 && activity_bounty[activity_bounty.length-1].voucher_batch.category === 0 && (!((gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num)) || guideNum == 2)" class="guideImg2" src="./../assets/guide/wawa2.png" alt="">
-    <img v-if="activity_bounty.length>0 && activity_bounty[activity_bounty.length-1].voucher_batch.category === 1 && (!((gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num)) || guideNum == 2)" class="guideImg2" src="./../assets/guide/guideImg2.png" alt=""/>
+    <img v-if="activity_bounty.length>0 && activity_bounty[activity_bounty.length-1].voucher_batch.category === 0 && (!((gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num)) || guideNum == 2)" class="guideImg2" :src="theme.guideBaomihuaNumImg" alt="">
+    <img v-if="activity_bounty.length>0 && activity_bounty[activity_bounty.length-1].voucher_batch.category === 1 && (!((gzh_operation.coupon && gzh_operation.coupon.status !=2) || (gzh_operation_other.task_count < gzh_operation_other.num)) || guideNum == 2)" class="guideImg2" :src="theme.guideWawaNumImg" alt=""/>
     <div class="bg3"></div>
-    <img @click="closeGuide" class="guideImg3" src="./../assets/guide/press_known.png" alt=""/>
+    <img @click="closeGuide" class="guideImg3" :src="theme.guideButtonImg" alt=""/>
   </div>
 </template>
 
 <script>
   import {mapState} from 'vuex'
+  import theme from './../themes/default'
+
   export default {
     name:'guide',
     data(){
       return {
-        img1:require('./../assets/guide/bg1-2.png'),
-        img2:require('./../assets/guide/bg1-1.png'),
+        theme:theme,
+//        img1:require('./../assets/guide/bg1-2.png'),
+//        img2:require('./../assets/guide/bg1-1.png'),
         guideNum:1
       }
     },
     mounted(){
       if(this.version2){
-        this.img1 = this.img2;
+        this.theme.guideImg1 = this.theme.guideImg2;
       }
       this.guideNum = localStorage.getItem('guideNum') || 1
     },

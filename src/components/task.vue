@@ -3,12 +3,12 @@
     <ul>
       <li v-for="item in task_opes.slice(0,3)">
         <div v-if="item.type === 7" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.coupon.status === 2}" :src="theme.taskFree" alt=""/>
           <img v-if="item.coupon.status === 2" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.coupon.status === 2}">免费领币</p>
         </div>
         <div v-if="item.type === 12" @click="consumer(item)">
-          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img class="task-free" :class="{'is_down':item.task_count >= item.num}" :src="theme.taskFree" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">免费领币</p>
         </div>
@@ -23,8 +23,8 @@
           <p :class="{'is_down':item.task_count >= item.num}">投币送币</p>
         </div>
         <div v-if="item.type === 10">
-          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" src="./../assets/task-2/icon_free_c.png" alt=""/>
-          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" src="./../assets/task-2/icon_free_receive_c.png" alt="">
+          <img @click="openTip('taskWawaTip')" v-if="item.task_count < item.num && task_now.prize_bounty<item.value" :src="theme.taskWawa1" alt=""/>
+          <img :class="{'is_down':item.task_count >= item.num}" @click="receiveTask(item)" v-else="" :src="theme.taskWawa2" alt="">
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
           <p :class="{'is_down':item.task_count >= item.num}">抓中送币</p>
         </div>
@@ -36,7 +36,7 @@
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         </div>
         <div v-if="item.type === 13" @click="openTip('tencent')">
-          <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" src="./../assets/task-2/icon_free_a.png" alt=""/>
+          <img  class="task-free" :class="{'is_down':item.task_count >= item.num}" :src="theme.taskFree" alt=""/>
           <img v-if="item.task_count >= item.num" class="img_down" src="./../assets/task-2/received.png" alt=""/>
         <p>免费领币</p>
         </div>
@@ -59,11 +59,13 @@
   import CONFIG from '../config'
   import {mapState} from 'vuex'
   import api from './../api/index'
+  import theme from './../themes/default'
 
   export default {
     name:'task',
     data(){
       return {
+        theme:theme,
         isRequest:false,
         artifact:{}
       }
@@ -281,6 +283,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "./../themes/default";
   @keyframes wave-animation {
     0% {
       background-position: 0 top;
@@ -307,7 +310,7 @@
       top:-18px;
     }
     ul{
-      background: #fff;
+      background: $taskUlImgOrColor;
       width: 706px;
       position: absolute;
       height:100%;
@@ -370,11 +373,11 @@
           .m-water{
             width: 90px;
             height: 90px;
-            background: url("./../assets/task-2/water.png") no-repeat;
+            background: $toubiLingBg;
             background-size: 100% 100%;
             border-radius: 50%;
             font-size: 30px;
-            color: #fff;
+            color: $toubiColor;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -400,7 +403,7 @@
             /*rgba(242, 123, 0, 0.51);*/
             .bol{
               width: 100%;
-              background: url("./../assets/task/b_bg.png");
+              background: $toubiBg;
               animation: wave-animation 1s infinite linear;
               transition: all 1s linear;
               background-size: 102px 116px;
@@ -410,7 +413,7 @@
               left: 50%;
               top:50%;
               font-size: 28px;
-              color: #fff;
+              color: $toubiColor;
               transform: translate(-50%,-50%);
               b{
                 font-size: 40px;
@@ -422,7 +425,7 @@
             height: 24px;
             font-size: 24px;
             line-height: 24px;
-            color: #494949;
+            color: $taskColor;
             margin: 4px 0 0 0;
             &.is_down{
               color: #b3b3b3;

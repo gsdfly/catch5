@@ -212,7 +212,8 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
+  @import "./../themes/default";
   .recharge-lists {
     width: 100%;
     position: absolute;
@@ -229,16 +230,13 @@
     width: 342px;
     height: 128px;
     /*height: 37.87%;*/
-    border: 1px solid #fd643b;
-    /*border-radius: 0.15px;*/
-    color: #494949;
+    border: $wxpayItemBorder;
+    background: $wxpayItemImg;
+    background-size: 100% 100%;
     position: relative;
-    /*overflow: hidden;*/
     border-radius: 16px;
   }
-  /*.recharge-lists > div.dalibao {*/
-    /**/
-  /*}*/
+
   .recharge-lists > div.dalibao{
     /*border: none;*/
   }
@@ -296,8 +294,8 @@
     /*line-height: 61px;*/
     /*font-size: 0.32px;*/
     font-size: 34px;
-    background: #fb643b;
-    color: #fff;
+    background: $wxpayItemBottomBg;
+    color: $wxpayItemBottomColor;
     border-radius: 0 0 12px 12px;
     text-align: center;
   }
@@ -315,9 +313,9 @@
     /*height: 68px;*/
     /*line-height: 68px;*/
     font-size: 36px;
-    color: #353535;
+    color: $wxpayItemTopColor;
     text-align: center;
-    background: #fff;
+    background: $wxpayItemTopBg;
     border-radius: 16px 16px 0 0;
   }
 
