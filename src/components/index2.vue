@@ -1548,19 +1548,28 @@
 </script>
 
 <style lang="scss" scoped>
-  @keyframes my-pulse {
-    from {
-      transform: scale3d(1, 1, 1);
+  @keyframes heartBeat {
+    0% {
+      transform: scale(1);
     }
 
-    50% {
-      transform: scale3d(1.08, 1.08, 1.08);
+    14% {
+      transform: scale(1.2);
     }
 
-    to {
-      transform: scale3d(1, 1, 1);
+    28% {
+      transform: scale(1);
+    }
+
+    42% {
+      transform: scale(1.2);
+    }
+
+    70% {
+      transform: scale(1);
     }
   }
+
   @keyframes wave-animation {
     0% {
       background-position: 0 top;
@@ -4036,7 +4045,7 @@
     z-index: 6;
   }
   .mypluse{
-    animation: my-pulse 1s linear infinite;
+    animation: heartBeat 1s linear infinite;
   }
   /*
   .main .center .peiqi{
@@ -4134,6 +4143,9 @@
 
   .main .center .tip {
     height: 84px;
+    background: #efae1d;
+    position: relative;
+    z-index: 7;
   }
 
   .main .center .tip > p {
