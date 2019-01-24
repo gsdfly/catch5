@@ -3476,6 +3476,16 @@
     position: relative;
   }
 
+  .header .header-main .game  .coin-animate{
+    position: absolute;
+    right:-10px;
+    top:-10px;
+    font-size: 50px;
+    color: #FDCC09;
+    animation-duration:2.5s;
+    font-weight: bold;
+  }
+
   .header .header-main .kefu {
     height: 62px;
     background: $coinsBgColor;
