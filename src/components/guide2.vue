@@ -1,7 +1,7 @@
 <template>
   <div class="guide2" :class="{'guide2-version2':version2}">
     <div class="top"></div>
-    <img v-if="activity_bounty[activity_bounty.length-1].voucher_batch.category === 0" class="tip" :src="theme." alt="">
+    <img v-if="activity_bounty[activity_bounty.length-1].voucher_batch.category === 0" class="tip" :src="theme.guide2BaomihuaImg" alt="">
     <img v-else class="tip" :src="theme.guide2WawaImg" alt="">
     <div class="bottom"></div>
     <img @click="closeGuide2" class="btn" :src="theme.guide2ButtonImg" alt="">

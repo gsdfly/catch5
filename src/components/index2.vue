@@ -10,7 +10,7 @@
         <img src="http://res.catchme.com.cn/activity/guide/shuoming_bg.png" alt="">
         <!--<img src="http://res.catchme.com.cn/activity/task-2/weibao.png" alt="">-->
       </div>
-      <div class="header" @click="test">
+      <div class="header">
         <div>
           <div class="head-portrait" @click="goProfile">
             <img v-if="user.avatar" :src="user.avatar" alt="" style="border-radius: 50%">
@@ -25,7 +25,8 @@
               <div>
                 <i class="icon-jinbi"></i><span class="coins-num">{{user.coins}}</span>
               </div>
-              <img v-show="isShowCoinTip" class="animated coin-tip" :class="{'zoomOutLeft':isShowCoinTip}" src="./../assets/small/coin_tip.png" alt="">
+              <!--<img v-show="isShowCoinTip" class="animated coin-tip" :class="{'zoomOutLeft':isShowCoinTip}" src="./../assets/small/coin_tip.png" alt="">-->
+              <span v-show="isShowCoinTip" class="animated coin-animate" :class="{'zoomOutLeft':isShowCoinTip}">+{{addCoinNum}}</span>
             </div>
             <div class="kefu" @click.stop="">
               <p id="support" @click="showKefu">
@@ -103,7 +104,7 @@
                   </div>
                 </div>
               </div>
-              <div class="startgame" :class="{'hasclick':start_desc == '投币中'}" id="coin-operated"
+              <div class="startgame" :class="{'hasclick':start_desc == '投币中','mypluse':!isClickStartGame}" id="coin-operated"
                    @click="handleStartingDevice">{{start_desc ? start_desc : '投币启动'}}
               </div>
               <div class="game-num norecharge" v-if="user.coins<=0">您还没有游戏币，请先充值<span></span>
@@ -132,7 +133,7 @@
         <!--</div>-->
       </div>
       <div class="footer">
-        <joPay ref="joPay" @changeTip="changeTip" @openTip="openTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
+        <joPay ref="joPay" @changeTip="changeTip" @startGame="myStartGame" @openTip="openTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
                @closeBg="closeBg"></joPay>
       </div>
       <div class="bg" v-show="bgShow && !tipContent.button" @click="closeBg">
@@ -686,6 +687,7 @@
     data() {
       return {
         theme:theme,           //页面主题变动部分
+        isClickStartGame:true,
         isConnectScoket: false,
         io: {},
         start_desc: '投币启动',
@@ -752,6 +754,7 @@
         isShowGuide2: false,
         freeAnimate:'',
         isShowCoinTip:false,
+        addCoinNum:0,
         isShowGzhButtton:true,
         isShowGzhImg:false,
         gzhCodeStyle:'visibility: hidden',
@@ -838,10 +841,13 @@
         }).then((res) => {
           //正常领取成功
           this.isShowCoinTip = true;
+          this.isClickStartGame = false;
+          this.addCoinNum = res.data.coin_num;
           setTimeout(()=>{
             this.$store.commit('setCoins', res.data.coin_num);
             this.$store.dispatch('getUser');
             this.$store.dispatch('getOperations');
+            this.isShowCoinTip = false;
           },1500)
         })
         localStorage.removeItem('isgzh')
@@ -880,9 +886,14 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
-      test(){
-        this.bgShow = true;
-        this.contentShow = 'receive';
+      myStartGame(coin){
+        this.isClickStartGame = false;
+        this.isShowCoinTip = true;
+        this.addCoinNum = coin;
+        setTimeout(()=>{
+          this.$store.dispatch('getUser');
+          this.isShowCoinTip = false;
+        },1500)
       },
       downloadArtifact(){
         this.$refs.task.useArtifact()
@@ -1332,6 +1343,7 @@
       //投币，开始游戏
       handleStartingDevice() {
         this.closeBg();
+        this.isClickStartGame = true;
         if (this.info.online === 0) {
           this.$store.commit('changeTipContent', getErrMsg(1001));
           return
@@ -1523,6 +1535,41 @@
 
 <style lang="scss" scoped>
   @import "./../themes/default";
+  @keyframes heartBeat {
+    0% {
+      transform: scale(1);
+    }
+
+    14% {
+      transform: scale(1.2);
+    }
+
+    28% {
+      transform: scale(1);
+    }
+
+    42% {
+      transform: scale(1.2);
+    }
+
+    70% {
+      transform: scale(1);
+    }
+  }
+  /*@keyframes my-pulse {*/
+    /*from {*/
+      /*transform: scale3d(1, 1, 1);*/
+    /*}*/
+
+    /*50% {*/
+      /*transform: scale3d(1.08, 1.08, 1.08);*/
+    /*}*/
+
+    /*to {*/
+      /*transform: scale3d(1, 1, 1);*/
+    /*}*/
+  /*}*/
+
   @keyframes wave-animation {
     0% {
       background-position: 0 top;
@@ -2235,20 +2282,25 @@
   }
 
   .bg-center14 {
+    width: 100%;
+    height: 100%;
     .center-bg {
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.3);
       /*background: red;*/
-      position: absolute;
-      z-index: 999;
-      clip-path: circle(65px at 580px 660px);
-      filter: none;
+      /*position: absolute;*/
+      /*z-index: 999;*/
+      /*clip-path: circle(65px at 580px 660px);*/
+      /*filter: none;*/
       /*transition: opacity,clip-path 0.5s;*/
       transition: all 1s;
-      opacity: 0;
+      /*opacity: 0;*/
       /*display: none;*/
-      pointer-events: none;
+      /*pointer-events: none;*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
       > div {
         /*background: red;*/
         @include center;
@@ -3860,6 +3912,14 @@
     margin: 0 auto;
     position: relative;
     z-index: 6;
+    /*animation: heartBeat 1s linear infinite;*/
+    /*animation: my-pulse 1s linear infinite;*/
+    /*transform-style:preserve-3d;*/
+  }
+
+  .mypluse{
+    /*animation: my-pulse 1s linear infinite;*/
+    animation: heartBeat 1s linear infinite;
   }
 
   .main .center .hasclick {
@@ -3940,6 +4000,9 @@
   }
 
   .main .center .tip {
+    position: relative;
+    z-index: 7;
+    background: #fff;
     height: 84px;
   }
 

@@ -171,6 +171,7 @@
           } else {
             _hmt.push(['_trackEvent', '点击充值', '点击', '充值金额为'+price+'元', '']);
             payment(CONFIG, {coin_price_id: id}, self, function () {
+              self.$emit('startGame',coin);
               _hmt.push(['_trackEvent', '成功充值', '点击', '充值金额为'+price+'元', '']);
               self.isRequest = false;
               try{
