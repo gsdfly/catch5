@@ -124,7 +124,7 @@
               <img @click.prevent="" v-if="start_desc=='投币中'" class="tbz" src="../assets/small/tbz.gif" alt="">
               <img @click.prevent="" v-if="is_lamp_after && start_desc=='投币启动'" class="tbz"
                    src="http://res.catchme.com.cn/imgs-2018-02-05/btcg.gif" alt="">
-              <div class="tip">
+              <div class="tip" :class="{'tipbg':!isClickStartGame}">
                 <p v-show="user.coins<=0  && !is_lamp_after">充值后点击“投币启动”按钮开始游戏</p>
                 <p v-show="is_lamp_after && start_desc=='投币启动'">投币成功，<span>“摇动游戏杆”</span>即可开始游戏</p>
               </div>
@@ -879,9 +879,9 @@
         this.Indicator.close();
         this.showHtml = true;
         this.isGetImg = true;
-//        if (res.online === 0) {
-//          this.$store.commit('changeTipContent', getErrMsg(1001));
-//        }
+        if (res.online === 0) {
+          this.$store.commit('changeTipContent', getErrMsg(1001));
+        }
       })
 //      this.$store.dispatch('getUser')
     },
@@ -4001,6 +4001,8 @@
 
   .main .center .tip {
     position: relative;
+  }
+  .main .center .tipbg{
     z-index: 7;
     background: #fff;
     height: 84px;
