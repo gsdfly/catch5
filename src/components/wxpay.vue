@@ -171,7 +171,7 @@
           } else {
             _hmt.push(['_trackEvent', '点击充值', '点击', '充值金额为'+price+'元', '']);
             payment(CONFIG, {coin_price_id: id}, self, function () {
-              self.$emit('startGame');
+              self.$emit('startGame',coin);
               _hmt.push(['_trackEvent', '成功充值', '点击', '充值金额为'+price+'元', '']);
               self.isRequest = false;
               try{
@@ -188,7 +188,7 @@
                 })
               }
               setTimeout(()=>{
-                self.$store.dispatch('getUser');
+//                self.$store.dispatch('getUser');
                 self.$store.dispatch('getCoinList');
                 if(dalibaoIndex>=0){
                   self.$store.dispatch('getOperations');//大礼包充值完成回来重新获取运营位

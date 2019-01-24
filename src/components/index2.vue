@@ -26,7 +26,7 @@
                 <i class="icon-jinbi"></i><span class="coins-num">{{user.coins}}</span>
               </div>
               <!--<img v-show="isShowCoinTip" class="animated coin-tip" :class="{'zoomOutLeft':isShowCoinTip}" src="./../assets/small/coin_tip.png" alt="">-->
-              <span v-show="isShowCoinTip" class="animated coin-animate" :class="{'zoomOut':isShowCoinTip}">+{{addCoinNum}}</span>
+              <span v-show="isShowCoinTip" class="animated coin-animate" :class="{'zoomOutLeft':isShowCoinTip}">+{{addCoinNum}}</span>
             </div>
             <!--<div class="game game-quan" v-show="user.game_ticket>0">-->
             <!--<i class="iconfont icon-quan"></i>-->
@@ -144,7 +144,7 @@
         <!--</div>-->
       </div>
       <div class="footer">
-        <joPay ref="joPay" @changeTip="changeTip" @startGame="isClickStartGame=false" @openTip="openTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
+        <joPay ref="joPay" @changeTip="changeTip" @startGame="myStartGame" @openTip="openTip" @changeBgShow="changeBgShow" @handleScanQRCode="handleScanQRCode"
                @closeBg="closeBg"></joPay>
       </div>
       <div class="bg" v-show="bgShow && !tipContent.button" @click="closeBg">
@@ -668,7 +668,6 @@
           </div>
         </div>
       </div>
-      <button @click="isShowCoinTip=true">地啊你</button>
       <tipOperation></tipOperation>
     </div>
     <tip :tipContent="tipContent" @tipButton="tipButton"></tip>
@@ -854,12 +853,12 @@
           //正常领取成功
           this.isShowCoinTip = true;
           this.isClickStartGame = false;
-          this.mypluse = false;
           this.addCoinNum = res.data.coin_num;
           setTimeout(()=>{
             this.$store.commit('setCoins', res.data.coin_num);
             this.$store.dispatch('getUser');
             this.$store.dispatch('getOperations');
+            this.isShowCoinTip = false;
           },1500)
         })
         localStorage.removeItem('isgzh')
@@ -898,6 +897,15 @@
 //      this.$store.dispatch('getUser')
     },
     methods: {
+      myStartGame(coin){
+        this.isClickStartGame = false;
+        this.isShowCoinTip = true;
+        this.addCoinNum = coin;
+        setTimeout(()=>{
+          this.$store.dispatch('getUser');
+          this.isShowCoinTip = false;
+        },1500)
+      },
       downloadArtifact(){
         this.$refs.task.useArtifact()
       },
@@ -958,6 +966,7 @@
               this.redCoinNum = res.coin_num;
               setTimeout(()=>{
                 this.$store.dispatch('getUser');
+                this.isShowCoinTip = false;
               },1500)
             }
             localStorage.removeItem('re')
@@ -1153,13 +1162,13 @@
       receiveBiSuccess() {
         this.bgShow = true;
         this.contentShow = 'receiveBi';
-        setTimeout(() => {
-          this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
-        }, 0)
+//        setTimeout(() => {
+//          this.centerStyle = 'opacity:1;clip-path:circle(100vh at 50vw 50vh)'
+//        }, 0)
         setTimeout(() => {
           this.bgShow = false;
           this.contentShow = '';
-          this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
+//          this.centerStyle = 'opacity:0;clip-path:circle(8.67vw at 77.33vw 88vw)'
         }, 1500)
       },
       changeTaskGameProgress() {
@@ -2314,11 +2323,11 @@
       /*background: red;*/
       position: absolute;
       z-index: 999;
-      clip-path: circle(65px at 580px 660px);
-      filter: none;
+      /*clip-path: circle(65px at 580px 660px);*/
+      /*filter: none;*/
       /*transition: opacity,clip-path 0.5s;*/
       transition: all 1s;
-      opacity: 0;
+      /*opacity: 0;*/
       /*display: none;*/
       pointer-events: none;
       > div {
@@ -3490,6 +3499,16 @@
     background: url("./../assets/peiqi/icon_portrait_bi.png") no-repeat;
     background-size: 100% 100%;
     font-size: 0;
+  }
+
+  .header .header-main .game  .coin-animate{
+    position: absolute;
+    right:-10px;
+    top:-10px;
+    font-size: 50px;
+    color: #FDCC09;
+    animation-duration:2.5s;
+    font-weight: bold;
   }
 
   .header .header-main .game span {
