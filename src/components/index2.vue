@@ -2316,20 +2316,25 @@
   }
 
   .bg-center14 {
+    width: 100%;
+    height: 100%;
     .center-bg {
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.3);
       /*background: red;*/
-      position: absolute;
-      z-index: 999;
+      /*position: absolute;*/
+      /*z-index: 999;*/
       /*clip-path: circle(65px at 580px 660px);*/
       /*filter: none;*/
       /*transition: opacity,clip-path 0.5s;*/
       transition: all 1s;
       /*opacity: 0;*/
       /*display: none;*/
-      pointer-events: none;
+      /*pointer-events: none;*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
       > div {
         /*background: red;*/
         @include center;
