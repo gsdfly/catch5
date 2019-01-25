@@ -234,7 +234,8 @@
           return;
         }
         if(CONFIG.isWx || gzh_operation.type === 12){
-          this.$emit('openTip','free',gzh_operation.mp_url,gzh_operation.remarks);
+          var remarks = gzh_operation.remarks || gzh_operation.coupon.remarks;
+          this.$emit('openTip','free',gzh_operation.mp_url,remarks);
           _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：微信关注公众号', '']);
           return;
         }

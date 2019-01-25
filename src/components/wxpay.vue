@@ -44,7 +44,6 @@
 </template>
 
 <script>
-  import {instance} from '../config/common'
   import {mapState} from 'vuex'
   import CONFIG from '../config'
   import {SetCookie, getErrMsg, changeTipOperation, payment} from '../util'

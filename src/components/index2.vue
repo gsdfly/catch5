@@ -1688,12 +1688,15 @@
   }
 
   .kefu2 {
-    width: 292px;
+    width: 324px;
+    height: 347px;
+    background-size: 100% 100%;
     position: absolute;
     z-index: 999;
-    /*top:calc(6% - 0.12px);*/
     top: 0;
     right: 0;
+    margin: -14px -14px 0 0;
+    padding: 13px 13px 0 19px;
     transform: translate3d(100%, 0, 0);
     transition: all 0.4s;
     .kefu2-left {
@@ -1712,28 +1715,28 @@
     }
     .kefu2-right {
       width: 234px;
-      height: 352px;
+      height: 320px;
+      background: #fff2ee;
       padding: 30px 0 0 0;
       float: right;
-      background: #fff2ee;
       border-radius: 0 0 0 18px;
       .kefu2-img {
-        width: 158px;
-        height: 158px;
-        padding: 9px;
+        width: 143px;
+        height: 143px;
+        padding: 3px;
         margin: 0 auto;
-        background: #fff;
+        background: #d83622;
         border-radius: 4px;
         img {
-          width: 140px;
-          height: 140px;
+          width: 137px;
+          height: 137px;
         }
       }
       h3 {
         font-size: 22px;
         line-height: 24px;
         color: $kefuTipColor;
-        margin: 12px 0 38px 0;
+        margin: 12px 0 28px 0;
         text-align: center;
       }
       p {
@@ -4011,11 +4014,11 @@
 
   .main .center .tip {
     position: relative;
+    height: 84px;
   }
   .main .center .tipbg{
     z-index: 7;
     background: #fff;
-    height: 84px;
   }
 
   .main .center .tip > p {
