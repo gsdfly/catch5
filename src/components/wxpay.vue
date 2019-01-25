@@ -214,13 +214,13 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "./../themes/default";
+  @import "./../themes/chunjie";
   .recharge-lists {
     width: 100%;
     position: absolute;
     left: 0;
     top: 0;
-    padding: 0 20px;
+    padding: 5px 20px 0 20px;
     /*padding: 10px 20px 0 20px;*/
   }
 
@@ -401,6 +401,9 @@
     /*width: 348px;*/
     /*margin: 0 0 20px 0;*/
   /*}*/
+  .version2{
+    padding: 10px 20px 0 20px;
+  }
   .version2>div{
     height: 164px;
   }

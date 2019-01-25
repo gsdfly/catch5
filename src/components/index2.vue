@@ -53,56 +53,19 @@
       </div>
 
       <div class="activitys">
-        <!--<operations ref="operations" @changeBgShow="changeBgShow" @closeBg="closeBg"-->
-        <!--@changeTip="changeTip" @openTip="openTip"></operations>-->
-        <!--<quanprogress @openTip="openTip" @getVoucherLength="getVoucherLength"></quanprogress>-->
-        <task  ref="task" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>
+        <free></free>
+        <!--<task  ref="task" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>-->
       </div>
 
       <div class="main">
-        <!--<div class="main-center">-->
           <div class="centerout">
             <div class="center">
               <h3 @click="handleScanQRCode" id="change_device">扫码换机<i class="iconfont icon-go"></i></h3>
-              <div v-if="isShowBaomihuaList" class="my_ticket" @click="openTip('baomihuaList')">
-                <img src="./../assets/dalibao/my_ticket.png" alt=""/>
-                <!--<p>我的兑换券</p>-->
-              </div>
-              <div class="ring" v-if="activity_bounty.length>0">
-                <div class="d">
-                  <div class="dd" :style="ringStyle">
-                    <div>
-                      <img class="img" :src="theme.ringCircle" alt="">
-                      <!--<img class="img" src="http://res.catchme.com.cn/activity/ring/process2.png" alt="">-->
-                      <div class="star" :class="{'animation':starClass==='animation'}">
-                        <img class="star1" src="./../assets/ring/star1.png" alt="">
-                        <img class="star2" src="./../assets/ring/star2.png" alt="">
-                        <img class="star3" src="./../assets/ring/star3.png" alt="">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <span class="icon"></span>
-                <!--<span class="icon"><b>{{task_now.game_bounty}}</b>/{{task_game.value}}</span>-->
-                <div class="task-gift" v-show="isCalculated" v-for="(item,index) in activity_bounty">
-                  <!--<img class="ling" v-if="item.voucher_batch.value <= task_now.recharge_bounty" src="./../assets/task/red_ling.png" alt="" @click="receiveGift(item)" />-->
-                  <div class="ring-tip" id="couponList"
-                       @click="handleRed(item.voucher_batch.value,item)">
-                    <div class="ring-tip-bg">
-                      <!--<div class="ring-quan"-->
-                           <!--:class="{'ring-tip-ling':item.voucher_batch.value <= task_now.recharge_bounty}">-->
-                        <img :class="{'ring-tip-ling':item.voucher_batch.value <= task_now.recharge_bounty}" v-if="item.voucher_batch.image" class="ring-quan" :src="item.voucher_batch.image"
-                             alt=""/>
-                      <!--</div>-->
-                      <div class="ring-content"
-                           :class="{'last':(index+1)/activity_bounty.length>=0.6,'nolast':(index+1)/activity_bounty.length<0.6}">
-                        <p :class="{'hidden':item.voucher_batch.value - task_now.recharge_bounty<=0}">
-                          (再抓{{Math.ceil(( item.voucher_batch.value - task_now.recharge_bounty) / info.coin_num)}}次)</p>
-                        <h3 v-if="item.voucher_batch.description">{{item.voucher_batch.description}}</h3>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <img class="chunjiered" src="./../assets/chunjie/red.png" alt=""/>
+              <div class="cloud">
+                <img class="cloud-a" src="./../assets/chunjie/cloud_a.png" alt="">
+                <img class="cloud-b" src="./../assets/chunjie/cloud_b.png" alt="">
+                <img class="cloud-c" src="./../assets/chunjie/cloud_c.png" alt="">
               </div>
               <div class="startgame" :class="{'hasclick':start_desc == '投币中','mypluse':!isClickStartGame}" id="coin-operated"
                    @click="handleStartingDevice">{{start_desc ? start_desc : '投币启动'}}
@@ -110,14 +73,14 @@
               <div class="game-num norecharge" v-if="user.coins<=0">您还没有游戏币，请先充值<span></span>
               </div>
               <div class="game-num" v-else>
-                <i id="coin_reduce" class="iconfont icon-jianhao" @click="handlerGameNum('-')" :class="{
+                <i id="coin_reduce" class="iconfont icon-jian" @click="handlerGameNum('-')" :class="{
                      'active': gameNum === 1
                  }"></i>
                 <div>
                   <h3>{{gameNum * info.coin_num}}币</h3>
                   <p>可玩{{gameNum}}次游戏</p>
                 </div>
-                <i id="coin_add" class="iconfont icon-jiahao" @click="handlerGameNum('+')" :class="{
+                <i id="coin_add" class="iconfont icon-jia" @click="handlerGameNum('+')" :class="{
                      'active': ((gameNum + 1) * info.coin_num) > user.coins
                  }"></i>
               </div>
@@ -675,6 +638,7 @@
   import Clipboard from 'clipboard';
 //  import quanprogress from './quanprogress.vue'
   import task from './task.vue'
+  import free from './free.vue'
   import guide from './guide.vue'
   import guide2 from './guide2.vue'
   import socketio from 'socket.io-client';
@@ -809,7 +773,8 @@
       task,
       guide,
       guide2,
-      barcode: vueBarcode
+      barcode: vueBarcode,
+      free
     },
     mounted() {
 //      var step1 = localStorage.getItem('redGameStep')
@@ -1534,7 +1499,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "./../themes/default";
+  @import "./../themes/chunjie";
   @keyframes heartBeat {
     0% {
       transform: scale(1);
@@ -1556,19 +1521,6 @@
       transform: scale(1);
     }
   }
-  /*@keyframes my-pulse {*/
-    /*from {*/
-      /*transform: scale3d(1, 1, 1);*/
-    /*}*/
-
-    /*50% {*/
-      /*transform: scale3d(1.08, 1.08, 1.08);*/
-    /*}*/
-
-    /*to {*/
-      /*transform: scale3d(1, 1, 1);*/
-    /*}*/
-  /*}*/
 
   @keyframes wave-animation {
     0% {
@@ -1579,7 +1531,6 @@
       background-position: 235px top;
     }
   }
-
 
   @mixin tipButton {
     width: 118px;
@@ -1688,19 +1639,22 @@
   }
 
   .kefu2 {
-    width: 292px;
+    width: 324px;
+    height: 347px;
+    background: url("./../assets/chunjie/service_bg.png") no-repeat;
+    background-size: 100% 100%;
     position: absolute;
     z-index: 999;
-    /*top:calc(6% - 0.12px);*/
     top: 0;
     right: 0;
+    margin: -14px -14px 0 0;
+    padding: 13px 13px 0 19px;
     transform: translate3d(100%, 0, 0);
     transition: all 0.4s;
     .kefu2-left {
       float: right;
       width: 58px;
       height: 62px;
-      background: #fff2ee;
       border-radius: 18px 0 0 18px;
       line-height: 62px;
       text-align: center;
@@ -1712,28 +1666,26 @@
     }
     .kefu2-right {
       width: 234px;
-      height: 352px;
       padding: 30px 0 0 0;
       float: right;
-      background: #fff2ee;
       border-radius: 0 0 0 18px;
       .kefu2-img {
-        width: 158px;
-        height: 158px;
-        padding: 9px;
+        width: 143px;
+        height: 143px;
+        padding: 3px;
         margin: 0 auto;
-        background: #fff;
+        background: #d83622;
         border-radius: 4px;
         img {
-          width: 140px;
-          height: 140px;
+          width: 137px;
+          height: 137px;
         }
       }
       h3 {
         font-size: 22px;
         line-height: 24px;
         color: $kefuTipColor;
-        margin: 12px 0 38px 0;
+        margin: 12px 0 28px 0;
         text-align: center;
       }
       p {
@@ -3522,8 +3474,8 @@
   .main {
     width: 100%;
     height: 47.2%;
-    /*min-height: 538px;*/
-    min-height: 558px;
+    min-height: 538px;
+    /*min-height: 558px;*/
     /*height: calc(100% - 4.98px);*/
     position: relative;
   }
@@ -3550,8 +3502,8 @@
     /*padding: 0 0.22px;*/
     /*height: 2.04px;*/
     height: 14.4%;
-    /*min-height: 178px;*/
-    min-height: 168px;
+    min-height: 178px;
+    /*min-height: 168px;*/
     /*padding: 0 22px;*/
     position: relative;
   }
@@ -3591,8 +3543,8 @@
     /*margin: 0.32px 0 0 0;*/
     /*padding: 0.28px 0.2px 0 0.2px;*/
     /*padding: 90px 20px 0 20px ;*/
-    padding: 96px 20px 0 20px;
-    /*padding: 70px 20px 0 20px;*/
+    /*padding: 96px 20px 0 20px;*/
+    padding: 70px 20px 0 20px;
     /*border-radius: 10px;*/
     position: relative;
     border-radius: 16px;
@@ -3886,14 +3838,14 @@
 
   .main .center > h3 {
     width: 194px;
-    height: 74px;
+    height: 78px;
     /*font-size: 0.32px;*/
     font-size: 32px;
     color: $saomaColor;
     /*margin: 0 0 0.1px 0;*/
     /*height: 0.64px;*/
     background: $saomaBg;
-    line-height: 74px;
+    line-height: 78px;
     position: absolute;
     border-radius: 0 16px 0 0;
     right: 0px;
@@ -3906,6 +3858,37 @@
   .main .center > h3 > i {
     font-size: 30px;
   }
+  .main .center .chunjiered {
+    position: absolute;
+    width: 95px;
+    left: 47px;
+    top:38px;
+  }
+  .main .center .cloud {
+    width:418px;
+    height: 144px;
+    @include centerX;
+    z-index: 7;
+    top:150px;
+    .cloud-a{
+      width: 64px;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+    .cloud-b{
+      width: 75px;
+      position: absolute;
+      left: 0;
+      top:92px;
+    }
+    .cloud-c{
+      width: 66px;
+      position: absolute;
+      right: 80px;
+      top:0;
+    }
+  }
 
   .main .center .startgame {
     width: 358px;
@@ -3916,19 +3899,16 @@
     background-size: 100% 100%;
     border: none;
     outline: none;
-    font-size: 40px;
+    /*font-size: 40px;*/
+    font-size: 0;
     color: #fff;
     display: block;
     margin: 0 auto;
     position: relative;
     z-index: 6;
-    /*animation: heartBeat 1s linear infinite;*/
-    /*animation: my-pulse 1s linear infinite;*/
-    /*transform-style:preserve-3d;*/
   }
 
   .mypluse{
-    /*animation: my-pulse 1s linear infinite;*/
     animation: heartBeat 1s linear infinite;
   }
 
@@ -3939,14 +3919,14 @@
 
   .main .center .game-num {
     width: 418px;
-    height: 93px;
-    border: 1px solid $addAndReduceColor;
+    height: 91px;
+    background: url("./../assets/chunjie/home_frame_jiajian.png");
+    background-size: 100% 100%;
+    // border: 1px solid $addAndReduceColor;
     border-radius: 18px;
     font-size: 24px;
     line-height: 91px;
-    // margin: -63px auto 0 auto;
     margin: -118px auto 0 auto;
-    background: #fff;
     color: #7e7e7e;
     text-align: center;
     position: relative;
@@ -3956,6 +3936,7 @@
 
   .main .center .game-num.norecharge {
     border: 1px solid #afafaf;
+    background: none;
   }
 
   .main .center .game-num i.active {
@@ -3963,7 +3944,6 @@
   }
 
   .main .center .game-num i {
-    /*width: 0.81px;*/
     width: 20%;
     float: left;
     font-size: 50px;
@@ -3971,8 +3951,6 @@
     text-align: center;
     height: 71px;
     line-height: 71px;
-    /*height: 67px;*/
-    /*line-height: 67px;*/
     border-right: 1px solid $addAndReduceColor;
     margin: 10px 0;
   }
@@ -4011,11 +3989,11 @@
 
   .main .center .tip {
     position: relative;
+    height: 84px;
   }
   .main .center .tipbg{
     z-index: 7;
     background: #fff;
-    height: 84px;
   }
 
   .main .center .tip > p {
@@ -4035,72 +4013,33 @@
     /*height: 3.4px;*/
     /*height: 28%;*/
     height: 26.4%;
-    /*min-height: 310px;*/
-    min-height: 300px;
+    min-height: 310px;
+    /*min-height: 300px;*/
     position: relative;
     /*padding: 0.36px 0.22px 0 0.22px;*/
     /*overflow: hidden;*/
   }
 
-  /*@media only screen and (min-device-aspect-ratio: 3/5) {*/
-  /*.main{*/
-  /*height: 60%;*/
-  /*}*/
-  /*.main .center .game-num{*/
-  /*width: 4.3px;*/
-  /*height: 0.96px;*/
-  /*margin: -0.86px auto 0 auto;*/
-  /*}*/
-  /*.main .center .game-num > div h3{*/
-  /*line-height: 0.6px;*/
-  /*margin: 0;*/
-  /*}*/
-  /*.main .center .tip > p{*/
-  /*line-height: 0.72px;*/
-  /*}*/
-  /*.main .center .startgame{*/
-  /*width: 3.36px;*/
-  /*height: 3.36px;*/
-  /*}*/
-  /*.main .centerout{*/
-  /*margin: 0.1px 0 0 0;*/
-  /*}*/
-  /*.main .centerout .center{*/
-  /*padding: 0.9px 0.2px 0 0.2px;*/
-  /*}*/
-  /*.header > div{*/
-  /*top:55%;*/
-  /*}*/
-  /*.main .center .tip{*/
-  /*height: 1px;*/
-  /*}*/
-  /*.footer {*/
-  /*height: 28%;*/
-  /*}*/
-  /*}*/
 
   .jo-version2 .main {
     /*height: 60%;*/
-    /*height: 44.5%;*/
-    height: 45%;
+    height: 43.5%;
+    /*height: 45%;*/
   }
 
   .jo-version2 .activitys {
-    /*height: 15.5%;*/
-    height: 14.5%; //高度减少3%
+    height: 15.5%;
+    /*height: 14.5%; //高度减少3%*/
     /*height: 16%;*/
   }
 
   .jo-version2 .main .center .game-num {
     width: 430px;
     height: 96px;
-    margin: -118px auto 0 auto;
+    //margin: -118px auto 0 auto;
+    margin: -108px auto 0 auto;
   }
 
-  /*.jo-version2 .main .center .game-num > div h3 {*/
-  /*line-height: 0.6px;*/
-  /*margin: 0;*/
-  /*}*/
 
   .jo-version2 .main .center .tip > p {
     line-height: 72px;
@@ -4112,31 +4051,14 @@
     top: 68px;
   }
 
-  .jo-version2 .main .center .startgame {
-    /*width: 336px;*/
-    /*height: 336px;*/
-  }
 
-  /*.jo-version2 .main .centerout {*/
-  /*!*margin: 0.1px 0 0 0;*!*/
-  /*padding: 22px 18px;*/
-  /*}*/
 
   .jo-version2 .main .centerout .center {
-    /*padding: 90px 20px 0 20px;*/
+    padding: 90px 20px 0 20px;
     //上面加了30px
-    padding: 120px 20px 0 20px;
+    /*padding: 100px 20px 0 20px;*/
   }
 
-  /*
-  .jo-version2 .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .last {
-    right: -70px;
-  }
-
-  .jo-version2 .main .centerout .center .ring .task-gift .ring-tip .ring-tip-bg .nolast {
-    left: -70px;
-  }
-  */
   .jo-version2 .header > div {
     top: 55%;
     /*padding: 0 0 0 18px;*/
@@ -4147,7 +4069,8 @@
   }
 
   .jo-version2 .footer {
-    height: 28.5%;
+    height: 29%;
+    /*height: 28.5%;*/
   }
 
   .jo-version2 .header .header-main h4 {
