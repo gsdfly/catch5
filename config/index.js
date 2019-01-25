@@ -5,9 +5,9 @@ package = require(path.join(process.cwd(), 'package.json')),
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../dist/sendcoupon10.html'),
+    index: path.resolve(__dirname, '../dist/newyear.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'sendcoupon10',
+    assetsSubDirectory: 'newyear',
     assetsPublicPath: process.argv.includes('upload') ? 'http://res.catchme.com.cn/rc/'+package.version+'/':'./',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as

@@ -36,7 +36,7 @@ const state = {
   show_tip_operation:{isShow:false,tipObj:{image:''}},
   tip_operation:{},
   activity_bounty:[],
-  gzh_operation:{},
+  gzh_operation:{coupon:{}},
   gzh_operation_other:{},
   task_game:{
     num:0, //任务可以完成多少次
@@ -59,10 +59,14 @@ const state = {
   },
   task_opes:[],
   dalibao:[],
-  redGame:{}
+  redGame:{},
+  chunjie_operation:{}
 }
 
 const mutations = {
+  setChunjieOperation(state,value){
+    state.chunjie_operation = value;
+  },
   changeIsGuide(state,value){
     state.isShowGuide = value;
   },
@@ -397,7 +401,7 @@ const actions = {
             // ctx.commit('setTaskWawa',res[i]);
           // && CONFIG.isWx
           }else if(res[i].type === 12 && CONFIG.isWx){
-            // type为10时为掉落任务运营位
+            //type为10时为掉落任务运营位
             if(res[i].task_count >= res[i].num){
               completeOpe.push(res[i])
             }else {
@@ -428,6 +432,8 @@ const actions = {
             }else {
               undoneOpe.push(res[i])
             }
+          }else if(res[i].type === 21){
+            ctx.commit('setChunjieOperation',res[i]);
           }
         }
         if(dalibao.length>0){

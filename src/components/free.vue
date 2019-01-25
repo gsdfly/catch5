@@ -1,7 +1,11 @@
 <template>
   <div class="free" :class="{'free-version2':version2}">
     <div v-if="gzh_operation.id">
-      <img v-if="gzh_operation.coupon.status !== 2" class="freeImg" :src="img1" alt=""/>
+      <img @click="consumer(gzh_operation)" v-if="gzh_operation.coupon.status !== 2" class="freeImg" :src="img1" alt=""/>
+      <img v-else="" class="freeImg" :src="img3" alt=""/>
+    </div>
+    <div v-if="gzh_operation_other.id">
+      <img @click="consumer(gzh_operation_other)" v-if="gzh_operation_other.task_count<gzh_operation_other.num" class="freeImg" :src="img1" alt=""/>
       <img v-else="" class="freeImg" :src="img3" alt=""/>
     </div>
   </div>
@@ -34,6 +38,7 @@
     computed: mapState({
       gzh_operation: state => state.user.gzh_operation,
       isLogin: state => state.user.isLogin,
+      gzh_operation_other:state => state.user.gzh_operation_other,
     }),
     methods:{
       mountedStart(){
@@ -87,6 +92,23 @@
         localStorage.removeItem('warrantTime');
         localStorage.removeItem('userTime');
         localStorage.removeItem('domTime');
+      },
+      consumer(gzh_operation){
+        if(gzh_operation.coupon.status === 2 || gzh_operation.task_count >= gzh_operation.num){
+          return;
+        }
+        if(CONFIG.isWx || gzh_operation.type === 12){
+          var remarks = gzh_operation.remarks || gzh_operation.coupon.remarks
+          this.$emit('openTip','free',gzh_operation.mp_url,remarks);
+          _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：微信关注公众号', '']);
+          return;
+        }
+        _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：支付宝', '']);
+        this.$store.dispatch('getFreeCoin', {coin_price_id: gzh_operation.coin_price.coin_price_id, coupon_id: gzh_operation.coupon.id}).then((data) => {
+          this.$store.commit('setCoins', data.data.coin_num);
+          this.$store.dispatch('getUser');
+          this.$store.dispatch('getOperations');
+        })
       },
     },
     watch:{
