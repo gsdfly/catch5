@@ -105,8 +105,9 @@
         }
         _hmt.push(['_trackEvent', '任务：免费领币', '点击', '免费领币：支付宝', '']);
         this.$store.dispatch('getFreeCoin', {coin_price_id: gzh_operation.coin_price.coin_price_id, coupon_id: gzh_operation.coupon.id}).then((data) => {
-          this.$store.commit('setCoins', data.data.coin_num);
-          this.$store.dispatch('getUser');
+          this.$emit('myStartGame',data.data.coin_num);
+//          this.$store.commit('setCoins', data.data.coin_num);
+//          this.$store.dispatch('getUser');
           this.$store.dispatch('getOperations');
         })
       },

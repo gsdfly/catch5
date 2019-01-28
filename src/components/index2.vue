@@ -949,6 +949,7 @@
         color: #de2f24;
         @include centerX;
         top:211px;
+        text-decoration: line-through;
       }
       .btn{
         width: 374px;
@@ -997,7 +998,8 @@
   .jo-index .jo-index-div {
     width: 100%;
     height: 100%;
-    background: $bgImgOrColor;
+    //background: $bgImgOrColor;
+    background: url("./../assets/chunjie/bg.png");
     background-size: 100% 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -1114,7 +1116,8 @@
     height: 36px;
     line-height: 66px;
     display: inline-block;
-    background: $coinsImg;
+    //background: $coinsImg;
+    background: url("./../assets/chunjie/icon_portrait_bi.png") no-repeat;;
     background-size: 100% 100%;
     font-size: 0;
   }
@@ -1313,7 +1316,8 @@
     height: 361px;
     text-align: center;
     line-height: 306px;
-    background: $startGameImg;
+    //background: $startGameImg;
+    background: url("./../assets/chunjie/press_begin.png");
     background-size: 100% 100%;
     border: none;
     outline: none;
