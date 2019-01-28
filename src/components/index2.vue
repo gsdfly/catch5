@@ -3946,6 +3946,7 @@
 
   .main .center .game-num.norecharge {
     border: 1px solid #afafaf;
+    background: #fff;
   }
 
   .main .center .game-num i.active {
