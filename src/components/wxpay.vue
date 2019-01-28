@@ -118,7 +118,9 @@
             });
           } else {
             _hmt.push(['_trackEvent', '点击充值', '点击', '充值金额为'+price+'元', '']);
-            if(id === this.coin[this.coin.length-1].coin_price_id && this.chunjie_operation.task_count < this.chunjie_operation.num){
+            var chunjieRed = localStorage.getItem('chunjieRed');
+            var time = new Date().getDate();
+            if(id === this.coin[this.coin.length-1].coin_price_id && this.chunjie_operation.task_count < this.chunjie_operation.num && chunjieRed == time){
               this.isRequest = false;
               this.$emit('openTip','reduce');
               return;

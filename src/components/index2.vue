@@ -2,7 +2,6 @@
   <div class="jo-index" :class="{'jo-version2':version2}">
     <div class="jo-index-div" v-show="showHtml" @click="hideKefu">
       <div v-if="isGetImg" v-show="false">
-
       </div>
       <div class="header">
         <div>
@@ -41,7 +40,7 @@
       </div>
 
       <div class="activitys">
-        <free @openTip="openTip"></free>
+        <free @openTip="openTip" @myStartGame="myStartGame"></free>
         <!--<task  ref="task" @receiveBiSuccess="receiveBiSuccess" @openTip="openTip" @taskGame="taskGame" @bankCard="bankCard" @handleGzh="handleGzh"></task>-->
       </div>
       <div class="main">
@@ -348,6 +347,12 @@
         }
         if(value === 'chunjieRed'){
           this.isClickChunjiered = true;
+          var chunjieRed = localStorage.getItem('chunjieRed');
+          var time = new Date().getDate();
+          if(chunjieRed !== time){
+            localStorage.setItem('chunjieRed',time);
+            _hmt.push(['_trackEvent', '点击红包', '点击', '用户领取最大充值项红包', '']);
+          }
         }
         this.freeTipImg = value2;
         if(value3){
@@ -368,9 +373,6 @@
           this.$store.dispatch('getUser');
           this.isShowCoinTip = false;
         }, 1500)
-      },
-      handleGzh() {
-        this.isShowCoinTip = true;
       },
       press1() {
         clearTimeout(this.timeout1)
@@ -1352,7 +1354,7 @@
 
   .main .center .game-num.norecharge {
     border: 1px solid #afafaf;
-    background: none;
+    background: #fff;
   }
 
   .main .center .game-num i.active {

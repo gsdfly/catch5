@@ -53,10 +53,10 @@
                 this.$store.dispatch('getActivityBountyExchange',{operation_id:item.id}).then((res)=>{
                   this.$store.dispatch('getFreeCoin',{coin_price_id: item.coin_price.coin_price_id, coupon_id: item.coupon.id}).then((res)=>{
                     //领取成功调用动画
-                    this.$emit('handleGzh')
+                    this.$emit('myStartGame',res.data.coin_num);
                     setTimeout(()=>{
                       this.$store.commit('setCoins', res.data.coin_num);
-                      this.$store.dispatch('getUser');
+//                      this.$store.dispatch('getUser');
                       this.$store.dispatch('getOperations');
                     },1500)
                   })
