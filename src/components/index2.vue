@@ -163,17 +163,6 @@
           </div>
         </div>
 
-        <div class="bg-center19" v-if="contentShow == 'moneyred'" @click.stop="">
-          <div>
-            <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_cash.png" alt="">
-            <h3>恭喜获得</h3>
-            <h2>现金红包</h2>
-            <p>红包已通过“趣东西服务”发送至您的微信上啦<br/>注意查收哦</p>
-            <div class="btn" @click="closeBg">我知道啦</div>
-            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
-                 @click="closeBg"/>
-          </div>
-        </div>
 
         <div class="bg-center20" v-if="contentShow == 'failred'" @click.stop="">
           <div>
@@ -412,7 +401,7 @@
           if(res.type === 'coin'){
             this.isShowCoinTip = true;
             this.isClickStartGame = false;
-            this.addCoinNum = res.data.coin_num;
+            this.addCoinNum = res.coin_num;
             this.redCoinNum = res.coin_num;
             setTimeout(()=>{
               this.isShowCoinTip = false;
@@ -977,7 +966,7 @@
     }
   }
 
-  .bg-center18,.bg-center19,.bg-center20{
+  .bg-center18,.bg-center20{
     .btn{
       width: 360px;
       height: 70px;
@@ -1131,47 +1120,6 @@
     }
   }
 
-  .bg-center19{
-    >div{
-      @include center;
-      color: #fff;
-      .imgBg{
-        width: 697px;
-      }
-      h3{
-        font-size: 32px;
-        line-height: 32px;
-        width: 100%;
-        position:absolute;
-        left: 0;
-        top:464px;
-        text-align: center;
-        color: #fff787;
-      }
-      h2{
-        font-size: 60px;
-        line-height: 60px;
-        width: 100%;
-        position:absolute;
-        left: 0;
-        top:522px;
-        text-align: center;
-        color: #fff787;
-      }
-      p{
-        font-size: 24px;
-        line-height: 32px;
-        width: 100%;
-        position:absolute;
-        left: 0;
-        top:614px;
-        text-align: center;
-      }
-      .btn{
-        top:721px;
-      }
-    }
-  }
 
   .bg-center20{
     @include center;
