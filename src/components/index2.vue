@@ -128,6 +128,66 @@
           </div>
         </div>
 
+        <div class="bg-center18" v-if="contentShow == 'coinred'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_bi2.png" alt="">
+            <img v-if="user.avatar" class="avatar" :src="user.avatar" alt=""/>
+            <div  class="avatar-div" v-else>
+              <img src="./../assets/small/icon_portrait.png" alt="">
+            </div>
+            <h3>恭喜获得</h3>
+            <h2 v-if="redCoinNum > 0">{{redCoinNum}}个免费游戏币</h2>
+            <h2 v-else="">现金红包</h2>
+            <p v-if="redCoinNum > 0">点击“投币启动”按钮，开始抓娃娃吧</p>
+            <p v-else="">红包已通过“趣东西服务”发送至您的微信上啦<br/>注意查收哦</p>
+            <h4><span></span><b>大家的手气</b></h4>
+            <ul>
+              <li v-for="item in redGroup.list">
+                <img v-if="item.avatar" class="ul-avatar" :src="item.avatar" alt="">
+                <div v-else="">
+                  <img src="./../assets/small/icon_portrait.png" alt="">
+                </div>
+                <p>{{item.nickname}}</p>
+                <span v-if="item.type == 1">{{item.desc}}元</span>
+                <span v-if="item.type == 2">{{item.desc}}币</span>
+              </li>
+              <li v-for="item2 in (redGroup.num - redGroup.list.length)">
+                <div class="red-avatar">
+                  <img src="./../assets/red/red_s.png" alt="">
+                </div>
+                <span>等待领取</span>
+              </li>
+            </ul>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg('redMachine')"/>
+          </div>
+        </div>
+
+        <div class="bg-center19" v-if="contentShow == 'moneyred'" @click.stop="">
+          <div>
+            <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_cash.png" alt="">
+            <h3>恭喜获得</h3>
+            <h2>现金红包</h2>
+            <p>红包已通过“趣东西服务”发送至您的微信上啦<br/>注意查收哦</p>
+            <div class="btn" @click="closeBg">我知道啦</div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg"/>
+          </div>
+        </div>
+
+        <div class="bg-center20" v-if="contentShow == 'failred'" @click.stop="">
+          <div>
+            <div class="content">
+              <img class="imgBg" src="http://res.catchme.com.cn/activity/red/red_image.png" alt="">
+              <h3>领取失败</h3>
+              <p>{{message}}</p>
+              <div class="btn" @click="closeBg('redMachine')">我知道啦</div>
+            </div>
+            <img src="http://res.catchme.com.cn/imgs-2017-12-29-20-42/icon_close.png" alt="" class="close"
+                 @click="closeBg('redMachine')"/>
+          </div>
+        </div>
+
         <div class="bg-center30" v-if="contentShow=='chunjieRed'" @click.stop="">
           <div>
             <img class="imgBg" src="./../assets/chunjie/congratulate.png" alt=""/>
@@ -288,6 +348,10 @@
       free
     },
     mounted() {
+      var re = localStorage.getItem('re');
+      if(re && this.isLogin){
+        this.handleRedMachine(re)
+      }
       //判断是否是充gzh关注之后过来的
       var isgzh = localStorage.getItem('isgzh');
       if (isgzh) {
@@ -340,6 +404,29 @@
       })
     },
     methods: {
+      handleRedMachine(re){
+        this.$store.dispatch('getEnvelopeReceiveAction',re).then((res)=>{
+          this.bgShow = true;
+          this.redGroup = res.group;
+          this.contentShow = 'coinred';
+          if(res.type === 'coin'){
+            this.isShowCoinTip = true;
+            this.isClickStartGame = false;
+            this.addCoinNum = res.data.coin_num;
+            this.redCoinNum = res.coin_num;
+            setTimeout(()=>{
+              this.isShowCoinTip = false;
+              this.$store.dispatch('getUser');
+            },1500)
+          }
+          localStorage.removeItem('re')
+        }).catch((res)=>{
+          this.bgShow = true;
+          this.contentShow = 'failred'
+          this.message = res.message
+          localStorage.removeItem('re')
+        })
+      },
       openTip(value,value2='',value3='') {
         if(value === 'free'){
           this.isShowGzhButtton = true;
@@ -571,10 +658,6 @@
     },
     watch: {
       isLogin() {
-        var unionid = localStorage.getItem('unionid')
-        if (unionid) {
-          this.handleRedGame(unionid)
-        }
         var re = localStorage.getItem('re');
         if (re) {
           this.handleRedMachine(re)
@@ -893,6 +976,233 @@
       }
     }
   }
+
+  .bg-center18,.bg-center19,.bg-center20{
+    .btn{
+      width: 360px;
+      height: 70px;
+      line-height: 70px;
+      background-image: linear-gradient(0deg,
+        rgba(193, 193, 193, 0.65) 0%,
+        rgba(255, 255, 255, 0.65) 99%),
+      linear-gradient(
+          #ffffff,
+          #ffffff);
+      background-blend-mode: normal,
+      normal;
+      border-radius: 35px;
+      font-size: 32px;
+      color: #fd673b;
+      @include centerX;
+    }
+  }
+
+  .bg-center18{
+    >div{
+      @include center;
+      color: #927247;
+      .imgBg{
+        width: 671px;
+      }
+      .avatar{
+        width: 129px;
+        height: 129px;
+        border-radius: 50%;
+        border: 3px solid #ff6138;
+        @include centerX;
+        top:60px;
+      }
+      .avatar-div{
+        width: 129px;
+        height: 129px;
+        background:#ff6138;
+        border-radius: 50%;
+        @include centerX;
+        top:60px;
+        img{
+          width: 110px;
+          @include center;
+        }
+      }
+      >h3{
+        font-size: 32px;
+        line-height: 32px;
+        width: 100%;
+        position:absolute;
+        left: 0;
+        top:213px;
+        text-align: center;
+      }
+      >h2{
+        font-size: 48px;
+        line-height: 48px;
+        width: 100%;
+        position:absolute;
+        font-weight: bold;
+        left: 0;
+        top:258px;
+        text-align: center;
+      }
+      >p{
+        font-size: 24px;
+        line-height: 24px;
+        width: 100%;
+        position:absolute;
+        left: 0;
+        top:335px;
+        text-align: center;
+      }
+      >h4{
+        font-size: 24px;
+        line-height: 24px;
+        color: #ffb09c;
+        width: 100%;
+        text-align: center;
+        @include centerX;
+        top:493px;
+        span{
+          width: calc(100% - 98px);
+          height: 2px;
+          @include centerY;
+          left: 49px;
+          background: #ffb09c;
+          z-index: -1;
+        }
+        b{
+          background:#ff6138;
+          padding: 0 20px;
+        }
+      }
+      ul{
+        width: 100%;
+        height: 365px;
+        @include centerX;
+        top: 530px;
+        overflow: auto;
+        li{
+          width: 100%;
+          height: 65px;
+          margin: 0 0 8px 0;
+          padding: 0 50px;
+          color: #fff;
+          .ul-avatar{
+            width: 65px;
+            height: 65px;
+            border: solid 2px #ffe8da;
+            border-radius: 50%;
+            float: left;
+            /*background: #fdead4;*/
+          }
+          >div{
+            width: 65px;
+            height: 65px;
+            background: #ffe8da;
+            float: left;
+            position: relative;
+            border-radius: 50%;
+            img{
+              width: 53px;
+              @include center;
+            }
+            &.red-avatar{
+              background: #ffb09c;
+              img{
+                width: 32px;
+              }
+            }
+          }
+          p{
+            font-size: 28px;
+            line-height: 65px;
+            float: left;
+            margin: 0 0 0 10px;
+          }
+          span{
+            font-size: 30px;
+            line-height: 65px;
+            float: right;
+            font-weight: bold;
+          }
+        }
+      }
+      .btn{
+        top:687px;
+      }
+    }
+  }
+
+  .bg-center19{
+    >div{
+      @include center;
+      color: #fff;
+      .imgBg{
+        width: 697px;
+      }
+      h3{
+        font-size: 32px;
+        line-height: 32px;
+        width: 100%;
+        position:absolute;
+        left: 0;
+        top:464px;
+        text-align: center;
+        color: #fff787;
+      }
+      h2{
+        font-size: 60px;
+        line-height: 60px;
+        width: 100%;
+        position:absolute;
+        left: 0;
+        top:522px;
+        text-align: center;
+        color: #fff787;
+      }
+      p{
+        font-size: 24px;
+        line-height: 32px;
+        width: 100%;
+        position:absolute;
+        left: 0;
+        top:614px;
+        text-align: center;
+      }
+      .btn{
+        top:721px;
+      }
+    }
+  }
+
+  .bg-center20{
+    @include center;
+    >div{
+      .content{
+        width: 640px;
+        height: 860px;
+        background: #fd673b;
+        border-radius: 36px;
+        padding: 0.1px;
+        color: #fff;
+        .imgBg{
+          width: 474px;
+          height: 337px;
+          display: block;
+          margin: 125px auto 95px auto;
+        }
+        h3{
+          font-size: 34px;
+          line-height: 34px;
+        }
+        p{
+          font-size: 24px;
+          line-height: 24px;
+          margin: 30px 0 0 0;
+        }
+        .btn{
+          top:721px;
+        }
+      }
+    }}
 
   .bg-center30{
     >div{
